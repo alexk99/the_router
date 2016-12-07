@@ -111,7 +111,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install DPDK
 
-# Configure linux kernel
+### Configure linux kernel
 
 * Make shure the following options are enabled:
 
@@ -177,7 +177,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 ## Install the router
 
  
-# Install dependencies
+### Install dependencies
 
  * Quagga
 
@@ -200,7 +200,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 		make
 		make install
 
-# Install the router 
+### Install the router 
 
  * Download the router <a href="http://arouter.com/downloads/the_router.0.01.tar.gz">the_router_a_0.01.tar.gz</a>
 
@@ -211,7 +211,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
  		./install.sh
 
 
-# Configure dpdk ports
+### Configure dpdk ports
 
 * Define $RTE_SDK variable
 
@@ -247,7 +247,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 			# echo vendor device (lspci -n)
 			echo "8086 10fb" > /sys/bus/pci/drivers/igb_uio/new_id
 
-# Run the router
+### Run the router
 
  * Prepare configuration files. For configuration examples and options see the page "Configure the Router"
 
