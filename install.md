@@ -86,24 +86,30 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
 
 
-/*
- *	Install NPF
- */
-download npf_github
-copy city/city.h to /usr/local/include
+## Install NPF
 
-emerge jemalloc
+ * Clone NPF
+
+		git clone https://github.com/alexk99/npf
+
+ * Download <a href="http://arouter.com/downloads/city/city.h>city.h</a>, then
+
+		cp city.h /urs/local/include/
+
+ * Install jemalloc
+
+		emerge jemalloc
+
+ * Run the following commands:
  
-cd ./npf_github/src
-export LIBDIR=/usr/lib64
-export INCDIR=/usr/local/include
-export MANDIR=/usr/local
-make
-make install
+		cd npf/src
+		export LIBDIR=/usr/lib64
+		export INCDIR=/usr/local/include
+		export MANDIR=/usr/local
+		make
+		make install
 
-/*
- * DPDK
- */
+## Install DPDK
 
 /* Prepare linux kernel.
 Make shure the following options are enabled:
