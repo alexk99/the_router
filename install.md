@@ -1,6 +1,6 @@
 # Installing 
 
-Here is installation process on Gentoo Linux.
+Here is installation process for Gentoo Linux.
 
 ## Install various linux utils
 
@@ -22,7 +22,7 @@ Here is installation process on Gentoo Linux.
 
 ## Install Proplib
 
-Download <a href='http://arouter.com/downloads/proplib-0.6.3.tar.xz'>proplib-0.6.3.tar.xz</a>
+Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6.3.tar.xz</a>
 
 		tar xvf ./proplib-0.6.3.tar.xz
 		cd ./proplib-0.6.3
@@ -30,63 +30,60 @@ Download <a href='http://arouter.com/downloads/proplib-0.6.3.tar.xz'>proplib-0.6
 		make
 		make install
 
-/*
- *	Install libcdb
- */
-git clone https://github.com/rmind/libcdb
-or
-get from here link to libcdb.tar.gz
-download from D:\Работа\work\svn\ISP\the_router\npf\deps
-libcdb_alexk_path лежит в D:\Работа\work\svn\ISP\the_router\npf\deps
+## Install libcdb
+ 
+ * Download <a href="http://arouter.com/downloads/libcdb.tar.gz">libcdb.tar.gz</a>
+   or
 
-cd ./libcdb
-cat ../libcdb_alexk_path | patch -p1
+		git clone https://github.com/rmind/libcdb
 
-export LIBDIR=lib
-export INCDIR=include
-export DESTDIR=/usr/local
-make all
-make install
+ * Download the patch <a href="http://arouter.com/downloads/libcdb_alexk.patch">libcdb_alexk.patch</a>
+ * Execute the following commands:
+ 
 
-/*
- *	Install qsbr
- */
-git clone https://github.com/rmind/libqsbr
-or
-download from D:\Работа\work\svn\ISP\the_router\npf\deps
+		cd ./libcdb
+		cat libcdb_alexk.patch | patch -p1
 
-cd ./libqsbr/src
-cat ../../libqsbr_alexk_patch | patch -p1
+		export LIBDIR=lib
+		export INCDIR=include
+		export DESTDIR=/usr/local
+		make all
+		make install
 
-export LIBDIR=lib
-export INCDIR=include/qsbr
-export DESTDIR=/usr/local
-make all
-make install
+## Install qsbr
+
+ * Download <a href="http://arouter.com/downloads/libqsbr.tar.gz>libqsbr.tar.gz</a>
+ * Download the patch <a href="http://arouter.com/downloads/libqsbr_alexk.patch>libqsbr_alexk.patch</a>
+ * Execute the following commands:
+
+		tar xzvf libqsbr.tar.gz
+		cd ./libqsbr/src
+		cat libqsbr_alexk.patch | patch -p1
+
+		export LIBDIR=lib
+		export INCDIR=include/qsbr
+		export DESTDIR=/usr/local
+		make all
+		make install
 
 
-/*
- *	Install bpfjit
- */
-download sljit-0.92.tgz from D:\work\npf_deps 
-tar xzvf ./sljit-0.92.tgz
+## Install bpfjit
 
-git clone https://github.com/rmind/bpfjit
-or 
-download bpfjit.tar.gz from npf_deps 
+ * Download <a href="http://arouter.com/downloads/sljit-0.92.tgz>sljit-0.92.tgz</a>
+ * Execute the following commands:
 
-cd ./bpfjit/sljit/
-cp -rpn ../../sljit-0.92/* ./
-cd ./bpfjit/
+		tar xzvf sljit-0.92.tgz
+		cd ./bpfjit/sljit/
+		cp -rpn ../../sljit-0.92/* ./
+		cd ./bpfjit/
 
-edit ./Makefile
+ * Edit ./Makefile and delete or comment the following lines:
+		BuildRequires:>make
+		BuildRequires:>libtool
 
-delete or comment two following lines:
-   BuildRequires:>make
-   BuildRequires:>libtool
-
-make rpm
-rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
+ * Run
+		make rpm
+		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
 
 
 /*
