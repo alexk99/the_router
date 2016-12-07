@@ -52,8 +52,8 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install qsbr
 
- * Download <a href="http://arouter.com/downloads/libqsbr.tar.gz>libqsbr.tar.gz</a>
- * Download the patch <a href="http://arouter.com/downloads/libqsbr_alexk.patch>libqsbr_alexk.patch</a>
+ * Download <a href="http://arouter.com/downloads/libqsbr.tar.gz">libqsbr.tar.gz</a>
+ * Download the patch <a href="http://arouter.com/downloads/libqsbr_alexk.patch">libqsbr_alexk.patch</a>
  * Execute the following commands:
 
 		tar xzvf libqsbr.tar.gz
@@ -69,7 +69,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install bpfjit
 
- * Download <a href="http://arouter.com/downloads/sljit-0.92.tgz>sljit-0.92.tgz</a>
+ * Download <a href="http://arouter.com/downloads/sljit-0.92.tgz">sljit-0.92.tgz</a>
  * Execute the following commands:
 
 		tar xzvf sljit-0.92.tgz
@@ -92,7 +92,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 		git clone https://github.com/alexk99/npf
 
- * Download <a href="http://arouter.com/downloads/city/city.h>city.h</a>, then
+ * Download <a href="http://arouter.com/downloads/city/city.h">city.h</a>, then
 
 		cp city.h /urs/local/include/
 
