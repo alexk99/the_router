@@ -20,20 +20,15 @@ Here is installation process on Gentoo Linux.
  
 		emerge libpcap
 
----------------------------------------------------------------------------------------------
+## Install Proplib
 
-/*
- *	Install Proplib
- */
+Download <a href='http://arouter.com/downloads/proplib-0.6.3.tar.xz'>proplib-0.6.3.tar.xz</a>
 
-link to proplib-0.6.3.tar.xz
-D:\Работа\work\svn\ISP\the_router\npf\deps
-
-tar xvf ./proplib-0.6.3.tar.xz
-cd ./proplib-0.6.3
-./configure
-make
-make install
+		tar xvf ./proplib-0.6.3.tar.xz
+		cd ./proplib-0.6.3
+		./configure
+		make
+		make install
 
 /*
  *	Install libcdb
