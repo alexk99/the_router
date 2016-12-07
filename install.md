@@ -111,191 +111,155 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install DPDK
 
-/* Prepare linux kernel.
-Make shure the following options are enabled:
-*/
+# Configure linux kernel
 
-UIO support
-   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
-      symbol UIO_PCI_GENERIC
+* Make shure the following options are enabled:
 
-PROC_PAGE_MONITOR
-   File systems -> Pseudo filesystems -> /proc file system support      
+		UIO support
+		   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
+		      symbol UIO_PCI_GENERIC
+		
+		PROC_PAGE_MONITOR
+		   File systems -> Pseudo filesystems -> /proc file system support      
+		
+		HUGETLBFS
+		  File systems -> Pseudo filesystems
+		
+		HPET and HPET_MMAP
+		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
-HUGETLBFS
-  File systems -> Pseudo filesystems
+* Configure hugepages
 
-HPET and HPET_MMAP
-   Device Drivers -> Character devices -> HPET - High Precision Event Timer
+	- reboot you machine and check that hugepages are available and free
 
+			grep -i huge /proc/meminfo
 
-/* reboot you machine and check that hugepages are free */
+	- you should get something like this:
 
-	grep -i huge /proc/meminfo
+			HugePages_Total:    3072
+			HugePages_Free:     3072
+			HugePages_Rsvd:        0
+			HugePages_Surp:        0
+			Hugepagesize:       2048 kB
 
-you should get something like this:
+	- Make a mount point for hugepages
 
-	HugePages_Total:    3072
-	HugePages_Free:     3072
-	HugePages_Rsvd:        0
-	HugePages_Surp:        0
-	Hugepagesize:       2048 kB
+			mkdir /mnt/huge
 
-/* mount huge pages */
-
-	mkdir /mnt/huge
-
-create mout poing in the /etc/fstab
-	huge         /mnt/huge   hugetlbfs pagesize=2M   0       0
+	- Create a mount point entry in the /etc/fstab
 	
-mount it
-	mount huge
-
-/* Turn on some boot time options */
-If you use grub edit /boot/grub/grub.conf and appent following options:
-
-intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
-
-/* download dpdk 16.07 */
-http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
-tar xvf ./dpdk-16.07.tar.xz
-cd ./dpdk-16.07
-make install T=x86_64-native-linuxapp-gcc
-
-patch it
-todo
-
-/*
- *	Install The_router
- */
- 
-/* Install dependencies */
-
-/* Quagga */
-	emerge -v quagga
-
-/* quagga sources */
-	quagga-1.0.20160315.tar.xz
-	tar xvf ./quagga-1.0.20160315.tar.xz
-
-/* PCRE2 */
-	emerge libpcre2
- 
-/* libcuckoo */
-	git clone https://github.com/efficient/libcuckoo
-	or download 
-	todo make libcackoo archive 
+			huge         /mnt/huge   hugetlbfs pagesize=2M   0       0
 	
-	cd ./libcuckoo
-	autoreconf -fis
-	./configure
-	make
-	make install
+	- Mount hugepages
+	
+			mount huge
+
+* Turn on some linux boot time options
+	- If you use grub edit /boot/grub/grub.conf and appent the following options:
+
+			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
+
+* download dpdk 16.07
+
+		wget http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
+		
+* Download a dpdk log subsystem patch
+	
+		todo
+		
+* Run the following commands:		
+
+		tar xvf dpdk-16.07.tar.xz
+		cd ./dpdk-16.07
+		make install T=x86_64-native-linuxapp-gcc
+
+
+## Install the router
 
  
-cd ./the_router_alexk_dpdk_v16_07/src/
+# Install dependencies
 
-/* define */
-export NPF_BASE_DIR=/usr/src/npf_github
-export THE_ROUTER_BASE_DIR=/usr/src/the_router_alexk_dpdk_v16_07
-export RTE_SDK=/usr/src/dpdk-16.07
-export RTE_TARGET=x86_64-native-linuxapp-gcc
-# quagga sources
-export QUAGGA_DIR=/usr/src/quagga-1.0.20160315/
+ * Quagga
 
-make
-cp ./build/the_router /usr/local/bin
+		emerge -v quagga
 
-/* cli */
-cd ./cli_client
-make
-cp ./cli /usr/local/bin/rcli
+ * Download quagga sources <a href="http://arouter.com/downloads/quagga-1.0.20160315.tar.xz">quagga-1.0.20160315.tar.xz</a>
+	
+		tar xvf ./quagga-1.0.20160315.tar.xz
 
+ * PCRE2
 
-/* Configure dpdk ports */
+		emerge libpcre2
+ 
+ * libcuckoo
 
-/* load drivers */
-modprobe uio
-insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
-# loading kni module 
-insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
+		git clone https://github.com/efficient/libcuckoo
+		cd libcuckoo
+		autoreconf -fis
+		./configure
+		make
+		make install
 
-/* 
-bind your NIC to DPDK either by using the commands below or by 
-running the $RTE_SDK/tools/setup.sh. If you are going to run 
-the following commands make sure you are using your own nic pci
-addresses in the echo commands.
-*/
+# Install the router 
 
-ip link set down enp1s0f0
-ip link set down enp1s0f0
+ * Download the router <a href="http://arouter.com/downloads/the_router.0.01.tar.gz">the_router_a_0.01.tar.gz</a>
 
-# unbind from linux
-# replace 0000:01:00.0 with your own address.
-# use lspci to determine it.
-echo 0000:01:00.0 > /sys/bus/pci/drivers/ixgbe/unbind
-echo 0000:01:00.1 > /sys/bus/pci/drivers/ixgbe/unbind
-
-# bind to DPDK driver
-# replace "8086 10fb" with your own addres
-# echo vendor device (lspci -n)
-echo "8086 10fb" > /sys/bus/pci/drivers/igb_uio/new_id
-
-/* create router.conf */
-
-nano /etc/router.conf
-
-startup {
-  port 0 mtu 1500 tpid 0x8100 state enabled
-  port 1 mtu 1500 tpid 0x8100 state enabled
-
-  rx_queue port 0 queue 0 lcore 1
-  rx_queue port 0 queue 1 lcore 2
-  rx_queue port 0 queue 2 lcore 3
-
-  rx_queue port 1 queue 0 lcore 3
-  rx_queue port 1 queue 1 lcore 2
-  rx_queue port 1 queue 2 lcore 1
-
-  sysctl set global_packet_counters 1
-
-#  sysctl set arp_cache_timeout 300
-}
+ * Run the following commands:
+ 
+ 		tar xvf ./the_router.0.01.tar.gz
+ 		cd ./the_router.0.01
+ 		./install.sh
 
 
-runtime {
-  vif add name p0 port 0 type untagged
-  ip addr add 10.0.0.1/24 dev p0
+# Configure dpdk ports
 
-  vif add name p1 port 1 type untagged
-  ip addr add 10.0.1.1/24 dev p1
+* Define $RTE_SDK variable
 
-  ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
+		export RTE_SDK=/path_to_dpdk
 
-  npf load "/etc/npf.conf.warp17"
-}
+* Load drivers
 
+		modprobe uio
+		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
+		# loading kni module 
+		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
 
-/* create npf conf */
+* Bind your NIC's to DPDK either by using the commands below or by 
+  running the $RTE_SDK/tools/setup.sh. If you are going to run 
+  the following commands make sure you are using your own NIC PCI
+  addresses in the echo commands
 
-nano "/etc/npf.conf.warp17"
+	- Down linux interfaces of NIC you are goiing to bind to dpdk, for example:
+	
+			ip link set down enp1s0f0
+			ip link set down enp1s0f0
 
-map p1 netmap 10.0.100.0/24
-#alg "icmp"
+	- Unbind from linux
+	
+			# replace 0000:01:00.0 with your own address.
+			# use lspci to determine it.
+			echo 0000:01:00.0 > /sys/bus/pci/drivers/ixgbe/unbind
+			echo 0000:01:00.1 > /sys/bus/pci/drivers/ixgbe/unbind
 
-group default {
-  pass stateful final on p1 all
-  pass final on p0 all
-  #pass final on p1 all
-}
+	- Bind to DPDK driver
+	
+			# replace "8086 10fb" with your own addres
+			# echo vendor device (lspci -n)
+			echo "8086 10fb" > /sys/bus/pci/drivers/igb_uio/new_id
 
+# Run the router
 
-/** run the router **/
+ * Prepare configuration files. For configuration examples and options see the page "Configure the Router"
 
-nano /root/run_router.sh
+ 	- create router.conf
 
-the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1
-ps -ef | grep the_router | grep -v grep | awk '{print $2}' > /var/run/the_router.pid
+			nano /etc/router.conf
 
-run.sh /etc/the_router.conf
+ 	- create npf conf
+
+			nano /etc/npf.conf
+
+ * run the router
+
+		/usr/local/sbin/router_run.sh /etc/the_router.conf
 
