@@ -156,21 +156,27 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 * Turn on some linux boot time options
 	- If you use grub edit /boot/grub/grub.conf and appent the following options:
-
+	
 			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
 
+	- Note:
+		You might want to isolate different set of cores depending of the hardware configuration of your server.
+		The rule is that you should isolate all cores you're going to use in traffic forwarding process unless
+		the perfomance is not the goal.
+		
 * download dpdk 16.07
 
 		wget http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
+		tar xvf dpdk-16.07.tar.xz
+		cd ./dpdk-16.07
 		
-* Download a dpdk log subsystem patch
-	
-		todo
+* Download dpdk log subsystem patch <a href="http://arouter.com/downloads/dpdk/log_patch.patch">log_patch.patch</a>, then
+  apply the patch
+  		
+		cat ./log_patch.patch | patch -p2
 		
 * Run the following commands:		
 
-		tar xvf dpdk-16.07.tar.xz
-		cd ./dpdk-16.07
 		make install T=x86_64-native-linuxapp-gcc
 
 
@@ -202,14 +208,13 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ### Install the router 
 
- * Download the router <a href="http://arouter.com/downloads/the_router.0.01.tar.gz">the_router_a_0.01.tar.gz</a>
+ * Download the router <a href="http://arouter.com/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
 
  * Run the following commands:
  
- 		tar xvf ./the_router.0.01.tar.gz
- 		cd ./the_router.0.01
+ 		tar xvf ./the_router.a0.01.tar.gz
+ 		cd ./the_router.a0.01
  		./install.sh
-
 
 ### Configure dpdk ports
 
@@ -234,14 +239,14 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 			ip link set down enp1s0f0
 			ip link set down enp1s0f0
 
-	- Unbind from linux
+	- Unbind NIC's from linux
 	
 			# replace 0000:01:00.0 with your own address.
 			# use lspci to determine it.
 			echo 0000:01:00.0 > /sys/bus/pci/drivers/ixgbe/unbind
 			echo 0000:01:00.1 > /sys/bus/pci/drivers/ixgbe/unbind
 
-	- Bind to DPDK driver
+	- Bind NIC's to the DPDK driver
 	
 			# replace "8086 10fb" with your own addres
 			# echo vendor device (lspci -n)
