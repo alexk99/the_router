@@ -9,5 +9,8 @@
 * If using Ubuntu Server 14.04 LTS then just install:
 
 * Paragraph 2
+
 		code line1
 		code line2
+
+* Paragraph 3
