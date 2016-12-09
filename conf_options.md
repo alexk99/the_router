@@ -79,7 +79,6 @@ startup {
 #  sysctl set arp_cache_timeout 300
 }
 
-
 runtime {
   vif add name p0 port 1 type untagged
   ip addr add 10.0.0.1/24 dev p0
@@ -90,6 +89,14 @@ runtime {
   ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
 
   npf load "/etc/npf.conf"
+}
+```
+
+## NPF configaration file example
+```
+group default {
+  pass final on p0 all
+  pass final on p1 all
 }
 ```
 
