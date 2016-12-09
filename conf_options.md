@@ -37,11 +37,29 @@ are the commands that can't be modified once the router have started.
 So the only way to set them up is to edit the configuration file /etc/router.conf.
 
  * port
+	```
+	port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled
+	```
+ 
  * rx_queue
+ 	```
+ 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
+ 	```
+ 	
  * sysctl
+ ```
+ sysctl set <name> <value>
+ ```
+ 
+ * npf load
+ ```
+ npf load "<path_to_npf_configuration_file>"
+ ```
+ Note: that you should enclose path to file with '"'.
 
 ### Runtime commands 
 are the commands which values can be altered by the rcli utility in any time.
+You could also use any of this commands in runtime section of the router configuarion file but without rcli prefix.
 
 ### ip addr
  * ip addr add
@@ -94,23 +112,123 @@ are the commands which values can be altered by the rcli utility in any time.
    	 - kni
    	 - proxy_arp
    	   
+
+ * vif del
+   ```
+   rcli vif del <name>
+   ```
+
    
  * sh vif
    ```
-   rcli 
+   rcli sh vif
    ```
    
  * sh vif counters
    ```
-   rcli 
+   rcli sh vif counters
    ```
    
-   -
+ * clear vif counters
    ```
-   rcli 
+   rcli clear vif counters
+   ```
+
+### arp
+   
+ * arp add
+   ```
+   rcli arp add <ip> <mac> dev <vif_name> [static]
    ```
    
+ * arp del
+   ```
+   rcli arp del <ip> dev <vif_name>
+   ```
    
+ * sh arp cache
+   ```
+   rcli sh arp cache
+   ```
+
+### sysctl
+
+ * sysctl set
+   ```
+   rcli sysctl set <name> <value>
+   ```
+
+ * sysctl set
+   ```
+   rcli sysctl get <name> <value>
+   ```
+
+### ping
+
+ * ping
+   ```
+	rcli ping --help
+	Usage: ping [-c,--count count] [-i,--interval interval_in_ms] [-s icmp_payload_size]
+	[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
+	[-h,--help] destination
+   ```
+
+### NPF
+ * npf sh npf conndb size
+   ```
+   rcli sh npf conndb size
+   ```
    
- * npf load
+ * sh npf conndb summary
+   ```
+   rcli sh npf conndb summary
+   ```
+
+ * sh npf stat
+   ```
+   rcli sh npf stat
+   ```
+
+ * npf clear stat
+   ```
+   rcli npf clear stat
+   ```
+
+### Other commands
+
+ * shutdown
+   ```
+   rcli shutdown
+   ```
+
+### Router statistic commands
+
+ * sh port ext stat
+   ```
+   rcli sh port ext stat
+   ```
+
+ * sh port stat
+   ```
+   rcli sh port stat
+   ```
+
+ * sh cmbuf stats
+   ```
+   rcli sh cmbuf stats
+   ```
+
+ * sh mbuf stats
+   ```
+   rcli sh mbuf stats
+   ```
    
+ * sh stats
+   ```
+   rcli sh stats
+   ```
+   
+ * clear stats
+   ```
+   rcli clear stats
+   ```
