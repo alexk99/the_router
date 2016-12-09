@@ -1,9 +1,9 @@
-# Work in the progress.. Stay tuned.
+# Work in progress.. Stay tuned.
 
 
 
 # The router
-The router is the modern software packet router based on DPDK an NPF libraries.
+The router is a modern software packet router based on DPDK an NPF libraries.
 
 # Installation
 <a href="/install.md">Installation</a>
