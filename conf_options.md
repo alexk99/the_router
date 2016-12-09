@@ -43,24 +43,24 @@ So the only way to set them up is to edit the configuration file /etc/router.con
 ### Runtime commands 
 are the commands which values can be altered by the rcli utility in any time.
 
- * ip addr
-   - ip addr add
+### ip addr
+ * ip addr add
 	```
 	rcli ip addr add <net>/<mask> dev <vif_name>
 	```
 	
-   - ip addr del
+ * ip addr del
 	```
 	rcli ip addr del <net>/<mask> dev <vif_name>
 	```
    
-   - sh ip addr  
+ * sh ip addr  
 	```
 	rcli sh ip addr
 	```
 
- * ip route
-   - ip route add
+### ip route
+ * ip route add
 	```
 	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
 	or
@@ -69,18 +69,18 @@ are the commands which values can be altered by the rcli utility in any time.
 	ip route add <net>/<mask> unreachable [table <table_name>]
 	```
    
-   - ip route del
+ * ip route del
    ```
    ip route del <net/mask> [table <table_name>]
    ```
    
-   - sh ip route
+ * sh ip route
    ```
    rcli sh ip route
    ```
    
- * vif
-   - vif add
+### vif
+ * vif add
    ```
    rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
    ```
@@ -95,12 +95,12 @@ are the commands which values can be altered by the rcli utility in any time.
    	 - proxy_arp
    	   
    
-   - sh vif
+ * sh vif
    ```
    rcli 
    ```
    
-   - sh vif counters
+ * sh vif counters
    ```
    rcli 
    ```
