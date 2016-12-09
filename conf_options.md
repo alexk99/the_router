@@ -29,6 +29,7 @@ Set the number of memory channels to use.
 Add a PCI device in white list.
 
 Example of the startup script cmd options:
+
 	```
 	the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
 	```
