@@ -24,6 +24,11 @@ Set the number of memory channels to use.
  * -w
 Add a PCI device in white list.
 
+Example of the startup script cmd options:
+	```
+	the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
+	```
+
 ## Configuration file options
 
 This options are stored in the /etc/router.conf file.
@@ -31,6 +36,23 @@ This options are stored in the /etc/router.conf file.
 Configuration file commands consists of the two groups:
  * startup
  * runtime
+
+	```
+startup {
+	startup_command_1
+	startup_command_2
+	...
+	startup_command_n
+}
+
+
+runtime {
+	runtime_command_1
+	runtime_command_2
+	...
+	runtime_command_n
+}
+	```
 
 ### Startup commands 
 are the commands that can't be modified once the router have started.
@@ -58,8 +80,8 @@ So the only way to set them up is to edit the configuration file /etc/router.con
  Note: that you should enclose path to file with '"'.
 
 ### Runtime commands 
-are the commands which values can be altered by the rcli utility in any time.
-You could also use any of this commands in runtime section of the router configuarion file but without rcli prefix.
+are the commands that can be executed while a router is working.
+You could also use any of this commands in the runtime section of the router configuarion file but without rcli prefix.
 
 ### ip addr
  * ip addr add
@@ -174,7 +196,7 @@ You could also use any of this commands in runtime section of the router configu
    ```
 
 ### NPF
- * npf sh npf conndb size
+ * sh npf conndb size
    ```
    rcli sh npf conndb size
    ```
