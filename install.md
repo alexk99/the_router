@@ -1,8 +1,8 @@
 # Installing 
 
-Here is installation process for Gentoo Linux.
+Here is the installation process description for Gentoo Linux.
 
-## Install various linux utils
+## Install the following utilities and libs:
 
  * git
 
@@ -22,7 +22,7 @@ Here is installation process for Gentoo Linux.
 
 ## Install Proplib
 
-Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6.3.tar.xz</a>
+Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0.6.3.tar.xz</a>
 
 		tar xvf ./proplib-0.6.3.tar.xz
 		cd ./proplib-0.6.3
@@ -32,12 +32,12 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install libcdb
  
- * Download <a href="http://arouter.com/downloads/libcdb.tar.gz">libcdb.tar.gz</a>
+ * Download <a href="http://therouter.net/downloads/libcdb.tar.gz">libcdb.tar.gz</a>
    or
 
 		git clone https://github.com/rmind/libcdb
 
- * Download the patch <a href="http://arouter.com/downloads/libcdb_alexk.patch">libcdb_alexk.patch</a>
+ * Download the patch <a href="http://therouter.net/downloads/libcdb_alexk.patch">libcdb_alexk.patch</a>
  * Execute the following commands:
  
 
@@ -52,8 +52,8 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install qsbr
 
- * Download <a href="http://arouter.com/downloads/libqsbr.tar.gz">libqsbr.tar.gz</a>
- * Download the patch <a href="http://arouter.com/downloads/libqsbr_alexk.patch">libqsbr_alexk.patch</a>
+ * Download <a href="http://therouter.net/downloads/libqsbr.tar.gz">libqsbr.tar.gz</a>
+ * Download the patch <a href="http://therouter.net/downloads/libqsbr_alexk.patch">libqsbr_alexk.patch</a>
  * Execute the following commands:
 
 		tar xzvf libqsbr.tar.gz
@@ -69,15 +69,17 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ## Install bpfjit
 
- * Download <a href="http://arouter.com/downloads/sljit-0.92.tgz">sljit-0.92.tgz</a>
+ * Download <a href="http://therouter.net/downloads/bpfjit.tar.gz">bpfjit.tar.gz</a>
+ * Download <a href="http://therouter.net/downloads/sljit-0.92.tgz">sljit-0.92.tgz</a>
  * Execute the following commands:
 
-		tar xzvf sljit-0.92.tgz
+		tar xzvf ./bpfjit.tar.gz
+		tar xzvf ./sljit-0.92.tgz
 		cd ./bpfjit/sljit/
 		cp -rpn ../../sljit-0.92/* ./
-		cd ./bpfjit/
+		cd ..
 
- * Edit ./Makefile and delete or comment the following lines:
+ * Edit ./SPECS/libbpfjit.spec and delete or comment the following lines:
 		BuildRequires:>make
 		BuildRequires:>libtool
 
@@ -92,7 +94,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 		git clone https://github.com/alexk99/npf
 
- * Download <a href="http://arouter.com/downloads/city/city.h">city.h</a>, then
+ * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
 		cp city.h /urs/local/include/
 
@@ -154,14 +156,15 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 	
 			mount huge
 
-* Turn on some linux boot time options
+* Turn on linux boot time options:
 	- If you use grub edit /boot/grub/grub.conf and appent the following options:
 	
 			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
 
 	- Note:
-		You might want to isolate different set of cores depending of the hardware configuration of your server.
-		The rule is that you should isolate all cores you're going to use in traffic forwarding process unless
+		You might want to isolate a different set of cores or reserve different amount of ram for huge pagas 
+		depending of the hardware configuration of your server.
+		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
 		the perfomance is not the goal.
 		
 * download dpdk 16.07
@@ -170,7 +173,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 		tar xvf dpdk-16.07.tar.xz
 		cd ./dpdk-16.07
 		
-* Download dpdk log subsystem patch <a href="http://arouter.com/downloads/dpdk/log_patch.patch">log_patch.patch</a>, then
+* Download dpdk log subsystem patch <a href="http://therouter.net/downloads/dpdk/log_patch.patch">log_patch.patch</a>, then
   apply the patch
   		
 		cat ./log_patch.patch | patch -p2
@@ -189,7 +192,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 		emerge -v quagga
 
- * Download quagga sources <a href="http://arouter.com/downloads/quagga-1.0.20160315.tar.xz">quagga-1.0.20160315.tar.xz</a>
+ * Download quagga sources <a href="http://therouter.net/downloads/quagga-1.0.20160315.tar.xz">quagga-1.0.20160315.tar.xz</a>
 	
 		tar xvf ./quagga-1.0.20160315.tar.xz
 
@@ -208,7 +211,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ### Install the router 
 
- * Download the router <a href="http://arouter.com/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
+ * Download the router <a href="http://therouter.net/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
 
  * Run the following commands:
  
@@ -254,7 +257,7 @@ Download <a href="http://arouter.com/downloads/proplib-0.6.3.tar.xz">proplib-0.6
 
 ### Run the router
 
- * Prepare configuration files. For configuration examples and options see the page "Configure the Router"
+ * Prepare configuration files. For configuration examples and options see the page <a href="/conf_options.md">Configure the Router</a>
 
  	- create router.conf
 
