@@ -1,10 +1,10 @@
 # Configuration of The router
 
-There are three groups of configuration options of The router:
+There are three groups of configuration options and commands of The router:
 
  * command line options
- * configuration file options
- * runtime options
+ * configuration file commands
+ * runtime commands
 	
 ## Command line options
 Command line options can be modified by editing the run script /usr/local/sbin/router_run.sh.
@@ -28,15 +28,25 @@ Add a PCI device in white list.
 
 This options are stored in the /etc/router.conf file.
 
-Configuration file options consists of the groups:
+Configuration file commands consists of the two groups:
  * startup
  * runtime
 
-### Startup options 
-are options that can't be modified once the router have started.
-So the only way to set up them is to editing the configuration file /etc/router.conf.
+### Startup commands 
+are the commands that can't be modified once the router have started.
+So the only way to set them up is to edit the configuration file /etc/router.conf.
 
+ * port
+ * rx_queue
+ * sysctl
 
+### Runtime commands 
+are the commands which values can be altered by the rcli utility in any time.
 
-### Runtime options 
-are the options which values can be altered by the rcli utility in any time.
+ * ip addr
+
+ * ip route
+ * sh ip route
+ * vif
+ * npf load
+   
