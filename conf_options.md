@@ -46,18 +46,71 @@ are the commands which values can be altered by the rcli utility in any time.
  * ip addr
    - ip addr add
 	```
-	rcli ip addr add <net/mask> dev <vif_name>
+	rcli ip addr add <net>/<mask> dev <vif_name>
 	```
 	
    - ip addr del
+	```
+	rcli ip addr del <net>/<mask> dev <vif_name>
+	```
+   
    - sh ip addr  
+	```
+	rcli sh ip addr
+	```
 
  * ip route
    - ip route add
-   - ip route del
-   - sh ip route
+	```
+	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
+	or
+	ip route add <net>/<mask> via <gw_ip> src <src_ip> [table <table_name>]
+	or
+	ip route add <net>/<mask> unreachable [table <table_name>]
+	```
    
- * sh ip route
+   - ip route del
+   ```
+   ip route del <net/mask> [table <table_name>]
+   ```
+   
+   - sh ip route
+   ```
+   rcli sh ip route
+   ```
+   
  * vif
+   - vif add
+   ```
+   rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
+   ```
+   
+   Type parameter can take one of the following values:
+     - untagged
+     - dot1q
+     - qinq
+   
+   Flags:
+   	 - kni
+   	 - proxy_arp
+   	   
+   
+   - sh vif
+   ```
+   rcli 
+   ```
+   
+   - sh vif counters
+   ```
+   rcli 
+   ```
+   
+   -
+   ```
+   rcli 
+   ```
+   
+   
+   
  * npf load
    
