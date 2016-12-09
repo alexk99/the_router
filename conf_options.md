@@ -44,8 +44,15 @@ So the only way to set them up is to edit the configuration file /etc/router.con
 are the commands which values can be altered by the rcli utility in any time.
 
  * ip addr
+   - ip addr add
+   - ip addr del
+   - sh ip addr  
 
  * ip route
+   - ip route add
+   - ip route del
+   - sh ip route
+   
  * sh ip route
  * vif
  * npf load
