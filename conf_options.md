@@ -45,6 +45,10 @@ are the commands which values can be altered by the rcli utility in any time.
 
  * ip addr
    - ip addr add
+	```
+	rcli ip addr add <net/mask> dev <vif_name>
+	```
+	
    - ip addr del
    - sh ip addr  
 
