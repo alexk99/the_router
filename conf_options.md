@@ -38,20 +38,20 @@ Configuration file commands consists of the two groups:
  * runtime
 
 	```
-startup {
-	startup_command_1
-	startup_command_2
-	...
-	startup_command_n
-}
-
-
-runtime {
-	runtime_command_1
-	runtime_command_2
-	...
-	runtime_command_n
-}
+	startup {
+		startup_command_1
+		startup_command_2
+		...
+		startup_command_n
+	}
+	
+	
+	runtime {
+		runtime_command_1
+		runtime_command_2
+		...
+		runtime_command_n
+	}
 	```
 
 ### Startup commands 
