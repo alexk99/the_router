@@ -13,15 +13,19 @@ refer to DPDK documentation <a href="http://dpdk.org/doc/guides/testpmd_app_ug/r
 
 Before running the router you must check the following options and use your own values depending on the hardware you use:
  * -c
+ 
 Set the hexadecimal bitmask of the cores to run on.
 	
  * --lcores
+ 
 Map lcore set to physical cpu set
 
  * -n
+ 
 Set the number of memory channels to use.
 
  * -w
+ 
 Add a PCI device in white list.
 
 Example of the startup script cmd options:
@@ -39,9 +43,13 @@ could be very low.
 
 This options are stored in the /etc/router.conf file.
 
-Configuration file commands consists of the two groups:
+Configuration file consists of the sections:
  * startup
  * runtime
+
+Each section contain commands. Everything on the same line is considered as a single command.
+Symbol # is used to comment the whole line.
+
 
 	```
 	startup {
@@ -101,8 +109,9 @@ group default {
 ```
 
 ### Startup commands 
-are the commands that can't be modified once the router have started.
-So the only way to set them up is to edit the configuration file /etc/router.conf.
+Startup commands are the commands that are used to initilize router's susbystem or properties 
+that can't be modified once the router have started. This commands can only be used in
+the startup section of the configuration file and can't be used by rcli interface.
 
  * port
 	```
@@ -126,8 +135,8 @@ So the only way to set them up is to edit the configuration file /etc/router.con
  Note: that you should enclose path to file with '"'.
 
 ### Runtime commands 
-are the commands that can be executed while a router is working.
-You could also use any of this commands in the runtime section of the router configuarion file but without rcli prefix.
+Runtime commands are the commands that can be either executed via rcli interface or used in the runtime section of
+the configuration file.
 
 ### ip addr
  * ip addr add
