@@ -26,4 +26,17 @@ Add a PCI device in white list.
 
 ## Configuration file options
 
-## Runtime options
+This options are stored in the /etc/router.conf file.
+
+Configuration file options consists of the groups:
+ * startup
+ * runtime
+
+### Startup options 
+are options that can't be modified once the router have started.
+So the only way to set up them is to editing the configuration file /etc/router.conf.
+
+
+
+### Runtime options 
+are the options which values can be altered by the rcli utility in any time.

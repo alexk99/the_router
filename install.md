@@ -269,5 +269,5 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
  * run the router
 
-		/usr/local/sbin/router_run.sh /etc/the_router.conf
+		/usr/local/sbin/router_run.sh /etc/router.conf
 
