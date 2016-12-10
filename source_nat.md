@@ -15,7 +15,7 @@ is used on both hosts S1 and S2.
 
 ## Testing lab
 
-<img src="therouter.net/images/tests/source_nat/nat_warp_17_lab.png">
+<img src="http://therouter.net/images/tests/source_nat/nat_warp_17_lab.png">
 
 ## Hardware configuration
 
@@ -163,3 +163,10 @@ To measure the final results L2 switch port counters were used.
  TX Bytes     	       225525397824                  0
  TX Frames   	       1659007125                    0
 ```
+
+## Number of tcp connections
+
+todo
+
+# Conclusion:
+The router is able to perform source NAT function for traffic rate of 5.4 Mpps for .9M simultaneous tcp connections.
