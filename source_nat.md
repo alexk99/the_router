@@ -38,6 +38,7 @@ is used on both hosts S1 and S2.
 
 * /etc/router.conf
 
+	```
 	startup {
 	  port 0 mtu 1500 tpid 0x8100 state enabled
 	  port 1 mtu 1500 tpid 0x8100 state enabled

@@ -30,9 +30,7 @@ Add a PCI device in white list.
 
 Example of the startup script cmd options:
 
-	```
 	the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
-	```
 
 Note:
 Lcore 0 will be used for the router's control plane task and can be shared with any linux tasks.
@@ -51,8 +49,6 @@ Configuration file consists of the sections:
 Each section contain commands. Everything on the same line is considered as a single command.
 Symbol # is used to comment the whole line.
 
-
-	```
 	startup {
 		startup_command_1
 		startup_command_2
@@ -67,47 +63,44 @@ Symbol # is used to comment the whole line.
 		...
 		runtime_command_n
 	}
-	```
 
 ## Configuration file example
-```
-startup {
-  port 0 mtu 1500 tpid 0x8100 state enabled
-  port 1 mtu 1500 tpid 0x8100 state enabled
 
-  rx_queue port 0 queue 0 lcore 1
-  rx_queue port 0 queue 1 lcore 2
-  rx_queue port 0 queue 2 lcore 3
+	startup {
+	  port 0 mtu 1500 tpid 0x8100 state enabled
+	  port 1 mtu 1500 tpid 0x8100 state enabled
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	
+	  rx_queue port 1 queue 0 lcore 3
+	  rx_queue port 1 queue 1 lcore 2
+	  rx_queue port 1 queue 2 lcore 1
+	
+	  sysctl set global_packet_counters 1
+	
+	#  sysctl set arp_cache_timeout 300
+	}
 
-  rx_queue port 1 queue 0 lcore 3
-  rx_queue port 1 queue 1 lcore 2
-  rx_queue port 1 queue 2 lcore 1
-
-  sysctl set global_packet_counters 1
-
-#  sysctl set arp_cache_timeout 300
-}
-
-runtime {
-  vif add name p0 port 1 type untagged
-  ip addr add 10.0.0.1/24 dev p0
-
-  vif add name p1 port 0 type untagged
-  ip addr add 10.0.1.1/24 dev p1
-
-  ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
-
-  npf load "/etc/npf.conf"
-}
-```
+	runtime {
+	  vif add name p0 port 1 type untagged
+	  ip addr add 10.0.0.1/24 dev p0
+	
+	  vif add name p1 port 0 type untagged
+	  ip addr add 10.0.1.1/24 dev p1
+	
+	  ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
+	
+	  npf load "/etc/npf.conf"
+	}
 
 ## NPF configaration file example
-```
-group default {
-  pass final on p0 all
-  pass final on p1 all
-}
-```
+
+	group default {
+	  pass final on p0 all
+	  pass final on p1 all
+	}
 
 ### Startup commands
 
@@ -116,14 +109,12 @@ that can't be modified once the router have started. This commands can only be u
 the startup section of the configuration file and can't be used by rcli interface.
 
  * port
-	```
-	port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled
-	```
+
+		port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled
  
  * rx_queue
- 	```
- 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
- 	```
+ 
+	 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
  	
  * sysctl
 	```
