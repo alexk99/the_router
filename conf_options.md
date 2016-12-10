@@ -117,14 +117,13 @@ the startup section of the configuration file and can't be used by rcli interfac
 	 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
  	
  * sysctl
-	```
-	sysctl set <name> <value>
-	```
+
+		sysctl set <name> <value>
  
  * npf load
-	 ```
-	 npf load "<path_to_npf_configuration_file>"
-	 ```
+
+	 	npf load "<path_to_npf_configuration_file>"
+
 	 
  Note: that you should enclose path to file with '"'.
 
@@ -134,172 +133,146 @@ the configuration file.
 
 ### ip addr
  * ip addr add
-	```
-	rcli ip addr add <net>/<mask> dev <vif_name>
-	```
+
+		rcli ip addr add <net>/<mask> dev <vif_name>
 	
  * ip addr del
-	```
-	rcli ip addr del <net>/<mask> dev <vif_name>
-	```
-   
+
+		rcli ip addr del <net>/<mask> dev <vif_name>
+
  * sh ip addr  
-	```
-	rcli sh ip addr
-	```
+
+		rcli sh ip addr
 
 ### ip route
  * ip route add
-	```
-	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
+
+		rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
+		
 	or
-	ip route add <net>/<mask> via <gw_ip> src <src_ip> [table <table_name>]
+	
+		ip route add <net>/<mask> via <gw_ip> src <src_ip> [table <table_name>]
+		
 	or
-	ip route add <net>/<mask> unreachable [table <table_name>]
-	```
+	
+		ip route add <net>/<mask> unreachable [table <table_name>]
    
  * ip route del
-   ```
-   ip route del <net/mask> [table <table_name>]
-   ```
+ 
+		ip route del <net/mask> [table <table_name>]
    
  * sh ip route
-   ```
-   rcli sh ip route
-   ```
+ 
+		rcli sh ip route
    
 ### vif
  * vif add
-   ```
-   rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
-   ```
-   
+
+		rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
+
    Type parameter can take one of the following values:
-     - untagged
+	 - untagged
      - dot1q
      - qinq
    
    Flags:
-   	 - kni
-   	 - proxy_arp
+	 - kni
+	 - proxy_arp
    	   
-
  * vif del
-   ```
-   rcli vif del <name>
-   ```
 
-   
+		rcli vif del <name>
+
  * sh vif
-   ```
-   rcli sh vif
-   ```
+
+		rcli sh vif
    
  * sh vif counters
-   ```
-   rcli sh vif counters
-   ```
+
+		rcli sh vif counters
    
  * clear vif counters
-   ```
-   rcli clear vif counters
-   ```
+
+		rcli clear vif counters
 
 ### arp
    
  * arp add
-   ```
-   rcli arp add <ip> <mac> dev <vif_name> [static]
-   ```
-   
+
+		rcli arp add <ip> <mac> dev <vif_name> [static]
+
  * arp del
-   ```
-   rcli arp del <ip> dev <vif_name>
-   ```
-   
+ 
+		rcli arp del <ip> dev <vif_name>
+    
  * sh arp cache
-   ```
-   rcli sh arp cache
-   ```
+ 
+		rcli sh arp cache
 
 ### sysctl
 
  * sysctl set
-   ```
-   rcli sysctl set <name> <value>
-   ```
+
+		rcli sysctl set <name> <value>
 
  * sysctl set
-   ```
-   rcli sysctl get <name> <value>
-   ```
+
+		rcli sysctl get <name> <value>
 
 ### ping
 
  * ping
-   ```
-	rcli ping --help
-	Usage: ping [-c,--count count] [-i,--interval interval_in_ms] [-s icmp_payload_size]
-	[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
-	[-h,--help] destination
-   ```
+
+		rcli ping --help
+		Usage: ping [-c,--count count] [-i,--interval interval_in_ms] [-s icmp_payload_size]
+		[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
+		[-h,--help] destination
 
 ### NPF
  * sh npf conndb size
-   ```
-   rcli sh npf conndb size
-   ```
+
+		rcli sh npf conndb size
    
  * sh npf conndb summary
-   ```
-   rcli sh npf conndb summary
-   ```
+
+		rcli sh npf conndb summary
 
  * sh npf stat
-   ```
-   rcli sh npf stat
-   ```
+
+		rcli sh npf stat
 
  * npf clear stat
-   ```
-   rcli npf clear stat
-   ```
+
+		rcli npf clear stat
 
 ### Other commands
 
  * shutdown
-   ```
-   rcli shutdown
-   ```
+
+		rcli shutdown
 
 ### Router statistic commands
 
  * sh port ext stat
-   ```
-   rcli sh port ext stat
-   ```
+
+		rcli sh port ext stat
 
  * sh port stat
-   ```
-   rcli sh port stat
-   ```
+ 
+		rcli sh port stat
 
  * sh cmbuf stats
-   ```
-   rcli sh cmbuf stats
-   ```
+
+		rcli sh cmbuf stats
 
  * sh mbuf stats
-   ```
-   rcli sh mbuf stats
-   ```
-   
+
+		rcli sh mbuf stats
+
  * sh stats
-   ```
-   rcli sh stats
-   ```
+
+		rcli sh stats
    
  * clear stats
-   ```
-   rcli clear stats
-   ```
+ 
+		rcli clear stats
