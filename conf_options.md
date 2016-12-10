@@ -109,7 +109,8 @@ group default {
 }
 ```
 
-### Startup commands 
+### Startup commands
+
 Startup commands are the commands that are used to initilize router's susbystem or properties 
 that can't be modified once the router have started. This commands can only be used in
 the startup section of the configuration file and can't be used by rcli interface.
@@ -125,14 +126,15 @@ the startup section of the configuration file and can't be used by rcli interfac
  	```
  	
  * sysctl
- ```
- sysctl set <name> <value>
- ```
+	```
+	sysctl set <name> <value>
+	```
  
  * npf load
- ```
- npf load "<path_to_npf_configuration_file>"
- ```
+	 ```
+	 npf load "<path_to_npf_configuration_file>"
+	 ```
+	 
  Note: that you should enclose path to file with '"'.
 
 ### Runtime commands 
