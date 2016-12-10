@@ -1,10 +1,10 @@
-# Configuration of The router
+# Configuring The router
 
-There are three groups of configuration options and commands of The router:
+There are three groups of configuration options and commands:
 
  * command line options
  * configuration file commands
- * runtime commands
+ * rcli commands
 	
 ## Command line options
 Command line options can be modified by editing the run script /usr/local/sbin/router_run.sh.
