@@ -82,6 +82,7 @@ is used on both hosts S1 and S2.
 
 ## S1 Warp17 - client
 
+	```
 	set tests mtu port 0 1500
 	add tests l3_intf port 0 ip 10.0.0.2 mask 255.255.255.0
 	add tests l3_intf port 0 ip 10.0.0.3 mask 255.255.255.0
@@ -112,25 +113,26 @@ is used on both hosts S1 and S2.
 	
 	start tests port 0
 	show tests ui
-
+	```
 
 ## S3 Warp17 - server
-
+	
+	```
 	add tests l3_intf port 0 ip 10.0.1.2 mask 255.255.255.0
 	add tests l3_gw port 0 gw 10.0.1.1
 	add tests server tcp port 0 test-case-id 0 src 10.0.1.2 10.0.1.2 sport 6001 6001
 	set tests server raw port 0 test-case-id 0 data-req-plen 64 data-resp-plen 64
 	start tests port 0
 	show tests ui
+	```
 
 ## Results
 
-To measure the final results L2 switch port counters were used.
-
 ### Test in progress...
 
- * Port 26 counters
- 
+ * Switch port 26 counters
+	
+	``` 
 	Port Number : 26
 	==================================================================
 	Frame Size/Type       Frame Counts                  Frames/sec
@@ -151,9 +153,9 @@ To measure the final results L2 switch port counters were used.
 	RX Frames   	       86008496                      2809978
 	TX Bytes     	       7858637280                    261334242
 	TX Frames   	       85110670                      2809971
+	```
 
-
- * Port 7 counters
+ * Switch port 7 counters
 ```
   Port Number : 27
  ==================================================================
