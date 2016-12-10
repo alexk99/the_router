@@ -32,8 +32,7 @@ is used on both hosts S1 and S2.
 ### Server - S3
 	- Processor: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
 	- NIC: Intel X520-DA2
-	- Ram: todo
-	- Motheboard: todo
+	- Ram: 32Gb 4x8
 
 ## S2 Router configuration
 
@@ -135,38 +134,282 @@ To measure the final results L2 switch port counters were used.
 
 ### Test in progress...
 
+ * Port 26 counters
 ```
+ Port Number : 26
+ ==================================================================
+ Frame Size/Type       Frame Counts                  Frames/sec
+ ---------------       ----------------------        -----------
+ 64                    87024610                      2815507
+ 65-127                84094530                      2815504
+ 128-255               0                             0
+ 256-511               0                             0
+ 512-1023              0                             0
+ 1024-1518             0                             0
+ Unicast RX            86007867                      2809947
+ Multicast RX          0                             0
+ Broadcast RX          0                             0
+
  Frame Type            Total                         Total/sec
  ---------------       ----------------------        -----------
- RX Bytes              15838404480                   380334448
- RX Frames   	       117083587                     2795888
- TX Bytes     	       15964455088                   380334006
- TX Frames   	       117699235                     2795884
+ RX Bytes              7970481638                    261333199
+ RX Frames   	       86008496                      2809978
+ TX Bytes     	       7858637280                    261334242
+ TX Frames   	       85110670                      2809971
+```
+
+ * Port 7 counters
+```
+  Port Number : 27
+ ==================================================================
+ Frame Size/Type       Frame Counts                  Frames/sec
+ ---------------       ----------------------        -----------
+ 64                    350547141                     2813693
+ 65-127                347636843                     2813692
+ 128-255               0                             0
+ 256-511               0                             0
+ 512-1023              0                             0
+ 1024-1518             0                             0
+ Unicast RX            348611411                     2809496
+ Multicast RX          0                             0
+ Broadcast RX          19                            0
+
+ Frame Type            Total                         Total/sec
+ ---------------       ----------------------        -----------
+ RX Bytes              32365232450                   261001311
+ RX Frames   	       348612008                     2809484
+ TX Bytes     	       32481488302                   261000601
+ TX Frames   	       349571993                     2809480
+```
+
+ * Warp client 
+ ```
+ +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|Port 0                                                                             |Port 0: link UP, speed 10Gbps, duplex full(manual), TX: 19.09% RX: 19.09%
+|TcId        Type             Criteria      State    Runtime          Quick stats   |============================================================================================================================
+|================================================================================== |  CL s/s  Established       Closed         Data
+|   0      TCP CL  Run Time:      600s    RUNNING    157.20s    Run Time:    157s   | TCP/UDP            0            0      1407040
+|                                                                                   |
+|                                                                                   |============================================================================================================================
+|                                                                                   |TCP SM Stats
+|                                                                                   |============================================================================================================================
+|                                                                                   |INIT       :                0      LISTEN     :                0
+|                                                                                   |SYN_SENT   :                0      SYN_RECV   :                0
+|                                                                                   |ESTAB      :           944000      FIN_WAIT_1 :                0
+|                                                                                   |FIN_WAIT_2 :                0      LAST_ACK   :                0
+|                                                                                   |CLOSING    :                0      TIME_WAIT  :                0
+|                                                                                   |CLOSE_WAIT :                0      CLOSED     :                0
+|                                                                                   |
+|                                                                                   |============================================================================================================================
+|                                                                                   |IP Stats
+|                                                                                   |============================================================================================================================
+|                                                                                   |Rx Pkts     :        431074214  Invalid Cksum   :      0
+|                                                                                   |Rx Bytes    :      30975894896  Small Mbuf      :      0
+|                                                                                   |Rx ICMP     :                0  Small Hdr       :      0
+|                                                                                   |Rx TCP      :        431074214  Invalid Len     :      0
+|-----------------------------------------------------------------------------------|Rx UDP      :                0  Rx Frags        :      0
+|Port 0, Test Case 0                                                                |Rx Other    :                0
+|                                                                                   |Invalid Ver :                0  Res Bit         :      0
+|Statistics:                                                                        |
+|      Estab/s      Closed/s   Data Send/s                                          |============================================================================================================================
+|            0             0       1407040                                          |Link Stats
+|     Requests       Replies                                                        |============================================================================================================================
+|    214939234     213995246                                                        |                      Link       Rate              SW
+|                                                                                   |   Rx Pkts       431073821    2810955       431074234
+|                                                                                   |  Rx Bytes     38309881648  250175093     38309918532
+|                                                                                   |   Tx Pkts       432033873    2810950       432034182
+|                                                                                   |  Tx Bytes     38422304376  250174444     37123258996
+|                                                                                   |    Rx Err               0          0             N/A
+|                                                                                   |    Tx Err               0          0               0
+|                                                                                   |Rx No Mbuf               0          0             N/A
+|                                                                                   |
+ ```
+
+ * Warp server
+```
+ +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|Port 0                                                                             |Port 0: link UP, speed 10Gbps, duplex full(manual), TX: 19.08 |Port 1: link DOWN, speed 0Mbps, duplex N/A(manual), TX: 0.00%
+|TcId        Type             Criteria      State    Runtime          Quick stats   |============================================================= |=============================================================
+|================================================================================== |  CL s/s  Established       Closed         Data               |  CL s/s  Established       Closed         Data
+|   0     TCP SRV    Srv Up:         1     PASSED    180.94s      Srv Up:       1   | TCP/UDP            0            0      1403773               | TCP/UDP            0            0            0
+|Port 1                                                                             |                                                              |
+|TcId        Type             Criteria      State    Runtime          Quick stats   |============================================================= |=============================================================
+|================================================================================== |TCP SM Stats                                                  |TCP SM Stats
+|                                                                                   |============================================================= |=============================================================
+|                                                                                   |INIT       :                0      LISTEN     :               |INIT       :                0      LISTEN     :
+|                                                                                   |SYN_SENT   :                0      SYN_RECV   :               |SYN_SENT   :                0      SYN_RECV   :
+|                                                                                   |ESTAB      :           944000      FIN_WAIT_1 :               |ESTAB      :                0      FIN_WAIT_1 :
+|                                                                                   |FIN_WAIT_2 :                0      LAST_ACK   :               |FIN_WAIT_2 :                0      LAST_ACK   :
+|                                                                                   |CLOSING    :                0      TIME_WAIT  :               |CLOSING    :                0      TIME_WAIT  :
+|                                                                                   |CLOSE_WAIT :                0      CLOSED     :               |CLOSE_WAIT :                0      CLOSED     :
+|                                                                                   |  0                                                           |  0
+|                                                                                   |============================================================= |=============================================================
+|                                                                                   |IP Stats                                                      |IP Stats
+|                                                                                   |============================================================= |=============================================================
+|                                                                                   |Rx Pkts     :        507430261  Invalid Cksum   :      0      |Rx Pkts     :                0  Invalid Cksum   :      0
+|                                                                                   |Rx Bytes    :      36503736456  Small Mbuf      :      0      |Rx Bytes    :                0  Small Mbuf      :      0
+|                                                                                   |Rx ICMP     :                0  Small Hdr       :      0      |Rx ICMP     :                0  Small Hdr       :      0
+|                                                                                   |Rx TCP      :        507430261  Invalid Len     :      0      |Rx TCP      :                0  Invalid Len     :      0
+|-----------------------------------------------------------------------------------|Rx UDP      :                0  Rx Frags        :      0      |Rx UDP      :                0  Rx Frags        :      0
+|Port 0, Test Case 0                                                                |Rx Other    :                0                                |Rx Other    :                0
+|                                                                                   |Invalid Ver :                0  Res Bit         :      0      |Invalid Ver :                0  Res Bit         :      0
+|Statistics:                                                                        |                                                              |
+|      Estab/s      Closed/s   Data Send/s                                          |============================================================= |=============================================================
+|            0             0       1403773                                          |Link Stats                                                    |Link Stats
+|     Requests       Replies                                                        |============================================================= |=============================================================
+|    253088595     252144654                                                        |                      Link       Rate              SW         |                      Link       Rate              SW
+|                                                                                   |   Rx Pkts       507429788    2810313       507430262         |   Rx Pkts               0          0               0
+|                                                                                   |  Rx Bytes     45132938602  250117941     45132979922         |  Rx Bytes               0          0               0
+|                                                                                   |   Tx Pkts       506532071    2810313       506532396         |   Tx Pkts               0          0               0
+|                                                                                   |  Tx Bytes     45024694482  250117942     43499265892         |  Tx Bytes               0          0               0
+|                                                                                   |    Rx Err               0          0             N/A         |    Rx Err               0          0             N/A
+|                                                                                   |    Tx Err               0          0               0         |    Tx Err               0          0               0
+|                                                                                   |Rx No Mbuf               0          0             N/A         |Rx No Mbuf               0          0             N/A
+|                                                                                   |                                                              |
 ```
 
 ### Test is completed
 
+ * Port 26
 ``` 
- Port Number : 26 
-  Frame Type            Total                         Total/sec
+DGS-1510-28X/ME:admin#show packet ports 26
+Command: show packet ports 26
+
+
+ Port Number : 26
+ ==================================================================
+ Frame Size/Type       Frame Counts                  Frames/sec
  ---------------       ----------------------        -----------
- RX Bytes              225496441008                  0
- RX Frames   	       1658751795                    0
- TX Bytes     	       225633678544                  0
- TX Frames   	       1658908594                    0
- 
- Port Number : 27
+ 64                    1677113329                    0
+ 65-127                1675070297                    0
+ 128-255               0                             0
+ 256-511               0                             0
+ 512-1023              0                             0
+ 1024-1518             0                             0
+ Unicast RX            1676097213                    0
+ Multicast RX          0                             0
+ Broadcast RX          5                             0
+
  Frame Type            Total                         Total/sec
  ---------------       ----------------------        -----------
- RX Bytes              225585011456                  0
- RX Frames   	       1658658581                    0
- TX Bytes     	       225525397824                  0
- TX Frames   	       1659007125                    0
+ RX Bytes              155810310186                  0
+ RX Frames   	       1676097218                    0
+ TX Bytes     	       155883519104                  0
+ TX Frames   	       1676086408                    0
 ```
 
-## Number of tcp connections
+ * Port 27
+ ```
+ DGS-1510-28X/ME:admin#show packet ports 27
+Command: show packet ports 27
 
-todo
 
-# Conclusion:
-The router is able to perform source NAT function for traffic rate of 5.4 Mpps for .9M simultaneous tcp connections.
+ Port Number : 27
+ ==================================================================
+ Frame Size/Type       Frame Counts                  Frames/sec
+ ---------------       ----------------------        -----------
+ 64                    1677132153                    0
+ 65-127                1674906127                    0
+ 128-255               0                             0
+ 256-511               0                             0
+ 512-1023              0                             0
+ 1024-1518             0                             0
+ Unicast RX            1675841274                    0
+ Multicast RX          0                             0
+ Broadcast RX          138                           0
+
+ Frame Type            Total                         Total/sec
+ ---------------       ----------------------        -----------
+ RX Bytes              155856494618                  0
+ RX Frames   	       1675841412                    0
+ TX Bytes     	       155818510668                  0
+ TX Frames   	       1676196868                    0 
+ ```
+
+ * Warp client
+ ```
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|Port 0                                                                             |Port 0: link UP, speed 10Gbps, duplex full(manual), TX: 0.00% RX: 0.00%6%
+|TcId        Type             Criteria      State    Runtime          Quick stats   |============================================================================================================================
+|================================================================================== |  CL s/s  Established       Closed         Data
+|   0      TCP CL  Run Time:      600s     PASSED    600.36s    Run Time:    600s   | TCP/UDP            0            0            0
+|                                                                                   |
+|                                                                                   |============================================================================================================================
+|                                                                                   |TCP SM Stats
+|                                                                                   |============================================================================================================================
+|                                                                                   |INIT       :                0      LISTEN     :                0
+|                                                                                   |SYN_SENT   :                0      SYN_RECV   :                0
+|                                                                                   |ESTAB      :                0      FIN_WAIT_1 :                0
+|                                                                                   |FIN_WAIT_2 :                0      LAST_ACK   :                0
+|                                                                                   |CLOSING    :                0      TIME_WAIT  :                0
+|                                                                                   |CLOSE_WAIT :                0      CLOSED     :                0
+|                                                                                   |
+|                                                                                   |============================================================================================================================
+|                                                                                   |IP Stats
+|                                                                                   |============================================================================================================================
+|                                                                                   |Rx Pkts     :       1675196132  Invalid Cksum   :      0
+|                                                                                   |Rx Bytes    :     120597080096  Small Mbuf      :      0
+|                                                                                   |Rx ICMP     :                0  Small Hdr       :      0
+|                                                                                   |Rx TCP      :       1675196132  Invalid Len     :      0
+|-----------------------------------------------------------------------------------|Rx UDP      :                0  Rx Frags        :      0
+|Port 0, Test Case 0                                                                |Rx Other    :                0
+|                                                                                   |Invalid Ver :                0  Res Bit         :      0
+|Statistics:                                                                        |
+|      Estab/s      Closed/s   Data Send/s                                          |============================================================================================================================
+|            0             0             0                                          |Link Stats
+|     Requests       Replies                                                        |============================================================================================================================
+|    836880606     835936606                                                        |                      Link       Rate              SW
+|                                                                                   |   Rx Pkts      1675196270          0      1675196271
+|                                                                                   |  Rx Bytes    149077020252          0    149077020312
+|                                                                                   |   Tx Pkts      1676196843          0      1676196868
+|                                                                                   |  Tx Bytes    149113721696          0    144078117044
+|                                                                                   |    Rx Err               0          0             N/A
+|                                                                                   |    Tx Err               0          0               0
+|                                                                                   |Rx No Mbuf               0          0             N/A 
+ ```
+ 
+ * Warp server
+ ```
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|Port 0                                                                                       |Port 0: link UP, speed 10Gbps, duplex full(manual), TX: 0.00% RX: 0. |Port 1: link DOWN, speed 0Mbps, duplex N/A(manual), TX: 0.00% RX: 0.
+|TcId        Type             Criteria      State    Runtime          Quick stats             |==================================================================== |====================================================================
+|============================================================================================ |  CL s/s  Established       Closed         Data                      |  CL s/s  Established       Closed         Data
+|   0     TCP SRV    Srv Up:         1     PASSED    639.80s      Srv Up:       1             | TCP/UDP            0            0            0                      | TCP/UDP            0            0            0
+|Port 1                                                                                       |                                                                     |
+|TcId        Type             Criteria      State    Runtime          Quick stats             |==================================================================== |====================================================================
+|============================================================================================ |TCP SM Stats                                                         |TCP SM Stats
+|                                                                                             |==================================================================== |====================================================================
+|                                                                                             |INIT       :                0      LISTEN     :                2     |INIT       :                0      LISTEN     :                0
+|                                                                                             |SYN_SENT   :                0      SYN_RECV   :                0     |SYN_SENT   :                0      SYN_RECV   :                0
+|                                                                                             |ESTAB      :                0      FIN_WAIT_1 :                0     |ESTAB      :                0      FIN_WAIT_1 :                0
+|                                                                                             |FIN_WAIT_2 :                0      LAST_ACK   :                0     |FIN_WAIT_2 :                0      LAST_ACK   :                0
+|                                                                                             |CLOSING    :                0      TIME_WAIT  :                0     |CLOSING    :                0      TIME_WAIT  :                0
+|                                                                                             |CLOSE_WAIT :                0      CLOSED     :                0     |CLOSE_WAIT :                0      CLOSED     :                0
+|                                                                                             |                                                                     |
+|                                                                                             |==================================================================== |====================================================================
+|                                                                                             |IP Stats                                                             |IP Stats
+|                                                                                             |==================================================================== |====================================================================
+|                                                                                             |Rx Pkts     :       1675674304  Invalid Cksum   :      0             |Rx Pkts     :                0  Invalid Cksum   :      0
+|                                                                                             |Rx Bytes    :     120588448832  Small Mbuf      :      0             |Rx Bytes    :                0  Small Mbuf      :      0
+|                                                                                             |Rx ICMP     :                0  Small Hdr       :      0             |Rx ICMP     :                0  Small Hdr       :      0
+|                                                                                             |Rx TCP      :       1675674304  Invalid Len     :      0             |Rx TCP      :                0  Invalid Len     :      0
+|                                                                                             |Rx UDP      :                0  Rx Frags        :      0             |Rx UDP      :                0  Rx Frags        :      0
+|---------------------------------------------------------------------------------------------|Rx Other    :                0                                       |Rx Other    :                0
+|Port 0, Test Case 0                                                                          |Invalid Ver :                0  Res Bit         :      0             |Invalid Ver :                0  Res Bit         :      0
+|                                                                                             |                                                                     |
+|Statistics:                                                                                  |==================================================================== |====================================================================
+|      Estab/s      Closed/s   Data Send/s                                                    |Link Stats                                                           |Link Stats
+|            0             0             0                                                    |==================================================================== |====================================================================
+|     Requests       Replies                                                                  |                      Link       Rate              SW                |                      Link       Rate              SW
+|    836881590     836881259                                                                  |   Rx Pkts      1675674309          0      1675674310                |   Rx Pkts               0          0               0
+|                                                                                             |  Rx Bytes    149080546774          0    149080546834                |  Rx Bytes               0          0               0
+|                                                                                             |   Tx Pkts      1676086405          0      1676086408                |   Tx Pkts               0          0               0
+|                                                                                             |  Tx Bytes    149179173292          0    144151688272                |  Tx Bytes               0          0               0
+|                                                                                             |    Rx Err               0          0             N/A                |    Rx Err               0          0             N/A
+|                                                                                             |    Tx Err               0          0               0                |    Tx Err               0          0               0
+|                                                                                             |Rx No Mbuf               0          0             N/A                |Rx No Mbuf               0          0             N/A
+|                                                                                             |                                                                     |
+ ```
+
+# Conclusion
+The router is able to perform source NAT function for traffic rate of 5.4 Mpps for 0.9M simultaneous tcp connections.
