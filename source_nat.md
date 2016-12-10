@@ -20,25 +20,24 @@ is used on both hosts S1 and S2.
 ## Hardware configuration
 
 ### Server - S1
-	- Processor: Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
-	- NIC: Intel X520-DA2
-	- Ram: 8Gb DDR3
+ * Processor: Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+ * NIC: Intel X520-DA2
+ * Ram: 8Gb DDR3
 	
 ### Server - S2
-	- Processor: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz
-	- NIC: Intel X520-DA2
-	- Ram: 8Gb DDR3
+ * Processor: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz
+ * NIC: Intel X520-DA2
+ * Ram: 8Gb DDR3
 	
 ### Server - S3
-	- Processor: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
-	- NIC: Intel X520-DA2
-	- Ram: 32Gb 4x8
+ * Processor: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
+ * NIC: Intel X520-DA2
+ * Ram: 32Gb 4x8
 
 ## S2 Router configuration
 
-	- /etc/router.conf
+* /etc/router.conf
 
-	```
 	startup {
 	  port 0 mtu 1500 tpid 0x8100 state enabled
 	  port 1 mtu 1500 tpid 0x8100 state enabled
@@ -72,19 +71,17 @@ is used on both hosts S1 and S2.
 
 	```
 	
-	- /etc/npf.conf.warp17
+* /etc/npf.conf.warp17
 	
-	```
 	map p1 netmap 10.0.100.0/24
 	
 	group default {
 	  pass stateful final on p1 all
 	  pass final on p0 all
 	}
-	```
 
 ## S1 Warp17 - client
-	```
+
 	set tests mtu port 0 1500
 	add tests l3_intf port 0 ip 10.0.0.2 mask 255.255.255.0
 	add tests l3_intf port 0 ip 10.0.0.3 mask 255.255.255.0
@@ -115,18 +112,16 @@ is used on both hosts S1 and S2.
 	
 	start tests port 0
 	show tests ui
-	```
+
 
 ## S3 Warp17 - server
 
-	```
 	add tests l3_intf port 0 ip 10.0.1.2 mask 255.255.255.0
 	add tests l3_gw port 0 gw 10.0.1.1
 	add tests server tcp port 0 test-case-id 0 src 10.0.1.2 10.0.1.2 sport 6001 6001
 	set tests server raw port 0 test-case-id 0 data-req-plen 64 data-resp-plen 64
 	start tests port 0
 	show tests ui
-	```
 
 ## Results
 
@@ -135,28 +130,28 @@ To measure the final results L2 switch port counters were used.
 ### Test in progress...
 
  * Port 26 counters
-```
- Port Number : 26
- ==================================================================
- Frame Size/Type       Frame Counts                  Frames/sec
- ---------------       ----------------------        -----------
- 64                    87024610                      2815507
- 65-127                84094530                      2815504
- 128-255               0                             0
- 256-511               0                             0
- 512-1023              0                             0
- 1024-1518             0                             0
- Unicast RX            86007867                      2809947
- Multicast RX          0                             0
- Broadcast RX          0                             0
+ 
+	Port Number : 26
+	==================================================================
+	Frame Size/Type       Frame Counts                  Frames/sec
+	---------------       ----------------------        -----------
+	64                    87024610                      2815507
+	65-127                84094530                      2815504
+	128-255               0                             0
+	256-511               0                             0
+	512-1023              0                             0
+	1024-1518             0                             0
+	Unicast RX            86007867                      2809947
+	Multicast RX          0                             0
+	Broadcast RX          0                             0
+	
+	Frame Type            Total                         Total/sec
+	---------------       ----------------------        -----------
+	RX Bytes              7970481638                    261333199
+	RX Frames   	       86008496                      2809978
+	TX Bytes     	       7858637280                    261334242
+	TX Frames   	       85110670                      2809971
 
- Frame Type            Total                         Total/sec
- ---------------       ----------------------        -----------
- RX Bytes              7970481638                    261333199
- RX Frames   	       86008496                      2809978
- TX Bytes     	       7858637280                    261334242
- TX Frames   	       85110670                      2809971
-```
 
  * Port 7 counters
 ```
