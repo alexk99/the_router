@@ -7,5 +7,5 @@
 
 ## Dymamic routing
 
-### Integration with Quagga BGP.
-<a href="/quagga_bgp.md">Source NAT</a>
+### Quagga BGP
+<a href="/quagga_bgp.md">Quagga BGP</a>
