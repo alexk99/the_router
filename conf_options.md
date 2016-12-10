@@ -64,7 +64,7 @@ Symbol # is used to comment the whole line.
 		runtime_command_n
 	}
 
-## Configuration file example
+### Configuration file example
 
 	startup {
 	  port 0 mtu 1500 tpid 0x8100 state enabled
@@ -95,14 +95,14 @@ Symbol # is used to comment the whole line.
 	  npf load "/etc/npf.conf"
 	}
 
-## NPF configaration file example
+### NPF configaration file example
 
 	group default {
 	  pass final on p0 all
 	  pass final on p1 all
 	}
 
-### Startup commands
+## Startup commands
 
 Startup commands are the commands that are used to initilize router's susbystem or properties 
 that can't be modified once the router have started. This commands can only be used in
@@ -127,7 +127,7 @@ the startup section of the configuration file and can't be used by rcli interfac
 	 
  Note: that you should enclose path to file with '"'.
 
-### Runtime commands 
+## Runtime commands 
 Runtime commands are the commands that can be either executed via rcli interface or used in the runtime section of
 the configuration file.
 
