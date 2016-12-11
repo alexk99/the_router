@@ -10,8 +10,12 @@ KNI interfaces are created for each router's virtual interface (VIF) that are go
 the dynamic routing interaction with external routers. To do so 'kni' flag must be used in the creation
 of a VIF. Kni flag instructs the router's core to create KNI interface in the linux kernel and forward to it
 all packets that are destined to any ip address of the parent VIF. In other words all the conroll plane traffic
-go trought the KNI interfaces and Quagga BGP daemon can receive it and send responses back to the world.
+go through the KNI interfaces, so Quagga BGP daemon can receive it and send responses back to the world.
 
-Once quagga has received a route it will try to push it throuht its 'FIB push inteface'. The router listens
-all route updates that comes from that interface add install them into its main routing table. That updates
-will instruct router's data plane core to forward traffic to the right destinaion.
+Once the quagga has received a route it will try to push it throuht its 'FIB push inteface'. The router listens
+on that interdface for route updates add install them into its main routing table. That updates
+will instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
+goes along slow path through kni to the quagga and than back to the router through FPM interface. But data traffic
+will go through fast right through routers core to the destination.
+
+## Configuration example
