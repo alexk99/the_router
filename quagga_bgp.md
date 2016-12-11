@@ -15,7 +15,7 @@ go through the KNI interfaces, so Quagga BGP daemon can receive it and send resp
 Once the quagga has received a route it will try to push it throuht its 'FIB push inteface'. The router listens
 on that interdface for route updates add install them into its main routing table. That updates
 will instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
-goes along slow path through kni to the quagga and than back to the router through FPM interface. But data traffic
-will go through fast right through routers core to the destination.
+goes along slow path through KNI to the quagga and then back to the router through FPM interface. But data traffic
+will always go along fast path right through routers core to the destination.
 
 ## Configuration example

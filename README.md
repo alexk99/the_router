@@ -6,7 +6,7 @@
 The router is a software packet router based on DPDK an NPF libraries.
 Using modern software technique such as QSBR, lockless data structures and
 cuckoo hashing enables the router to perform routing and NAT on hight packet rates up
-to 6 Mpps using commodity hardware.
+to 6 Mpps using commodity hardware <a href="/source_nat.md">NAT perfomance benchmarks</a>
 
 It supports:
  * ipv4 static and dynamic routing. Dynamic routing is based on integration with 
