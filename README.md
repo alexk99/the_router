@@ -9,7 +9,7 @@ cuckoo hashing enables the router to perform routing and NAT on hight packet rat
 to 6 Mpps using commodity hardware <a href="/source_nat.md">NAT perfomance benchmarks</a>
 
 It supports:
- * ipv4 static and dynamic routing. Dynamic routing is based on integration with 
+ * ipv4 static and <a href="/quagga_bgp.md">dynamic routing</a>. Dynamic routing is based on integration with 
  <a href="http://www.nongnu.org/quagga">Quagga Routing Suite</a>
  * dot1q and qinq ethernet encapsulations
  * arp
