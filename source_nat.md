@@ -1,16 +1,17 @@
 # Source NAT
 
-NAT functionality of the router is based on the NPF standalone lib. So the configuration process of source
+NAT functionality of TheRouter is based on the NPF standalone lib. So the configuration process of source
 NAT is very similar to the configuration of the NetBSD packet filter except that the router
 uses a fork of NPF lib. Our NPF fork has a lot of new code and a different core for handling
 the connection state database.
 
-To describe and measure the perfomance of the source NAT function of the router a testing lab was build.
-The lab consists 3 servers and one L2 switch connecting all the servers into L2 network.
-From L3 point of view the lab consists of two hosts and a router between them. Host S1 establishes
-tcp connections to host S3 and the router performs source NAT for those tcp connections. To established
-a large number of connections the <a href="https://github.com/Juniper/warp17">Stateful Traffic Generator WARP17</a> 
-is used on both hosts S1 and S2.
+To describe and measure the perfomance of the source NAT function of TheRouter a testing lab was build.
+The lab consists of 3 servers and one L2 switch connecting all the servers into a L2 network.
+From a L3 point of view the lab consists of two hosts and a router connectiong them. Host S1 establishes
+tcp connections to host S3 and the router performs source NAT for those tcp connections. To establish
+a large number of connections and generate traffic 
+the <a href="https://github.com/Juniper/warp17">Stateful Traffic Generator WARP17</a> 
+is used on both S1 and S2 hosts.
 
 
 ## Testing lab

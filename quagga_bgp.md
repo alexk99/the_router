@@ -13,9 +13,16 @@ all packets that are destined to any ip address of the parent VIF. In other word
 go through the KNI interfaces, so Quagga BGP daemon can receive it and send responses back to the world.
 
 Once the quagga has received a route it will try to push it throuht its 'FIB push inteface'. The router listens
-on that interdface for route updates add install them into its main routing table. That updates
-will instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
+on that interface for route updates add install them into its main routing table. That updates
+instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
 goes along slow path through KNI to the quagga and then back to the router through FPM interface. But data traffic
 will always go along fast path right through routers core to the destination.
 
-## Configuration example
+# Configuration examples
+
+## BGP
+
+
+
+## OSFP
+

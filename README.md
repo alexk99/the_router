@@ -3,9 +3,9 @@
 
 
 # The router
-The router is a software packet router based on DPDK an NPF libraries.
+TheRouter is a software packet router based on <a href="http://dpdk.org/">DPDK</a> an <a href="https://github.com/alexk99/npf">NPF libraries.</a>
 Using modern software technique such as QSBR, lockless data structures and
-cuckoo hashing enables the router to perform routing and NAT on hight packet rates up
+<a href="https://github.com/efficient/libcuckoo">cuckoo hashing</a> enables the router to perform routing and NAT on hight packet rates up
 to 6 Mpps using commodity hardware <a href="/source_nat.md">NAT perfomance benchmarks</a>
 
 It supports:
