@@ -8,7 +8,7 @@ There are three groups of configuration options and commands:
 	
 ## Command line options
 Command line options can be modified by editing the run script /usr/local/sbin/router_run.sh.
-This are mostly DPDK EAL command line options, therefore you can
+Most of them are DPDK EAL command line options, therefore you can
 refer to DPDK documentation <a href="http://dpdk.org/doc/guides/testpmd_app_ug/run_app.html?highlight=eal%20options">EAL Command-line Options</a>
 for detailed description of them.
 
@@ -36,8 +36,8 @@ Example of the startup script cmd options:
 Note:
 Lcore 0 will be used for TheRouter's control plane task and can be shared with any linux tasks.
 The other cores will be used in TheRouter's data plane process. You should isolate them during the linux starup process by using
-linux kernel command line parameters isolcpus. Otherwise due the context switching performance of TheRouter's working threads
-could be very low.
+linux kernel command line parameters isolcpus. Otherwise, performance of TheRouter's working threads
+could be very low due the context switching.
 
 ## Configuration file options
 
