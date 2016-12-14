@@ -80,6 +80,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		cd ..
 
  * Edit ./SPECS/libbpfjit.spec and delete or comment the following lines:
+ 
 		BuildRequires:>make
 		BuildRequires:>libtool
 
@@ -162,10 +163,10 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
 
 	- Note:
-		You might want to isolate a different set of cores or reserve different amount of ram for huge pagas 
+		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
 		depending of the hardware configuration of your server.
 		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
-		the perfomance is not the goal.
+		the perfomance is not a goal.
 		
 * download dpdk 16.07
 
@@ -183,7 +184,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		make install T=x86_64-native-linuxapp-gcc
 
 
-## Install the router
+## Install TheRouter
 
  
 ### Install dependencies
@@ -209,9 +210,9 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		make
 		make install
 
-### Install the router 
+### Install TheRouter 
 
- * Download the router <a href="http://therouter.net/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
+ * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
 
  * Run the following commands:
  
@@ -255,9 +256,9 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 			# echo vendor device (lspci -n)
 			echo "8086 10fb" > /sys/bus/pci/drivers/igb_uio/new_id
 
-### Run the router
+### Run TheRouter
 
- * Prepare configuration files. For configuration examples and options see the page <a href="/conf_options.md">Configure the Router</a>
+ * Prepare configuration files. For configuration examples and options see the page <a href="/conf_options.md">Configure TheRouter</a>
 
  	- create router.conf
 
