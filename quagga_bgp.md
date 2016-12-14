@@ -20,7 +20,7 @@ will always go along the fast path right through the router's core to a destinat
 
 ## Quagga configuring
 
-Quagga must be complied with the --enable-fpm option enabled.
+Quagga must be complied with the --enable-fpm option.
 If you install Quagga using sources then just run:
 
 		./configure --enable-fpm
@@ -31,7 +31,7 @@ If you install Quagga using sources then just run:
 
 ## BGP
 
-### Congiguring TheRouter
+### Configuring TheRouter
 
  * router.conf
 
@@ -103,7 +103,33 @@ Let's take a cisco router and configure bgp on it:
 
 ### Check TheRouter's routing table
 
- * Check a routing table. There are only directly connected routes and a default route.
+ * Let's check that we received a bgp route:
+ 
+		h5 / # telnet localhost bgpd
+		Trying 127.0.0.1...
+		Connected to localhost.
+		Escape character is '^]'.
+		
+		Hello, this is Quagga (version 1.0.20160315).
+		Copyright 1996-2005 Kunihiro Ishiguro, et al.
+		
+		
+		User Access Verification
+		
+		Password:
+		h5> ena
+		h5# sh ip bgp
+		BGP table version is 0, local router ID is 10.0.0.1
+		Status codes: s suppressed, d damped, h history, * valid, > best, = multipath,
+		              i internal, r RIB-failure, S Stale, R Removed
+		Origin codes: i - IGP, e - EGP, ? - incomplete
+		
+		   Network          Next Hop            Metric LocPrf Weight Path
+		*> 10.12.0.0/24     10.0.0.3                 0              0 64513 i
+		
+		Displayed  1 out of 1 total prefixes
+		
+ * Then check our main routing table:
  
 		h5 # rcli sh ip route
 		10.0.0.0/24 C dev p0 src 10.0.0.1
@@ -111,5 +137,7 @@ Let's take a cisco router and configure bgp on it:
 		10.0.1.0/24 C dev p1 src 10.0.1.1
 		0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1	
 		
+	! We've got a new prefix 10.12.0.0/24
+	
 ## OSFP
 
