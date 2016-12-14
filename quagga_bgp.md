@@ -18,11 +18,98 @@ instruct router's data plane core to forward traffic to the right destinaion. So
 goes along slow path through KNI to the quagga and then back to the router through FPM interface. But data traffic
 will always go along the fast path right through the router's core to a destination.
 
+## Quagga configuring
+
+Quagga must be complied with the --enable-fpm option enabled.
+If you install Quagga using sources then just run:
+
+		./configure --enable-fpm
+		make
+		make install
+
 # Configuration examples
 
 ## BGP
 
+### Congiguring TheRouter
 
+ * router.conf
 
+Note that "kni" flag is used.
+
+		runtime {
+			..
+			vif add name p0 port 1 type untagged flags kni
+  			ip addr add 10.0.0.1/24 dev p0
+			..
+		}
+
+ * start TheRouter
+
+Each kni interface should be set up after the router has started.
+ 
+		router_run.sh /etc/router.conf
+		ip link set up rkni_p0
+
+ * Check a routing table. There are only directly connected routes and a default route.
+ 
+		h5 # rcli sh ip route
+		10.0.0.0/24 C dev p0 src 10.0.0.1
+		10.0.1.0/24 C dev p1 src 10.0.1.1
+		0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1		
+
+### Start Zebra on the router's host
+
+ * zebra.conf
+
+		hostname h5
+
+		! Set both of these passwords
+		password xxx
+		enable password xxx
+		
+		! Turn off welcome messages
+		no banner motd
+		
+		log file /var/log/quagga/zebra.log
+
+### Start bgpd on the router's host
+
+ * bgpd.conf
+
+		!
+		hostname h5
+		password xxx
+		log syslog
+		!
+		router bgp 64512
+		  bgp router-id 10.0.0.1
+		  neighbor 10.0.0.3 remote-as 64513
+		!
+		line vty
+		!
+		
+### Start external bgp router
+	
+Let's take a cisco router and configure bgp on it:
+
+		router bgp 64513
+ 		no synchronization
+ 		bgp router-id 10.0.0.3
+ 		bgp log-neighbor-changes
+ 		network 10.12.0.0 mask 255.255.255.0
+ 		neighbor 10.0.0.1 remote-as 64512
+ 		no auto-summary
+
+### Check TheRouter's routing table
+
+ * Check a routing table. There are only directly connected routes and a default route.
+ 
+		h5 # rcli sh ip route
+		10.0.0.0/24 C dev p0 src 10.0.0.1
+		10.12.0.0/24 via 10.0.0.3 dev p0 src 10.0.0.1
+		10.0.1.0/24 C dev p1 src 10.0.1.1
+		0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1	
+		
 ## OSFP
 
