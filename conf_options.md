@@ -1,4 +1,4 @@
-# Configuring The router
+# Configuring TheRouter
 
 There are three groups of configuration options and commands:
 
@@ -8,10 +8,11 @@ There are three groups of configuration options and commands:
 	
 ## Command line options
 Command line options can be modified by editing the run script /usr/local/sbin/router_run.sh.
-This are mostly DPDK EAL command line options, therefore for detailed description of them you can
+This are mostly DPDK EAL command line options, therefore you can
 refer to DPDK documentation <a href="http://dpdk.org/doc/guides/testpmd_app_ug/run_app.html?highlight=eal%20options">EAL Command-line Options</a>
+for detailed description of them.
 
-Before running the router you must check the following options and use your own values depending on the hardware you use:
+Before running TheRouter you must check the following options and use your own values depending on the hardware you use:
  * -c
  
 Set the hexadecimal bitmask of the cores to run on.
@@ -33,9 +34,9 @@ Example of the startup script cmd options:
 	the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
 
 Note:
-Lcore 0 will be used for the router's control plane task and can be shared with any linux tasks.
-The other cores will be used in the router's data plane process and you should isolate them during the linux starup process by using
-linux kernel command line parameters isolcpus. Otherwise due the context switching performance of the routers working threads
+Lcore 0 will be used for TheRouter's control plane task and can be shared with any linux tasks.
+The other cores will be used in TheRouter's data plane process. You should isolate them during the linux starup process by using
+linux kernel command line parameters isolcpus. Otherwise due the context switching performance of TheRouter's working threads
 could be very low.
 
 ## Configuration file options
@@ -46,8 +47,8 @@ Configuration file consists of the sections:
  * startup
  * runtime
 
-Each section contain commands. Everything on the same line is considered as a single command.
-Symbol # is used to comment the whole line.
+Each section contains commands. Everything on the same line is considered as a single command.
+Symbol # is used to comment a whole line.
 
 	startup {
 		startup_command_1
@@ -104,9 +105,9 @@ Symbol # is used to comment the whole line.
 
 ## Startup commands
 
-Startup commands are the commands that are used to initilize router's susbystem or properties 
-that can't be modified once the router have started. This commands can only be used in
-the startup section of the configuration file and can't be used by rcli interface.
+Startup commands are the commands that are used to initilize TheRouter's susbystem and properties 
+that can't be modified once TheRouter have started. This commands can only be used in
+the startup section of the configuration file and can't be used by the rcli interface.
 
  * port
 
