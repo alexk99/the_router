@@ -19,6 +19,10 @@ Set the hexadecimal bitmask of the cores to run on.
 	
  * --lcores
  
+ !  Note: the_router.a0.01.tar.gz version has supported only a 4 cores cpu. You must use at least a 4 cores cpu and then configure
+ TheRouter to use 4 lcores using --lcores='0@0,1@1,2@2,3@3' parameter
+ 
+ 
 Map lcore set to physical cpu set
 
  * -n

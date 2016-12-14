@@ -94,12 +94,12 @@ Each kni interface should be set up after the router has started.
 Let's take a cisco router and configure bgp on it:
 
 		router bgp 64513
- 		no synchronization
- 		bgp router-id 10.0.0.3
- 		bgp log-neighbor-changes
- 		network 10.12.0.0 mask 255.255.255.0
- 		neighbor 10.0.0.1 remote-as 64512
- 		no auto-summary
+ 		  no synchronization
+ 		  bgp router-id 10.0.0.3
+ 		  bgp log-neighbor-changes
+ 		  network 10.12.0.0 mask 255.255.255.0
+ 		  neighbor 10.0.0.1 remote-as 64512
+ 		  no auto-summary
 
 ### Check TheRouter's routing table
 
