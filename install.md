@@ -219,8 +219,8 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
  * Run the following commands:
  
- 		tar xvf ./the_router.a0.01.tar.gz
- 		cd ./the_router.a0.01
+ 		tar xvf ./the_router.a0.02.tar.gz
+ 		cd ./the_router.a0.02
  		./install.sh
 
 ### Configure dpdk ports
