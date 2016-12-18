@@ -9,3 +9,6 @@
 
 ### Quagga BGP
 <a href="/quagga_bgp.md">Quagga BGP</a>
+
+### Link bonding (aggregation)
+<a href="/link_bonding.md">Quagga BGP</a>
