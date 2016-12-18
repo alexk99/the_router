@@ -4,7 +4,7 @@ Since TheRouter is a DPDK application it supports link bonding (link aggregation
 To use link bonding ports it's enough to create them using command line parameters 
 of TheRouter (see the section "Command line options" of <a href="conf_options.md">Configuring TheRouter</a>.
 
-To create link bonding port just add the following the router_run.sh
+To create a link bonding port just add the following the the router_run.sh file:
 
 	--vdev 'eth_bond0,mode=2,slave=0000:02:00.0,slave=0000:02:00.1,xmit_policy=l23'
 
