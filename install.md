@@ -93,7 +93,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
  * Clone NPF
 
-		git clone https://github.com/alexk99/npf
+		git clone -b alexk https://github.com/alexk99/npf
 
  * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
