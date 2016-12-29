@@ -91,7 +91,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
 ## Install NPF
 
- * Clone NPF
+ * Clone NPF (https://github.com/alexk99/npf/tree/alexk)
 
 		git clone -b alexk https://github.com/alexk99/npf
 
