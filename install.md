@@ -212,15 +212,15 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
 ### Install TheRouter 
 
- !  Note: this version has supported only a 4 cores cpu. You must use at least a 4 cores cpu and then configure
- TheRouter to use 4 lcores using --lcores='0@0,1@1,2@2,3@3' command line parameter. See <a href="/conf_options.md">Configuring page</a>
+ !  Note: this version supports maximum 4 cores cpu. 
 
- * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.01.tar.gz">the_router.a0.01.tar.gz</a>
+ * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.11.4cores.tar.gz">the_router.a0.11.4cores.tar.gz</a>
+ * Download TheRouter (the version for old xeon cpu: X5355, X5650, etc..)<a href="http://therouter.net/downloads/the_router.a0.11.4cores-old_xeon.tar.gz">the_router.a0.11.4cores-old_xeon.tar.gz</a> 
 
  * Run the following commands:
  
- 		tar xvf ./the_router.a0.02.tar.gz
- 		cd ./the_router.a0.02
+ 		tar xvf ./the_router.xxx.tar.gz
+ 		cd ./the_router.xxx
  		./install.sh
 
 ### Configure dpdk ports
