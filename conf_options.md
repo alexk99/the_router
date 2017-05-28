@@ -218,6 +218,8 @@ the configuration file.
 
  * ip pbr flush
 
+		rcli ip pbr flush
+
 	
 ### ip route
  * ip route add
