@@ -15,7 +15,7 @@ It supports:
  * ip unnumbered 
  * arp, proxy arp
  * icmp
- * pbr and multiple routing tables (work in progess)
+ * pbr and multiple routing tables
  * statefull and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding

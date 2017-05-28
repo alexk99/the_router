@@ -60,6 +60,11 @@ Each kni interface should be set up after the router has started.
 
 ### Start Zebra on the router's host
 
+ * Create a linux routing table for quagga's routes
+	Edit file /etc/iproute2/rt_tables and add the following line:
+		250	rt1
+ 		
+
  * zebra.conf
 
 		hostname h5
@@ -67,6 +72,9 @@ Each kni interface should be set up after the router has started.
 		! Set both of these passwords
 		password xxx
 		enable password xxx
+		
+		# install routes to the linux routing table "rt1"
+		table 250
 		
 		! Turn off welcome messages
 		no banner motd

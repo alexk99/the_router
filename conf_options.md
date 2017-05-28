@@ -152,6 +152,73 @@ the configuration file.
 
 		rcli sh ip addr
 
+### ip route tables
+ * ip route table add
+
+		rcli ip route table add <route_table_name>
+		
+ * ip route table del
+
+		rcli ip route table del <route_table_name>
+	
+ * rcli sh ip route tables
+
+		rcli rcli sh ip route tables
+
+### U32 sets
+ * u32set create
+
+		rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
+		
+ * u32set destroy
+
+		rcli u32set destroy <u32set_name>
+
+ * ipset add
+
+		rcli ipset add <u32set_name> <ipv4>
+ 
+ * ipset del
+
+		rcli ipset del <u32set_name> <ipv4>
+ 
+ * ipset test
+
+		rcli ipset test <u32set_name> <ipv4>
+		
+ * l2set add
+
+		rcli l2set add <u32set_name> port <port_number> <svid> <cvid>
+
+ * l2set del
+
+		rcli l2set del <u32set_name> port <port_number> <svid> <cvid>
+		
+ * l2set test
+
+		rcli l2set test <u32set_name> port <port_number> <svid> <cvid>
+		
+
+### PBR rules
+ * sh ip pbr rules
+
+		rcli sh ip pbr rules
+		
+ * ip pbr rule add
+
+		ip pbr rule add prio <prio_num> u32set <u32set_name> type "ip" table <route_table_name>
+
+		ip pbr rule add prio <prio_num> u32set <u32set_name> type "l2" table <route_table_name>
+		
+		rcli ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
+		
+ * ip pbr rule del
+
+		rcli ip pbr rule del prio <prio_num>
+
+ * ip pbr flush
+
+	
 ### ip route
  * ip route add
 
