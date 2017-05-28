@@ -72,6 +72,9 @@ Symbol # is used to comment a whole line.
 ### Configuration file example
 
 	startup {
+	  # total number of mbufs
+	  sysctl set mbuf 8192
+	
 	  port 0 mtu 1500 tpid 0x8100 state enabled
 	  port 1 mtu 1500 tpid 0x8100 state enabled
 	
