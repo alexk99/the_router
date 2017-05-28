@@ -61,7 +61,8 @@ Each kni interface should be set up after the router has started.
 ### Start Zebra on the router's host
 
  * Create a linux routing table for quagga's routes
-	Edit file /etc/iproute2/rt_tables and add the following line:
+ Edit file /etc/iproute2/rt_tables and add the following line:
+ 
 		250	rt1
  		
 
