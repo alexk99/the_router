@@ -25,6 +25,7 @@ Detailed description of the all link bonding parameters can be found in the DPDK
 ## router.conf
 	
 		startup {
+		  sysctl set mbuf 8192
 		  port 0 mtu 1500 tpid 0x8100 state enabled
 		
 		  rx_queue port 0 queue 0 lcore 1
