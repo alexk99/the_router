@@ -1,6 +1,5 @@
 # Использование TheRouter в качестве одного из core раутеров в сети оператора связи.
 
-## NAT
 Месяц назад 15 мая 2017 было принято решение попробовать запустить TheRouter в качестве 
 одного из core маршрутизаторов в боевой сети оператора связи, чья сеть
 насчитывает более 60 тысяч подключений домашних пользователей. Новый маршрутизатор
@@ -17,7 +16,13 @@
 Сервер HP ProLiant DL380 G6, 2 процессора Intel 6C X5650 2.66 GHz, 48GB DRAM
 
 ### Схема сети
-<a href="/">Source NAT</a>
+<img src="http://therouter.net/images/production/bizin.png">
 
 ###
 Статистика работы
+
+## Last 7 days
+<img src="http://therouter.net/images/production/traffic_7days.png">
+
+## Last day
+<img src="http://therouter.net/images/production/traffic_last_day.png">
