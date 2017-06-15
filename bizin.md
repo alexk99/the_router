@@ -16,13 +16,13 @@
 Сервер HP ProLiant DL380 G6, 2 процессора Intel 6C X5650 2.66 GHz, 48GB DRAM
 
 ### Схема сети
-<img src="http://therouter.net/images/production/bizin.png">
+<img src="http://therouter.net/images/production/bzn/bizin.png">
 
 ###
 Статистика работы
 
 ## Last 7 days
-<img src="http://therouter.net/images/production/traffic_7days.png">
+<img src="http://therouter.net/images/production/bzn/traffic_7days.png">
 
 ## Last day
-<img src="http://therouter.net/images/production/traffic_last_day.png">
+<img src="http://therouter.net/images/production/bzn/traffic_last_day.png">
