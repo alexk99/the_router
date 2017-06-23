@@ -2,8 +2,8 @@
 
 ## TheRouter поддерживает следующие функции и технологии, необходимые для управления подпичиками и создания BRAS сервера.
 
- * L2/L3 connected subscribers
- * vlan per subsriber with ip unnumbered adresses
+ * IPoE L2/L3 connected subscribers
+ * IPoE vlan per subsriber with ip unnumbered adresses
  * proxy arp
  * traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
