@@ -300,7 +300,7 @@ therouter_pbr - код действия с pbr таблицей:
 	h4 src # rcli sh ip route tables
 	route table name
 	main
-	rt_bl
+	blocked_subsc
 
 ### Вывод правил маршрутизации PBR
 
@@ -322,3 +322,81 @@ therouter_pbr - код действия с pbr таблицей:
 	h4 src # rcli sh l2set l2s1
 	U32SET name l2s1, type L2, hash size 4096, hash bucket size 16, num items: 0
 	portid.svid.cvid
+
+
+## Пример конфигурации
+
+### TheRouter
+
+	startup {
+	  sysctl set mbuf 8192
+	  port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif
+	  port 1 mtu 1500 tpid 0x8100 state enabled
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	
+	  rx_queue port 1 queue 2 lcore 1
+	  rx_queue port 1 queue 1 lcore 2
+	  rx_queue port 1 queue 0 lcore 3
+	
+	  sysctl set global_packet_counters 1
+	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_size 65536
+	  sysctl set dynamic_vif_ttl 600
+	
+	  sysctl set dhcp_relay_enabled 1
+	}
+	
+	runtime {
+	
+	  ip route add 10.10.0.0/24 unreachable
+	
+	  # link with local linux host
+	  vif add name v3 port 0 type dot1q cvid 3
+	  ip addr add 192.168.3.1/24 dev v3
+	
+	  # home network link
+	  vif add name v2 port 0 type dot1q cvid 2 flags npf_on
+	  ip addr add 192.168.1.112/24 dev v2
+	  ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.112
+	
+	
+	  ## static arp records
+	  # radius server
+	  arp add 192.168.3.2 90:e2:ba:4b:b3:17 dev v3 static
+	
+	  dhcp_relay 192.168.3.2
+	
+	  radius_client add server 192.168.3.2
+	  radius_client add src ip 192.168.3.1
+	  radius_client set secret "secret"
+	
+	
+	  # PBR
+	  ip route table add rt_bl
+	
+	  u32set create ips1 size 4096 bucket_size 16
+	  u32set create l2s1 size 4096 bucket_size 16
+	  subsc u32set init ips1 l2s1
+	
+	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
+	  ip pbr rule add prio 20 u32set l2s1 type "l2" table rt_bl
+	
+	
+	  # NPF
+	  # npf load "/etc/npf.conf.accept_all_2"
+	
+	  npf load "/etc/npf.conf.bras_dhcp_relay"
+	}
+	
+## NPF /etc/npf.conf.bras_dhcp_relay
+
+	map v2 netmap 10.110.0.0/29
+	#alg "icmp"
+	
+	group default {
+	  pass stateful final on v2 all
+	  pass final on lh3 all
+	}
