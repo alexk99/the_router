@@ -1,9 +1,10 @@
-# Введение
+# 1. Введение
 
 В этом howto будет рассмотрена пошаговая настройка bras сервера с помощью программы TheRouter
 операционной системы Gentoo Linux и ряда дополнительных программ (Dhcpd, FreeRadius, Mysql, Quagga).
 
-Создаваемый Bras будет выполнять следующие задачи:
+BRAS сервер будет интегрирован в небольшую тестовую сеть будет выполнять следующие задачи:
+
  * терминация пользовательских ethernet qinq вланов;
  * авторация и аутентификация пользователей с помощью протокола Radius;
  * перенаправление трафика заблокированных пользователей на cпециальный веб сайт;
@@ -11,23 +12,23 @@
  * маршрутизацию пользовательского трафика с помощью динамических протоколов маршрутизации;
  * пребразование серых адресов пользователей в pool белых адресов с помощью NAT;
 	
-# Настройка операционной системы Gentoo и установка TheRouter
+# 2. Настройка операционной системы Gentoo и установка TheRouter
 
 Следуя <a href="https://github.com/alexk99/the_router/blob/master/install.md">инструкции</a>
 установите DPDK и TheRouter на машину с операционной системой Gentoo Linux.
 
-# Схема сети, в которой будет установлен BRAS.
+# 3. Схема сети, в которой будет установлен BRAS.
 
 Сеть состоит из linux хоста H4, на котором установлен TheRouter и необходимые для
 его работы программы (Dhcpd, FreeRadius, Mysql, Quagga), пограничного uplink маршрутизатора,
 подключенного к интернет, и подписчиков Subscriber 1-4. Подписчики 1 и 2 подключены через
 отдельные вланы, 3-4 через L2 broadcast domain.
 
-## L2 схема сети
+## 3.1. L2 схема сети
 
 <img src="http://therouter.net/images/bras/bras howto l2.png">
 
-## L3 схема сети
+## 3.2. L3 схема сети
 
 <img src="http://therouter.net/images/bras/bras_howto_l3.png">
 
@@ -36,17 +37,97 @@
 сетевой стэк the_router (radius client TheRouter'а и т.п.) с сетевым стэком linux, который
 работает на том же хосте h4, но использует свои сетевые карты. 
 
-3) Запуск, проверка L2 связности и маршрутизации.
+# 4. Запуск TheRouter, проверка L2 связности и маршрутизации.
 
-3.1) Запуск TheRouter
+## 4.1. Запуск TheRouter
 
 the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
  --syslog='daemon' -n2 -w 0000:60:00.0 -w 0000:60:00.1  --vdev 'eth_bond0,mode=4,slave=0000:60:00.0,slave=0000:60:00.1,xmit_policy=l23' \
  -- -c /etc/router_bras_dhcp_relay_lag.conf
 
-3.2) Проверка связности
+## 4.2. Конфигурационный файл TheRouter
 
-3.2.0) Проверим, что созданы все описанные в конфигурационном файле интерфейсы
+Ниже приведен текст конфигурационного файла TheRouter.
+Подробный разбор директив из этого файла приведен в последующих разделах этого howto.
+
+/etc/router_bras_dhcp_relay_lag.conf
+
+	startup {
+	  sysctl set mbuf 8192
+	  sysctl set log_level 7
+	
+	  # LAG (slave ports 0,1)
+	  port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	
+	  sysctl set global_packet_counters 1
+	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_size 65536
+	  sysctl set dynamic_vif_ttl 600
+	
+	  sysctl set dhcp_relay_enabled 1
+	}
+	
+	runtime {
+	  # blackhole multicast addresses
+	  ip route add 224.0.0.0/4 unreachable
+	
+	  radius_client add src ip 192.168.20.1
+	
+	
+	  ip route add 10.10.0.0/24 unreachable
+	
+	  # link with local linux host
+	  vif add name v20 port 0 type dot1q cvid 20
+	  ip addr add 192.168.20.1/24 dev v20
+	
+	  # home network link (vlan3)
+	  vif add name v3 port 0 type dot1q cvid 3 flags npf_on, kni
+	  ip addr add 192.168.1.112/24 dev v3
+	  #ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.112
+	
+	  # cisco L3 connected
+	  vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs
+	  ip addr add 192.168.21.1/24 dev v21
+	
+	  # L2 connected (zyxel 5Ghz WiFi)
+	  vif add name v5 port 0 type dot1q cvid 5 flags kni,l2_subs
+	  ip addr add 192.168.5.1/24 dev v5
+	
+	
+	  ## static arp records
+	  # radius server
+	  arp add 192.168.20.2 90:e2:ba:4b:b3:17 dev v20 static
+	
+	  dhcp_relay 192.168.20.2
+	
+	  radius_client add server 192.168.20.2
+	  radius_client set secret "hokawuwe"
+	
+	
+	  # PBR
+	  ip route table add rt_bl
+	
+	  u32set create ips1 size 4096 bucket_size 16
+	  u32set create l2s1 size 4096 bucket_size 16
+	  subsc u32set init ips1 l2s1
+	
+	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
+	  ip pbr rule add prio 20 u32set l2s1 type "l2" table rt_bl
+	
+	
+	  # NPF
+	  # npf load "/etc/npf.conf.accept_all_2"
+	
+	  npf load "/etc/npf.conf.bras_dhcp_relay"
+	}
+
+## 4.3. Проверка связности
+
+### 4.3.1. Проверим, что созданы все описанные в конфигурационном файле интерфейсы
 
 	h4 src # rcli sh vif
 	name    port    vid     mac                     type    flags   idx     ingress_car     egress_car
@@ -54,7 +135,7 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	v5      0       0.5     00:1B:21:3C:69:44       dot1q   kni,l2 subs     13      -       -
 	v3      0       0.3     00:1B:21:3C:69:44       dot1q   kni,NPF 11      -       -
 
-3.2.1) ARP
+### 4.3.2. ARP
 
 	h4 src # rcli sh arp
 	port    vid     ip      mac     type    state
@@ -62,7 +143,7 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	0       0.5     192.168.5.124   A8:5B:78:09:0C:E1       dynamic ok
 	0       0.3     192.168.1.3     D4:CA:6D:7C:D0:DC       dynamic ok
 
-3.2.3) ICMP
+### 4.3.3. ICMP
 
 	h4 src # rcli ping -c3 192.168.1.3
 	Ping 192.168.1.3 56(84) bytes of data.
@@ -84,9 +165,9 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	sent: 3, recv: 3 (100%), lost: 0 (0%)
 	round-trip min/avg/max = 0.279/0.445/0.557
 
-3.3) Запуск KNI интерфейсов и интеграция с Quagga
+## 4.4. Запуск KNI интерфейсов и интеграция с Quagga
 
-3.3.1) Поднимем KNI интерфейсы. КNI интерфейсы создаются для каждого vif интерфейса TheRouter,
+### 4.4.1. Поднимем KNI интерфейсы. КNI интерфейсы создаются для каждого vif интерфейса TheRouter,
 через который он взаимодействует с другими маршрутиазаторами с помощью какого-либо протокола
 динамической маршрутизации. В нашем примере TheRouter устанавливает bgp peer с uplink раутером,
 чтобы получить default маршрут.
@@ -95,9 +176,9 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	ip link set up rkni_v3
 	ip link set dev rkni_v3 address 00:1B:21:3C:69:44
 
-3.3.2) Запуск quagga
+### 4.4.2. Запуск quagga
 
-Сначала необходимо настроить запустить zebra.
+Сначала необходимо настроить и запустить zebra.
 
 Конфигурационный файл /etc/quagga/zebra.conf
 
@@ -114,7 +195,7 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	no banner motd
 	log file /var/log/quagga/zebra.log
 
-Единственный важдный момент в этом файле это директива table 250, которая говорит
+Единственный важдный момент в этом файле - это директива table 250, которая говорит
 zebrа инсталлировать все полученные от демонов маршрутизации маршруты не в основную
 таблицу маршрутизации linux, а в таблицу c id 250. Id таблица должна быть заранее
 прописан в файле /etc/iproute2/rt_tables
@@ -122,7 +203,7 @@ zebrа инсталлировать все полученные от демонов маршрутизации маршруты не в основ
 	250     rt1
 
 Это необходимо, чтобы полученные маршруты не мешали работе linux, т.к. они предназначены
-исключительно для the_router и будут переданы ему через "zebra FIB push interface" интерфейс.
+исключительно для TheRouter и будут переданы ему через "zebra FIB push interface" интерфейс.
 
 Запуск zebra
 	/etc/init.d/zebra start
@@ -180,9 +261,9 @@ Linux таблица rt1
 	0.0.0.0/0 via 192.168.1.3 dev v3 src 192.168.1.112
 	
 
-4) Настройка Radius.
+# 5. Настройка Radius.
 
-4.4.1) Настройка TheRouter клиента radius.
+## 5.1. Настройка TheRouter клиента radius.
 
 Команды ниже описывают (в порядке следования) адрес Radius сервера,
 ip адрес источника radius запросов, выполняемых TheRouter, 
@@ -202,7 +283,7 @@ Ip адрес "src ip" должен быть на интерфейс TheRouter,
   vif add name v20 port 0 type dot1q cvid 20
   ip addr add 192.168.20.1/24 dev v20
 
-4.4.2) Настройка Radius сервера на стороне Linux.
+## 5.2. Настройка Radius сервера на стороне Linux
 
 В качестве radius сервера используется пакет FreeRadius.
 Я не буду полностью описывать его настройку, т.к. у FreeRadius проекта есть своя документация и 
@@ -213,13 +294,13 @@ Ip адрес "src ip" должен быть на интерфейс TheRouter,
 
 /etc/raddb/sql/mysql/dialup.conf
 
-## router_bras_dhcp_relay.conf
-## pbr.
-authorize_reply_query = "SELECT 1, '%{SQL-User-Name}', 'therouter_ingress_cir', '200', '=' \
-UNION SELECT 2, '%{SQL-User-Name}', 'therouter_engress_cir', '200', '+=' \
-UNION SELECT 3, '%{SQL-User-Name}', 'therouter_ipv4_addr', GetIpoeUserService(%{request:therouter_port_id}, '%{request:therouter_outer_vid}', '%{request:therouter_inner_vid}'), '+=' \
-UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '24', '+=' \
-UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
+	## router_bras_dhcp_relay.conf
+	## pbr.
+	authorize_reply_query = "SELECT 1, '%{SQL-User-Name}', 'therouter_ingress_cir', '200', '=' \
+	UNION SELECT 2, '%{SQL-User-Name}', 'therouter_engress_cir', '200', '+=' \
+	UNION SELECT 3, '%{SQL-User-Name}', 'therouter_ipv4_addr', GetIpoeUserService(%{request:therouter_port_id}, '%{request:therouter_outer_vid}', '%{request:therouter_inner_vid}'), '+=' \
+	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '24', '+=' \
+	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
 
 Этот sql запрос будет использован FreeRadius'ом для формирования ответа на 
 radius запрос TheRouter'а об авторизации подписчика, подключенного через отдельный влан.
@@ -232,7 +313,7 @@ Mysql хранимая процедура GetIpoeUserService рассчитает ip адрес подписчика на ос
 
 https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber
 
-4.4.3 FreeRadius dictionary
+### 5.2.2. FreeRadius dictionary
 
 	VENDOR       TheRouter     12345
 	BEGIN-VENDOR TheRouter
@@ -248,12 +329,12 @@ https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#v
 	    ATTRIBUTE therouter_pbr 10 integer
 	END-VENDOR   TheRouter
 
-5) Настройка динамических qinq, dot1q интерфейсов подписчиков
+# 6. Настройка динамических qinq, dot1q интерфейсов подписчиков
 
 Подробная информация о "Vlan per subscriber" интерфейсах описана в разделе
 https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber
 
-6) Настройка DHCP и DHCP Relay для выдачи настроек подписчикам
+# 7. Настройка DHCP и DHCP Relay для выдачи настроек подписчикам
 
 В TheRouter реализована функциональность DHCP Relay.
 Единственная доступная на данный момент настройка - это ip адрес DHCP сервер,
@@ -311,13 +392,14 @@ dhcpd сервер.
 
 !!?!? нужен ли маршрут
 
-7) Настройка перенаправления заблокированных подписчиков на выделенный сайт
+# 8. Настройка перенаправления заблокированных подписчиков на выделенный сайт
 
 Выполняется с помощью механизма PBR (Policy based routing) и описана в разделе
 "Управление трафиком заблокированных подписчиков"
 https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков
 
-8) Настройка NAT
+# 9. Настройка NAT
 
-9) Заключение
+# 10. Заключение
+
 todo
