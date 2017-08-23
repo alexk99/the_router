@@ -167,10 +167,18 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 
 ## 4.4. Запуск KNI интерфейсов и интеграция с Quagga
 
-### 4.4.1. Поднимем KNI интерфейсы. КNI интерфейсы создаются для каждого vif интерфейса TheRouter,
+### 4.4.1. KNI интерфейсы
+
+КNI интерфейсы создаются для каждого vif интерфейса TheRouter,
 через который он взаимодействует с другими маршрутиазаторами с помощью какого-либо протокола
 динамической маршрутизации. В нашем примере TheRouter устанавливает bgp peer с uplink раутером,
 чтобы получить default маршрут.
+
+После запуска TheRouter необходимо поднять KNI интерфейсы и задать им MAC адреса.
+МАС адрес KNI интерфейса должен быть равен MAC адресу, соответсвующего ему VIF интерфейса TheRouter.
+
+В нашем примере создается один KNI интефейс c именем rkni_v3 для v3 интерфейса TheRouter.
+MAC адрес VIF интерфейса v3 можно увидеть в выводе команды 'rcli sh vif', приведенной выше.
 
 	#!/bin/bash
 	ip link set up rkni_v3
@@ -206,9 +214,10 @@ zebrа инсталлировать все полученные от демонов маршрутизации маршруты не в основ
 исключительно для TheRouter и будут переданы ему через "zebra FIB push interface" интерфейс.
 
 Запуск zebra
+
 	/etc/init.d/zebra start
 
-Запустив zebra можно запустить bgpd.
+Запустив zebra, можно запустить bgpd.
 
 Конфигурационный файл /etc/quagga/bgpd.conf
 
@@ -240,9 +249,10 @@ ip адресов подписчиков в внешние адреса маршрутизируемые в интернет.
 настроенный на нем. 
 
 Запуск bgpd
+
 	/etc/init.d/bgpd start
 	
-Проверим, что маршрут успешно получен и инсталлирован во linux таблицу и в the_router.
+Проверим, что default (0.0.0.0/0) маршрут успешно получен и инсталлирован во linux таблицу и в the_router.
 
 Linux таблица rt1
 
@@ -259,29 +269,33 @@ Linux таблица rt1
 	192.168.1.0/24 C dev v3 src 192.168.1.112
 	10.10.0.0/24 is unreachable
 	0.0.0.0/0 via 192.168.1.3 dev v3 src 192.168.1.112
-	
 
 # 5. Настройка Radius.
 
-## 5.1. Настройка TheRouter клиента radius.
+## 5.1. Настройка TheRouter клиента radius
 
 Команды ниже описывают (в порядке следования) адрес Radius сервера,
 ip адрес источника radius запросов, выполняемых TheRouter, 
 и общий для клиента и сервера пароль.
 
-	radius_client add server 192.168.3.2
-	radius_client add src ip 192.168.3.1
+	radius_client add server 192.168.20.2
+	radius_client add src ip 192.168.20.1
 	radius_client set secret "secret"
 
-
-Ip адрес "src ip" должен быть на интерфейс TheRouter,
+Ip адрес "src ip" должен быть добавлен на интерфейс TheRouter,
 через который доступн radius сервер. В нашем случае это интерфейс v20,
-соединяющий TheRouter c linux стэком хоста h4. Ip адрес 192.168.3.2 настроен
-на linux стороне влана 20.
+соединяющий TheRouter c linux стэком хоста h4. 
 
-  # link with local linux host
-  vif add name v20 port 0 type dot1q cvid 20
-  ip addr add 192.168.20.1/24 dev v20
+	# link with local linux host
+	vif add name v20 port 0 type dot1q cvid 20
+	ip addr add 192.168.20.1/24 dev v20
+
+Ip адрес 192.168.20.1 настроен на linux стороне влана 20.
+
+	9: vlan20@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+	    link/ether 90:e2:ba:4b:b3:17 brd ff:ff:ff:ff:ff:ff
+	    inet 192.168.20.2/24 brd 192.168.20.255 scope global vlan20
+	       valid_lft forever preferred_lft forever
 
 ## 5.2. Настройка Radius сервера на стороне Linux
 
@@ -309,11 +323,11 @@ Mysql хранимая процедура GetIpoeUserService рассчитает ip адрес подписчика на ос
 настройки маршрутизации трафика в сторону подписчика по принципу ip unnumbered.
 
 Подробно механизм ip unnumbered для динамических "Vlan per subscriber" интерфейсов и их
-настройка с помощью radius описана по следующей ссылке в разделе Vlan per subscriber
-
-https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber
+настройка с помощью radius описана в разделе <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 ### 5.2.2. FreeRadius dictionary
+
+Добавьте в /etc/raddb/dictionary следующие строчки
 
 	VENDOR       TheRouter     12345
 	BEGIN-VENDOR TheRouter
@@ -337,7 +351,7 @@ https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#v
 # 7. Настройка DHCP и DHCP Relay для выдачи настроек подписчикам
 
 В TheRouter реализована функциональность DHCP Relay.
-Единственная доступная на данный момент настройка - это ip адрес DHCP сервер,
+Единственная доступная на данный момент настройка - это ip адрес DHCP сервера,
 которому TheRouter будет перенаправлять все полученные dhcp запросы.
 
 	dhcp_relay 192.168.20.2
@@ -345,7 +359,12 @@ https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#v
 В нашем примере указан ip адрес влана 20 linux стэка хоста h4, где запущен
 dhcpd сервер.
 
-	конфиг dhcpd.conf
+## 7.1. Конфиг /etc/dhcp/dhcpd.conf
+	
+Это пример dhcpd конфигурационного файла, в котором описаны настройки
+двух subscriber'ов. Dhcpd сервер слушает запросы на интерфейсе v3 (cеть 192.168.20.0)
+и идентифицирует двух тестовых subscriber'ов по их mac адресам.
+
 	
 	#
 	# Global parameters
@@ -360,26 +379,25 @@ dhcpd сервер.
 	
 	shared-network dd {
 	
-	subnet 10.10.0.0 netmask 255.255.255.0 {
-	    option subnet-mask 255.255.255.0;
-	    option routers 10.10.0.1;
-	
-	    pool {
-	        range 10.10.0.50 10.10.0.200;
-	        default-lease-time 72000; # 20 hours
-	        max-lease-time 72000;
-	        allow unknown clients;
-	    }
-	}
-	
-	subnet 192.168.20.0 netmask 255.255.255.0 {
-	}
+		subnet 10.10.0.0 netmask 255.255.255.0 {
+		    option subnet-mask 255.255.255.0;
+		    option routers 10.10.0.1;
+		
+		    pool {
+		        range 10.10.0.50 10.10.0.200;
+		        default-lease-time 72000; # 20 hours
+		        max-lease-time 72000;
+		        allow unknown clients;
+		    }
+		}
+		
+		subnet 192.168.20.0 netmask 255.255.255.0 {
+		}
 	
 	}
 	
 	# 0 - hostname, 1 - host ip, 2 - host mac
 	
-	## alexk computer
 	host c1 {
 	  hardware ethernet F8:32:E4:72:61:1B;
 	  fixed-address 10.10.0.12;
@@ -395,8 +413,7 @@ dhcpd сервер.
 # 8. Настройка перенаправления заблокированных подписчиков на выделенный сайт
 
 Выполняется с помощью механизма PBR (Policy based routing) и описана в разделе
-"Управление трафиком заблокированных подписчиков"
-https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков">Управление трафиком заблокированных подписчиков</a>
 
 # 9. Настройка NAT
 
