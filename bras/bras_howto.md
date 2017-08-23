@@ -169,7 +169,7 @@ the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 
 Подробное описание принципа интеграции c Quagga описано
 на странице 
-<a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite"
+<a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite">
 Dynamic routing. Integration with Quagga routing suite
 </a>
 
