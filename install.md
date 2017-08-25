@@ -214,8 +214,8 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
  !  Note: this version supports maximum 4 cores cpu. 
 
- * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.11.4cores.tar.gz">the_router.a0.11.4cores.tar.gz</a>
- * Download TheRouter (the version for old xeon cpu: X5355, X5650, etc..)<a href="http://therouter.net/downloads/the_router.a0.11.4cores-old_xeon.tar.gz">the_router.a0.11.4cores-old_xeon.tar.gz</a> 
+ * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.12.6cores.dpdk.16.07.tar.gz">the_router.a0.12.6cores.dpdk.16.07.tar.gz</a>
+ * Download TheRouter (the version for old xeon cpu: X5355, X5650, etc..)<a href="http://therouter.net/downloads/the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
 
  * Run the following commands:
  
