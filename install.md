@@ -187,7 +187,7 @@ Apply the patches:
 		cat ./log_patch_dpdk_16.07.patch | patch -p2
 		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
 
- * Run the following commands:		
+Run the following commands:		
 
 		make install T=x86_64-native-linuxapp-gcc
 
@@ -222,7 +222,7 @@ Apply the patches:
 
  !  Note: this version supports maximum 6 cores cpu. 
 
- * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.13.6cores.dpdk.16.07.tar.gz">the_router.a0.12.6cores.dpdk.16.07.tar.gz</a>
+ * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.13.6cores.dpdk.16.07.tar.gz">the_router.a0.13.6cores.dpdk.16.07.tar.gz</a>
  * Download TheRouter (the version for old xeon cpu: X5355, X5650, etc..)<a href="http://therouter.net/downloads/the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
 
  * Run the following commands:
