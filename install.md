@@ -1,4 +1,4 @@
-# Installing 
+# Install
 
 Here are the installations steps for Gentoo Linux.
 

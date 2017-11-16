@@ -1,4 +1,4 @@
-# Installing 
+# Install
 
 Here is the installation for Ubuntu 16.04.
 
@@ -225,11 +225,11 @@ Run the following commands:
 
  * city hash
 
-	git clone https://github.com/google/cityhash
-	cd ./cityhash/
-	./configure
-	make all check CXXFLAGS="-g -O3"
-	make install
+		git clone https://github.com/google/cityhash
+		cd ./cityhash/
+		./configure
+		make all check CXXFLAGS="-g -O3"
+		make install
 
  Notes: libcityhash should be compiled as dynamic library, but the steps below create a static link lib.
  I haven't so far figured why, you can download compiled lib <a href="http://therouter.net/downloads/libcityhash.so.0.0.0">libcityhash.so.0.0.0</a>
