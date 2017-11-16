@@ -85,6 +85,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		BuildRequires:>libtool
 
  * Run
+
 		make rpm
 		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
 
@@ -97,7 +98,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
  * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
-		cp city.h /urs/local/include/
+		cp city.h /usr/local/include/
 
  * Install jemalloc
 
@@ -174,12 +175,19 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		tar xvf dpdk-16.07.tar.xz
 		cd ./dpdk-16.07
 		
-* Download dpdk log subsystem patch <a href="http://therouter.net/downloads/dpdk/log_patch.patch">log_patch.patch</a>, then
-  apply the patch
-  		
+### Patch DPDK
+
+Download the patches:
+
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch.patch">dpdk log subsystem patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/net_bond_mempool_fix_16.07.patch">net bond mempool patch</a>
+
+ * Apply the patches:
+
 		cat ./log_patch.patch | patch -p2
-		
-* Run the following commands:		
+		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
+
+ * Run the following commands:		
 
 		make install T=x86_64-native-linuxapp-gcc
 
@@ -212,9 +220,9 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
 ### Install TheRouter 
 
- !  Note: this version supports maximum 4 cores cpu. 
+ !  Note: this version supports maximum 6 cores cpu. 
 
- * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.12.6cores.dpdk.16.07.tar.gz">the_router.a0.12.6cores.dpdk.16.07.tar.gz</a>
+ * Download TheRouter <a href="http://therouter.net/downloads/the_router.a0.13.6cores.dpdk.16.07.tar.gz">the_router.a0.12.6cores.dpdk.16.07.tar.gz</a>
  * Download TheRouter (the version for old xeon cpu: X5355, X5650, etc..)<a href="http://therouter.net/downloads/the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
 
  * Run the following commands:
@@ -237,7 +245,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
 
 * Bind your NIC's to DPDK either by using the commands below or by 
-  running the $RTE_SDK/tools/setup.sh. If you are going to run 
+  running the $RTE_SDK/tools/dpdk-devbind.py. If you are going to run 
   the following commands make sure you are using your own NIC PCI
   addresses in the echo commands
 
