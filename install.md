@@ -132,6 +132,17 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		HPET and HPET_MMAP
 		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
+* Turn on linux boot time options:
+	- If you use grub edit /boot/grub/grub.conf and appent the following options:
+	
+			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
+
+	- Note:
+		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
+		depending of the hardware configuration of your server.
+		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
+		the perfomance is not a goal.
+
 * Configure hugepages
 
 	- reboot you machine and check that hugepages are available and free
@@ -157,17 +168,6 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 	- Mount hugepages
 	
 			mount huge
-
-* Turn on linux boot time options:
-	- If you use grub edit /boot/grub/grub.conf and appent the following options:
-	
-			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
-
-	- Note:
-		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
-		depending of the hardware configuration of your server.
-		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
-		the perfomance is not a goal.
 		
 * download dpdk 16.07
 
