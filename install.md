@@ -179,12 +179,12 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
 Download the patches:
 
- * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch.patch">dpdk log subsystem patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch_dpdk_16.07.patch">dpdk log subsystem patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/16.07/net_bond_mempool_fix_16.07.patch">net bond mempool patch</a>
 
- * Apply the patches:
+Apply the patches:
 
-		cat ./log_patch.patch | patch -p2
+		cat ./log_patch_dpdk_16.07.patch | patch -p2
 		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
 
  * Run the following commands:		
