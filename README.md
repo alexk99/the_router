@@ -20,8 +20,9 @@ It supports:
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
 
-# Installation
-<a href="/install.md">Installation</a>
+# Install
+<a href="/install.md">Gentoo Install</a>
+<a href="/ubuntu_install.md">Ubuntu 16.04 Install</a>
 
 # Configuration
 <a href="/conf_options.md">Configuration</a>

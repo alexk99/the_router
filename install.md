@@ -1,6 +1,6 @@
 # Installing 
 
-Here is the installation process description for Gentoo Linux.
+Here are the installations steps for Gentoo Linux.
 
 ## Install the following utilities and libs:
 
