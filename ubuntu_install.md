@@ -154,6 +154,21 @@ Notes: install process ends successfully even if it indicates that there has bee
 		HPET and HPET_MMAP
 		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
+* Turn on linux boot time options:
+	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
+	
+			GRUB_CMDLINE_LINUX="intel_idle.max_cstate=1 isolcpus=1,2,3,4,5,6,7,9,10,11,12,13,14,15 default_hugepagesz=2M hugepagesz=2M hugepages=3072"
+
+	- Run
+		
+			update-grub
+
+	- Note:
+		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
+		depending of the hardware configuration of your server.
+		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
+		the perfomance is not a goal.
+
 * Configure hugepages
 
 	- reboot you machine and check that hugepages are available and free
@@ -180,21 +195,6 @@ Notes: install process ends successfully even if it indicates that there has bee
 	
 			mount huge
 
-* Turn on linux boot time options:
-	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
-	
-			GRUB_CMDLINE_LINUX="intel_idle.max_cstate=1 isolcpus=1,2,3,4,5,6,7,9,10,11,12,13,14,15 default_hugepagesz=2M hugepagesz=2M hugepages=3072"
-
-	- Run
-		
-			update-grub
-
-	- Note:
-		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
-		depending of the hardware configuration of your server.
-		The rule here is that you should isolate all cores you're going to use in the router's traffic forwarding process unless
-		the perfomance is not a goal.
-		
 * download dpdk 16.07
 
 		wget http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
