@@ -21,8 +21,9 @@ It supports:
  * link bonding
 
 # Install
-<a href="/install.md">Gentoo Install</a>
-<a href="/ubuntu_install.md">Ubuntu 16.04 Install</a>
+
+ * <a href="/install.md">Gentoo Install</a>
+ * <a href="/ubuntu_install.md">Ubuntu 16.04 Install</a>
 
 # Configuration
 <a href="/conf_options.md">Configuration</a>
