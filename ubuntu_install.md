@@ -1,6 +1,6 @@
 # Install
 
-Here is the installation for Ubuntu 16.04.
+Here are the installations steps for Ubuntu 16.04.
 
 ## Install the following utilities and libs:
 
@@ -185,6 +185,10 @@ Notes: install process ends successfully even if it indicates that there has bee
 	
 			GRUB_CMDLINE_LINUX="intel_idle.max_cstate=1 isolcpus=1,2,3,4,5,6,7,9,10,11,12,13,14,15 default_hugepagesz=2M hugepagesz=2M hugepages=3072"
 
+	- Run
+		
+			update-grub
+
 	- Note:
 		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
 		depending of the hardware configuration of your server.
@@ -232,7 +236,7 @@ Run the following commands:
 		make install
 
  Notes: libcityhash should be compiled as dynamic library, but the steps below create a static link lib.
- I haven't so far figured why, you can download compiled lib <a href="http://therouter.net/downloads/libcityhash.so.0.0.0">libcityhash.so.0.0.0</a>
+ I haven't so far figured why, so as a workaroung you can download already compiled lib <a href="http://therouter.net/downloads/libcityhash.so.0.0.0">libcityhash.so.0.0.0</a>
  and copy it to /usr/local/lib/libcityhash.so.0.0.0
 
 ### Install TheRouter 
