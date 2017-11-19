@@ -117,7 +117,7 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 
 ### Configure linux kernel
 
-* Make shure the following options are enabled:
+* Make sure the following options are enabled:
 
 		UIO support
 		   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
