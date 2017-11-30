@@ -135,6 +135,18 @@ Notes: install process ends successfully even if it indicates that there has bee
 		make
 		make install
 
+## Update system library paths
+
+ Add the following lines to the /etc/ld.so.conf.d/router.conf
+
+		/usr/lib64
+		/usr/local/lib
+		/usr/lib/x86_64-linux-gnu
+
+ Run
+
+		ldconfig
+
 ## Install DPDK
 
 ### Configure linux kernel
