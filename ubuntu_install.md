@@ -251,8 +251,9 @@ Run the following commands:
  #### old xeon cpu: X5355, X5650, etc..
  
  !  Note: this version supports maximum 6 cores cpu. 
+ <a href="http://therouter.net/downloads/the_router.latest.6cores.old_xeon.dpdk.16.07.version">the_router.latest.6cores.old_xeon.dpdk.16.07 verion</a> 
  
- * Download <a href="http://therouter.net/downloads/the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.a0.12.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
+ * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.latest.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
 
 ### Install TheRouter
 
