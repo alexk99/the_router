@@ -1,4 +1,4 @@
-# First expirience using TheRouter as core router in a service provider network
+# First experience using TheRouter as core router in a service provider network
 
 A month ago, 15 may 2017 a decision was made to start the first production 	
 operation of TheRouter software in a real network environment of a service provider
@@ -12,7 +12,7 @@ A new router running TheRouter software had to accomplish the following goals:
 BGP peering with BRAS servers and the border router;
 - receipt a full bgp view/table from the border router;
 
-The whole experiment, the goals and a the_router place in the network were choosed  
+The whole experiment, the goals and a the_router place in the network were chosen  
 keeping in mind that the_router is still a very experimental software and it has not been used
 in a real network environment before. The most important condition was to be able
 to stop/restart the_router without an impact to the network operations.
@@ -105,7 +105,7 @@ Note: only single cpu is used in the the_router configuration, in order to avoid
 ### Last day
 <img src="http://therouter.net/images/production/bzn/traffic_last_day.png">
 
-## LAG versions of an expiriment
+## LAG versions of an experiment
 
 ### 1 day stat
 <img src="http://therouter.net/images/production/bzn/the_router_bizin_monitor_lag_1.png">
