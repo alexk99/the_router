@@ -184,7 +184,7 @@ You should up KNI interfaces and configure their MAC addresses after the_route h
 MAC address on a kni interface should be equal to the mac address of the router's interface coupled with the kni
 interface. MAC address of a VIF can be learned from 'rcli sh vif' command output.
 
-Exaple of a bash script that up kni interfaces and configure their proper MAC address.
+Example of a bash script that up kni interfaces and configure their MAC address:
 
 	#!/bin/bash
 	ip link set up rkni_v3
@@ -222,10 +222,10 @@ Id of this tables should be added to /etc/iproute2/rt_tables
 
 	250     rt1
 
-Using a separate routing table is requied so the received routes do no mess with routes linux uses
-in his standart network operation. The routes quagga receives via KNI interfaces and install to table 250
-are ment only for the_router and have no value for the linux host. The zebra will pass that routes to the_router
-via "zebra FIB push interface" after they have been received and installed into the table 250.
+Using a separate routing table is requied so the received routes do not mess with routes linux uses
+in its standard network operations. The routes quagga receives via KNI interfaces and then install to the table 'rt1'
+are meant only for the_router and have no value for the linux host. The zebra will pass that routes to the_router
+via "zebra FIB push interface" after they have been received and installed into the table 'rt1'.
 
 Run zebra
 
@@ -253,24 +253,24 @@ Bgpd's configuration file /etc/quagga/bgpd.conf
 	line vty
 	!
 
-In this file a single bgp peer is described. It's the peer with the uplink border router 192.168.1.3.
-The_router announces network 10.111.0.0/29 which is used in SNAT function and serve as a fake pulic
+A single bgp peer with the uplink border router 192.168.1.3 is described in this configuration file. 
+The router announces network 10.111.0.0/29 which is used in SNAT function and serve as a pulic
 addresses of the_router's subscribers.
-Note: a private prefix 10.111.0.0/29 is used only due the test nature of this howto and lack of public/routed
-ip address. In a real environment a routed/public ip address is used usally in cases like this.
+Note that a private prefix 10.111.0.0/29 is used only due the test nature of this howto and lack of public/routed
+ip address. In a real environment a routed/public ip addresses usally are used in the cases like this.
 
 Run bgpd
 
 	/etc/init.d/bgpd start
 	
-Insure that default (0.0.0.0/0) route is successfule received and installed into both the linux route table and the_router's route table.
+Insure that default (0.0.0.0/0) route is successfully received and installed into both the linux route table and the_router's route table.
 
-Linux routing table rt1 (id 250)
+Linux routing table 'rt1' (id 250)
 
 	h4 src # ip route ls table rt1
 	default via 192.168.1.3 dev rkni_v3  proto zebra  metric 20
 
-The main TheRouter's rouing table:
+The TheRouter's main routing table:
 
 	h4 src # rcli sh ip route
 	224.0.0.0/4 is unreachable
@@ -281,7 +281,7 @@ The main TheRouter's rouing table:
 	10.10.0.0/24 is unreachable
 	0.0.0.0/0 via 192.168.1.3 dev v3 src 192.168.1.112
 
-# 5. Radius congiguration
+# 5. Radius configuration
 
 ## 5.1. TheRouter radius client configuration
 
@@ -295,7 +295,7 @@ shared radius secret.
 
 Src ip address must be assigned to the router's interface which
 connects the router with a RADIUS server. It is a v20 interface in this
-test lab, since in connect the_router with the linux host H4 
+test lab, since it connects the_router with the linux host H4 
 where RADIUS server is running.
 
 	# link with local linux host
