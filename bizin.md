@@ -105,3 +105,11 @@ Note: используется только один из процессоров
 
 ### Last day
 <img src="http://therouter.net/images/production/bzn/traffic_last_day.png">
+
+## Версия с LAG
+
+### 1 day stat
+<img src="http://therouter.net/images/production/bzn/the_router_bizin_monitor_lag_1.png">
+
+### 60 days stat
+<img src="http://therouter.net/images/production/bzn/the_router_bizin_monitor_lag_2.png">
