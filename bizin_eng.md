@@ -19,9 +19,9 @@ to stop/restart the_router without an impact to the network operations.
 
 # TheRouter server
 
-HP ProLiant DL380 G6, 2 Intel cpu 6C X5650 2.66 GHz, 48GB DRAM
-NICs: Intel XL710
-Note: only single cpu is used in the the_router configuration, in order to avoid "slow" NUMA paths.
+ - HP ProLiant DL380 G6, 2 Intel cpu 6C X5650 2.66 GHz, 48GB DRAM
+ - NICs: Intel XL710
+ - Note: only single cpu is used in the the_router configuration, in order to avoid "slow" NUMA paths.
 
 # TheRouter configuration file:
 
@@ -105,7 +105,9 @@ Note: only single cpu is used in the the_router configuration, in order to avoid
 ### Last day
 <img src="http://therouter.net/images/production/bzn/traffic_last_day.png">
 
-## LAG versions of an experiment
+## LAG versions of the experiment
+
+Two 10G ports of the router were added to a LAG group.
 
 ### 1 day stat
 <img src="http://therouter.net/images/production/bzn/the_router_bizin_monitor_lag_1.png">
