@@ -30,3 +30,11 @@ It supports:
 
 # Use cases
 <a href="/use_cases.md">Use cases</a>
+
+# TheRouter in production environment
+
+## "Bizin"
+<a href="/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
+
+Bizin. TheRouter as a BGP core router in the internet service provider network.
+Forwarind traffic between a BRAS cluster and a Google Cache Server.
