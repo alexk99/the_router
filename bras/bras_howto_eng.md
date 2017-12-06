@@ -23,8 +23,8 @@ instruction install DPDK and TheRouter on a machine running under Gentoo Linux o
 # 3. Test network scheme
 
 The test network consists of a linux host H4, the border router connected to internet and our clients/user/subscribers.
-The H4 host runs TheRouter and other requied for accomplishing our goals programs: Dhcpd, FreeRadius, Mysql, Quagga.
-Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via an shared L2 network/broadcast domain.
+The H4 host runs TheRouter and other programs requied for accomplishing our goals: Dhcpd, FreeRadius, Mysql, Quagga.
+Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 network/broadcast domain.
 
 ## 3.1. L2 network scheme
 
@@ -181,17 +181,20 @@ with other routers via any dynamic routing protocol supported by Quagga. In this
 is the v3 interface. The router receives a default route from the bgp peer established via the v3 kni interface.
 
 You should up KNI interfaces and configure their MAC addresses after the_route has started.
-MAC address on a kni interface should be equal to the mac address of the router's interface which is coupled with the kni
-interface.
+MAC address on a kni interface should be equal to the mac address of the router's interface coupled with the kni
+interface. MAC address of a VIF can be learned from 'rcli sh vif' command output.
 
-In this howto a kni interface is created for the v3 VIF.
-MAC address of a VIF can be learned from the output of the 'rcli sh vif' command.
-
-Exmaple bash script that up kni interfaces and configure its proper MAC address.
+Exaple of a bash script that up kni interfaces and configure their proper MAC address.
 
 	#!/bin/bash
 	ip link set up rkni_v3
 	ip link set dev rkni_v3 address 00:1B:21:3C:69:44
+	
+	ip link set up rkni_v5
+	ip link set dev rkni_v5 address 00:1B:21:3C:69:44
+	
+	ip link set up rkni_v21
+	ip link set dev rkni_v21 address 00:1B:21:3C:69:44
 
 ### 4.4.2. Starting Quagga
 
