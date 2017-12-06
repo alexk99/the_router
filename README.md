@@ -36,5 +36,5 @@ It supports:
 ## "Bizin"
 <a href="/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
 
-Bizin. First experience using TheRouter as a BGP core router in the internet service provider network.
-Forwarind traffic between a BRAS cluster and a Google Cache Server.
+Bizin. First experience using TheRouter as a BGP core router in a internet service provider network.
+Forwardind traffic between a BRAS cluster and a Google Cache Server.
