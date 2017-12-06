@@ -26,7 +26,7 @@ Detailed description of the all link bonding parameters can be found in the DPDK
 	
 		startup {
 		  sysctl set mbuf 8192
-		  port 0 mtu 1500 tpid 0x8100 state enabled
+		  port 0 mtu 1500 tpid 0x8100 state enabled bond_slaves 1,2
 		
 		  rx_queue port 0 queue 0 lcore 1
 		  rx_queue port 0 queue 1 lcore 2
