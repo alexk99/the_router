@@ -316,7 +316,7 @@ The FreeRadius project has a very good documentations and the are a lot of confi
 examples available on the internet, so, excuse me for not providing any examples here.
 
 But, I will provide the text of the main SQL query that illusrates using of TheRouter specific
-radius attributes and a text of TheRouter VAS dictionary.
+radius attributes and, the text of TheRouter VAS dictionary is also provided.
 
 /etc/raddb/sql/mysql/dialup.conf
 
@@ -332,10 +332,10 @@ This SQL query is used by FreeRadius to query the data requied to form a radius 
 to a router's radius request to authorize a subscriber connected via a dedicated vlan.
 Mysql stored procedure GetIpoeUserService will calculate subscriber's ip address
 based on subscriber's vlan id and port number via it connected to the_router.
-The informatin provided in a radius reply then will be used by the_router to configure
-subscribers routing using the ip unnumbered rules.
+The informatin provided in a radius reply will be used then by the_router to configure
+subscribers routing using according to the ip unnumbered rules.
 
-The detailed descriptions of the ip unnumberes rules are provided in the chapter
+The detailed description of the ip unnumberes rules is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 ### 5.2.2. FreeRadius dictionary
@@ -360,7 +360,7 @@ Add the following lines to the /etc/raddb/dictionary
 
 ## 6.1. Dynamic "Vlan per subscriber" subscriber's interfaces
 
-The detailed descriptions of "vlan per subscriber" dynamic interfaces are provided in the chapter
+The detailed description of "vlan per subscriber" dynamic interfaces is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber".
 I am going to briefly describe them in the context of our test lab.
 
@@ -452,24 +452,22 @@ L2/L3 sessions support shaping of traffic going through a session.
 	        192.168.5.132   1       0       200 mbit/s      200 mbit/s      0       0
 	        192.168.5.133   1       0       200 mbit/s      200 mbit/s      0       0
 
-# 7. Настройка DHCP и DHCP Relay для выдачи настроек подписчикам
+# 7. DHCP server and DHCP Relay configuration
 
-В TheRouter реализована функциональность DHCP Relay.
-Единственная доступная на данный момент настройка - это ip адрес DHCP сервера,
-которому TheRouter будет перенаправлять все полученные dhcp запросы.
+TheRouter software supports DHCP Relay feature.
+The only configure option available so far is the ip address of a DHCP server
+to relay DHCP requests to.
 
 	dhcp_relay 192.168.20.2
 
-В нашем примере указан ip адрес влана 20 linux стэка хоста h4, где запущен
-dhcpd сервер.
+Ip address 192.168.20.2 is the address of H4 host where a DHCP server is running.
 
-## 7.1. Конфиг /etc/dhcp/dhcpd.conf
+## 7.1. DHCP server config /etc/dhcp/dhcpd.conf
 	
-Это пример dhcpd конфигурационного файла, в котором описаны настройки
-двух subscriber'ов. Dhcpd сервер слушает запросы на интерфейсе v3 (cеть 192.168.20.0)
-и идентифицирует двух тестовых subscriber'ов по их mac адресам.
+This is an exmaple of a DHCP server configuration file describing IP options for two subscribers.
+DHCP server is listening for requests on V3 interface and indentifies subscribers by their MAC addresses.
 
-	
+
 	#
 	# Global parameters
 	#
@@ -500,8 +498,6 @@ dhcpd сервер.
 	
 	}
 	
-	# 0 - hostname, 1 - host ip, 2 - host mac
-	
 	host c1 {
 	  hardware ethernet F8:32:E4:72:61:1B;
 	  fixed-address 10.10.0.12;
@@ -512,40 +508,40 @@ dhcpd сервер.
 	  fixed-address 10.10.0.11;
 	}
 	
-## 7.2. Маршрутизация DHCP ответов
+## 7.2. DHCP response routing
 
-Чтобы ответы dhcpd сервера успешно достигли своего назначения должен быть известен маршрут
-до сервера, который перенаправляет запросы в dhcpd. В нашем случае dhcpd запросы поступают
-с адреса 10.10.0.1 - это IP адрес всех динамических интерфейсов, настроенных по принципу ip
-unnumbered и, следовательно, имеющих одинаковый адрес. TheRouter перенаправлят dhcp запросы,
-приходящие от подписчиков через динамические интерфейсы, подставляя в них адрес 10.10.0.1,
-чтобы dhcpd сервер знал куда обратно следует отправлять ответы.
+In order dhcp server responses to successfully reach their destinations
+a dhcp server should know a route to dhcp relay server requests are coming from.
+In our example dhcp request are coming from ip address 10.10.0.1. This is the address
+assigned to all dynamic interfaces according to ip unnumbered scheme. TheRouter relay 
+dhcp requests of subsribers connected via dynamic interfaces and alter those requests 
+adding ip address 10.10.0.1 in them.
 
-Это иллюстрируют записи из лог файла dhcpd
+The following dhcpd log files entries illustares described scheme.
 
 	Aug 23 21:07:24 h4 dhcpd[2888]: DHCPREQUEST for 10.10.0.11 (192.168.20.2) from 00:88:65:36:39:4c via 10.10.0.1
 	Aug 23 21:07:24 h4 dhcpd[2888]: DHCPACK on 10.10.0.11 to 00:88:65:36:39:4c via 10.10.0.1
 
-в конце строки указано от какого сервера перенапавлен запрос: "via 10.10.0.1".
+The end of each log entry "via 10.10.0.1" indicates from which server a request was reseived.
 
-Поэтому на linux хосте h4 должен быть создан маршрут до адреса 10.10.0.1.
-Этот маршрут должен вести в TheRouter, а связь с ним выполнена через влан 20,
-поэтому маршрут выглядит вот так:
+Therefore there should be a route to the destination 10.10.0.1 on linux host H4.
+The route should point to TheRouter which is connected via vlan 20, so the route 
+should be added by the following command:
 
 	ip route add 10.10.0.1 via 192.168.20.1
 
-# 8. Настройка перенаправления заблокированных подписчиков на выделенный сайт
+# 8. Configuration of the redirecting unauthorized users traffic to a site
 
-Выполняется с помощью механизма PBR (Policy based routing) и описана в разделе
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков">Управление трафиком заблокированных подписчиков</a>
+Traffic redirection is implemented via PBR mechanism (Policy based routing) and described in
+the <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков">Control traffic of unauthorised user</a>
 
-# 9. Настройка NAT
+# 9. NAT configuration
 
-Настройки NAT описываются в отдельном файле, и загружаются отдельной директивой 
+NAT configuration is conntrolled by a separate configuration file which is defined by the following command:
 
 	npf load "/etc/npf.conf.bras_dhcp_relay"
 
-Файл /etc/npf.conf.bras_dhcp_relay
+File /etc/npf.conf.bras_dhcp_relay
 
 	map v3 netmap 10.111.0.0/29
 	
@@ -555,9 +551,11 @@ unnumbered и, следовательно, имеющих одинаковый адрес. TheRouter перенаправлят d
 	  pass stateful final on v3 all
 	}
 	
-Директива "map v3 netmap 10.111.0.0/29" настраивает NAT преобразование IP адресов источника всех пакетов (входящих,исходящих)
-интерфейса v3 в адреса из подсети 10.111.0.0/29. Алгоритм NAT статически связывает исходный адрес источника с новым адресом
-из заданной подсети 10.111.0.0/29 следующим образом:
-	новый адрес рассчивается как адрес 10.111.0.0 or (32 - 29 == 3 в cтепени 2 == 8) старшие 8 бит адреса исходного адреса.
+Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 
+v3 interface. Translation replace a source ip address with an address from the pool 10.111.0.0/29.
+The new address of a packet calculated by combining an original packet source address and the prefix 10.111.0.0/29:
 
-Т.е. один и тот же внутренний адрес (исходный) будет всегда преобразовываться в один и тот же внешний адрес.
+	new address is: 10.111.0.0 plus first 8 bits from an original address.
+	8 is calculated like this: 32 - 29 == 3 ^ 2 == 8
+
+According to that rule the same source ip address will always be tranlated to the same address from the defined address pool.
