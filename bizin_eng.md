@@ -1,10 +1,10 @@
 # First experience using TheRouter as core router in a service provider network
 
-A month ago, 15 may 2017 a decision was made to start the first production 	
+A month ago, 15 may 2017, a decision was made to start the first production 	
 operation of TheRouter software in a real network environment of a service provider
-network with more than 60 thousands of users.
+network with more than 60 thousands users.
 
-A new router running TheRouter software had to accomplish the following goals:
+A new server running TheRouter software had to accomplish the following tasks:
 
 - forwarding traffic between the BRAS cluster and the Google cache server;
 - forwarding traffic between the Google cache server and Internet via the border router;
@@ -12,10 +12,10 @@ A new router running TheRouter software had to accomplish the following goals:
 BGP peering with BRAS servers and the border router;
 - receipt a full bgp view/table from the border router;
 
-The whole experiment, the goals and a the_router place in the network were chosen  
-keeping in mind that the_router is still a very experimental software and it has not been used
+The whole experiment, the tasks and a the router place in the network were chosen  
+keeping in mind that the_router is still an experimental software and it has never been used
 in a real network environment before. The most important condition was to be able
-to stop/restart the_router without an impact to the network operations.
+to stop/restart the_router without an impact at the network operations.
 
 # TheRouter server
 

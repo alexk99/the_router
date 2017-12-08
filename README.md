@@ -33,8 +33,8 @@ It supports:
 
 # Production cases
 
-## "Bizin"
+## Bizin
 <a href="/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
 
-Bizin. First experience using TheRouter as a BGP core router in a internet service provider network.
+Bizin. The first experience using TheRouter as a BGP core router in an internet service provider network.
 Forwardind traffic between a BRAS cluster and a Google Cache Server.
