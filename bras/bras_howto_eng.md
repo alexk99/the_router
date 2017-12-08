@@ -412,9 +412,9 @@ port_id, svid, cvid
 
 ### 6.2.1. L2/L3 subscribers
 Detailed information about L2 subscriber sessions is located in 
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l2-connected-subscribers"
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l2-connected-subscribers">
 L2 connected subscribers</a>, and L3 connected subscriber detailed descriptions is in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l3-connected-subscribers"
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l3-connected-subscribers">
 L3 connected subscribers</a>
 
 Examples of our test BRAS L2/L3 subscribers sessions will be described below.
