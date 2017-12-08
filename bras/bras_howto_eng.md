@@ -361,8 +361,8 @@ Add the following lines to the /etc/raddb/dictionary
 ## 6.1. Dynamic "Vlan per subscriber" subscriber's interfaces
 
 The detailed description of "vlan per subscriber" dynamic interfaces is provided in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber".
-I am going to briefly describe them in the context of our test lab.
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber">vlan-per-subscriber</a>.
+I am going to briefly describe them according to the context of our test lab.
 
 Dynamic interfaces (dynamic VIF) are created automatically by the_router in a response
 to user traffic coming to a router port. They cannot be created by a user via rcli interface 
