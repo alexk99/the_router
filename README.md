@@ -39,10 +39,10 @@ Broadband Remote Access Server (BRAS) features:
 
 # Use cases
 
-<a href="/source_nat.md">Source NAT</a>
-<a href="/quagga_bgp.md">Dymamic routing. Quagga BGP</a>
-<a href="/link_bonding.md">Link bonding</a>
-<a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
+ * <a href="/source_nat.md">Source NAT</a>
+ * <a href="/quagga_bgp.md">Dymamic routing. Quagga BGP</a>
+ * <a href="/link_bonding.md">Link bonding</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
 # Production cases
 
