@@ -8,7 +8,7 @@ goals:
 
  * termination users QinQ ethernet vlans;
  * user authorization and authentication via RADIUS protocol;
- * redirection anauthorized users traffic to the a WEB server;
+ * redirection unauthorized  users traffic to the a WEB server;
  * shaping users traffic;
  * forwarding traffic based on routes received via BGP protocol;
  * SNAT - network adress translation of users source private ip addresses into a pool of public/white
@@ -22,8 +22,8 @@ instruction install DPDK and TheRouter on a machine running under Gentoo Linux o
 
 # 3. Test network scheme
 
-The test network consists of a linux host H4, the border router connected to internet and our clients/user/subscribers.
-The H4 host runs TheRouter and other programs requied for accomplishing our goals: Dhcpd, FreeRadius, Mysql, Quagga.
+The test network consists of a linux host H4, the border router connected to the internet and our clients/user/subscribers.
+The H4 host runs TheRouter and other programs required for accomplishing our tasks: Dhcpd, FreeRadius, Mysql, Quagga.
 Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 network/broadcast domain.
 
 ## 3.1. L2 network scheme
@@ -293,10 +293,10 @@ shared radius secret.
 	radius_client add src ip 192.168.20.1
 	radius_client set secret "secret"
 
-Src ip address must be assigned to the router's interface which
-connects the router with a RADIUS server. It is a v20 interface in this
-test lab, since it connects the_router with the linux host H4 
-where RADIUS server is running.
+The source ip address must be assigned to the router's interface which
+connects a router to a RADIUS server. It is a v20 interface in this
+test lab, since it connects the_router with the Linux host H4 
+where the RADIUS server is running.
 
 	# link with local linux host
 	vif add name v20 port 0 type dot1q cvid 20
@@ -312,11 +312,11 @@ Ip address 192.168.20.1 is configured on the linux side of vlan 20.
 ## 5.2. Radius server configuration 
 
 FreeRadius is used as a RADIUS server in this howto.
-The FreeRadius project has a very good documentations and the are a lot of configuration
+The FreeRadius project has a very good documentations and there are a lot of configuration
 examples available on the internet, so, excuse me for not providing any examples here.
 
-But, I will provide the text of the main SQL query that illusrates using of TheRouter specific
-radius attributes and, the text of TheRouter VAS dictionary is also provided.
+But, I will provide the text of the main SQL query that illustrates using of TheRouter specific
+radius attributes and the text of TheRouter VAS dictionary is also provided.
 
 /etc/raddb/sql/mysql/dialup.conf
 
@@ -328,11 +328,11 @@ radius attributes and, the text of TheRouter VAS dictionary is also provided.
 	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '24', '+=' \
 	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
 
-This SQL query is used by FreeRadius to query the data requied to form a radius responce
+This SQL query is used by FreeRadius to query the data required to form a radius response
 to a router's radius request to authorize a subscriber connected via a dedicated vlan.
 Mysql stored procedure GetIpoeUserService will calculate subscriber's ip address
 based on subscriber's vlan id and port number via it connected to the_router.
-The informatin provided in a radius reply will be used then by the_router to configure
+The information provided in a radius reply will be used then by the_router to configure
 subscribers routing using according to the ip unnumbered rules.
 
 The detailed description of the ip unnumberes rules is provided in the chapter
@@ -364,10 +364,10 @@ The detailed description of "vlan per subscriber" dynamic interfaces is provided
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber".
 I am going to briefly describe them in the context of our test lab.
 
-Dynamic interfaces (dynamic vif) are created automatically by the_router in a response
-to user traffic comming to a router port. They can not be created by a user via rcli interface 
-or by a command in a configuration file. In order the router to create a dynamic VIF it should
-be informed on which port number it should expect a user traffic that will trigger a dynamic vif creation.
+Dynamic interfaces (dynamic VIF) are created automatically by the_router in a response
+to user traffic coming to a router port. They cannot be created by a user via rcli interface 
+or by a configuration file command. In order the router to create a dynamic VIF it should
+be informed on which port number it should expect a user traffic that will trigger a dynamic VIF creation.
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
@@ -388,11 +388,11 @@ the case of ip unnumbered.
 		...
 
 The "sh subsc" command also ouputs a list of L2/L3 subscriber sessions, therefore some field values may be blank.
-For example, a dynamic vif "subsc ip" field is blank.
+For example, a dynamic VIF "subsc ip" field is blank.
 
 ### 6.1.2. Dynamic vif routing
 
-When a radius response to dynamic vif creation request includes radius VSA attribute "therouter_ip_unnumbered",
+When a radius response to dynamic VIF creation request includes radius VSA attribute "therouter_ip_unnumbered",
 TheRouter creates a route for a subscriber. Detailed description of this process is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Ответ-на-запрос-авторизации">
 Radius Authorization responce</a>.
@@ -436,12 +436,12 @@ L3 sessions are created on VIF v21:
 	vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs	
 
 The only difference between L2 and L3 subscriber sessions is that L2 sessions store
-subscriber's MAC address in addition to subsriber's ip address. Storing a MAC address 
-allows the_router (not implemented yet) to make sure that all packets going throw a session match sessions MAC address,
+subscriber's MAC address in addition to subscriber's ip address. Storing a MAC address 
+allows the_router (not implemented yet) to make sure that all packets going throw a session match the session MAC address,
 and to execute defined actions when a packet doesn't match a session.
 
-Authorazation of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
-but it doesn't require any IP conguration steps (assiging an ip address, creation an ip route).
+Authorization of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
+but it doesn't require any IP configuration steps (assigning an ip address, creation an ip route).
 
 L2/L3 sessions support shaping of traffic going through a session.
 
@@ -464,8 +464,8 @@ Ip address 192.168.20.2 is the address of H4 host where a DHCP server is running
 
 ## 7.1. DHCP server config /etc/dhcp/dhcpd.conf
 	
-This is an exmaple of a DHCP server configuration file describing IP options for two subscribers.
-DHCP server is listening for requests on V3 interface and indentifies subscribers by their MAC addresses.
+This is an example of a DHCP server configuration file describing IP options for two subscribers.
+DHCP server is listening for requests on V3 interface and identifies subscribers by their MAC addresses.
 
 
 	#
@@ -512,17 +512,17 @@ DHCP server is listening for requests on V3 interface and indentifies subscriber
 
 In order dhcp server responses to successfully reach their destinations
 a dhcp server should know a route to dhcp relay server requests are coming from.
-In our example dhcp request are coming from ip address 10.10.0.1. This is the address
-assigned to all dynamic interfaces according to ip unnumbered scheme. TheRouter relay 
-dhcp requests of subsribers connected via dynamic interfaces and alter those requests 
-adding ip address 10.10.0.1 in them.
+In our example, dhcp requests are coming from ip address 10.10.0.1. This is the address
+assigned to all dynamic interfaces according to ip unnumbered scheme. TheRouter relays 
+dhcp requests of subsribers connected via dynamic interfaces and alters those requests,
+adding ip address 10.10.0.1 to them.
 
 The following dhcpd log files entries illustares described scheme.
 
 	Aug 23 21:07:24 h4 dhcpd[2888]: DHCPREQUEST for 10.10.0.11 (192.168.20.2) from 00:88:65:36:39:4c via 10.10.0.1
 	Aug 23 21:07:24 h4 dhcpd[2888]: DHCPACK on 10.10.0.11 to 00:88:65:36:39:4c via 10.10.0.1
 
-The end of each log entry "via 10.10.0.1" indicates from which server a request was reseived.
+The end of each log entry "via 10.10.0.1" indicates from which server a request was received.
 
 Therefore there should be a route to the destination 10.10.0.1 on linux host H4.
 The route should point to TheRouter which is connected via vlan 20, so the route 
@@ -552,8 +552,8 @@ File /etc/npf.conf.bras_dhcp_relay
 	}
 	
 Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 
-v3 interface. Translation replace a source ip address with an address from the pool 10.111.0.0/29.
-The new address of a packet calculated by combining an original packet source address and the prefix 10.111.0.0/29:
+v3 interface. Translation replaces a source ip address with an address from the pool 10.111.0.0/29.
+The new address of a packet is calculated by combining an original packet source address and the prefix 10.111.0.0/29.
 
 	new address is: 10.111.0.0 plus first 8 bits from an original address.
 	8 is calculated like this: 32 - 29 == 3 ^ 2 == 8
