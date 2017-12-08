@@ -20,6 +20,15 @@ It supports:
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
 
+Broadband Remote Access Server (BRAS) features:
+
+ * IPoE L2/L3 connected subscribers
+ * IPoE vlan per subsriber with ip unnumbered adresses
+ * traffic shaping (Token bucket filter with extended burst value)
+ * DHCP relay
+ * redirect subsribers traffic based on multiple routing tables and PBR
+ * radius/coa
+
 # Install
 
  * <a href="/install.md">Gentoo Install</a>
@@ -30,6 +39,22 @@ It supports:
 
 # Use cases
 <a href="/use_cases.md">Use cases</a>
+
+## NAT
+
+### Source NAT
+<a href="/source_nat.md">Source NAT</a>
+
+## Dymamic routing
+
+### Quagga BGP
+<a href="/quagga_bgp.md">Quagga BGP</a>
+
+## Link bonding (aggregation)
+<a href="/link_bonding.md">Link bonding</a>
+
+## BRAS
+<a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
 # Production cases
 
