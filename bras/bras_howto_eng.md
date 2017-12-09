@@ -336,7 +336,7 @@ The information provided in a radius reply will be used then by the_router to co
 subscribers routing using according to the ip unnumbered rules.
 
 The detailed description of the ip unnumberes rules is provided in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber">Vlan per subscriber</a>
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 ### 5.2.2. FreeRadius dictionary
 
@@ -361,7 +361,7 @@ Add the following lines to the /etc/raddb/dictionary
 ## 6.1. Dynamic "Vlan per subscriber" subscriber's interfaces
 
 The detailed description of "vlan per subscriber" dynamic interfaces is provided in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#vlan-per-subscriber">vlan-per-subscriber</a>.
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">vlan-per-subscriber</a>.
 I am going to briefly describe them according to the context of our test lab.
 
 Dynamic interfaces (dynamic VIF) are created automatically by the_router in a response
@@ -394,7 +394,7 @@ For example, a dynamic VIF "subsc ip" field is blank.
 
 When a radius response to dynamic VIF creation request includes radius VSA attribute "therouter_ip_unnumbered",
 TheRouter creates a route for a subscriber. Detailed description of this process is provided in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Ответ-на-запрос-авторизации">
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#authorization-response">
 Radius Authorization responce</a>.
 
 Insure that a route has been created:
@@ -412,9 +412,9 @@ port_id, svid, cvid
 
 ### 6.2.1. L2/L3 subscribers
 Detailed information about L2 subscriber sessions is located in 
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l2-connected-subscribers">
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#l2-connected-subscribers">
 L2 connected subscribers</a>, and L3 connected subscriber detailed descriptions is in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#l3-connected-subscribers">
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#l3-connected-subscribers">
 L3 connected subscribers</a>
 
 Examples of our test BRAS L2/L3 subscribers sessions will be described below.
@@ -533,7 +533,7 @@ should be added by the following command:
 # 8. Configuration of the redirecting unauthorized users traffic to a site
 
 Traffic redirection is implemented via PBR mechanism (Policy based routing) and described in
-the <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management.md#Управление-трафиком-заблокированных-подписчиков">Control traffic of unauthorised user</a>
+the <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#unauthorised-subscribers-traffic-control">Unauthorised subscribers traffic control</a>
 
 # 9. NAT configuration
 

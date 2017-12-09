@@ -20,7 +20,7 @@ It supports:
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
 
-Broadband Remote Access Server (BRAS) features:
+## Broadband Remote Access Server (BRAS) features <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">(documentation)</a>:
 
  * IPoE L2/L3 connected subscribers
  * IPoE vlan per subsriber with ip unnumbered adresses
@@ -42,7 +42,8 @@ Broadband Remote Access Server (BRAS) features:
  * <a href="/source_nat.md">Source NAT</a>
  * <a href="/quagga_bgp.md">Dymamic routing. Quagga BGP</a>
  * <a href="/link_bonding.md">Link bonding</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
+ * BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
+ <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">docs</a>
 
 # Production cases
 
