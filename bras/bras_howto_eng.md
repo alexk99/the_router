@@ -8,7 +8,7 @@ goals:
 
  * termination users QinQ ethernet vlans;
  * user authorization and authentication via RADIUS protocol;
- * redirection unauthorized  users traffic to the a WEB server;
+ * redirection unauthorized  users traffic to a WEB server;
  * shaping users traffic;
  * forwarding traffic based on routes received via BGP protocol;
  * SNAT - network adress translation of users source private ip addresses into a pool of public/white
@@ -371,9 +371,9 @@ be informed on which port number it should expect a user traffic that will trigg
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
-When the_router receives on a port a packet that doesn't match any known VIF, the router
-creates a new dynamic interface provided that creation of the interfaces is allowed by the RADIUS
-protocol. Vlan id values for a new virtual interface will be gathered from the packet's ethernet header.
+When the_router receives on a port a packet that doesn't match any known VIFs, the router
+creates a new dynamic interface provided that creation of the interface is authorized by the RADIUS
+protocol. Vlan id values for the new virtual interface will be gathered from the packet's ethernet header.
 
 RADIUS request to authorize a creation of new dynamic VIF will contain data about subsriber's vlan.
 RADIUS response should contain the data requied to configure IP protocol for a new dynamic VIF and IP forwarding in
