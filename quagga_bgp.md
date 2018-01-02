@@ -21,31 +21,31 @@ will always go along the fast path right through the router's core to a destinat
 ## Using a separate network namespace
 
 Since linux host running TheRouter can be used for running other network related programs (for example dhcpd, radius, etc..)
-that use different NICs and network routes it would be very convinient to separate linux network stack and the TheRouter network
-enviroment completly. Linux network namespace is ideal solution for that task. TheRouter and Quagga/FRR will be running an one
-network space and linux and all programs it hosts will be running in the default network namespace. Therefore the dynamic routes 
-that Quagga/FRR creates for TheRouter will be in the dedicate routing table and will not mess with linux routes.
+that use different NICs and network different routes it would be very convinient to completly separate linux network stack and the TheRouter network
+enviroment. Linux network namespace is ideal solution for that task. TheRouter and Quagga/FRR will be running in one
+network space and linux and all standart programs it hosts will be running in the default network namespace. 
+Therefore the dynamic routes that Quagga/FRR creates for TheRouter will be installed in the dedicated routing table 
+and will not mess with linux routes.
 
-First, a network namespace should be created.
+First, a network namespace should be created:
 
 	ip netns add tr
 
-Second, run TheRouter and Quagga/FRR components (bgpd, ospfd, zebra) in the created namespace "tr" 
+Second, TheRouter and Quagga/FRR components (bgpd, ospfd, zebra) should be started in the created namespace "tr" 
 by using the following prexix for a startup command:
 
 	ip netns exec tr <command>
 
-For example, in order to run TheRouter in the "tr" network namespace it should be started using the command:
+For example, in order to run TheRouter in the network namespace named "tr" TheRouter should be started using the command:
 
 	ip netns exec tr \<route_path>\the_router --proc-type=primary -c 0xF --lcores=...
 
-Also, note than rcli command should be also executed in the "tr" namespace.
-So, it's very convinient to define a bash variable and use it instead of typing 'ip netns exec tr'
-before rcli.
+Also, note that rcli and telnet command for confiring TheRouter and Quagga should be also executed in the "tr" namespace.
+So, it's very convinient to define a bash variable and use it instead of typing 'ip netns exec tr' each time.
 
 	export rvrf="ip netns exec tr"
-	$rvrf ip link set up dev rkni_v3
-
+	$rvrf rcli sh ip route
+	$rvrf telnet localhost bgpd
 
 ## Quagga/FRR configuring
 
