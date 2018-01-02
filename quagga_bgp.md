@@ -92,7 +92,7 @@ Check out the routing table. There are only directly connected routes and a defa
 
 ### Start Zebra on the router's host using the following config file
 
- * zebra.conf
+zebra.conf
 
 	hostname h5
 	password xxx
@@ -102,7 +102,7 @@ Check out the routing table. There are only directly connected routes and a defa
 
 ### Start bgpd on the router's host using the following config file
 
- * bgpd.conf
+bgpd.conf
 
 	!
 	hostname h5
@@ -128,9 +128,9 @@ Let's take a cisco router and configure bgp on it:
 	  neighbor 10.0.0.1 remote-as 64512
 	  no auto-summary
 
-### Check TheRouter's routing table
+### Result
 
- * Let's check that we received a bgp route:
+Let's check out that we received a bgp route:
 
 	h5 / # $rvrf telnet localhost bgpd
 	Trying 127.0.0.1...
@@ -156,15 +156,15 @@ Let's take a cisco router and configure bgp on it:
 	
 	Displayed  1 out of 1 total prefixes
 
- * Then check our main routing table:
- 
-		h5 # $rvrf rcli sh ip route
-		10.0.0.0/24 C dev p0 src 10.0.0.1
-		10.12.0.0/24 via 10.0.0.3 dev p0 src 10.0.0.1
-		10.0.1.0/24 C dev p1 src 10.0.1.1
-		0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1	
-		
-	! We've got a new prefix 10.12.0.0/24
+Then check out the main routing table:
+
+	h5 # $rvrf rcli sh ip route
+	10.0.0.0/24 C dev p0 src 10.0.0.1
+	10.12.0.0/24 via 10.0.0.3 dev p0 src 10.0.0.1
+	10.0.1.0/24 C dev p1 src 10.0.1.1
+	0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1	
+
+! We've got a new prefix 10.12.0.0/24
 	
 ## OSFP
 
