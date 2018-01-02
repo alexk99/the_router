@@ -43,7 +43,7 @@ It supports:
 # Use cases
 
  * <a href="/source_nat.md">Source NAT</a>
- * <a href="/quagga_bgp.md">Dymamic routing. Quagga BGP</a>
+ * <a href="/quagga_bgp.md">Dymamic routing. Quagga and FRR</a>
  * <a href="/link_bonding.md">Link bonding</a>
  * BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
  <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">docs</a>
