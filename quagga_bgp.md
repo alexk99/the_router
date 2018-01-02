@@ -171,9 +171,10 @@ Let's set up a test network consisting of three routers: h4, h5 and c2.
 h4 and h5 are routers running TheRouter software, c2 is a cisco router.
 On each router an ip address is assigned to a loopback interface: h4 has 4.4.4.4
 address, h5 has 5.5.5.5 address and c2 has 2.2.2.2 address.
-Then we can use thouse addresses to establish iBGP connectivity. For example
-we establish a iBGP session beetween C2 and H5 using ip addresses assigned to loopback interfaces
-2.2.2.2 and 5.5.5.5
+Then we can use this addresses to establish iBGP connectivity. For example
+we will establish a iBGP session beetween C2 and H5 using ip addresses assigned to loopback interfaces
+2.2.2.2 and 5.5.5.5. Also C2 will annouce network 10.33.33.0/24 via iBGP peer with H5 to illustrate
+the using of loopback addresses.
 
 	h5 src # $rvrf telnet localhost zebra
 	h5>
