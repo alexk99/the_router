@@ -175,16 +175,15 @@ Then we can use thouse addresses to establish iBGP connectivity. For example
 we establish a iBGP session beetween C2 and H5 using ip addresses assigned to loopback interfaces
 2.2.2.2 and 5.5.5.5
 
-
-h5 src # $rvrf telnet localhost zebra
-h5>
-h5> sh ip route
-...
-O>* 2.2.2.2/32 [110/11] via 192.168.1.137, rkni_v3, 00:03:43
-...
-B>  10.33.33.0/24 [200/0] via 2.2.2.2 (recursive), 00:03:28
-  *                         via 192.168.1.137, rkni_v3, 00:03:28
-...
+	h5 src # $rvrf telnet localhost zebra
+	h5>
+	h5> sh ip route
+	...
+	O>* 2.2.2.2/32 [110/11] via 192.168.1.137, rkni_v3, 00:03:43
+	...
+	B>  10.33.33.0/24 [200/0] via 2.2.2.2 (recursive), 00:03:28
+	  *                         via 192.168.1.137, rkni_v3, 00:03:28
+	...
 
 ### Router h4 configuration
 
