@@ -167,4 +167,227 @@ Then check out the main routing table:
 ! We've got a new prefix 10.12.0.0/24
 	
 ## OSFP
+Let's set up a test network consisting of three routers: h4, h5 and c2.
+h4 and h5 are routers running TheRouter software, c2 is a cisco router.
+On each router an ip address is assigned to a loopback interface: h4 has 4.4.4.4
+address, h5 has 5.5.5.5 address and c2 has 2.2.2.2 address.
+Then we can use thouse addresses to establish iBGP connectivity. For example
+we establish a iBGP session beetween C2 and H5 using ip addresses assigned to loopback interfaces
+2.2.2.2 and 5.5.5.5
 
+
+h5 src # $rvrf telnet localhost zebra
+h5>
+h5> sh ip route
+...
+O>* 2.2.2.2/32 [110/11] via 192.168.1.137, rkni_v3, 00:03:43
+...
+B>  10.33.33.0/24 [200/0] via 2.2.2.2 (recursive), 00:03:28
+  *                         via 192.168.1.137, rkni_v3, 00:03:28
+...
+
+### Router h4 configuration
+
+h4 OSPF 
+
+	!
+	! Zebra configuration saved from vty
+	!   2017/12/28 23:21:54
+	!
+	hostname h4
+	password xxx
+	log file /var/log/quagga/ospfd.log
+	no banner motd
+	!
+	!
+	interface lo
+	!
+	interface rkni_v3
+	!
+	router ospf
+	 ospf router-id 192.168.1.112
+	 redistribute connected
+	 redistribute static
+	 network 4.4.4.4/32 area 0.0.0.0
+	 network 192.168.1.0/24 area 0.0.0.0
+	!
+	line vty
+	!
+
+h4 BGP
+
+	!
+	! Zebra configuration saved from vty
+	!   2017/12/29 17:21:26
+	!
+	hostname h4
+	password xxx
+	log syslog
+	!
+	router bgp 64512
+	 bgp router-id 192.168.1.112
+	 network 10.111.0.0/29
+	 neighbor 2.2.2.2 remote-as 64512
+	 neighbor 2.2.2.2 update-source 4.4.4.4
+	 neighbor 5.5.5.5 remote-as 64512
+	 neighbor 5.5.5.5 update-source 4.4.4.4
+	 neighbor 192.168.1.3 remote-as 64513
+	 exit
+	!
+	line vty
+	!	
+
+h4 TheRouter
+
+	startup {
+	  sysctl set mbuf 8192
+	  sysctl set log_level 7
+	
+	  # LAG (slave ports 0,1)
+	  port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	
+	  sysctl set global_packet_counters 1
+	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_size 65536
+	  sysctl set dynamic_vif_ttl 600
+	
+	  sysctl set dhcp_relay_enabled 1
+	}
+	
+	runtime {
+	  # loopback
+	  ip addr add 4.4.4.4/32 dev lo
+	
+	  # blackhole multicast addresses
+	  ip route add 224.0.0.0/4 unreachable
+	
+	  # home network link (vlan3)
+	  vif add name v3 port 0 type dot1q cvid 3 flags npf_on, kni
+	  ip addr add 192.168.1.112/24 dev v3
+	}
+
+### Router h5 configuration
+
+h5 OSPF
+
+	!
+	frr version 3.0
+	frr defaults traditional
+	!
+	hostname h5
+	password xxx
+	log file /var/log/frr/ospfd.log
+	no banner motd
+	!
+	!
+	interface lo
+	!
+	interface rkni_v3
+	!
+	router ospf
+	 ospf router-id 5.5.5.5
+	 redistribute connected
+	 redistribute static
+	 network 5.5.5.5/32 area 0
+	 network 192.168.1.0/24 area 0.0.0.0
+	!
+	line vty
+	!
+
+h5 BGP
+
+	!
+	frr version 3.0
+	frr defaults traditional
+	!
+	hostname h5
+	password xxx
+	log syslog
+	!
+	!
+	router bgp 64512
+	 bgp router-id 192.168.1.111
+	 neighbor 2.2.2.2 remote-as 64512
+	 neighbor 2.2.2.2 update-source 5.5.5.5
+	 neighbor 192.168.1.3 remote-as 64513
+	!
+	 vnc defaults
+	  response-lifetime 3600
+	  exit-vnc
+	!
+	!
+	ip prefix-list pl_norm_nets seq 5 permit 0.0.0.0/0 le 24
+	!
+	route-map rm_in permit 10
+	 match ip address prefix-list pl_norm_nets
+	!
+	route-map rm_in deny 20
+	!
+	line vty
+	!
+
+h5 TheRouter
+
+	h5 src # cat /etc/router_ospf_loopback.conf
+	startup {
+	  # mbuf mempool size
+	  sysctl set mbuf 8192
+	
+	  port 0 mtu 1500 tpid 0x8100 state enabled
+	  port 1 mtu 1500 tpid 0x8100 state enabled
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	
+	  rx_queue port 1 queue 0 lcore 1
+	  rx_queue port 1 queue 1 lcore 2
+	  rx_queue port 1 queue 2 lcore 3
+	
+	  sysctl set log_level 8
+	  sysctl set global_packet_counters 1
+	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_size 65536
+	  sysctl set dynamic_vif_ttl 600
+	  sysctl set vif_stat 1
+	}
+	
+	runtime {
+	  # loopback address
+	  ip addr add 5.5.5.5/32 dev lo
+	
+	  # blackhole multicast addresses
+	  ip route add 224.0.0.0/4 unreachable
+	
+	  vif add name v3 port 0 type dot1q cvid 3 flags kni
+	  ip addr add 192.168.1.111/24 dev v3
+	}
+
+### Router c2 configuration
+
+	interface Loopback0
+	 ip address 2.2.2.2 255.255.255.0
+	 ip ospf 1 area 0
+	 
+	...
+	
+	router ospf 1
+	 log-adjacency-changes
+	 redistribute connected
+	 redistribute static
+	 network 192.168.1.0 0.0.0.255 area 0.0.0.0
+	!
+	router bgp 64512
+	 no synchronization
+	 bgp log-neighbor-changes
+	 network 10.33.33.0 mask 255.255.255.0
+	 neighbor 4.4.4.4 remote-as 64512
+	 neighbor 4.4.4.4 update-source Loopback0
+	 neighbor 5.5.5.5 remote-as 64512
+	 neighbor 5.5.5.5 update-source Loopback0
+	 no auto-summary
+	!
