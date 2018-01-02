@@ -47,7 +47,7 @@ So, it's very convinient to define a bash variable and use it instead of typing 
 	$rvrf rcli sh ip route
 	$rvrf telnet localhost bgpd
 
-## Quagga/FRR configuring
+## Quagga/FRR installation
 
 Quagga or FRR must be complied with the --enable-fpm option.
 For example, if you are installing Quagga using sources then just run:
@@ -60,7 +60,7 @@ For example, if you are installing Quagga using sources then just run:
 
 ## BGP
 
-### Configuring TheRouter
+### Configure TheRouter
 
  * router.conf
 
@@ -73,21 +73,20 @@ Note that "kni" flag is used.
 		..
 	}
 
- * start TheRouter
+ * create a network namespace and set up the loopback interface
+
+	ip netns add tr
+	export rvrf="ip netns exec tr"
+	$rvrf ip link set up lo
+
+ * start TheRouter and setup kni interfaces
 
 Each kni interface should be set up after the router has started.
 
 	router_run.sh /etc/router.conf
-	ip netns exec tr ip link set up lo
-	ip netns exec tr ip link set up rkni_p0
-
-or
-
-	router_run.sh /etc/router.conf
-	$rvrf ip link set up lo
 	$rvrf ip link set up rkni_p0
 
- * Check a routing table. There are only directly connected routes and a default route.
+ * Check a routing table. There are only directly connected routes and a default route:
 
 	h5 # $rvrf rcli sh ip route
 	10.0.0.0/24 C dev p0 src 10.0.0.1
