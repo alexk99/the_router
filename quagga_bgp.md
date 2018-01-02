@@ -62,8 +62,6 @@ For example, if you are installing Quagga using sources then just run:
 
 ### Configure TheRouter
 
- * router.conf
-
 Note that "kni" flag is used.
 
 	runtime {
@@ -73,20 +71,19 @@ Note that "kni" flag is used.
 		..
 	}
 
- * create a network namespace and set up the loopback interface
+Create a network namespace and set up the loopback interface:
 
 	ip netns add tr
 	export rvrf="ip netns exec tr"
 	$rvrf ip link set up lo
 
- * start TheRouter and setup kni interfaces
-
-Each kni interface should be set up after the router has started.
+Start TheRouter and setup kni interfaces.
+Each kni interface should be set up after the router has started:
 
 	router_run.sh /etc/router.conf
 	$rvrf ip link set up rkni_p0
 
- * Check a routing table. There are only directly connected routes and a default route:
+Check out the routing table. There are only directly connected routes and a default route there:
 
 	h5 # $rvrf rcli sh ip route
 	10.0.0.0/24 C dev p0 src 10.0.0.1
