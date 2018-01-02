@@ -1,4 +1,6 @@
-<img class="center" src="http://therouter.net/images/r.png">
+<div class="center">
+<img src="http://therouter.net/images/r.png">
+</div>
 
 # Work in progress.. Stay tuned.
 
