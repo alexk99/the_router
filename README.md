@@ -1,4 +1,4 @@
-<img src="http://therouter.net/images/r.png">
+<center><img src="http://therouter.net/images/r.png"></center>
 
 # Work in progress.. Stay tuned.
 
