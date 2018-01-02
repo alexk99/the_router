@@ -1,6 +1,6 @@
-<div class="center">
-<img src="http://therouter.net/images/r.png">
-</div>
+<p align="center">
+  <img src="http://therouter.net/images/r.png" />
+</p>
 
 # Work in progress.. Stay tuned.
 
