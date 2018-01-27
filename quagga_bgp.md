@@ -1,6 +1,6 @@
 # Dynamic routing. Integration with Quagga or FRR.
 
-Integration with Quagga is built on using Kernel network interfaces (KNI) on the DPDK side 
+Integration with Quagga/FRR is built on using Kernel network interfaces (KNI) on the DPDK side 
 and <a href="http://www.nongnu.org/quagga/docs/docs-multi/zebra-FIB-push-interface.html">zebra FIB push interface</a> 
 on the quagga's side.
 

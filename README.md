@@ -11,7 +11,7 @@ TheRouter is a software packet router based on <a href="http://dpdk.org/">DPDK</
 Using modern software technique such as QSBR, lockless data structures and
 <a href="https://github.com/efficient/libcuckoo">cuckoo hashing</a> enables 
 the router to perform routing (<a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">up tp 32Mpps</a>)
-and NAT (<a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">up to 6 Mpps"</a>) 
+and NAT (<a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">up to 6 Mpps</a>) 
 on high packet rates using commodity hardware.
 
 ## It supports
@@ -26,11 +26,6 @@ on high packet rates using commodity hardware.
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
 
-## Perfomance tests
-
- * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT perfomance benchmarks</a>
-
 ## Broadband Remote Access Server (BRAS) features 
 
  * IPoE L2/L3 connected subscribers
@@ -42,6 +37,11 @@ on high packet rates using commodity hardware.
 
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
+
+## Perfomance tests
+
+ * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT perfomance benchmarks</a>
 
 # Install
 
