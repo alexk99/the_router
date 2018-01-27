@@ -34,5 +34,25 @@ Test have showed that TheRouter is capable of forwarding up to 32Mpps traffic of
 In more complicated test scenario when router was configured with LACP bonding port and 800k routes were installed into
 its FIB it showed result of 23 Mpps with zero packet loss (test 17.1 and 17.7)
 
+# Hardware configuration
+
+## PktGen H3 machine
+ * Processor: Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+ * NIC: Intel X520-DA2
+ * Ram: 8Gb DDR3
+	
+## PktGen H5 machine
+ * Processor: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz
+ * NIC: Intel X520-DA2
+ * Ram: 8Gb DDR3
+	
+## TheRouter R machine
+ * Processor: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
+ * NIC: Intel XL710 40GbE
+ * Ram: 32Gb 4x8
+
+## AR1 switch
+ * Arista 7050S-64
+
 # Full results table:
  - <a href="http://therouter.net/images/tests/routing_tests/27_01_2018/router_test_21.01.2018_routing_test1_wo_borders.html">html table</a>
