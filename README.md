@@ -34,7 +34,6 @@ on high packet rates using commodity hardware.
  * DHCP relay
  * redirect subsribers traffic based on multiple routing tables and PBR
  * radius/coa
-
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
