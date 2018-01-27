@@ -1,7 +1,7 @@
 # Routing performance evaluation tests
 
-To evaluation maximum performance capability of TheRouter number of test was conducted.
-Performed tests tred to cover dirrent types of ipv4 traffic and load that a router can face
+To evaluate maximum performance capability of TheRouter number of test was conducted.
+Performed tests tried to cover dirrent types of ipv4 traffic and load that a router might face
 in a real network. 
 
 To generate test traffic PktGen software was used. PktGen is DPDK based stateless packet generator 
