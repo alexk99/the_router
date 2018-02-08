@@ -37,10 +37,10 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
-## Perfomance tests
+## Performance tests
 
  * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT perfomance benchmarks</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT performance benchmarks</a>
 
 # Install
 
@@ -64,4 +64,4 @@ on high packet rates using commodity hardware.
 <a href="/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
 
 Bizin. The first experience using TheRouter as a BGP core router in an internet service provider network.
-Forwardind traffic between a BRAS cluster and a Google Cache Server.
+Forwarding traffic between a BRAS cluster and a Google Cache Server.
