@@ -16,7 +16,7 @@ on high packet rates using commodity hardware.
 
 ## It supports
 
- * ipv4 static and <a href="/quagga_bgp.md">dynamic routing</a>. Dynamic routing is based on integration with <a href="http://www.nongnu.org/quagga">Quagga Routing Suite</a> or <a href="https://frrouting.org/">FRRouting</a>
+ * ipv4 static and <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md">dynamic routing</a>. Dynamic routing is based on integration with <a href="http://www.nongnu.org/quagga">Quagga Routing Suite</a> or <a href="https://frrouting.org/">FRRouting</a>
  * dot1q and qinq ethernet encapsulations
  * ip unnumbered 
  * arp, proxy arp
@@ -44,24 +44,24 @@ on high packet rates using commodity hardware.
 
 # Install
 
- * <a href="/install.md">Gentoo Install</a>
- * <a href="/ubuntu_install.md">Ubuntu 16.04 Install</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/install.md">Gentoo Install</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ubuntu_install.md">Ubuntu 16.04 Install</a>
 
 # Configuration
-<a href="/conf_options.md">Configuration</a>
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md">Configuration</a>
 
 # Use cases
 
- * <a href="/source_nat.md">Source NAT</a>
- * <a href="/quagga_bgp.md">Dymamic routing. Quagga and FRR</a>
- * <a href="/link_bonding.md">Link bonding</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">Source NAT</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md">Dymamic routing. Quagga and FRR</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/link_bonding.md">Link bonding</a>
  * BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
  <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">docs</a>
 
 # Production cases
 
 ## Bizin
-<a href="/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
+<a href="https://github.com/alexk99/the_router/blob/master/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
 
 Bizin. The first experience using TheRouter as a BGP core router in an internet service provider network.
 Forwarding traffic between a BRAS cluster and a Google Cache Server.
