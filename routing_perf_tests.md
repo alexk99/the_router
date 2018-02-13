@@ -1,21 +1,21 @@
 # Routing performance evaluation tests
 
-To evaluate maximum performance capability of TheRouter number of test was conducted.
-Performed tests tried to cover dirrent types of ipv4 traffic and load that a router might face
+To evaluate the maximum performance capability of TheRouter number of test were conducted.
+Performed tests tried to cover dirrent types of ipv4 traffic and a load that the router might face
 in a real network. 
 
-To generate test traffic PktGen software was used. PktGen is DPDK based stateless packet generator 
-capable of creation traffic with different parameters
-practically on wire speed. Main traffic parameters that was covered by tests are:
+To generate test traffic PktGen software was used. PktGen is a DPDK based stateless packet generator 
+capable of creating traffic with different parameters
+practically on wire speed. Main traffic parameters that were covered by tests are:
  - pps - packet per second
  - packet size
  - number of ip flows
 
-Also different TheRouter configurations was tested that were differed by:
+Also, different TheRouter configurations were tested and differed by:
  - number of routes
  - port configuration
 
-In order to put more pressure on TheRouter several different network schemes was tested:
+In order to put more pressure on TheRouter several different network schemes were tested:
  - unidirection traffic tests
  - bidirection traffic tests
  - 4-directional traffic tests
@@ -28,7 +28,7 @@ In order to put more pressure on TheRouter several different network schemes was
 <img src="http://therouter.net/images/tests/routing_tests/27_01_2018/4dir_tests.png">
 
 # Results
-Test have showed that TheRouter is capable of forwarding up to 32Mpps traffic of 64 bytes packets with 0 packet loss 
+Tests have showed that TheRouter is capable of forwarding up to 32Mpps traffic of 64 bytes packets with 0 packet loss 
 (test 14.3 in the table with full results below). 
 
 In more complicated test scenario when router was configured with LACP bonding port and 800k routes were installed into
