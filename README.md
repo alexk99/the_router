@@ -29,7 +29,7 @@ on high packet rates using commodity hardware.
 ## Broadband Remote Access Server (BRAS) features 
 
  * IPoE L2/L3 connected subscribers
- * IPoE vlan per subsriber with ip unnumbered adresses
+ * IPoE vlan per subsriber with ip unnumbered addresses
  * traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
  * redirect subsribers traffic based on multiple routing tables and PBR
