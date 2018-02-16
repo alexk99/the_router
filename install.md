@@ -181,11 +181,13 @@ Download the patches:
 
  * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch_dpdk_16.07.patch">dpdk log subsystem patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/16.07/net_bond_mempool_fix_16.07.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/bond_fix_mtu_16.07.patch">net bond fix mtu patch</a>
 
 Apply the patches:
 
 		cat ./log_patch_dpdk_16.07.patch | patch -p2
 		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
+		cat ./bond_fix_mtu_16.07.patch | patch -p1
 
 Run the following commands:		
 
