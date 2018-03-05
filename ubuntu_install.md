@@ -126,7 +126,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 		cd libnpf/net
 		rm ./npf.h
 		ln -s ../../kern/npf.h npf.h		
-		cd ..
+		cd ../..
 		
 		export DESTDIR=/
 		export LIBDIR=/usr/lib64
