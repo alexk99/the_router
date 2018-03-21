@@ -53,13 +53,15 @@
 	  fpm route table map add green rtable green
 	  fpm route table map add red rtable red
 	
-	  # create hashes
+	  # create sets containing VIF identificators
 	  u32set create l2set_green size 4096 bucket_size 16
 	  u32set create l2set_red size 4096 bucket_size 16
 	
+	  # create PBR rules
 	  ip pbr rule add prio 10 u32set l2set_green type "l2" table green
 	  ip pbr rule add prio 20 u32set l2set_red type "l2" table red
 	
+	  # fill l2 sets
 	  l2set add l2set_green port 0 svid 0 cvid 11
 	  l2set add l2set_green port 0 svid 0 cvid 13
 	
@@ -70,7 +72,7 @@
 
 ## Router post start script
 
-### Note: !! change MAC address 
+### Note: change MAC addresses
 
 	# Enslave L3 interfaces to a VRF device
 	$rns ip link set up address 68:05:CA:30:61:80 master green dev rkni_v11
