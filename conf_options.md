@@ -340,6 +340,34 @@ the configuration file.
 	* NPF_ANY_CONN_NEW
 	* NPF_ANY_CONN_ESTABLISHED
 
+Example:
+	
+	startup {
+		...
+	
+		# any protocol timeouts (UDP)
+		sysctl set NPF_ANY_CONN_CLOSED 2
+		sysctl set NPF_ANY_CONN_NEW 30
+		sysctl set NPF_ANY_CONN_ESTABLISHED 60
+		
+		# TCP timeouts
+		sysctl set NPF_TCPS_CLOSED 10
+		sysctl set NPF_TCPS_SYN_SENT 30
+		sysctl set NPF_TCPS_SIMSYN_SENT 30
+		sysctl set NPF_TCPS_SYN_RECEIVED 60
+		sysctl set NPF_TCPS_ESTABLISHED 600
+		sysctl set NPF_TCPS_FIN_SENT 240
+		sysctl set NPF_TCPS_FIN_RECEIVED 240
+		sysctl set NPF_TCPS_CLOSE_WAIT 45
+		sysctl set NPF_TCPS_FIN_WAIT 60
+		sysctl set NPF_TCPS_CLOSING 30
+		sysctl set NPF_TCPS_LAST_ACK 30
+		sysctl set NPF_TCPS_TIME_WAIT 120
+	
+		...
+	}
+
+
 ### Other commands
 
  * shutdown
