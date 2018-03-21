@@ -4,21 +4,11 @@ Here are the installations steps for Gentoo Linux.
 
 ## Install the following utilities and libs:
 
- * git
-
 		emerge git
-
- * rpm
-
 		emerge rpm
-
- * svn
-
 		emerge subversion
-
- * libpcap
- 
 		emerge libpcap
+		emerge sys-process/numactl
 
 ## Install Proplib
 
@@ -228,13 +218,6 @@ Run the following commands:
  <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.version">latest the_router.6cores.dpdk.17.11.1 verion</a>
 
  * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.tar.gz">the_router.latest.6cores.dpdk.17.11.1.tar.gz</a>
- 
- #### old xeon cpu: X5355, X5650, etc..
- 
- !  Note: this version supports maximum 6 cores cpu. 
- <a href="http://therouter.net/downloads/the_router.latest.6cores.old_xeon.dpdk.17.11.1.version">the_router.latest.6cores.old_xeon.dpdk.17.11.1 verion</a> 
- 
- * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.old_xeon.dpdk.17.11.1.tar.gz">the_router.latest.6cores.old_xeon.dpdk.17.11.1.tar.gz</a> 
 
 ### Install TheRouter 
 
