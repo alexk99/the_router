@@ -1,6 +1,6 @@
 # FRR VRF test lab
 
-<img src="http://therouter.net/images/frr_vrf_test_lab.png">
+<img src="http://therouter.net/images/frr_vrf_test_lab.jpg">
 
 ## Setup linux VRF
 
