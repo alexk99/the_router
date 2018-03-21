@@ -188,15 +188,15 @@ the configuration file.
 		
  * l2set add
 
-		rcli l2set add <u32set_name> port <port_number> <svid> <cvid>
+		rcli l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
  * l2set del
 
-		rcli l2set del <u32set_name> port <port_number> <svid> <cvid>
+		rcli l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
 		
  * l2set test
 
-		rcli l2set test <u32set_name> port <port_number> <svid> <cvid>
+		rcli l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
 		
 
 ### PBR rules
@@ -321,6 +321,24 @@ the configuration file.
  * npf clear stat
 
 		rcli npf clear stat
+
+#### NPF sysctl variables controlling connection tracking state timeouts
+
+	* NPF_TCPS_CLOSED
+	* NPF_TCPS_SYN_SENT
+	* NPF_TCPS_SIMSYN_SENT
+	* NPF_TCPS_SYN_RECEIVED
+	* NPF_TCPS_ESTABLISHED
+	* NPF_TCPS_FIN_SENT
+	* NPF_TCPS_FIN_RECEIVED
+	* NPF_TCPS_CLOSE_WAIT
+	* NPF_TCPS_FIN_WAIT
+	* NPF_TCPS_CLOSING
+	* NPF_TCPS_LAST_ACK
+	* NPF_TCPS_TIME_WAIT
+	* NPF_ANY_CONN_CLOSED
+	* NPF_ANY_CONN_NEW
+	* NPF_ANY_CONN_ESTABLISHED
 
 ### Other commands
 
