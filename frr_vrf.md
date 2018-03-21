@@ -18,54 +18,55 @@
 
 ### Router's conf
 
-startup {
-  # mbuf mempool size
-  sysctl set mbuf 8192
+	startup {
+	  # mbuf mempool size
+	  sysctl set mbuf 8192
+	
+	  port 0 mtu 1500 tpid 0x8100 state enabled
+	
+	  rx_queue port 0 queue 0 lcore 1
+	  rx_queue port 0 queue 1 lcore 2
+	  rx_queue port 0 queue 2 lcore 3
+	}
+	
+	runtime {
+	  # loopback address
+	  ip addr add 5.5.5.5/32 dev lo
+	
+	  vif add name v11 port 0 type dot1q cvid 11 flags kni
+	  ip addr add 10.1.0.1/24 dev v11
+	
+	  vif add name v12 port 0 type dot1q cvid 12 flags kni
+	  ip addr add 10.2.0.1/24 dev v12
+	
+	  vif add name v13 port 0 type dot1q cvid 13 flags kni
+	  ip addr add 10.3.0.1/24 dev v13
+	
+	  vif add name v14 port 0 type dot1q cvid 14 flags kni
+	  ip addr add 10.4.0.1/24 dev v14
+	
+	  # create additional route tables
+	  ip route table add green
+	  ip route table add red
+	
+	  # create mappings between linux VRF names and router's additional route table names
+	  fpm route table map add green rtable green
+	  fpm route table map add red rtable red
+	
+	  # create hashes
+	  u32set create l2set_green size 4096 bucket_size 16
+	  u32set create l2set_red size 4096 bucket_size 16
+	
+	  ip pbr rule add prio 10 u32set l2set_green type "l2" table green
+	  ip pbr rule add prio 20 u32set l2set_red type "l2" table red
+	
+	  l2set add l2set_green port 0 svid 0 cvid 11
+	  l2set add l2set_green port 0 svid 0 cvid 13
+	
+	  l2set add l2set_red port 0 svid 0 cvid 12
+	  l2set add l2set_red port 0 svid 0 cvid 14
+	}
 
-  port 0 mtu 1500 tpid 0x8100 state enabled
-
-  rx_queue port 0 queue 0 lcore 1
-  rx_queue port 0 queue 1 lcore 2
-  rx_queue port 0 queue 2 lcore 3
-}
-
-runtime {
-  # loopback address
-  ip addr add 5.5.5.5/32 dev lo
-
-  vif add name v11 port 0 type dot1q cvid 11 flags kni
-  ip addr add 10.1.0.1/24 dev v11
-
-  vif add name v12 port 0 type dot1q cvid 12 flags kni
-  ip addr add 10.2.0.1/24 dev v12
-
-  vif add name v13 port 0 type dot1q cvid 13 flags kni
-  ip addr add 10.3.0.1/24 dev v13
-
-  vif add name v14 port 0 type dot1q cvid 14 flags kni
-  ip addr add 10.4.0.1/24 dev v14
-
-  # create additional route tables
-  ip route table add green
-  ip route table add red
-
-  # create mappings between linux VRF names and router's additional route table names
-  fpm route table map add green rtable green
-  fpm route table map add red rtable red
-
-  # create hashes
-  u32set create l2set_green size 4096 bucket_size 16
-  u32set create l2set_red size 4096 bucket_size 16
-
-  ip pbr rule add prio 10 u32set l2set_green type "l2" table green
-  ip pbr rule add prio 20 u32set l2set_red type "l2" table red
-
-  l2set add l2set_green port 0 svid 0 cvid 11
-  l2set add l2set_green port 0 svid 0 cvid 13
-
-  l2set add l2set_red port 0 svid 0 cvid 12
-  l2set add l2set_red port 0 svid 0 cvid 14
-}
 
 ## Router post start script
 
