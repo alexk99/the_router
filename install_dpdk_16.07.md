@@ -1,33 +1,24 @@
 # Install
 
-Here are the installations steps for Ubuntu 16.04.
+Here are the installations steps for Gentoo Linux.
 
 ## Install the following utilities and libs:
 
-	apt install g++
-	apt install libjemalloc-dev
-	apt install libpcap-dev
-	apt install python
-	apt install libpcre2-8-0
-	apt install autoconf
-	apt install zlib1g-dev
-	apt install flex
-	apt install byacc
-	apt install cmake
-	apt install libtool
-	apt install libtool-bin
-	apt install subversion
-	apt install rpm
-	apt install libreadline6 libreadline6-dev
+ * git
 
-## Install libcap
+		emerge git
 
-	wget http://www.tcpdump.org/release/libpcap-1.5.3.tar.gz
-	tar xzvf ./libpcap-1.5.3.tar.gz
-	cd ./libpcap-1.5.3/
-	./configure
-	make
-	make install
+ * rpm
+
+		emerge rpm
+
+ * svn
+
+		emerge subversion
+
+ * libpcap
+ 
+		emerge libpcap
 
 ## Install Proplib
 
@@ -59,15 +50,6 @@ Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0
 		make all
 		make install
 
-Notes: install process ends successfully even if it indicates that there has been the following error:
-
-	make -C man install
-	make[1]: Entering directory '/home/alex/libcdb/man'
-	make[1]: *** No rule to make target 'install'.  Stop.
-	make[1]: Leaving directory '/home/alex/libcdb/man'
-	Makefile:5: recipe for target 'install' failed
-	make: *** [install] Error 2	
-
 ## Install qsbr
 
  * Download <a href="http://therouter.net/downloads/libqsbr.tar.gz">libqsbr.tar.gz</a>
@@ -91,7 +73,6 @@ Notes: install process ends successfully even if it indicates that there has bee
  * Download <a href="http://therouter.net/downloads/sljit-0.92.tgz">sljit-0.92.tgz</a>
  * Execute the following commands:
 
-		mkdir /usr/lib64
 		tar xzvf ./bpfjit.tar.gz
 		tar xzvf ./sljit-0.92.tgz
 		cd ./bpfjit/sljit/
@@ -119,33 +100,18 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 		cp city.h /usr/local/include/
 
+ * Install jemalloc
+
+		emerge jemalloc
+
  * Run the following commands:
  
 		cd npf/src
-		
-		cd libnpf/net
-		rm ./npf.h
-		ln -s ../../kern/npf.h npf.h		
-		cd ../..
-		
-		export DESTDIR=/
 		export LIBDIR=/usr/lib64
 		export INCDIR=/usr/local/include
 		export MANDIR=/usr/local
 		make
 		make install
-
-## Update system library paths
-
- Add the following lines to the /etc/ld.so.conf.d/router.conf
-
-		/usr/lib64
-		/usr/local/lib
-		/usr/lib/x86_64-linux-gnu
-
- Run
-
-		ldconfig
 
 ## Install DPDK
 
@@ -167,13 +133,9 @@ Notes: install process ends successfully even if it indicates that there has bee
 		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
 * Turn on linux boot time options:
-	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
+	- If you use grub edit /boot/grub/grub.conf and appent the following options:
 	
-			GRUB_CMDLINE_LINUX="intel_idle.max_cstate=1 isolcpus=1,2,3,4,5,6,7,9,10,11,12,13,14,15 default_hugepagesz=2M hugepagesz=2M hugepages=3072"
-
-	- Run
-		
-			update-grub
+			intel_idle.max_cstate=1 isolcpus=1,2,3 default_hugepagesz=2M hugepagesz=2M hugepages=3072
 
 	- Note:
 		You might want to isolate a different set of cores or reserve different amount of ram for huge pages 
@@ -206,27 +168,26 @@ Notes: install process ends successfully even if it indicates that there has bee
 	- Mount hugepages
 	
 			mount huge
+		
+* download dpdk 16.07
 
-* download dpdk 17.11.1 (LTS)
-
-		wget https://fast.dpdk.org/rel/dpdk-17.11.1.tar.xz
-		tar xvf dpdk-17.11.1.tar.xz
-		cd ./dpdk-stable-17.11.1
+		wget http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
+		tar xvf dpdk-16.07.tar.xz
+		cd ./dpdk-16.07
 		
 ### Patch DPDK
 
 Download the patches:
 
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/eal_log.patch">eal log patch</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_fix_mtu.patch">net bond fix mtu patch</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_lacp_fix_mempool_size.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch_dpdk_16.07.patch">dpdk log subsystem patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/net_bond_mempool_fix_16.07.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/bond_fix_mtu_16.07.patch">net bond fix mtu patch</a>
 
 Apply the patches:
 
-		cat ./eal_log.patch | patch -p1
-		cat ./bond_fix_mtu.patch | patch -p1
-		cat ./bond_lacp_fix_mempool_size.patch | patch -p1
-		
+		cat ./log_patch_dpdk_16.07.patch | patch -p2
+		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
+		cat ./bond_fix_mtu_16.07.patch | patch -p1
 
 Run the following commands:		
 
@@ -238,21 +199,26 @@ Run the following commands:
  
 ### Install dependencies
 
+ * Quagga
+
+		emerge -v quagga
+
  * Download quagga sources <a href="http://therouter.net/downloads/quagga-1.0.20160315.tar.xz">quagga-1.0.20160315.tar.xz</a>
 	
 		tar xvf ./quagga-1.0.20160315.tar.xz
 
- * city hash
+ * PCRE2
 
-		git clone https://github.com/google/cityhash
-		cd ./cityhash/
+		emerge libpcre2
+ 
+ * libcuckoo
+
+		git clone https://github.com/efficient/libcuckoo
+		cd libcuckoo
+		autoreconf -fis
 		./configure
-		make all check CXXFLAGS="-g -O3"
+		make
 		make install
-
- Notes: libcityhash should be compiled as dynamic library, but the steps above create a static link lib.
- I haven't so far figured why, so as a workaroung you can download already compiled lib <a href="http://therouter.net/downloads/libcityhash.so.0.0.0">libcityhash.so.0.0.0</a>
- and copy it to /usr/local/lib/libcityhash.so.0.0.0
 
 ### Download TheRouter 
 
@@ -270,7 +236,7 @@ Run the following commands:
  
  * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.old_xeon.dpdk.16.07.tar.gz">the_router.latest.6cores.old_xeon.dpdk.16.07.tar.gz</a> 
 
-### Install TheRouter
+### Install TheRouter 
 
  * Run the following commands:
  
@@ -291,10 +257,28 @@ Run the following commands:
 		# loading kni module 
 		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
 
-* Bind your NIC's to DPDK by using $RTE_SDK/usertools/dpdk-devbind.py
+* Bind your NIC's to DPDK either by using the commands below or by 
+  running the $RTE_SDK/tools/dpdk-devbind.py. If you are going to run 
+  the following commands make sure you are using your own NIC PCI
+  addresses in the echo commands
 
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.1
+	- Down linux interfaces of NIC you are goiing to bind to dpdk, for example:
+	
+			ip link set down enp1s0f0
+			ip link set down enp1s0f0
+
+	- Unbind NIC's from linux
+	
+			# replace 0000:01:00.0 with your own address.
+			# use lspci to determine it.
+			echo 0000:01:00.0 > /sys/bus/pci/drivers/ixgbe/unbind
+			echo 0000:01:00.1 > /sys/bus/pci/drivers/ixgbe/unbind
+
+	- Bind NIC's to the DPDK driver
+	
+			# replace "8086 10fb" with your own addres
+			# echo vendor device (lspci -n)
+			echo "8086 10fb" > /sys/bus/pci/drivers/igb_uio/new_id
 
 ### Run TheRouter
 

@@ -207,26 +207,25 @@ Notes: install process ends successfully even if it indicates that there has bee
 	
 			mount huge
 
-* download dpdk 17.11.1 (LTS)
+* download dpdk 16.07
 
-		wget https://fast.dpdk.org/rel/dpdk-17.11.1.tar.xz
-		tar xvf dpdk-17.11.1.tar.xz
-		cd ./dpdk-stable-17.11.1
+		wget http://fast.dpdk.org/rel/dpdk-16.07.tar.xz
+		tar xvf dpdk-16.07.tar.xz
+		cd ./dpdk-16.07
 		
 ### Patch DPDK
 
 Download the patches:
 
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/eal_log.patch">eal log patch</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_fix_mtu.patch">net bond fix mtu patch</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_lacp_fix_mempool_size.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/log_patch_dpdk_16.07.patch">dpdk log subsystem patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/net_bond_mempool_fix_16.07.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/16.07/bond_fix_mtu_16.07.patch">net bond fix mtu patch</a>
 
 Apply the patches:
 
-		cat ./eal_log.patch | patch -p1
-		cat ./bond_fix_mtu.patch | patch -p1
-		cat ./bond_lacp_fix_mempool_size.patch | patch -p1
-		
+		cat ./log_patch_dpdk_16.07.patch | patch -p2
+		cat ./net_bond_mempool_fix_16.07.patch | patch -p2
+		cat ./bond_fix_mtu_16.07.patch | patch -p1
 
 Run the following commands:		
 
@@ -291,10 +290,10 @@ Run the following commands:
 		# loading kni module 
 		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
 
-* Bind your NIC's to DPDK by using $RTE_SDK/usertools/dpdk-devbind.py
+* Bind your NIC's to DPDK either by using $RTE_SDK/tools/dpdk-devbind.py
 
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.1
+		$RTE_SDK/tools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0
+		$RTE_SDK/tools/dpdk-devbind.py --bind=igb_uio 0000:02:00.1
 
 ### Run TheRouter
 
