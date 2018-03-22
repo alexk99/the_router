@@ -367,6 +367,16 @@ Example:
 		...
 	}
 
+### NPF NAT events (IPFIX)
+
+ * Enable nat events 
+
+		sysctl set ipfix_nat_events 1
+
+
+ * Setup ipfix collector
+
+		ipfix_collector addr 192.168.20.2
 
 ### Other commands
 
