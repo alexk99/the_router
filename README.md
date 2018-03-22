@@ -25,6 +25,7 @@ on high packet rates using commodity hardware.
  * statefull and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
+ * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
 
 ## Broadband Remote Access Server (BRAS) features 
 
