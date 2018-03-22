@@ -367,7 +367,7 @@ Example:
 		...
 	}
 
-### NPF NAT events (IPFIX)
+### NAT events logging via IPFIX
 
  * Enable nat events 
 
