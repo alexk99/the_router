@@ -83,12 +83,12 @@ TheRouter VRRP group state
 
 ## 2) Changing priority.
 
-Changing priority to a value less then other's VRRP router,
+Changing priority to a value less then other VRRP router priority value
 should trigger a new master election.
 
 	rcli vrrp group 10 dev v3 prio 50
 
-TheRouter has transitioned to backup state, and cisco became a master router.
+TheRouter has transitioned to a backup state and cisco became a master router.
 
 	h5 ~ # rcli sh vrrp
 	vif v3 (port 0, vid 0.3, type 0) - group 10
@@ -101,7 +101,9 @@ TheRouter has transitioned to backup state, and cisco became a master router.
 	  master router is 192.168.1.91, priority is 100
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.804 sec
-	
+
+Cisco
+
 	R1#sh vrrp
 	FastEthernet0/0 - Group 10
 	  State is Master
