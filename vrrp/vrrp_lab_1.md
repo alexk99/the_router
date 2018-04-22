@@ -119,6 +119,8 @@ Cisco
 
 ## 3) Enabling/disabling
 
+Disable the_router vrrp group 10 on interface v3.
+
 	h5 ~ # rcli vrrp group 10 dev v3 disable
 	h5 ~ #
 	h5 ~ # rcli sh vrrp
@@ -204,7 +206,7 @@ Turn on preemtion mode. It will allow the_router to become a master.
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.414 sec
 
-5) Router link failure.
+# 5) Router link failure.
 
 Deletion a virtual link in the GNS project will create a split brain situation.
 And both routers become a master router.
