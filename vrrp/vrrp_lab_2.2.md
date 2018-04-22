@@ -14,7 +14,7 @@ the same machine h5. Host c6 is a network namespace on the machine h4.
 	export c4ns="ip netns exec c4"
 	export c5ns="ip netns exec c5"
 
-<img src="http://therouter.net/images/vrrp/lab_2_2.png">
+<img src="http://therouter.net/images/vrrp/lab_2_2.jpg">
 
 ## 1) Initial configuration.
 
