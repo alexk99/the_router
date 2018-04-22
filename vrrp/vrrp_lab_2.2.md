@@ -6,8 +6,15 @@ running on the vlan 5. C5 and C6 are hosts that use a virtual router as
 a default gateway. C5's default gateway is virtual router group 10 and C6's default
 gateway is group 11. Groups 10 and 11 use two different ipv4 subnets 10.0.5.0/24 and 
 10.0.55.0/24. Also there is a C4 host to test that VRRP works ok and C5 and C6 are
-able to communicate with C4.
+able to communicate with it.
 
+Note: hosts c4 and c5 are not dedicated hosts but different network namespaces ($c4ns and c5ns) on
+the same machine h5. Host c6 is a network namespace on the machine h4.
+
+	export c4ns="ip netns exec c4"
+	export c5ns="ip netns exec c5"
+
+<img src="http://therouter.net/images/vrrp/lab_2_2.png">
 
 ## 1) Initial configuration.
 
@@ -269,7 +276,7 @@ Check the_router vrrp state.
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.414 sec
 
-Dump traffic on host c4 to make sure that all come through the_router
+Dump traffic on host c4 to make sure that all packets come through the_router
 
 	h5 ~ # $c4ns tcpdump -e -n -i vlan4
 	dropped privs to tcpdump
