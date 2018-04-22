@@ -149,8 +149,8 @@ TheRouter VRRP group state
 
 ## 2) Checking connectivity
 
-Make sure that initiall configuratio is ok and hosts c5 and c6 are able to ping
-their default gataways (virtual router group 10 and 11) and to ping host c4.
+Below are some commands to make sure that the initial configuration is ok and hosts c5 and c6 are able to ping
+theirs default gateway (virtual router group 10 and 11) and they are able to ping host c4.
 
 ### c5
 
@@ -213,10 +213,10 @@ their default gataways (virtual router group 10 and 11) and to ping host c4.
 
 ## Failover
 
-### Initial state. TheRouter is a master for group 10 and arista is a master for group 11.
+### Initial state. TheRouter is group 10 master and arista is a master for group 11.
 
-Dump traffic on host c4 to make sure that traffic originated on C5 comes through the_router
-and traffic originated on c6 comes throuht arista.
+Get a traffic dump on host c4 on vlan4 to make sure that packets originated on C5 comes through the_router
+and packets originated on c6 comes throuht arista.
 
 	h5 ~ # $c4ns tcpdump -e -n -i vlan4
 	dropped privs to tcpdump
@@ -239,8 +239,9 @@ ICMP requests from C6 (10.0.55.5) have source MAC address 00:1c:73:4d:de:45 that
 
 ### Failover. 
 
-Block a switch port to which R2 (arista) is connected.
-Now h5 the_router should become a master for group 11 and both hosts c5 and c6 should have it as a default gateway.
+After blocking a switch port R2 (arista) is connected to,
+h5 the_router should become a master also for group 11, and traffic from both hosts c5 and c6
+will go through it.
 
 	DGS-1510-28X/ME:admin#config ports 28 state disable
 	Command: config ports 28 state disable
