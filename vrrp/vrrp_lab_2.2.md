@@ -16,7 +16,7 @@ the same machine h5. Host c6 is a network namespace on the machine h4.
 
 <img src="http://therouter.net/images/vrrp/lab_2_2.jpg">
 
-## 1) Initial configuration.
+## 1. Initial configuration.
 
 	Arista's config:
 
@@ -147,7 +147,7 @@ TheRouter VRRP group state
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.414 sec
 
-## 2) Checking connectivity
+## 2. Checking connectivity
 
 Below are some commands to make sure that the initial configuration is ok and hosts c5 and c6 are able to ping
 theirs default gateway (virtual router group 10 and 11) and they are able to ping host c4.
@@ -211,7 +211,7 @@ theirs default gateway (virtual router group 10 and 11) and they are able to pin
 	5 packets transmitted, 4 received, 20% packet loss, time 12ms
 	rtt min/avg/max/mdev = 0.163/0.169/0.186/0.018 ms, ipg/ewma 3.071/0.168 ms
 
-## Failover
+## 3. Failover
 
 ### Initial state. TheRouter is group 10 master and arista is a master for group 11.
 
