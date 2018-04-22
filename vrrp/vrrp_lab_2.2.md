@@ -6,7 +6,7 @@ running on the vlan 5. C5 and C6 are hosts that use a virtual router as
 a default gateway. C5's default gateway is virtual router group 10 and C6's default
 gateway is group 11. Groups 10 and 11 use two different ipv4 subnets 10.0.5.0/24 and 
 10.0.55.0/24. Also there is a C4 host to test that VRRP works ok and C5 and C6 are
-able to communicate with it.
+able to communicate with C4.
 
 Note: hosts c4 and c5 are not dedicated hosts but different network namespaces ($c4ns and c5ns) on
 the same machine h5. Host c6 is a network namespace on the machine h4.
@@ -215,8 +215,8 @@ theirs default gateway (virtual router group 10 and 11) and they are able to pin
 
 ### Initial state. TheRouter is group 10 master and arista is a master for group 11.
 
-Get a traffic dump on host c4 on vlan4 to make sure that packets originated on C5 comes through the_router
-and packets originated on c6 comes throuht arista.
+Get a traffic dump on host c4 on vlan4 to make sure that packets originated on C5 come through the_router
+and packets originated on c6 come through arista.
 
 	h5 ~ # $c4ns tcpdump -e -n -i vlan4
 	dropped privs to tcpdump
@@ -240,7 +240,7 @@ ICMP requests from C6 (10.0.55.5) have source MAC address 00:1c:73:4d:de:45 that
 ### Failover. 
 
 After blocking a switch port R2 (arista) is connected to,
-h5 the_router should become a master also for group 11, and traffic from both hosts c5 and c6
+h5 the_router should become a master for group 11, and traffic from both hosts c5 and c6
 will go through it.
 
 	DGS-1510-28X/ME:admin#config ports 28 state disable
