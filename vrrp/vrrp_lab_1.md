@@ -206,7 +206,7 @@ Turn on preemtion mode. It will allow the_router to become a master.
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.414 sec
 
-# 5) Router link failure.
+## 5) Router link failure.
 
 Deletion a virtual link in the GNS project will create a split brain situation.
 And both routers become a master router.
