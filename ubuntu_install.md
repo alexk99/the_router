@@ -220,13 +220,14 @@ Download the patches:
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/eal_log.patch">eal log patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_fix_mtu.patch">net bond fix mtu patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_lacp_fix_mempool_size.patch">net bond mempool patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/ip_fragmentation_table.patch">ip fragmentation table patch</a>
 
 Apply the patches:
 
 		cat ./eal_log.patch | patch -p1
 		cat ./bond_fix_mtu.patch | patch -p1
 		cat ./bond_lacp_fix_mempool_size.patch | patch -p1
-		
+		cat ./ip_fragmentation_table.patch | patch -p1
 
 Run the following commands:		
 
