@@ -38,6 +38,12 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
+## Road map
+
+ * VRRP - end of may 2018
+ * IPv6 - september, october 2018
+ * Netflow (IPFIX) - december 2018
+
 ## Performance tests
 
  * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
