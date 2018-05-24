@@ -19,6 +19,7 @@ Here are the installations steps for Ubuntu 16.04.
 	apt install subversion
 	apt install rpm
 	apt install libreadline6 libreadline6-dev
+	apt install libnuma-dev
 
 ## Install libcap
 
