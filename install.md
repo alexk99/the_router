@@ -173,6 +173,7 @@ Download the patches:
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_fix_mtu.patch">net bond fix mtu patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_lacp_fix_mempool_size.patch">net bond mempool patch</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/ip_fragmentation_table.patch">ip fragmentation table patch</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/17.11.1/bond_add_remove_mac_addr.patch">bond_add_remove_mac_addr patch</a>
 
 Apply the patches:
 
@@ -180,6 +181,7 @@ Apply the patches:
 		cat ./bond_fix_mtu.patch | patch -p1
 		cat ./bond_lacp_fix_mempool_size.patch | patch -p1
 		cat ./ip_fragmentation_table.patch | patch -p1
+		cat ./bond_add_remove_mac_addr.patch | patch -p1
 
 Run the following commands:		
 
