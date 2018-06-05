@@ -46,7 +46,8 @@ Assign global ip6 address 2001:470::24e6:3555:bcec:4100 on interface v3.
 	    30:61:80
 	    ec:41:0
 
-DAD for 2001:470::24e6:3555:bcec:4100 is over. The address now is a preffered address.
+DAD for 2001:470::24e6:3555:bcec:4100 is over. The address now is a preffered address
+has an infinite lifetime.
 
 	h5 ~ # rcli sh ipv6 addr
 	vif v3
@@ -60,12 +61,12 @@ DAD for 2001:470::24e6:3555:bcec:4100 is over. The address now is a preffered ad
 
 ## 3. Assigning duplicate link-local address.
 
-Let's manually assign to v3 the link-local address that belongs to another node.
+Let's manually assign to v3 the link-local address belonging to another node.
 
 	rcli ipv6 addr link-local fe80::24e6:3555:bcec:4a36 dev v3
 
 DAD failed. The link-local address state becomes DUPLICATE - flags DUP.
-The ipv6 interface v3 state becomes STALLED. All global address state become TEN.
+The ipv6 interface v3 state becomes STALLED. All global address states become TEN.
 
 	h5 ~ # rcli sh ipv6 addr
 	vif v3
@@ -87,7 +88,7 @@ interface v3 and starts DAD procedure for it. Once DAD for link-local address is
 and address has been proven to be unique the_router start DAD procedure for all global TENTATIVE
 addresses assigned to the same interface.
 	
-All DAD procedures are completed. All addresses are preffered.
+All DAD procedures are completed. All addresses are preffered (flags PREF)
 	
 	h5 ~ # rcli sh ipv6 addr
 	vif v3
@@ -100,7 +101,7 @@ All DAD procedures are completed. All addresses are preffered.
 	    ec:41:0
 	    30:61:80
 
-## 5. Assign a global address using EUI-64
+## 5. Assign a global address using a prefix and EUI-64 interface id
 
 	rcli ipv6 addr add 2001:470::0/64 eui-64 dev v3
 
