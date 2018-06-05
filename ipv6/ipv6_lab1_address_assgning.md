@@ -2,7 +2,7 @@
 
 lab#1 test network consists of the_router and a host supporting ipv6
 
-## 1 Enable ipv6 on the_router on interface v3
+## 1. Enable ipv6 on the_router on interface v3
 
 	rcli ipv6 enable dev v3; rcli sh ipv6 addr
 
@@ -30,7 +30,7 @@ DAD is over. The link-local address now is a preffered address.
 	    30:61:80
 
 
-## 2 Assigning a global address
+## 2. Assigning a global address
 
 	rcli ipv6 addr add 2001:470::24e6:3555:bcec:4100/64 dev v3; rcli sh ipv6 addr
 
@@ -58,7 +58,7 @@ DAD for 2001:470::24e6:3555:bcec:4100 is over. The address now is a preffered ad
 	    30:61:80
 	    ec:41:0
 
-## 3 Assigning duplicate link-local address.
+## 3. Assigning duplicate link-local address.
 
 Let's manually assign to v3 the link-local address that belongs to another node.
 
@@ -78,7 +78,7 @@ The ipv6 interface v3 state becomes STALLED. All global address state become TEN
 	    ec:41:0
 	    ec:4a:36
 
-## 4 Assign EUI-64 link-local address 
+## 4. Assign EUI-64 link-local address 
 
 	rcli ipv6 addr link-local fe80::24e6:3555:bcec:4a36 dev v3
 
@@ -100,7 +100,7 @@ All DAD procedures are completed. All addresses are preffered.
 	    ec:41:0
 	    30:61:80
 
-## 5 Assign a global address using EUI-64
+## 5. Assign a global address using EUI-64
 
 	rcli ipv6 addr add 2001:470::0/64 eui-64 dev v3
 
@@ -117,7 +117,7 @@ Command generates a global address using the given prefix and the interface eui-
 	    30:61:80
 	    ec:41:0
 
-## 6 Delete a global address
+## 6. Delete a global address
 
 	rcli ipv6 addr del 2001:470::24e6:3555:bcec:4100/64 dev v3
 	
