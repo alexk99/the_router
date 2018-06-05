@@ -38,6 +38,15 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
+## VRRP - WIP
+
+ * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_1.md">Lab #1 results</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_2.2.md">Lab #2 results</a>
+
+## IPV6 - WIP
+
+ * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab1_address_assgning.md">Lab #1 results</a>
+
 ## Road map
 
  * VRRP - end of may 2018
