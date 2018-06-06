@@ -81,7 +81,7 @@ The ipv6 interface v3 state becomes STALLED. All global address states become TE
 
 ## 4. Assign EUI-64 link-local address 
 
-	rcli ipv6 addr link-local fe80::24e6:3555:bcec:4a36 dev v3
+	rcli ipv6 addr link-local eui-64 dev v3
 
 The command above gerenerates a link-local address using EUI-64 procedure, assigns it the
 interface v3 and starts DAD procedure for it. Once DAD for link-local address is completed
