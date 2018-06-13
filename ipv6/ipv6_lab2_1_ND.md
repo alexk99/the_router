@@ -64,8 +64,8 @@ has been completed successfuly and the RECHABLE entry has been created.
 ## 3. STALE neighbor cache entry state
 
 A rechable entry becomes stale when there are no packets interested in it.
-This happens after about half of the entry TTL time has been expired.
-Then, after another half TTL entry has been expired the entry is deleted
+This happens after about half of the entry TTL time is expired.
+Then, after the other half TTL the entry will be deleted
 provided that there is still no traffic. 
 
 Stale entry is a neighbor cache
@@ -89,7 +89,7 @@ Wait another half TTL. Entry is deleted.
 ## 4. Updating STALE entries
 
 Create a STALE entry by executing the ping command and waiting the half TTL.
-Then ping the ipv6 address again, it entry will become rechable again.
+Then ping the ipv6 address again, the entry will become rechable again.
 	
 	h5 ~ # rcli ping6 -w -c4 fe80::d6ca:6dff:fe7c:d0dc
 	Ping fe80::d6ca:6dff:fe7c:d0dc 56(84) bytes of data.
