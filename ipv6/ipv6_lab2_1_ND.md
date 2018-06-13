@@ -2,19 +2,22 @@
 
 lab#1 test network consists of the_router and a host supporting ipv6
 
-## 0. The neighbor cache is empty
+## 0. Initial state
+
+The neighbor cache is empty
 
 	h5 ~ # rcli sh ipv6 arp
 	vif     ip      mac     state   flags
 	flags: R - isRouter, P - probing, S - static
 
-## 1. ping nonexistent ipv6 address. INCOMPLETE neighbor cache entries.
+## 1. INCOMPLETE neighbor cache entry state
 
-A neihgbor cache entry with INCOMPLETE state is created.
-Incomplete entry lives as long as the probing process has not finished.
+Ping nonexistent ipv6 address command is executed.
+A neighbor cache entry with INCOMPLETE state is created.
+An incomplete entry lives as long as the probing process has not finished.
 During the probing process a number of Neigbor Solicitation 
-messages is sent then if a Neighbor Advertisement messages is received 
-the entry's state is changed to RECHABLE or the entry is deleted.
+messages is sent. Then if a reply Neighbor Advertisement message is received 
+the entry's state is changed to the RECHABLE state or the entry is deleted.
 
 	h5 ~ # rcli ping6 -c1 fe80::d6ca:6dff:fe7c:d0d1
 	Ping fe80::d6ca:6dff:fe7c:d0d1 56(84) bytes of data.
@@ -38,10 +41,12 @@ Entry fe80::d6ca:6dff:fe7c:d0d1 is deleted:
 	vif     ip      mac     state   flags
 	flags: R - isRouter, P - probing, S - static
 
-## 2. Ping an existing IPv6 address. RECHABLE neighbor cache entries.
+## 2. RECHABLE neighbor cache entry state
+
+Ping an existing IPv6 address.
 
 The probing process for ip6 address fe80::d6ca:6dff:fe7c:d0dc 
-has been completed succesfuly and the RECHABLE entry has been created.
+has been completed successfuly and the RECHABLE entry has been created.
 
 	h5 ~ # rcli ping6 -c1 fe80::d6ca:6dff:fe7c:d0dc
 	Ping fe80::d6ca:6dff:fe7c:d0dc 56(84) bytes of data.
@@ -56,24 +61,25 @@ has been completed succesfuly and the RECHABLE entry has been created.
 	flags: R - isRouter, P - probing, S - static
 	port 0, vid 0.3, type 0 fe80::d6ca:6dff:fe7c:d0dc       D4:CA:6D:7C:D0:DC       reachable       P
 
-## 3. STALE entries.
+## 3. STALE neighbor cache entry state
 
 A rechable entry becomes stale when there are no packets interested in it.
 This happens after about half of the entry TTL time has been expired.
 Then, after another half TTL entry has been expired the entry is deleted
-provided that there is still no traffic. Stale entry is a neighbor cache
-entry that stores the link-layer address that might be outdated, but it is
+provided that there is still no traffic. 
+
+Stale entry is a neighbor cache
+entry that has the link-layer address that might be outdated, but it
 still can be used.
 
-Let's wait some time and output the neibour cache after ping command 
-from step 2.
+Ping ipv6 address fe80::d6ca:6dff:fe7c:d0dc, wait the half TTL and output the neihgbor cache
 	
 	h5 ~ # rcli sh ipv6 arp
 	vif     ip      mac     state   flags
 	flags: R - isRouter, P - probing, S - static
 	port 0, vid 0.3, type 0 fe80::d6ca:6dff:fe7c:d0dc       D4:CA:6D:7C:D0:DC       stale   P
 
-Let's wait again. Entry is deleted.
+Wait another half TTL. Entry is deleted.
 
 	h5 ~ # rcli sh ipv6 arp
 	vif     ip      mac     state   flags
@@ -83,7 +89,7 @@ Let's wait again. Entry is deleted.
 ## 4. Updating STALE entries
 
 Create a STALE entry by executing the ping command and waiting the half TTL.
-Then ping the ipv6 address again it entry will become rechable again.
+Then ping the ipv6 address again, it entry will become rechable again.
 	
 	h5 ~ # rcli ping6 -w -c4 fe80::d6ca:6dff:fe7c:d0dc
 	Ping fe80::d6ca:6dff:fe7c:d0dc 56(84) bytes of data.
@@ -124,12 +130,11 @@ Then ping the ipv6 address again it entry will become rechable again.
 
 ## 5. Stale entries 2.
 
-Replying to echo request packets is not implemented yet.
+Replying to the echo request packets is not implemented yet.
 So, when a ipv6 enabled host pings a router's ipv6 address it
-will not get echo reply back, but it will get router MAC address in it's cache.
+will not get echo replies back, but it will get router's MAC address in it's cache.
 And the_router itself creates a neigbor cache entry for the host originated 
-ping packets. Created neighbor cache entry according to the RFC 4861 
-will have STALE state
+ping packets. Created neighbor cache entry will have STALE state according to the RFC 4861.
 
 on a windos machine that have fe80::24e6:3555:bcec:4a36 ipv6 address
 
