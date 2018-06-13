@@ -1,4 +1,4 @@
-# IPV6 Lab #2.1. Testing the Neigbor discoverty protocol and the neigbor cache states.
+# IPV6 Lab #2.1. Testing the Neighbor discovery protocol and the neigbor cache states.
 
 lab#1 test network consists of the_router and a host supporting ipv6
 
