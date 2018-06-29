@@ -218,10 +218,7 @@ Run the following commands:
 
  #### x86_64
 
- !  Note: this version supports maximum 6 cores cpu. 
- <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.version">latest the_router.6cores.dpdk.17.11.1 verion</a>
-
- * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.tar.gz">the_router.latest.6cores.dpdk.17.11.1.tar.gz</a>
+* Download <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.47.tar.gz">the_router.6cores.dpdk.17.11.1.dev.a0.47.tar.gz</a>
 
 ### Install TheRouter 
 

@@ -64,7 +64,7 @@ has been completed successfuly and the RECHABLE entry has been created.
 ## 3. STALE neighbor cache entry state
 
 A rechable entry becomes stale when there are no packets interested in it.
-This happens after about half of the entry TTL time is expired.
+This happens after about half of the entry TTL time is ellapsed.
 Then, after the other half TTL the entry will be deleted
 provided that there is still no traffic. 
 
