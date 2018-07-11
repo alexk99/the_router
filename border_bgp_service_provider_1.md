@@ -1,9 +1,9 @@
 # TheRouter as a border router in a service provider network
 
-TheRouter as a border router in a service provider network One of several border 
-router running under linux was replaced by TheRouter since there were not enough 
-resources to handle current traffic uning Linux kernel. TheRouter installed even 
-on a very cheap hardware now forwards traffic without any problem.
+One of several border router running under linux was replaced by TheRouter since 
+there were not enough resources to handle current traffic uning Linux kernel. 
+TheRouter installed even on a very cheap hardware now forwards traffic without 
+any problem.
 
 TheRouter is connected to a core switch using LACP link aggregation port (4x10G) 
 and forwards traffic between several VLANs according to the routing table 
