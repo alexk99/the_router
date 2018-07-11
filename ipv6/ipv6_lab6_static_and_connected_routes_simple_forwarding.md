@@ -81,7 +81,7 @@ to access internet via ipv6 protocol.
 	rtt min/avg/max/mdev = 0.102/0.137/0.238/0.059 ms
 
 
-### Ping an internet host
+### 4.1. Ping an internet host
 
 	h5 ~ # $c4ns ping6 2a02:6b8::2:242
 	PING 2a02:6b8::2:242(2a02:6b8::2:242) 56 data bytes

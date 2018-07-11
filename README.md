@@ -4,8 +4,6 @@
 
 # Work in progress.. Stay tuned.
 
-
-
 # TheRouter
 TheRouter is a software packet router based on <a href="http://dpdk.org/">DPDK</a> an <a href="https://github.com/alexk99/npf">NPF libraries.</a>
 Using modern software technique such as QSBR, lockless data structures and
@@ -37,6 +35,11 @@ on high packet rates using commodity hardware.
  * radius/coa
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
+
+## News
+
+ * Another production case - <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">
+ TheRouter as a BGP border router in a service provider network</a>
 
 ## VRRP - WIP
 
@@ -81,3 +84,8 @@ on high packet rates using commodity hardware.
 
 Bizin. The first experience using TheRouter as a BGP core router in an internet service provider network.
 Forwarding traffic between a BRAS cluster and a Google Cache Server.
+
+## TheRouter as a BGP border router in a service provider network
+
+<a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">
+ TheRouter as a BGP border router in a service provider network</a>
