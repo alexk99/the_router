@@ -48,7 +48,11 @@ on high packet rates using commodity hardware.
 
 ## IPV6 - WIP
 
- * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab1_address_assgning.md">Lab #1 results</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab1_address_assgning.md">Lab #1. IPV6 address assigning commands</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab2_1_ND.md">Lab #2. Neighbor discovery protocol and the neigbor cache states</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab6_static_and_connected_routes_simple_forwarding.md">Lab #3. Static and connected ipv6 routes</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_bgp_lab.md">Lab #4. IPv6 BGP</a>
+ 
 
 ## Road map
 
