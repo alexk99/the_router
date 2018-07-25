@@ -7,7 +7,7 @@ Host C5 is directly connected to router C4 and injects ipv6 full table
 into C4 using perl script bgp_simple.pl. C4 is connected to H5 TheRouter
 and forward it's full ipv6 routing table to TheRouter.
 
-<img src="http://therouter.net/images/ipv6/ipv6 lab3.png">
+<img src="http://therouter.net/images/ipv6/ipv6 lab4 bgp.png">
 
 ## 1. H5 (TheRouter) config
 
