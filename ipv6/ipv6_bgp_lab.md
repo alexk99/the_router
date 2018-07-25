@@ -1,7 +1,7 @@
 # IPV6 Lab #4. BGP.
 
-lab#4 test network consists of linux router C4 running linux and FRR,
-the_router and the host C5. 
+lab#4 test network consists of a router C4 running linux and FRR,
+the_router and a host C5. 
 
 Host C5 is directly connected to router C4 and injects ipv6 full table 
 into C4 using perl script bgp_simple.pl. C4 is connected to H5 TheRouter
@@ -164,14 +164,13 @@ and forward it's full ipv6 routing table to TheRouter.
 	46331
 	
 	h5 ~ # $rvrf rcli sh ipv6 route | head
-	2605:a401:80e2::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2a00:1950::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2804:49c:3104::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2a02:26f0:b400::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2604:3e40::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2605:8000:90::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2804:14d:7e80::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2804:14d:5cd6::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2a02:b48:8102::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-	2a01:2b0:2000:155::/0 via fe80::62a4:4cff:fe41:a24 dev v4
-		
+	2605:a401:80e2::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2a00:1950::/32 via fe80::62a4:4cff:fe41:a24 dev v4
+	2804:49c:3104::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2a02:26f0:b400::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2604:3e40::/32 via fe80::62a4:4cff:fe41:a24 dev v4
+	2605:8000:90::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2804:14d:7e80::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2804:14d:5cd6::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2a02:b48:8102::/48 via fe80::62a4:4cff:fe41:a24 dev v4
+	2a01:2b0:2000:155::/64 via fe80::62a4:4cff:fe41:a24 dev v4
