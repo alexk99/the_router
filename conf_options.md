@@ -588,4 +588,67 @@ an interface
 
 		ipv6 nd ra prefix add <prefix/length> dev <vif_name>
 
-  Deletes a prefix to Router Advertisement messages sent from an interface		
+  Deletes a prefix from Router Advertisement messages sent from an interface		
+
+## IPv6 sysctl variables
+
+ * nd_retrans_timer
+
+  The time in milliseconds between retransmissions of Neighbor
+  Solicitation messages to a neighbor when
+  resolving the address or when probing the
+  reachability of a neighbor.
+
+ * fib6_max_route_tables
+
+  Max number of ipv6 routing tables
+
+ * fib6_max_routes
+
+  Max number of ipv6 routes entries
+
+ * fib6_max_next_hops
+
+  Max number of ipv6 next hop entries
+
+ * fib6_max_lpm_tbl8
+
+  Max number of lpm6 tbl8. See https://doc.dpdk.org/guides/prog_guide/lpm6_lib.html
+
+ * fib6_max_num_local_ip_addrs
+
+  Max number if ipv6 addresses assigned at interfaces
+
+ * max_num_solicited_node_addrs
+
+  Max number of solicited node addresses
+
+ * nd_neighbor_cache_size
+
+  ipv6 neighbor cache size
+
+ * nd_neighbor_cache_entry_ttl
+
+  ipv6 neigbour cache entry time to live. Seconds.
+
+ * icmp6_packet_rate
+
+  Icmpv6 error transmission rate in packets per seconds.
+
+ * icmp6_transmission_burst
+
+  Max number of icmpv6 error messages that could be send at once
+
+ * icmp6_num_buckets
+
+  Num icmp6 buckets
+
+ * max_rtr_solicitation_delay
+
+  number of seconds to delay the transmission of router solicitation messages
+
+ * dad_attempts
+
+  Number of attempts for Duplicate address detection algorithm
+
+
