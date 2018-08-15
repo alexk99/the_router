@@ -416,11 +416,176 @@ Example:
 
 		ipv6 enable dev <vif_name>
 
-  Enables IPv6 protocol on the interface, create link-local address using eui-64 scheme
+  Enables IPv6 protocol on an interface, create link-local address using eui-64 scheme
 
  * ipv6 disable
 
 		ipv6 disable dev <vif_name>
 
-  Disables IPv6 protocol on the interface. Delete all addresses and routes depending on the interface
+  Disables IPv6 protocol on the interface. Delete all addresses and routes depending on an interface
 
+* sh ipv6 addr
+
+		sh ipv6 addr
+
+  Outputs ipv6 addresses assignes to interfaces
+
+ * ipv6 address add eui-64
+
+		ipv6 address add eui-64 <prefix>/<length> eui-64 dev <vif_name>
+
+  Generates an address using prefix and interface id (EUI64 scheme) and assign the address to
+an interface
+
+ * ipv6 address add
+
+		ipv6 address add <address>/<length> dev <vif_name>
+
+  Assigns the given ipv6 address to an interface
+
+ * ipv6 address link-local
+
+		ipv6 address link-local <address>/<length> dev <vif_name>
+
+  Assigns the given ipv6 link-local address to an interface
+
+ * ipv6 address link-local eui-64
+
+		ipv6 address link-local eui-64 dev <vif_name>
+
+  Generates a link-local address using the eui-64 scheme and assigns it to an interface
+
+ * ipv6 address del
+
+		ipv6 address del <address or prefix>/<length> dev <vif_name>
+
+  Deletes an address from an interface
+
+ * sh ipv6 route
+
+		sh ipv6 route
+
+  Outputs ipv6 routing table
+
+ * ipv6 route add
+
+		ipv6 route add <prefix/prefix-length> dev <vif_name>
+
+  Adds a connected route to a prefix into the main routing table
+
+ * ipv6 route add
+
+		ipv6 route add <prefix/length> dev <vif_name> via <ipv6-address> [table <ipv6_routing_table>]
+
+  Adds a route to a prefix via a gateway with given address into a routing table
+
+ * ipv6 route add
+
+		ipv6 route add ::/0 via <ipv6-address> [table <ipv6_routing_table>]
+
+  Adds the default route into a routing table
+
+ * ipv6 route add
+
+		ipv6 route add <prefix/length> unreachable [table <ipv6_routing_table>]
+
+  Adds an unrechable route into a routing table
+
+ * ipv6 route del
+
+		ipv6 route del <prefix/length> [table <ipv6_routing_table>]
+
+  Deletes a route from a routing table
+
+ * ipv6 nd ra
+
+		ipv6 nd ra enable|disable dev <vif_name>
+
+  Enables or disables Router Advertisements at an interface.
+  If disabled router will not transmit Router Advertisement messages at an interface
+  and will not answer to Router Solicitation messages
+
+ * sh ipv6 arp
+
+		sh ipv6 arp
+
+  Outputs ipv6 neighbor cache entries
+
+ * ipv6 arp add
+
+		ipv6 arp add <ipv6-address> <mac-address> dev <vif_name> [static]
+
+  Creates or alters an ipv6 neighbor cache entry
+
+ * ipv6 arp del
+
+		ipv6 arp del <ipv6-address> dev <vif_name>
+
+  Deletes an ipv6 neighbor cache entry
+
+ * icmp6 error msg
+
+		icmp6 error msg type <number> code <number> enable|disable
+
+  Enables or disables generation of an icmp messages with the given type and code
+
+ * sh icmp6 error msg
+
+		sh icmp6 error msg type <number> code <number>
+
+  Outputs state of icmp error message
+
+ * ipv6 nd ra lifetime
+
+		ipv6 nd ra lifetime <number> dev <vif_name>
+
+  Configures lifetime field value of Router Advertisement messages sent 
+  from an interface
+
+ * ipv6 nd ra interval
+
+		ipv6 nd ra interval <min_number> <max_number> dev <vif_name>
+
+  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values
+  See https://tools.ietf.org/html/rfc4861#page-40
+  6.2.1.  Router Configuration Variables
+
+ * ipv6 nd ra reachable
+
+		ipv6 nd ra reachable <number> dev <vif_name>
+
+  Configures the value to be placed in the Reachable Time field
+  in the Router Advertisement messages sent by the router.
+  The value zero means unspecified (by this router).  
+  MUST be no greater than 3,600,000 milliseconds (1 hour).  
+
+ * ipv6 nd ra retrans_timer
+
+		ipv6 nd ra retrans_timer <number> dev <vif_name>
+
+  Configures the value to be placed in the Retrans Timer field
+  in the Router Advertisement messages sent by the router.  
+  The value zero means unspecified (by this router).
+
+ * ipv6 nd ra hop limit
+
+		ipv6 nd ra hop limit <number> dev <vif_name>
+
+  Configures the default value to be placed in the Cur Hop Limit
+  field in the Router Advertisement messages sent by
+  the router.  The value should be set to the current
+  diameter of the Internet.  The value zero means
+  unspecified (by this router).
+
+ * ipv6 nd ra prefix add|update
+
+		ipv6 nd ra prefix add|update <prefix/length> [valid_lt <number>] 
+		  [preferred_lt <number>] [flags O,A] dev <vif_name>
+
+  Adds or updates a prefix to/in Router Advertisement messages sent from an interface
+  
+ * ipv6 nd ra prefix del
+
+		ipv6 nd ra prefix add <prefix/length> dev <vif_name>
+
+  Deletes a prefix to Router Advertisement messages sent from an interface		
