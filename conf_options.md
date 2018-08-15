@@ -409,3 +409,18 @@ Example:
  * clear stats
  
 		rcli clear stats
+
+## IPv6
+
+ * ipv6 enable
+
+		ipv6 enable dev <vif_name>
+
+  Enables IPv6 protocol on the interface, create link-local address using eui-64 scheme
+
+ * ipv6 disable
+
+		ipv6 disable dev <vif_name>
+
+  Disables IPv6 protocol on the interface. Delete all addresses and routes depending on the interface
+
