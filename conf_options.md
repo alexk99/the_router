@@ -430,34 +430,34 @@ Example:
 
   Outputs ipv6 addresses assignes to interfaces
 
- * ipv6 address add eui-64
+ * ipv6 addr add eui-64
 
-		ipv6 address add eui-64 <prefix>/<length> eui-64 dev <vif_name>
+		ipv6 addr add eui-64 <prefix>/<length> eui-64 dev <vif_name>
 
   Generates an address using prefix and interface id (EUI64 scheme) and assign the address to
 an interface
 
- * ipv6 address add
+ * ipv6 addr add
 
-		ipv6 address add <address>/<length> dev <vif_name>
+		ipv6 addr add <address>/<length> dev <vif_name>
 
   Assigns the given ipv6 address to an interface
 
- * ipv6 address link-local
+ * ipv6 addr link-local
 
-		ipv6 address link-local <address>/<length> dev <vif_name>
+		ipv6 addr link-local <address> dev <vif_name>
 
   Assigns the given ipv6 link-local address to an interface
 
- * ipv6 address link-local eui-64
+ * ipv6 addr link-local eui-64
 
-		ipv6 address link-local eui-64 dev <vif_name>
+		ipv6 addr link-local eui-64 dev <vif_name>
 
   Generates a link-local address using the eui-64 scheme and assigns it to an interface
 
- * ipv6 address del
+ * ipv6 addr del
 
-		ipv6 address del <address or prefix>/<length> dev <vif_name>
+		ipv6 addr del <address or prefix>/<length> dev <vif_name>
 
   Deletes an address from an interface
 
@@ -605,7 +605,7 @@ an interface
 
  * fib6_max_routes
 
-  Max number of ipv6 routes entries
+  Max number of ipv6 route entries
 
  * fib6_max_next_hops
 
