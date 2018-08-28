@@ -567,9 +567,9 @@ an interface
   in the Router Advertisement messages sent by the router.  
   The value zero means unspecified (by this router).
 
- * ipv6 nd ra hop limit
+ * ipv6 nd ra hop_limit
 
-		ipv6 nd ra hop limit <number> dev <vif_name>
+		ipv6 nd ra hop_limit <number> dev <vif_name>
 
   Configures the default value to be placed in the Cur Hop Limit
   field in the Router Advertisement messages sent by
@@ -651,4 +651,125 @@ an interface
 
   Number of attempts for Duplicate address detection algorithm
 
+## IPV6 VRRP version 3
 
+ * vrrp create group
+
+		vrrp create group <vrrp_id> dev <vif_name> address-family af_ipv6 version 3
+
+  Creates vrrp group
+
+ * vrrp group ipv6 add
+
+		vrrp group <vrrp_id> dev <vif_name> ipv6 add <link-local ipv6 address>
+
+  Setup or change ipv6 link-local address of a vrrp3 ipv6 group
+  
+ * vrrp group ipv6 add
+
+		vrrp group <vrrp_id> dev <vif_name> ipv6 add <ipv6_address> secondary
+
+  Add secondary ipv6 global address to a vrrp3 ipv6 group
+  
+ * vrrp group ipv6 del
+
+		vrrp group <vrrp_id> dev <vif_name> ipv6 del <ipv6_address> secondary
+
+  Del secondary ipv6 global address from a vrrp3 ipv6 group
+
+ * vrrp group prio
+
+		vrrp group <vrrp_id> dev <vif_name> prio <value>
+
+  Change priority of a vrrp group
+
+ * vrrp group advert_int
+
+		vrrp group <vrrp_id> dev <vif_name> advert_int <value>
+
+  Change advertisement transmission interval (cetiseconds, 100 centiseconds == 1 sec) of a vrrp group
+
+ * vrrp group accept_mode
+
+		vrrp group <vrrp_id> dev <vif_name> accept_mode <on|off>
+
+  Change accept_mode of a vrrp group
+
+ * vrrp group preempt_mode
+
+		vrrp group <vrrp_id> dev <vif_name> preempt_mode <on|off>
+
+  Change preempt_mode of a vrrp group
+  
+ * sh vrrp
+
+		sh vrrp
+
+  Shows vrrp group information
+  
+ * vrrp group del 
+
+		vrrp del group <vrrp_id> dev <vif_name>
+
+  Deletes vrrp group
+  
+ * vrrp group nd ra enable/disable
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra enable|disable
+
+  Enables or disables transmission of ND Router Advertisement messages for a VRRP IPV6 group
+
+ * vrrp group nd ra lifetime
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra lifetime <value>
+
+  Configures lifetime field value of Router Advertisement messages sent 
+  for a VRRP IPV6 group
+
+ * vrrp group nd ra interval
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra interval <min_number> <max_number>
+
+  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values
+  See https://tools.ietf.org/html/rfc4861#page-40
+  6.2.1.  Router Configuration Variables
+
+ * vrrp group nd ra reachable
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra reachable <number>
+
+  Configures the value to be placed in the Reachable Time field
+  in the Router Advertisement messages sent by the router.
+  The value zero means unspecified (by this router).  
+  MUST be no greater than 3,600,000 milliseconds (1 hour).
+  
+ * vrrp group nd ra retrans_timer
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra retrans_timer <number>
+
+  Configures the value to be placed in the Retrans Timer field
+  in the Router Advertisement messages sent by the router.  
+  The value zero means unspecified (by this router).
+
+ * vrrp group nd ra hop_limit
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra hop_limit <number>
+
+  Configures the default value to be placed in the Cur Hop Limit
+  field in the Router Advertisement messages sent by
+  the router.  The value should be set to the current
+  diameter of the Internet.  The value zero means
+  unspecified (by this router).
+
+ * vrrp group nd ra prefix add|update
+
+		vrrp group <vrrp_id> dev <vif_name> nd ra prefix add|update <prefix/length> [valid_lt <number>] 
+		  [preferred_lt <number>] [flags O,A] dev <vif_name>
+
+  Adds or updates a prefix to/in Router Advertisement messages sent for a VRRP IPV6 group
+  
+ * vrrp group nd ra prefix del
+
+		vrrp group <vrrp_id> dev <vif_name>  nd ra prefix add <prefix/length> dev <vif_name>
+
+  Deletes a prefix from Router Advertisement messages sent for a VRRP IPV6 group
