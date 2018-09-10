@@ -41,7 +41,7 @@ on high packet rates using commodity hardware.
  * Another production case - <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">
  TheRouter as a BGP border router in a service provider network</a>
 
-## VRRP - WIP
+## VRRP
 
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_1.md">Lab #1 results</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_2.2.md">Lab #2 results</a>
