@@ -455,6 +455,13 @@ an interface
 
   Generates a link-local address using the eui-64 scheme and assigns it to an interface
 
+ * ipv6 addr auto
+
+		ipv6 addr auto dev <vif_name> enable|disable
+
+  Enables SLAAC client for an interface. Once enabled the router starts assigning dynamic 
+  ipv6 addresses at an interface based on the information received in Router Advertisement messages
+
  * ipv6 addr del
 
 		ipv6 addr del <address or prefix>/<length> dev <vif_name>
@@ -496,6 +503,15 @@ an interface
 		ipv6 route del <prefix/length> [table <ipv6_routing_table>]
 
   Deletes a route from a routing table
+
+ * ipv6 route default auto
+
+		ipv6 route default auto dev <vif_name> enable|disable
+
+  Enables intallation of default routes based on the information in Router Advertisement messages.
+  Once enabled the router will create the default route based on the first RA message received on the interface
+  and will associate a timer with that route. The timer is set to RA.lifetime value. When it expires the default
+  route will be deleted and the router will install a new default route based on another RA message received at the interface.
 
  * ipv6 nd ra
 
@@ -546,7 +562,7 @@ an interface
 
 		ipv6 nd ra interval <min_number> <max_number> dev <vif_name>
 
-  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values
+  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values (seconds)
   See https://tools.ietf.org/html/rfc4861#page-40
   6.2.1.  Router Configuration Variables
 
@@ -730,7 +746,7 @@ an interface
 
 		vrrp group <vrrp_id> dev <vif_name> nd ra interval <min_number> <max_number>
 
-  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values
+  Configures the MinRtrAdvInterval and MaxRtrAdvInterval values (seconds)
   See https://tools.ietf.org/html/rfc4861#page-40
   6.2.1.  Router Configuration Variables
 
