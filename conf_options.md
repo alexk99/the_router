@@ -535,14 +535,14 @@ an interface
 
 		ipv6 pbr rule add prio <rule priority number> u32set <set name> <set type> table <route table name>
 
-  Adds an ipv6 pbr rule to the rule list at the position <rule priority number>.
+  Adds an ipv6 pbr rule to the rule list at the position "rule priority number".
   Only "l2" set type value is supported so far. 
 
  * ipv6 pbr rule del
 
 		ipv6 pbr rule del prio <rule priority number>
 
-  Dels an ipv6 pbr rule from the rule list from the position <rule priority number>
+  Deletes an ipv6 pbr rule from the rule list from the position "rule priority number"
 
  * ipv6 nd ra
 
