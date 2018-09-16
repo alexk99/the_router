@@ -53,8 +53,8 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab6_static_and_connected_routes_simple_forwarding.md">Lab #3. Static and connected ipv6 routes</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_bgp_lab.md">Lab #4. IPv6 BGP</a>
 
- IPv6 rcli commands descriptions https://github.com/alexk99/the_router/blob/master/conf_options.md#ipv6
- Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.60.tar.gz. 
+ - IPv6 rcli commands descriptions https://github.com/alexk99/the_router/blob/master/conf_options.md#ipv6
+ - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.61.tar.gz
 
 ## Road map
 
