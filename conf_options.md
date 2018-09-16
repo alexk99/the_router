@@ -513,6 +513,37 @@ an interface
   and will associate a timer with that route. The timer is set to RA.lifetime value. When it expires the default
   route will be deleted and the router will install a new default route based on another RA message received at the interface.
 
+ * ipv6 route table add
+
+		ipv6 route table add <route table name>
+
+  Add an ipv6 route table to the FIB
+
+ * ipv6 route table del
+
+		ipv6 route table del <route table name>
+
+  Deletes an ipv6 route table from the FIB
+
+ * ipv6 pbr rule add prefix
+
+		ipv6 pbr rule add prio <rule priority number> from <ipv6 prefix/length> table <route table name>
+
+  Adds an ipv6 pbr rule to the rule list at the position <rule priority number>
+
+ * ipv6 pbr rule add set
+
+		ipv6 pbr rule add prio <rule priority number> u32set <set name> <set type> table <route table name>
+
+  Adds an ipv6 pbr rule to the rule list at the position <rule priority number>.
+  Only "l2" set type value is supported so far. 
+
+ * ipv6 pbr rule del
+
+		ipv6 pbr rule del prio <rule priority number>
+
+  Dels an ipv6 pbr rule from the rule list from the position <rule priority number>
+
  * ipv6 nd ra
 
 		ipv6 nd ra enable|disable dev <vif_name>
