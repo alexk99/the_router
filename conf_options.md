@@ -529,7 +529,7 @@ an interface
 
 		ipv6 pbr rule add prio <rule priority number> from <ipv6 prefix/length> table <route table name>
 
-  Adds an ipv6 pbr rule to the rule list at the position <rule priority number>
+  Adds an ipv6 pbr rule to the rule list at the position "rule priority number"
 
  * ipv6 pbr rule add set
 
