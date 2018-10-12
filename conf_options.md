@@ -829,24 +829,26 @@ use 'sysctl get <varname>' or 'sysctl set <varname> <varvalue>' command
 to view or modity a sysctl variable. 
 
  * flow_acct
-Flow account state.
+
+    Flow account state.
 
 		0 - disabled
 		1 - enabled
 
  * flow_acct_dropped_pkts
-if enabled do flow accounting for dropped packets.
+
+    If enabled do flow accounting for dropped packets.
 
 		0 - disabled
 		1 - enabled
 
  * flow_acct_idle_timeout
- 
-   Idle timeout of a flow, secs. When the idle timeout expires an idle flow is exported.
-   
+
+    Idle timeout of a flow, secs. When the idle timeout expires an idle flow is exported.
+
  * flow_acct_active_timeout
- 
-   active timeout of a flow, secs. When the active timeout expires an active flow is exported.
+
+    active timeout of a flow, secs. When the active timeout expires an active flow is exported.
 
 ## rcli commands
 

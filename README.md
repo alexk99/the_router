@@ -24,6 +24,8 @@ on high packet rates using commodity hardware.
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
+ * ipv6 - in testing phase
+ * flow accounting via IPFIX - in testing phase
 
 ## Broadband Remote Access Server (BRAS) features 
 
