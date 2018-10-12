@@ -46,7 +46,7 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_1.md">Lab #1 results</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_2.2.md">Lab #2 results</a>
 
-## IPV6 - WIP
+## IPV6. IPv6 support is in a testing stage.
 
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab1_address_assgning.md">Lab #1. IPV6 address assigning commands</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab2_1_ND.md">Lab #2. Neighbor discovery protocol and the neigbor cache states</a>
@@ -54,13 +54,12 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_bgp_lab.md">Lab #4. IPv6 BGP</a>
 
  - IPv6 rcli commands descriptions https://github.com/alexk99/the_router/blob/master/conf_options.md#ipv6
- - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.62.tar.gz
+ - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.63.tar.gz
 
-## Road map
+## IPFIX flow accouting. Flow accounting support is in a testing stage.
 
- * VRRP - end of may 2018
- * IPv6 - september, october 2018
- * Netflow (IPFIX) - december 2018
+- Flow support configuration command - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
+- Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.63.tar.gz
 
 ## Performance tests
 
