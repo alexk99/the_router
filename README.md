@@ -24,8 +24,8 @@ on high packet rates using commodity hardware.
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
- * ipv6 (testing phase)
- * flow accounting via IPFIX (testing phase)
+ * ipv6 (test phase)
+ * flow accounting via IPFIX (test phase)
 
 ## Broadband Remote Access Server (BRAS) features 
 
@@ -48,7 +48,7 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_1.md">Lab #1 results</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/vrrp/vrrp_lab_2.2.md">Lab #2 results</a>
 
-## IPV6. IPv6 support is in a testing stage.
+## IPV6. IPv6 support is in a test phase.
 
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab1_address_assgning.md">Lab #1. IPV6 address assigning commands</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_lab2_1_ND.md">Lab #2. Neighbor discovery protocol and the neigbor cache states</a>
@@ -58,9 +58,9 @@ on high packet rates using commodity hardware.
  - IPv6 rcli commands descriptions https://github.com/alexk99/the_router/blob/master/conf_options.md#ipv6
  - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.63.tar.gz
 
-## IPFIX flow accouting. Flow accounting support is in a testing stage.
+## IPFIX flow accouting. Flow accounting support is in a test phase.
 
-- Flow support configuration command - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
+- Flow support configuration commands - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
 - Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.63.tar.gz
 
 ## Performance tests
