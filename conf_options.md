@@ -253,8 +253,10 @@ the configuration file.
      - qinq
    
    Flags:
+     - npf_on
 	 - kni
 	 - proxy_arp
+	 - flow_acct
    	   
  * vif del
 
@@ -857,3 +859,9 @@ to view or modity a sysctl variable.
 		flow ipfix_collector addr <ipv4 address> [port <portnumber>]
 
   Configures flow accounting ipfix collector address and port. Default port value is 4739.
+
+## Enabling flow accounting on an interface
+To enable flow accounting on a particular VIF use VIF flag "flow_acct". For example:
+
+	vif add name v3 port 2 type dot1q cvid 3 flags npf_on, kni, flow_acct
+
