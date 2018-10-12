@@ -820,3 +820,36 @@ an interface
 		vrrp group <vrrp_id> dev <vif_name>  nd ra prefix add <prefix/length> dev <vif_name>
 
   Deletes a prefix from Router Advertisement messages sent for a VRRP IPV6 group
+
+## Flow accounting (IPFIX)
+
+### sysctl variables
+
+use 'sysctl get <varname>' or 'sysctl set <varname> <varvalue>' command
+to view or modity a sysctl variable. 
+
+ * flow_acct. Flow account state.
+
+	0 - disabled
+	1 - enabled
+
+ * flow_acct_dropped_pkts. if enabled do flow accounting for dropped packets.
+
+	0 - disabled
+	1 - enabled
+
+ * flow_acct_idle_timeout
+ 
+   Idle timeout of a flow, secs. When idle timeout expires a flow will be exported.
+   
+ * flow_acct_active_timeout
+ 
+   active timeout of a flow, secs. When active timeout expires a flow will be exported.
+
+## rcli commands
+
+ * flow ipfix_collector
+
+		flow ipfix_collector addr <ipv4 address> [port <portnumber>]
+
+  Configures flow accounting ipfix collector address and port. Default port value is 4739.
