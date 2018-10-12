@@ -24,6 +24,7 @@ on high packet rates using commodity hardware.
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * link bonding
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
+ * vrrp (v2 for ipv4 and v3 for ipv6)
  * ipv6 (test phase)
  * flow accounting via IPFIX (test phase)
 
