@@ -26,6 +26,14 @@ on high packet rates using commodity hardware.
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
  * vrrp (v2 for ipv4 and v3 for ipv6)
  * ipv6 (test phase)
+ 	- unicast routing
+	- ICMPv6
+	- Neighbor Discovery Protocol
+	- 	Duplicate address detection
+  	-	Neighbor Unreachability Detection
+	- MLD v1, v2
+	- SLAAC
+	- vrrp v3
  * flow accounting via IPFIX (test phase)
 
 ## Broadband Remote Access Server (BRAS) features 
