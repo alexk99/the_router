@@ -852,6 +852,24 @@ to view or modity a sysctl variable.
 
     active timeout of a flow, secs. When the active timeout expires an active flow is exported.
 
+ * flow_ipv4_max
+
+    maximum number of concurrent ipv4 flows entries
+
+ * flow_ipv6_max
+
+    maximum number of concurrent ipv6 flows entries
+
+ * flow_ipv4_worker_max
+
+    maximum number of ipv4 flows entries that a single lcore (worker) can process
+    concurrently
+
+ * flow_ipv6_worker_max
+
+    maximum number of ipv6 flows entries that a single lcore (worker) can process
+    concurrently
+
 ## rcli commands
 
  * flow ipfix_collector
