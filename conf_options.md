@@ -894,9 +894,10 @@ in sorted order. The position of ACL in the list is defined by a priority specif
 
 An ACL, in turn, consists of rules. The position of a rule in an ACL is also defined by priority.
 
-When a packet comes into an interface it is compared to the ingress ACL rules. First, a packet
-is compared to the rules of the ACL with the minimum priority. Then the process goes to the next ACL
-with greater priority.
+When a packet comes into an interface it is compared to the rules of ACLs from the ingress list,
+when a packet is transmitted from an interface it is compared to the rules of ACLs from the egress list.
+First, a packet is compared to the rules of the ACL with the minimum priority. Then the process 
+goes to the next ACL with greater priority.
 
 Rules of ACL are also traversed by a priority order, first comes a rule with the minimum
 priority.
