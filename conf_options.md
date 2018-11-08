@@ -929,18 +929,64 @@ Example:
 
 		vif acl add dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
 
-Use an ACL on an interface. Commands add an ACL to the ingress or egress list of ACLs of an interface
+Use an ACL on an interface. Command adds an ACL to the ingress or egress list of ACLs of an interface
 at position number <prio>.
 
 Parameters:
- - vif_name - name of the interface to add an ACL too
- - direction - specifies the type of the interface list to add ACL too. Can one the two values:
- ingress or egress
- - acl_id - unique numeric identificator of the ACL to add to an interface
+ - vif_name - name of an interface to add an ACL too
+ - direction - specifies the interface list of ACLs to add an ACL too.
+ Can be one the two values: ingress or egress
+ - acl_id - numeric identificator of the ACL to add to an interface
  - prio - position in the interface's ACL list to put an ACL too
  
 Example:
 
 		vif acl add dev v5 dir ingress aclid 10 prio 30
 
+### vif acl del
+
+		vif acl del dev <vif_name> dir <direction> aclid <acl_id>
+
+Stop using an ACL on an interface. Command deletes an ACL
+from the ingress or egress list of ACLs of an interface.
+
+Parameters:
+ - vif_name - name of an interface to delete an ACL from
+ - direction - specifies the interface list of ACLs to delete an ACL from.
+ Can be one the two values: ingress or egress
+ - acl_id - numeric identificator of the ACL to delete from an interface
+ 
+Example:
+
+		vif acl del dev v5 dir ingress aclid 10
+
+### vif acl mod
+
+		vif acl modify dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
+
+Changes the position of an ACL in the list of ACLs on an interface
+
+Parameters:
+ - vif_name - name of an interface
+ - direction - specifies the interface list of ACLs.
+ Can be one the two values: ingress or egress
+ - acl_id - numeric identificator of the ACL to modify
+ - prio - new position of an ACL
+ 
+Example:
+
+		vif acl modify dev v5 dir ingress aclid 10 prio 40
+
+### vif acl flush
+
+		vif acl flush aclid <acl_id>
+
+Deletes all rules from an ACL.
+
+Parameters:
+ - acl_id - numeric identificator of the ACL to delete rules from
+ 
+Example:
+
+		vif acl flush aclid 10
 
