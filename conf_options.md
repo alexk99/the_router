@@ -930,14 +930,14 @@ Example:
 		vif acl add dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
 
 Use an ACL on an interface. Command adds an ACL to the ingress or egress list of ACLs of an interface
-at position number <prio>.
+at position number prio.
 
 Parameters:
- - vif_name - name of an interface to add an ACL too
- - direction - specifies the interface list of ACLs to add an ACL too.
+ - vif_name - name of an interface to add an ACL to
+ - direction - specifies the interface list of ACLs to add an ACL to.
  Can be one the two values: ingress or egress
  - acl_id - numeric identificator of the ACL to add to an interface
- - prio - position in the interface's ACL list to put an ACL too
+ - prio - position in the interface's ACL list to put an ACL to
  
 Example:
 
@@ -989,4 +989,104 @@ Parameters:
 Example:
 
 		vif acl flush aclid 10
+
+### vif acl rule add
+
+		vif acl rule <ip_version> add aclid <acl_id> prio <prio> [proto <protocol_number>]
+		[src <src_prefix>] [dst <dst_prefix>] [sport <src_port_range>] [dport <dst_port_range>] 
+
+Adds a rule to an ACL.
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6
+ - acl_id - numeric identificator of an ACL to add a rule to
+ - prio - position of a rule in the ACL
+ - proto - ip protocol number
+ - src_prefix - source ip prefix
+ - dst_prefix - destination ip prefix
+ - src_port_range - l4 source port range: for example: 8080 8090
+ - dst_port_range - l4 destination port range
+ 
+Examples:
+
+		vif acl rule ipv4 add aclid 11 prio 21 proto 6 src 10.1.0.0/24 dst 10.2.0.0/24 sport 10 20 dport 80
+		or
+		vif acl rule ipv4 add aclid 11 prio 21 dst 10.1.0.0/24 dport 80
+		or
+		vif acl rule ipv6 add aclid 10 prio 20 dst 2a00:1450:400c:c07::8b dport 80
+
+### vif acl rule del
+
+		vif acl rule <ip_version> del aclid <acl_id> prio <prio>
+
+Deletes a rule from an ACL.
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6
+ - acl_id - numeric identificator of an ACL to add a rule to
+ - prio - position of a rule in the ACL
+ 
+Example:
+
+		vif acl rule ipv4 del aclid 11 prio 21
+
+### vif acl rule mod
+
+		vif acl rule <ip_version> modify aclid <acl_id> prio <prio> [proto <protocol_number>]
+		[src <src_prefix>] [dst <dst_prefix>] [sport <src_port_range>] [dport <dst_port_range>] 
+
+Modify a rule in an ACL.
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6
+ - acl_id - numeric identificator of an ACL to add a rule to
+ - prio - position of a rule in the ACL
+ - proto - ip protocol number
+ - src_prefix - source ip prefix
+ - dst_prefix - destination ip prefix
+ - src_port_range - l4 source port range: for example: 8080 8090
+ - dst_port_range - l4 destination port range
+ 
+Examples:
+
+		vif acl rule ipv4 modify aclid 11 prio 21 proto 6 src 10.1.0.0/24 dst 10.2.0.0/24 sport 10 20 dport 80
+		or
+		vif acl rule ipv4 modify aclid 11 prio 21 dst 10.1.0.0/24 dport 80
+		or
+		vif acl rule ipv6 modify aclid 10 prio 20 dst 2a00:1450:400c:c07::8b dport 80
+		
+### sh vif acl rules
+
+		sh vif acl rules aclid <acl_id>
+
+Shows ACL.
+
+Parameters:
+ - acl_id - numeric identificator of an ACL to show
+
+ 
+Example:
+
+		h5 ~ # rcli sh vif acl rules aclid 11
+		acl id 11, type ipv4_tuple, action deny, num rules 1
+		--
+		prio 21, proto any, src any, dst 10.1.1.0/24, sport any, dport 81
+
+### sh vif
+
+		sh vif
+
+Shows ACL interface.
+ 
+Example:
+
+		h5 ~ # rcli sh vif
+		vif v5, id 3
+		  port 0, vlan 0.5, encapsulation dot1q
+		  mac address 00:1B:21:A3:0C:88
+		  NPF index 12
+		  CAR ingress not set
+		      egress not set
+		  ACL ingress prio 30 acl 10, prio 40 acl 11
+		      egress not set
 
