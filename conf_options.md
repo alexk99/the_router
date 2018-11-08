@@ -883,3 +883,64 @@ To enable flow accounting on a particular VIF use VIF flag "flow_acct". For exam
 
 	vif add name v3 port 2 type dot1q cvid 3 flags npf_on, kni, flow_acct
 
+## Access control lists (ACL)
+
+## RCLI commands
+
+### vif acl create
+
+		vif acl create aclid <acl_id> type <acl_type> <action>
+
+Creates new access control list.
+
+Parameters:
+ - acl_id - unique numeric identificator
+ - acl_type - type. It can be one of the following types:
+   - ipv4_tuple - define an ACL that can classify packets using combination 
+of following fields: protocol type, ipv4 source address, ipv4 destination address, 
+l4 source port, l4 destination port
+   - ipv6_tuple - define an ACL that can classify packets using combination 
+of following fields: protocol type, ipv6 source address, ipv6 destination address, 
+l4 source port, l4 destination port
+ - action: action to take for a packet when a match is found. It can be one of the following
+ values:
+   - deny - drop a packet when a match is found
+   - permit - permit a packet when a match is found
+
+Example:
+
+		vif acl create aclid 10 type ipv6_tuple deny
+
+
+### vif acl destroy
+
+		vif acl destroy aclid <acl_id>
+
+Deletes an access control list.
+
+Parameters:
+ - acl_id - unique numeric identificator of a ACL to delete
+
+Example:
+
+		vif acl destroy aclid 10
+
+### vif acl add
+
+		vif acl add dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
+
+Use an ACL on an interface. Command adds an ACL to the ingress or egress list of ACLs of an interface
+at position number <prio>.
+
+Parameters:
+ - vif_name - name of the interface to add an ACL too
+ - direction - specifies the type of the interface list to add ACL too. Can one the two values:
+ ingress or egress
+ - acl_id - unique numeric identificator of the ACL to add to an interface
+ - prio - position in the interface's ACL list to put an ACL too
+ 
+Example:
+
+		vif acl add dev v5 dir ingress aclid 10 prio 30
+
+
