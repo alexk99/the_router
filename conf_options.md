@@ -899,10 +899,7 @@ when a packet is transmitted from an interface it is compared to the rules of AC
 First, a packet is compared to the rules of the ACL with the minimum priority. Then the process 
 goes to the next ACL with greater priority.
 
-Rules of ACL are also traversed by a priority order, first comes a rule with the minimum
-priority.
-
-When a packet is matched an ACL rule, ACL process is stopped and the action defined
+When a packet is matched to an ACL rule, the ACL process is stopped and the action defined
 by the ACL is taken to the packet. It could be a drop or permit action.
 
 If a packet is not matched to any ACL rule, the process goes to the next ACL in the list if any.
