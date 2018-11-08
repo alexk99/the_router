@@ -929,7 +929,7 @@ Example:
 
 		vif acl add dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
 
-Use an ACL on an interface. Command adds an ACL to the ingress or egress list of ACLs of an interface
+Use an ACL on an interface. Commands add an ACL to the ingress or egress list of ACLs of an interface
 at position number <prio>.
 
 Parameters:
