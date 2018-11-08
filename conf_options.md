@@ -885,6 +885,31 @@ To enable flow accounting on a particular VIF use VIF flag "flow_acct". For exam
 
 ## Access control lists (ACL)
 
+Access control lists can be used to filter traffic incoming to an interface (ingress) or
+outging from an interface. Multiple ACL can be applied to the same interface and a single ACL
+can be applied to many interfaces. 
+
+Each interface has two ACL list: ingress and egress. An interface ACL list stores ACL
+in sorted order. The position of ACL in the list is defined by a priority specified by a user.
+
+An ACL, in turn, consists of rules. The position of a rule in an ACL is also defined by priority.
+
+When a packet comes into an interface it is compared to the ingress ACL rules. First, a packet
+is compared to the rules of the ACL with the minimum priority. Then the process goes to the next ACL
+with greater priority.
+
+Rules of ACL are also traversed by a priority order, first comes a rule with the minimum
+priority.
+
+When a packet is matched an ACL rule, ACL process is stopped and the action defined
+by the ACL is taken to the packet. It could be a drop or permit action.
+
+If a packet is not matched to any ACL rule, the process goes to the next ACL in the list if any.
+If there are no more ACL in the list, then the action opposite to the action defined by ACL is taken.
+For example, if a packet is not matched to any rule of a deny ACL, then the packet is permitted.
+And when a packet isn't matched to any rule of a permit ACL, then the packet is dropped.
+So, the last ACL in the list defines the fate of a packet when no matches are found.
+
 ## RCLI commands
 
 ### vif acl create
