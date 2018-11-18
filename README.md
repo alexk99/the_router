@@ -70,7 +70,7 @@ on high packet rates using commodity hardware.
 ## IPFIX flow accouting. Flow accounting support is in a test phase.
 
 - Flow support configuration commands - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
-- Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.63.tar.gz
+- Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.64.tar.gz
 
 ## Road map
 
