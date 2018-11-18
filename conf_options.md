@@ -664,10 +664,6 @@ an interface
 
   Max number of lpm6 tbl8. See https://doc.dpdk.org/guides/prog_guide/lpm6_lib.html
 
- * fib6_max_num_local_ip_addrs
-
-  Max number if ipv6 addresses assigned at interfaces
-
  * max_num_solicited_node_addrs
 
   Max number of solicited node addresses
