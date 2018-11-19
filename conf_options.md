@@ -874,6 +874,13 @@ to view or modity a sysctl variable.
 
   Configures flow accounting ipfix collector address and port. Default port value is 4739.
 
+ * sh flow stat
+
+		sh flow stat
+
+  Show flow accounting statistic counters.
+
+
 ## Enabling flow accounting on an interface
 To enable flow accounting on a particular VIF use VIF flag "flow_acct". For example:
 
