@@ -898,11 +898,13 @@ goes to the next ACL with greater priority.
 When a packet is matched to an ACL rule, the ACL process is stopped and the action defined
 by the ACL is taken to the packet. It could be a drop or permit action.
 
-If a packet is not matched to any ACL rule, the process goes to the next ACL in the list if any.
+If a packet is not matched to any ACL rule the process goes to the next ACL in the list.
 If there are no more ACL in the list, then the action opposite to the action defined by ACL is taken.
 For example, if a packet is not matched to any rule of a deny ACL, then the packet is permitted.
-And when a packet isn't matched to any rule of a permit ACL, then the packet is dropped.
+And when a packet isn't matched to any rule of a permit ACL the packet is dropped.
 So, the last ACL in the list defines the fate of a packet when no matches are found.
+Note that empty ACLs are not included into interfaces list of ACL and won't be taken
+into account when a packet isn't matched to any ACL rules. 
 
 ## RCLI commands
 
