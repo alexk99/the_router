@@ -65,12 +65,12 @@ on high packet rates using commodity hardware.
  * <a href="https://github.com/alexk99/the_router/blob/master/ipv6/ipv6_bgp_lab.md">Lab #4. IPv6 BGP</a>
 
  - IPv6 rcli commands descriptions https://github.com/alexk99/the_router/blob/master/conf_options.md#ipv6
- - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.66.tar.gz
+ - Test ipv6 build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.67.tar.gz
 
 ## IPFIX flow accouting. Flow accounting support is in a test phase.
 
 - Flow support configuration commands - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
-- Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.66.tar.gz
+- Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.67.tar.gz
 
 ## Road map
 
