@@ -50,6 +50,15 @@ on high packet rates using commodity hardware.
 
 ## PPPoE
 
+PPPoE server supports:
+- radius authorization (PAP and CHAP)
+- CoA
+- Shaping (Token bucket filter with extended burst value)
+- TCP MSS FIX
+- redirect subsribers traffic based on multiple routing tables and PBR
+- full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
+- up to 40000 concurrent pppoe subscribers
+
 - Configuration options
 <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE conf options</a>
 - HOWTO
