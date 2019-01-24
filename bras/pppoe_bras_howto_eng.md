@@ -1,7 +1,7 @@
 # 1. Introduction
 
 This howto describes configuration of a PPPoE BRAS server running TheRouter software
-under Linux operating.
+under Linux operating system.
 
 The PPPoE BRAS server is going to be integrated into a small test network and it should accomplish the following
 tasks:
@@ -41,7 +41,7 @@ $rvrf ip link set up dev rkni_v3 address 6C:B3:11:51:15:50
 ## 4.2. TheRouter's configuration file
 
 Here is the full router's configuration file.
-Detailed description of the configuration commands will be provided in the next paragraphs of this howto.
+Detailed description of the configuration commands will be provided in the following paragraphs.
 
 	startup {
 	  # mbuf mempool size
@@ -132,10 +132,7 @@ Detailed description of the configuration commands will be provided in the next 
 	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
 	
 	  # pppoe
-	  
-	  # pppoe p-t-p address
-	  ip route add 10.10.1.1/32 local
-	  
+	  	  
 	  # enable TCP MSS fix
 	  sysctl set tcp_mss_fix 1
 	  
@@ -148,11 +145,14 @@ Detailed description of the configuration commands will be provided in the next 
 	  ppp dns secondary 8.8.4.4
 	  ppp ipcp server ip 10.10.1.1
 	
+	  # pppoe p-t-p address
+	  ip route add 10.10.1.1/32 local
+	
 	  #
 	  # radius
 	  #
-	  radius_client add src ip 192.168.1.118
-	  radius_client add server 192.168.1.73
+	  radius_client add src ip 192.168.5.111
+	  radius_client add server 192.168.5.2
 	  radius_client set secret "secret"
 	  coa server set secret "secret"
 	
@@ -178,22 +178,22 @@ Dynamic routing. Integration with Quagga routing suite
 
 ### 4.3.1. KNI interfaces
 
-KNI interfaces must be created for each router's VIF that will be used to communicate
+a KNI interface must be created for each router's VIF that will be used to communicate
 with other routers via dynamic routing protocols supported by Quagga/FRR. Example of a such interface
 is the v3 interface. The router receives a default route from the bgp peer established via the v3 kni interface.
 
-You should up KNI interfaces and configure their MAC addresses after the_route has started.
-MAC address of a kni interface should be equal to the mac address of the router's interface coupled with the kni
-interface. MAC address of a VIF can be learned from 'rcli sh vif' command output.
+You should up KNI interfaces and configure their MAC addresses after the_router has started.
+MAC address of a kni interface should be equal to the mac address of the router's interface (VIF) 
+coupled with a kni interface. MAC address of a VIF can be found out from the 'rcli sh vif' command output.
 
-Example of a bash script that up kni interfaces and configure their MAC address:
+Example of a bash script that up a kni interface and configure it's MAC address:
 
 	#!/bin/bash
 	ip link set up dev rkni_v3 address 00:1B:21:3C:69:44
 	
 ### 4.3.2. Starting FRR
 
-Zebra and bpgd FRR components should be configured and started in the router namespace
+Zebra and bpgd Quagga/FRR components should be configured and started in the router namespace
 "tr" in order the_router to cummunicate with others BPG peers.
 
 Zebra's configuration file /etc/frr/zebra.conf
@@ -333,21 +333,24 @@ Following commands define RADIUS server ip address,
 source ip address of RADIUS router's requests,
 shared radius and CoA secrets.
 
-	  radius_client add src ip 192.168.1.118
-	  radius_client add server 192.168.1.73
-	  radius_client set secret "secret"
-	  coa server set secret "secret"
+	radius_client add src ip 192.168.5.111
+	radius_client add server 192.168.5.2
+	radius_client set secret "secret"
+	coa server set secret "secret"
 
 The source ip address must be assigned to the router's interface which
-connects the router with a RADIUS server. It is the v3 interface, 
+connects the router with a RADIUS server. It is the v5 interface, 
 since it connects the_router to the linux host H5 
 where the RADIUS server is running.
 
-Ip address 192.168.1.73 is configured on the linux side of vlan 3.
+Ip address 192.168.5.2 is configured on the linux side of vlan 5.
 
-	14: vlan3@eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+	h5 src # ip addr ls dev vlan5
+	16: vlan5@eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
 	    link/ether 60:a4:4c:41:0a:24 brd ff:ff:ff:ff:ff:ff
-	    inet 192.168.1.73/24 brd 192.168.1.255 scope global vlan3
+	    inet 192.168.5.2/24 brd 192.168.5.255 scope global vlan5
+	       valid_lft forever preferred_lft forever
+	    inet6 fe80::62a4:4cff:fe41:a24/64 scope link
 	       valid_lft forever preferred_lft forever
 
 ## 5.2. Radius server configuration 
@@ -394,13 +397,113 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_pbr 10 integer
 	END-VENDOR   TheRouter
 
-# 6. Configure subscriber's sessions or dynamic VIF
+# 6. PPPoE and PPP
+
+### 6.1.1. Enable PPPoE on a VIF
+
+First enable PPPoE protocol on a VIF router's interface connected to a L2 subnet
+with pppoe subscribers
+
+	vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
+
+Then, configure ip address of the router side of pppoe p-t-p tunnels
+and create a local route to that address:
+
+	ppp ipcp server ip 10.10.1.1
+	
+	# pppoe p-t-p address
+	ip route add 10.10.1.1/32 local
+
+Configure ppp subscribers ip parameters:
+
+	# ppp
+	ppp dns primary 8.8.8.8
+	ppp dns secondary 8.8.4.4
+
+Enable TCP MSS fix:
+
+	# enable TCP MSS fix
+	sysctl set tcp_mss_fix 1
+
+Configure PPPoE parameters:
+
+	pppoe ac_cookie key "13071232717"
+	pppoe ac_name "trouter1"
+	pppoe service name "*"
+
+Now everything is ready to connect pppoe subscribers.
 
 ### 6.1.1. Viewing ip subscrubers 
 
 	h5 src # $rvrf rcli sh pppoe subsc
 	vif_id  mac     session_id      ip addr mtu     ingress cir     egress cir      tx_pkts rx_pkts
 	4       60:A4:4C:41:0A:24       1       0.0.0.0 1480    0       0       0       0
+
+Since log_level 8 is configured there are a lot of ppp debug info the syslog file:
+
+Establishing a pppoe connection:
+
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: OPEN event
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Initial - Starting
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: OPEN event
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Initial - Starting
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: UP event
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Starting: send a configure request #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Starting - Req sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: receive a configure request #3
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Req sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: received a configure Nak/Reject code 3, #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: send a configure request #2
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Req sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: receive a configure request #4
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: send a configure ack #4
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Ack sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Ack sent: received a configure Ack #2
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Ack sent - Opened
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state initial: start AUTH process
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition initial -- waiting for peer's request
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state waiting for peer's request: received PAP request #3
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition waiting for peer's request -- peer request received
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state: peer request received, send a result code to the peer: code 2, id #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition peer request received -- finished
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, auth proto 49187, subsc VIF id 7, state finished, timer 0x7f4f742e72c0, auth ctx fini
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: UP event
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Starting: send a configure request #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Starting - Req sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Req sent: receive a configure request #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Req sent - Req sent
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Req sent: received a configure Ack #1
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Req sent - Ack rcvd
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: receive a configure request #2
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Ack rcvd - Ack rcvd
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: receive a configure request #3
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: send a configure ack #3
+	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Ack rcvd - Opened
+
+Closing a pppoe connection:
+
+	$rvrf rcli pppoe close 7
+
+
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Close event
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Opened: send a terminate request #3
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Opened - Closing
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Closing: received a terminate Ack #3
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Closing - Closed
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: IPCP, subsc VIF id 7: shutdown, send close event message to LCP
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: Close event
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Down event
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Closed - Initial
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Close event
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: IPCP, subsc VIF id 7: shutdown, send close event message to LCP
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Opened: send a terminate request #4
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Opened - Closing
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: Close event
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Closing - Closing
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Closing: received a terminate Ack #4
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Closing - Closed
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: shutdown: admin shutdown (6)
+	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: lcore 0 shutdown PPPoE: port 0, session id 4, 4bmac 1279330852, reason 10252
 
 
 # 7. NAT configuration
