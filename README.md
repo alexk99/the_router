@@ -36,9 +36,10 @@ on high packet rates using commodity hardware.
 	- vrrp v3
  * flow accounting via IPFIX (test phase)
 
-## Broadband Remote Access Server (BRAS) features 
+## Broadband Remote Access Server (BRAS/BNG) features 
 
  * IPoE L2/L3 connected subscribers
+ * PPPoE subscribers
  * IPoE vlan per subsriber with ip unnumbered addresses
  * traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
@@ -46,6 +47,17 @@ on high packet rates using commodity hardware.
  * radius/coa
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
+
+## PPPoE
+
+### Configuration options
+<href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE conf options</a>
+### HOWTO
+<href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">PPPoE BRAS howto</a>
+### Download
+PPPoE enabled the_router binary for x86_64 (intel core family or higher)
+It's on the very first builds, no production tests have been perfmored yet.
+<href="https://therouter.net/downloads/the_router_pppoe">PPPoE BRAS howto</a>
 
 ## News
 
