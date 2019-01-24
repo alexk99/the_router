@@ -505,8 +505,30 @@ Closing a pppoe connection:
 	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: shutdown: admin shutdown (6)
 	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: lcore 0 shutdown PPPoE: port 0, session id 4, 4bmac 1279330852, reason 10252
 
+# 7. CoA
 
-# 7. NAT configuration
+### 7.1 Add subsriber's ip address to ip set of blocked/unuthorised users.
+
+	echo User-Name=pppoe5,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
+
+IP set containing blocked subscribers ip addresses is defined by command:
+
+	u32set create ips1 size 16384 bucket_size 16
+
+That IP set is used by PBR rules to redirect blocked/unuthorised pppoe users to a direrect routing table:
+
+	# pbr rules
+	ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
+
+### 7.2 Remove subsriber's ip address from ip set of blocked/unuthorised users.
+
+	echo User-Name=pppoe5,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
+
+### 7.2 Change traffic shaping parameters of PPPoE subsriber
+
+	echo User-Name=pppoe9,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_ingress_cir=50,therouter_engress_cir=55" | radclient 192.168.5.111:3799 coa secret
+
+# 8. NAT configuration
 
 NAT configuration is conntrolled by a separate configuration file which is defined by the following command:
 
