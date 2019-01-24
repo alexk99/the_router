@@ -68,6 +68,10 @@ PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 It's on the very first builds, no production tests have been perfmored yet.
 <a href="http://therouter.net/downloads/the_router_pppoe">Download</a>
 
+PPPoE roadmap:
+ * radius accounting
+ * productions and performance tests
+
 ## News
 
  * Another production case - <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">
