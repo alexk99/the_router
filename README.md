@@ -50,14 +50,14 @@ on high packet rates using commodity hardware.
 
 ## PPPoE
 
-### Configuration options
-<href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE conf options</a>
-### HOWTO
-<href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">PPPoE BRAS howto</a>
-### Download
+Configuration options.
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE conf options</a>
+HOWTO.
+<a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">PPPoE BRAS howto</a>
+Download.
 PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 It's on the very first builds, no production tests have been perfmored yet.
-<href="https://therouter.net/downloads/the_router_pppoe">PPPoE BRAS howto</a>
+<a href="https://therouter.net/downloads/the_router_pppoe">PPPoE BRAS howto</a>
 
 ## News
 
