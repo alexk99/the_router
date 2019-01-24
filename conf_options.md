@@ -1118,3 +1118,93 @@ Example:
 		  ACL ingress prio 30 acl 10, prio 40 acl 11
 		      egress not set
 
+## PPPoE subscribers
+
+### sh pppoe subsc
+
+	sh pppoe subsc
+
+Output all connected/online pppoe subscribers
+
+Example:
+
+	h5 ~ # $rvrf rcli sh pppoe subsc
+	vif_id  mac     session_id      ip addr mtu     ingress cir     egress cir      tx_pkts rx_pkts
+	9       60:A4:4C:41:0A:24       6       10.11.1.1       1480    50      55      0       0
+
+### pppoe disconnect
+
+	pppoe disconnect <pppoe_vif_id>
+
+Disconnect pppoe subscriber VIF with id <pppoe_vif_id>
+
+### Enable PPPoE on VIF
+
+See "vif add" for all details.
+
+Example:
+
+	vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
+
+Using pppoe_on flag enables PPPoE protocol at an interface.
+
+### pppoe ac_cookie key
+
+	pppoe ac_cookie key "key_data"
+
+Sets ac_cookie key value.
+
+Example:
+
+	pppoe ac_cookie key "13071232717"
+
+### pppoe ac_name
+
+	pppoe ac_name "ac_name"
+
+Sets PPPoE AC name.
+
+Example:
+
+	pppoe ac_name "trouter1"
+
+### pppoe service name
+
+	pppoe service name "service_name"
+
+Sets PPPoE service name.
+
+Example:
+
+	pppoe service name "*"
+
+### ppp dns primary
+
+	ppp dns primary <ip_address>
+
+Sets ip address of the primary dns server for ppp subscribers.
+
+Example:
+
+	ppp dns primary 8.8.8.8
+
+### ppp dns secondary
+
+	ppp dns secondary <ip_address>
+
+Sets ip address of the secondary dns server for ppp subscribers.
+
+Example:
+
+	ppp dns primary 8.8.4.4
+
+### ppp ipcp server ip
+
+	ppp ipcp server ip <ip_address>
+
+Sets ip address the_router side ot ppp p-t-p tunnels
+
+Example:
+
+	ppp ipcp server ip 10.10.1.1
+
