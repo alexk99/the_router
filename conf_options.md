@@ -1208,3 +1208,24 @@ Example:
 
 	ppp ipcp server ip 10.10.1.1
 
+## PPPoE subsribers sysctl variables
+
+### pppoe_max_subsc
+
+Maximum numbers of concurrent pppoe subscribers.
+
+### pppoe_inactive_ttl
+
+Time is seconds. Pppoe subscriber will be disconnected
+if there no packets during that period of time.
+
+### tcp_mss_fix
+1 - on, 0 - off. Enables or disables using TCP MSS fix for pppoe traffic.
+
+### ppp_max_terminate
+Max number of PPP FSM (LCP or NCP(IPCP)) terminate packets that may be sent.
+
+### ppp_max_configure
+Max number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
+
+
