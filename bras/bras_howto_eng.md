@@ -187,7 +187,7 @@ Dynamic routing. Integration with FRR/Quagga routing suite
 ### 4.4.1. KNI interfaces
 
 A KNI interface must be created for each router's VIF that is gonna
-used to communicate with other routers via a dynamic routing protocol 
+be used to communicate with other routers via a dynamic routing protocol 
 supported by FRR/Quagga. An example of a such interface is the v3 interface. 
 The router receives a default route from the BGP peer established 
 via the v3 KNI interface.
@@ -207,8 +207,8 @@ Example of a bash script that up kni interfaces and configure their MAC address:
 
 ### 4.4.2. FRR/Quagga
 
-Zebra and bpgd FRR/Quagga daemons should be configured and started to TheRouter can
-cummunicate with other BGP routers. Since TheTouter has been started in "tr" linux
+Zebra and bpgd FRR/Quagga daemons should be configured and started so TheRouter can
+communicate with other BGP routers. Since TheRouter has been started in "tr" Linux
 network namespace those daemons must also be started in the same namespace.
 
 Zebra's configuration file /etc/quagga/zebra.conf
@@ -336,12 +336,12 @@ radius attributes and I will provide the text of TheRouter VAS dictionary.
 	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '24', '+=' \
 	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
 
-This SQL query is used by FreeRadius to query the data required to form a radius response
+This SQL query is used by FreeRadius to query data required to form a radius response
 to a TheRouter's RADIUS request to authorize a subscriber connected via a dedicated vlan.
 MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
 based on subscriber's VLAN id and the port number via it is connected to TheRouter.
 The information provided in a radius reply will be used by TheRouter to configure
-subscribers route and IP according to the IP unnumbered rules.
+subscribers routes and IP according to the IP unnumbered rules.
 
 The detailed description of the ip unnumberes rules is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
