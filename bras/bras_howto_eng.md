@@ -405,7 +405,7 @@ TheRouter creates a route for a subscriber. Detailed description of this process
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#authorization-response">
 Radius Authorization responce</a>.
 
-Insure that a route has been created:
+Ensure that a route has been created:
 
 	h4 ~ # $rvrf rcli sh ip route
 	...
@@ -425,17 +425,17 @@ L2 connected subscribers</a>, and L3 connected subscriber detailed descriptions 
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#l3-connected-subscribers">
 L3 connected subscribers</a>
 
-Examples of our test BRAS L2/L3 subscribers sessions will be described below.
+Examples of L2/L3 subscribers sessions will be described below.
 
-L2/L3 subscriber sessions are not a kind of VIF and they are not required any IP configuration steps 
-such as a route creation or assigning an ip address to be executed on the router side.
+L2/L3 subscriber session is not a kind of VIF and they it's required any IP configuration steps 
+such as a route creation or assigning an ip address.
 
 L2/L3 subsriber sessions belong to a VIF, therefore in order to create them the special flag should added
-to a vif creation command. To allow the router to create L2 subscriber sessions the "l2_subs" flag
+to a VIF creation command. To allow the router to create L2 subscriber sessions the "l2_subs" flag
 should be used. To allow the router to create L3 subscriber sessions the "l3_subs" flag
 should be used.
 
-In our test lab L2 subscriber sessions are create on VIF v5:
+In this test lab L2 subscriber sessions are created on VIF v5:
 
 	vif add name v5 port 0 type dot1q cvid 5 flags kni,l2_subs
 
@@ -444,14 +444,14 @@ L3 sessions are created on VIF v21:
 	vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs	
 
 The only difference between L2 and L3 subscriber sessions is that L2 sessions store
-subscriber's MAC address in addition to subscriber's ip address. Storing a MAC address 
-allows TheRouter (not implemented yet) to make sure that all packets going throgh a session 
+subscribers MAC address in addition to subscribers IP address. Storing a MAC address 
+allows TheRouter (not implemented yet) to make sure that packets going through a session 
 match the session MAC address, and to execute defined actions when a packet doesn't match a session.
 
 Authorization of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
-but it doesn't require any IP configuration steps (assigning an ip address, creation an ip route).
+but it doesn't require any IP configuration steps (assigning an IP address, creation IP route).
 
-L2/L3 sessions support shaping of traffic going through a session.
+L2/L3 sessions support shaping of traffic going through them.
 
 ### 6.2.2. Viewing L2/L3 sessions
 
@@ -518,9 +518,9 @@ DHCP server is listening for requests on V3 interface and identifies subscribers
 	
 ## 7.2. DHCP response routing
 
-In order to dhcp server responses successfully reach their destinations
-a dhcp server should know a route to the network dhcp requests are coming from.
-In our example, dhcp requests are coming from network 10.10.0.0/24.
+In order to DHCP server responses successfully reach their destination
+a DHCP server should know routes to networks DHCP requests are coming from.
+In this example DHCP requests are coming from network 10.10.0.0/24.
 Therefore there should be a route to the destination 10.10.0.0/24 on linux host H4.
 The route should point to TheRouter that is connected via vlan 20, so the route 
 should be added by the following command:
