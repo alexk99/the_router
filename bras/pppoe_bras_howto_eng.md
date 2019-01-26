@@ -28,15 +28,15 @@ A server should be using at least Intel core family processors or similar.
 
 ## 4.1. Starting TheRouter
 
-ip netns add tr
-export rvrf="ip netns exec tr"
-
-ip netns exec tr the_router \
- --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' \
- -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -d -c /etc/router_pppoe.conf
-
-sleep 5
-$rvrf ip link set up dev rkni_v3 address 6C:B3:11:51:15:50
+	ip netns add tr
+	export rvrf="ip netns exec tr"
+	
+	ip netns exec tr the_router \
+	 --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' \
+	 -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -d -c /etc/router_pppoe.conf
+	
+	sleep 5
+	$rvrf ip link set up dev rkni_v3 address 6C:B3:11:51:15:50
 
 ## 4.2. TheRouter's configuration file
 

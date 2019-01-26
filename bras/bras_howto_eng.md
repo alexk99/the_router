@@ -1,30 +1,30 @@
 # 1. Introduction
 
 This howto describes configuration of a BRAS server running TheRouter software
-under Gentoo Linux operation system and using additional software: Dhcpd, FreeRadius, Mysql, Quagga.
+under Linux operating system.
 
-The BRAS server is going to be integrated into a small test network and it should accomplish the following
-tasks:
+The BRAS server is going to be integrated into a small test network and it 
+should be performing the following tasks:
 
  * termination users QinQ ethernet vlans;
  * user authorization and authentication via RADIUS protocol;
- * redirection unauthorized  users traffic to a WEB server;
+ * redirection unauthorized  users traffic to a web server;
  * shaping users traffic;
  * forwarding traffic based on routes received via BGP protocol;
- * SNAT - network adress translation of users source private ip addresses into a pool of public/white
- ip addresses;
+ * SNAT - network address translation of users source private IP addresses into a pool of public/white
+ IP addresses;
 	
-# 2. Configuration Gentoo Linux and TheRouter software
+# 2. Configuring Linux OS and TheRouter software
 
-Following either <a href="https://github.com/alexk99/the_router/blob/master/install.md">Gentoo installation</a>
+Follow either <a href="https://github.com/alexk99/the_router/blob/master/install.md">Gentoo installation</a>
 instructions or <a href="https://github.com/alexk99/the_router/blob/master/ubuntu_install.md">Ubuntu installation</a>
-instruction install DPDK and TheRouter on a machine running Gentoo Linux or Ubuntu.
+instruction and install DPDK and TheRouter on a machine running Linux OS.
 
 # 3. Test network scheme
 
-The test network consists of the linux host H4, the border router connected to the internet and our clients/subscribers.
-The H4 host runs TheRouter and other programs required for accomplishing our tasks: Dhcpd, FreeRadius, Mysql, Quagga.
-Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 network/broadcast domain.
+The test network consists of linux host H4, a border router connected to the internet and clients/subscribers.
+H4 host runs TheRouter and other programs required for accomplishing our tasks: dhcpd, freeradius, mysql, quagga or frr.
+Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 broadcast domain.
 
 ## 3.1. L2 network scheme
 
@@ -34,23 +34,32 @@ Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are c
 
 <img src="http://therouter.net/images/bras/bras_howto_l3.png">
 
-The two main static the_router's interfaces configured in a router's configuration file
-are v3 and v20 virtual interfaces (VIF). VIF v3 connects the_router to the border router.
-VIF v20 connects the_router to H4 linux network stack which runs on the same host as the_router, but uses
-its own NICs.
+Two static sub interfaces (VIF) configured in a router's configuration file
+are v3 and v20. V3 VIF connects TheRouter to the border router.
+v20 VIF connects TheTouter to H4 Linux network stack which runs 
+on the same machine as TheRouter does,  but uses its own NICs.
 
 # 4. Starting TheRouter, checking L2 and L3 connectivity.
 
 ## 4.1. Starting TheRouter
 
-the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
- --syslog='daemon' -n2 -w 0000:60:00.0 -w 0000:60:00.1  --vdev 'eth_bond0,mode=4,slave=0000:60:00.0,slave=0000:60:00.1,xmit_policy=l23' \
- -- -c /etc/router_bras_dhcp_relay_lag.conf
+	ip netns add tr
+	export rvrf="ip netns exec tr"
+	
+	$rvrf the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
+	  --syslog='daemon' -n2 -w 0000:60:00.0 -w 0000:60:00.1 \
+	  --vdev 'eth_bond0,mode=4,slave=0000:60:00.0,slave=0000:60:00.1,xmit_policy=l23' \
+	  -- -d -c /etc/router_bras_dhcp_relay_lag.conf
+
+	sleep 5
+	$rvrf ip link set up dev rkni_v3 address 00:1B:21:3C:69:44 
+
 
 ## 4.2. TheRouter's configuration file
 
 Here is the router's configuration file.
-Detailed description of the configuration commands will be provided in the next paragraphs of this howto.
+Detailed description of this file configuration commands 
+will be provided in the following paragraphs.
 
 /etc/router_bras_dhcp_relay_lag.conf
 
@@ -108,8 +117,9 @@ Detailed description of the configuration commands will be provided in the next 
 	
 	  radius_client add server 192.168.20.2
 	  radius_client set secret "secret"
-	
-	
+	  coa server set secret "secret"
+	  
+	  
 	  # PBR
 	  ip route table add rt_bl
 	
@@ -127,11 +137,11 @@ Detailed description of the configuration commands will be provided in the next 
 	  npf load "/etc/npf.conf.bras_dhcp_relay"
 	}
 
-## 4.3. Connectivity checking 
+## 4.3. Connectivity 
 
-### 4.3.1. Insure that the interfaces described in the configuration file are running:
+### 4.3.1. Insure that the interfaces described in the configuration file are up and running:
 
-	h4 src # rcli sh vif
+	h4 src # $rvrf rcli sh vif
 	name    port    vid     mac                     type    flags   idx     ingress_car     egress_car
 	v20     0       0.20    00:1B:21:3C:69:44       dot1q           10      -       -
 	v5      0       0.5     00:1B:21:3C:69:44       dot1q   kni,l2 subs     13      -       -
@@ -139,7 +149,7 @@ Detailed description of the configuration commands will be provided in the next 
 
 ### 4.3.2. ARP
 
-	h4 src # rcli sh arp
+	h4 src # $rvrf rcli sh arp
 	port    vid     ip      mac     type    state
 	0       0.20    192.168.20.2    90:E2:BA:4B:B3:17       static  ok
 	0       0.5     192.168.5.124   A8:5B:78:09:0C:E1       dynamic ok
@@ -147,7 +157,7 @@ Detailed description of the configuration commands will be provided in the next 
 
 ### 4.3.3. ICMP
 
-	h4 src # rcli ping -c3 192.168.1.3
+	h4 src # $rvrf rcli ping -c3 192.168.1.3
 	Ping 192.168.1.3 56(84) bytes of data.
 	reply 56 bytes icmp_seq=1 time=0.283 ms
 	reply 56 bytes icmp_seq=2 time=0.279 ms
@@ -157,7 +167,7 @@ Detailed description of the configuration commands will be provided in the next 
 	sent: 3, recv: 3 (100%), lost: 0 (0%)
 	round-trip min/avg/max = 0.278/0.280/0.283
 
-	h4 src # rcli ping -c3 192.168.20.2
+	h4 src # $rvrf rcli ping -c3 192.168.20.2
 	Ping 192.168.20.2 56(84) bytes of data.
 	reply 56 bytes icmp_seq=1 time=0.501 ms
 	reply 56 bytes icmp_seq=2 time=0.557 ms
@@ -167,39 +177,39 @@ Detailed description of the configuration commands will be provided in the next 
 	sent: 3, recv: 3 (100%), lost: 0 (0%)
 	round-trip min/avg/max = 0.279/0.445/0.557
 
-## 4.4. Starting KNI interfaces and Quagga integration
+## 4.4. KNI interfaces and FRR/Quagga integration
 
-Detailed description of a way TheRouter communicates with Quagga is provided on the page 
+Detailed description of a way TheRouter communicates with FRR/Quagga is described on the page 
 <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite">
-Dynamic routing. Integration with Quagga routing suite
+Dynamic routing. Integration with FRR/Quagga routing suite
 </a>
 
 ### 4.4.1. KNI interfaces
 
-KNI interfaces must be created for each router's VIF that will be used to communicate
-with other routers via dynamic routing protocols supported by Quagga. Example of a such interface
-is the v3 interface. The router receives a default route from the bgp peer established via the v3 kni interface.
+A KNI interface must be created for each router's VIF that is gonna
+used to communicate with other routers via a dynamic routing protocol 
+supported by FRR/Quagga. An example of a such interface is the v3 interface. 
+The router receives a default route from the BGP peer established 
+via the v3 KNI interface.
 
-You should up KNI interfaces and configure their MAC addresses after the_route has started.
-MAC address of a kni interface should be equal to the mac address of the router's interface coupled with the kni
-interface. MAC address of a VIF can be learned from 'rcli sh vif' command output.
+You should manually up KNI interfaces and configure their 
+MAC addresses once TheRouter has started. MAC address of a KNI interface 
+should be equal to the MAC address of the router's interface coupled with the KNI.
+MAC address of a VIF can be learned from an output of the 'rcli sh vif' command.
 
 Example of a bash script that up kni interfaces and configure their MAC address:
 
 	#!/bin/bash
-	ip link set up rkni_v3
-	ip link set dev rkni_v3 address 00:1B:21:3C:69:44
 	
-	ip link set up rkni_v5
-	ip link set dev rkni_v5 address 00:1B:21:3C:69:44
-	
-	ip link set up rkni_v21
-	ip link set dev rkni_v21 address 00:1B:21:3C:69:44
+	ip link set up dev rkni_v3 address 00:1B:21:3C:69:44
+	ip link set up dev rkni_v5 address 00:1B:21:3C:69:44
+	ip link set up dev rkni_v21 address 00:1B:21:3C:69:44
 
-### 4.4.2. Starting Quagga
+### 4.4.2. FRR/Quagga
 
-Zebra and bpgd quagga's components should be configured and started in order the_router to be
-able to cummunicate with others BPG routers.
+Zebra and bpgd FRR/Quagga daemons should be configured and started to TheRouter can
+cummunicate with other BGP routers. Since TheTouter has been started in "tr" linux
+network namespace those daemons must also be started in the same namespace.
 
 Zebra's configuration file /etc/quagga/zebra.conf
 
@@ -208,24 +218,17 @@ Zebra's configuration file /etc/quagga/zebra.conf
 	! Set both of these passwords
 	password xxx
 	enable password xxx
-	
-	# rt1
-	table 250
-	
+		
 	! Turn off welcome messages
 	no banner motd
 	log file /var/log/quagga/zebra.log
 
-The most important command in this file is the command "table 250". It tells Zebra
-to install received routes into the additional linux routing table with id 250.
-Id of this table should be added to /etc/iproute2/rt_tables
-
-	250     rt1
-
-Using a separate routing table is requied so the received routes do not mess with the routes that linux uses
-for its own network operations. The routes that quagga receives via KNI interfaces and install to the table 'rt1'
-are meant only for the_router and have no value for the linux host. Zebra will pass that routes to the_router
-via "zebra FIB push interface".
+Using a separate network namespace is required for routes to not mess with 
+routes Linux stack uses for its own network operations. The routes that 
+FRR/Quagga receives via KNI interfaces and install into the main
+routing table of "tr" namespace are meant only for TheTouter software and 
+have no value for the Linux network stack. Zebra will pass that routes 
+to TheRouter via "zebra FIB push interface".
 
 Run zebra
 
@@ -253,26 +256,30 @@ Bgpd's configuration file /etc/quagga/bgpd.conf
 	line vty
 	!
 
-A single bgp peer with the uplink border router 192.168.1.3 is described in this configuration file. 
-The router announces network 10.111.0.0/29 which is used in SNAT function and serve as a pulic
-addresses of the_router's subscribers.
-Note that a private prefix 10.111.0.0/29 is used only due the test nature of this howto and lack of global public
-ip address. In a real environment a global public ip addresses are usally used in the cases like this.
+A single BGP peer with the uplink border router 192.168.1.3 
+is described in this configuration file. 
+TheRouter announces network 10.111.0.0/29 which is used for 
+SNAT function and serves as a public addresses for subscribers. 
+Note that a private prefix 10.111.0.0/29 is used only due 
+the test nature of this howto and lack of global public IP address. 
+In a real environment, global public IP addresses are usually 
+used in cases like this.
 
 Run bgpd
 
 	/etc/init.d/bgpd start
 	
-Insure that a default (0.0.0.0/0) route is successfully received and installed into both the linux route table and the_router's route table.
+Insure that a default (0.0.0.0/0) route is successfully received and 
+installed into both the Linux routing table and TheRouter's routing table.
 
-Linux routing table 'rt1' (id 250)
+Linux routing table
 
-	h4 src # ip route ls table rt1
+	h4 src # $rvrf ip route ls
 	default via 192.168.1.3 dev rkni_v3  proto zebra  metric 20
 
 The TheRouter's main routing table:
 
-	h4 src # rcli sh ip route
+	h4 src # $rvrf rcli sh ip route
 	224.0.0.0/4 is unreachable
 	192.168.21.0/24 C dev v21 src 192.168.21.1
 	192.168.5.0/24 C dev v5 src 192.168.5.1
@@ -281,21 +288,22 @@ The TheRouter's main routing table:
 	10.10.0.0/24 is unreachable
 	0.0.0.0/0 via 192.168.1.3 dev v3 src 192.168.1.112
 
-# 5. Radius configuration
+# 5. RADIUS
 
 ## 5.1. TheRouter radius client configuration
 
-Following commands define RADIUS server ip address,
-source ip address of RADIUS router's requests,
-shared radius secret.
+Following commands define RADIUS server IP address,
+source IP address of RADIUS router's requests,
+shared radius secret and CoA secret
 
 	radius_client add server 192.168.20.2
 	radius_client add src ip 192.168.20.1
 	radius_client set secret "secret"
+	coa server set secret "secret"
 
-The source ip address must be assigned to the router's interface which
-connects the router to a RADIUS server. It is the v20 interface, 
-since it connects the_router to the linux host H4 
+The source IP address must be assigned to TheRouter's interface which
+connects TheRouter to a RADIUS server. It is the v20 interface since 
+it connects TheRouter to the linux host H4 
 where the RADIUS server is running.
 
 	# link with local linux host
@@ -312,11 +320,11 @@ Ip address 192.168.20.1 is configured on the linux side of vlan 20.
 ## 5.2. Radius server configuration 
 
 FreeRadius is used as a RADIUS server in this howto.
-The FreeRadius project has a very good documentations and there are a lot of configuration
+The FreeRadius project has a very good documentation and there are a lot of configuration
 examples available on the internet, so, excuse me for not providing any examples here.
 
 But, I will provide the text of the main SQL query that illustrates using of TheRouter specific
-radius attributes and also I will provide the text of TheRouter VAS dictionary.
+radius attributes and I will provide the text of TheRouter VAS dictionary.
 
 /etc/raddb/sql/mysql/dialup.conf
 
@@ -329,11 +337,11 @@ radius attributes and also I will provide the text of TheRouter VAS dictionary.
 	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
 
 This SQL query is used by FreeRadius to query the data required to form a radius response
-to a router's radius request to authorize a subscriber connected via a dedicated vlan.
-Mysql stored procedure GetIpoeUserService will calculate subscriber's ip address
-based on subscriber's vlan id and port number via it connected to the_router.
-The information provided in a radius reply then will be used by the_router to configure
-a subscriber routing according to the ip unnumbered rules.
+to a TheRouter's RADIUS request to authorize a subscriber connected via a dedicated vlan.
+MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
+based on subscriber's VLAN id and the port number via it is connected to TheRouter.
+The information provided in a radius reply will be used by TheRouter to configure
+subscribers route and IP according to the IP unnumbered rules.
 
 The detailed description of the ip unnumberes rules is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
@@ -364,49 +372,49 @@ The detailed description of "vlan per subscriber" dynamic interfaces is provided
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">vlan-per-subscriber</a>.
 I am going to briefly describe them according to the context of our test lab.
 
-Dynamic interfaces (dynamic VIF) are created automatically by the_router in a response
-to user packets coming to a router port. They cannot be created by a user via rcli interface 
-or by a configuration file command. In order the router to create a dynamic VIF it should
-be informed on which port it should expect a user traffic that should be processed using dynamic VIFs.
+Dynamic interfaces (dynamic VIF) are created automatically by TheRouter software in a response
+to user packets received at a router port. They cannot be created via rcli interface 
+or using a configuration file command. In order the router to start creating dynamic VIFs it should
+be configured on which port it should expect a subscribers traffic that should be processed 
+using dynamic VIFs.
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
-When the_router receives on such a port a packet that doesn't match any known VIFs, the router
+When TheRouter receives on such port a packet that doesn't match any known VIFs, the router
 creates a new dynamic interface provided that creation of the interface is authorized by the RADIUS
-protocol. Vlan id values for the new virtual interface are gathered from the packet's ethernet header.
+protocol. VLAN id values for the new virtual interface are gathered from the packet's ethernet header.
 
-RADIUS request to authorize a creation of new dynamic VIF contains data about subsriber's vlan.
-RADIUS response should contain the data requied to configure IP protocol for a new dynamic VIF 
-and IP forwarding in the case of ip unnumbered.
+A RADIUS request to authorize creation of a new dynamic VIF contains subsriber's VLAN data.
+RADIUS response should contain the data required to configure IP protocol of a new dynamic VIF.
 
 ### 6.1.1. Viewing ip subscrubers 
 
-	h4 ~ # rcli sh subsc
+	h4 ~ # $rvrf rcli sh subsc
 	vlan    subsc ip        mode    port    ingress_car     egress_car      rx_pkts tx_pkts
 		...
 	0.130                   1       0       200 mbit/s      200 mbit/s      0       0
 		...
 
-The "sh subsc" command also ouputs a list of L2/L3 subscriber sessions, therefore some field values may be blank.
-For example, a dynamic VIF "subsc ip" field is blank.
+The "sh subsc" command also outputs a list of L2/L3 subscriber sessions, therefore some field values may be blank.
+For example, the dynamic VIF "subsc ip" field is blank.
 
-### 6.1.2. Dynamic vif routing
+### 6.1.2. Routing of Dynamic VIF
 
-When a radius response to dynamic VIF creation request includes radius VSA attribute "therouter_ip_unnumbered",
+If a radius response to a dynamic VIF creation request includes the radius VSA attribute "therouter_ip_unnumbered",
 TheRouter creates a route for a subscriber. Detailed description of this process is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#authorization-response">
 Radius Authorization responce</a>.
 
 Insure that a route has been created:
 
-	h4 ~ # rcli sh ip route
+	h4 ~ # $rvrf rcli sh ip route
 	...
 	10.10.0.11/32 C dev dvif0.130 src 10.10.0.1
 	...
 
-10.10.0.11 is an ip address value included in a radius reply.
+10.10.0.11 is the IP address value included in the radius reply.
 dvif1.0.130 is the name of a dynamic interface. "1.0.130" substring of the name is 
-a concatenation of values of the fields port_id, svid, cvid
+a concatenation of values of the fields port_id, svid, cvid.
 
 ## 6.2. L2/L3 connected subscribers
 
@@ -437,7 +445,7 @@ L3 sessions are created on VIF v21:
 
 The only difference between L2 and L3 subscriber sessions is that L2 sessions store
 subscriber's MAC address in addition to subscriber's ip address. Storing a MAC address 
-allows the_router (not implemented yet) to make sure that all packets going throgh a session 
+allows TheRouter (not implemented yet) to make sure that all packets going throgh a session 
 match the session MAC address, and to execute defined actions when a packet doesn't match a session.
 
 Authorization of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
@@ -447,7 +455,7 @@ L2/L3 sessions support shaping of traffic going through a session.
 
 ### 6.2.2. Viewing L2/L3 sessions
 
-	h4 ~ # rcli sh subsc
+	h4 ~ # $rvrf rcli sh subsc
 	vlan    subsc ip        mode    port    ingress_car     egress_car      rx_pkts tx_pkts
 	        192.168.5.132   1       0       200 mbit/s      200 mbit/s      0       0
 	        192.168.5.133   1       0       200 mbit/s      200 mbit/s      0       0

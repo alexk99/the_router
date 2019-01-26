@@ -135,7 +135,7 @@ CoA mechanism makes TheRouter to store session id in the predefined table.
 Then, PBR rules are applied to a receiving packet and if the the_router finds 
 a match to one of those rules it will route the packet according to the routes of the routing table specified in the matched PBR rule.
 
-## Creationg of additioanal routing table
+## Additional routing table
 
 	ip route table add <table name>
 
