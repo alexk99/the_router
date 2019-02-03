@@ -14,50 +14,50 @@ on high packet rates using commodity hardware.
 
 ## It supports
 
- * ipv4 static and <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md">dynamic routing</a>. Dynamic routing is based on integration with <a href="http://www.nongnu.org/quagga">Quagga Routing Suite</a> or <a href="https://frrouting.org/">FRRouting</a>
- * dot1q and qinq ethernet encapsulations
- * ip unnumbered 
- * arp, proxy arp
- * icmp
- * pbr and multiple routing tables
- * statefull and stateless firewall and various forms of NAT. This functionality is based 
+ * IPv4 static and <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md">dynamic routing</a>. Dynamic routing is based on integration with <a href="http://www.nongnu.org/quagga">Quagga Routing Suite</a> or <a href="https://frrouting.org/">FRRouting</a>
+ * Dot1q and qinq ethernet encapsulations
+ * IP unnumbered 
+ * ARP, proxy ARP
+ * ICMP
+ * PBR and multiple routing tables
+ * Statefull and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
- * link bonding
+ * Link Aggregation/Link Bonding/LACP
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
- * vrrp (v2 for ipv4 and v3 for ipv6)
- * ipv6 (test phase)
- 	- unicast routing
+ * VRRP (v2 for IPv4 and v3 for IPv6)
+ * IPv6 (test phase)
+ 	- Unicast routing
 	- ICMPv6
 	- Neighbor Discovery Protocol
 	- 	Duplicate address detection
   	-	Neighbor Unreachability Detection
 	- MLD v1, v2
 	- SLAAC
-	- vrrp v3
- * flow accounting via IPFIX (test phase)
+	- VRRP v3
+ * Flow accounting via IPFIX (test phase)
 
 ## Broadband Remote Access Server (BRAS/BNG) features 
 
  * IPoE L2/L3 connected subscribers
  * PPPoE subscribers
- * IPoE vlan per subsriber with ip unnumbered addresses
- * traffic shaping (Token bucket filter with extended burst value)
+ * IPoE vlan per subsriber with ip unnumbered support
+ * Traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
- * redirect subsribers traffic based on multiple routing tables and PBR
- * radius/coa
+ * Redirect subsribers traffic based on multiple routing tables and PBR
+ * Radius/CoA
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
 
 ## PPPoE
 
 PPPoE server supports:
- * radius authorization (PAP and CHAP)
+ * RADIUS authorization (PAP and CHAP)
  * CoA
  * Shaping (Token bucket filter with extended burst value)
  * TCP MSS FIX
- * redirect subsribers traffic based on multiple routing tables and PBR
- * full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
- * up to 40000 concurrent pppoe subscribers
+ * Redirect subsribers traffic based on multiple routing tables and PBR
+ * Full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
+ * Up to 40000 concurrent pppoe subscribers
 
 - Configuration options
 <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE conf options</a>
@@ -69,8 +69,8 @@ It's on the very first builds, no production tests have been perfmored yet.
 <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.1.tar.gz">Download</a>
 
 PPPoE roadmap:
- * radius accounting
- * productions and performance tests
+ * RADIUS accounting
+ * production and performance tests
 
 ## News
 
@@ -96,10 +96,6 @@ PPPoE roadmap:
 
 - Flow support configuration commands - https://github.com/alexk99/the_router/blob/master/conf_options.md#flow-accounting-ipfix
 - Test build http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.dev.a0.67.tar.gz
-
-## Road map
-
- * Testing
 
 ## Performance tests
 
