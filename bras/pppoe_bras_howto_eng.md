@@ -57,7 +57,7 @@ Detailed description of the configuration commands will be provided in the follo
 		
 	  sysctl set log_level 8
 	  sysctl set global_packet_counters 1
-	  sysctl set arp_cache_timeout 60
+	  sysctl set arp_cache_timeout 600
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
 	  sysctl set vif_stat 1
@@ -66,6 +66,11 @@ Detailed description of the configuration commands will be provided in the follo
 	  sysctl set flow_acct_dropped_pkts 0
 	  sysctl set nd_neighbor_cache_entry_ttl 120
 	
+	  # PPPoE
+	  sysctl set pppoe_max_subsc 50000
+	  sysctl set subsc_vif_max 50000
+	  sysctl set radius_max_sessions 20000
+	  sysctl set pppoe_sub_uniq_check 1
 	
 	  # any protocol timeouts (UDP)
 	  sysctl set NPF_ANY_CONN_CLOSED 2
