@@ -45,6 +45,7 @@ on the same machine as TheRouter does,  but uses its own NICs.
 
 	ip netns add tr
 	export rvrf="ip netns exec tr"
+	$rvrf ip link set up lo
 	
 	$rvrf the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	  --syslog='daemon' -n2 -w 0000:60:00.0 -w 0000:60:00.1 \

@@ -30,6 +30,7 @@ A server should be using at least Intel core family processors or similar.
 
 	ip netns add tr
 	export rvrf="ip netns exec tr"
+	$rvrf ip link set up lo
 	
 	ip netns exec tr the_router \
 	 --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' \
