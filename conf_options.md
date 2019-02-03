@@ -1232,6 +1232,6 @@ Maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
 
 ### pppoe_sub_uniq_check
 1 - on, 0 - off. Check that each pppoe subscriber has a uniq pair: Host-Uniq TAG and MAC address.
-If a new pppoe discover request containging already existing pair of values is received
+If a new pppoe discover request containging already existing pair of the values is received
 it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
 
