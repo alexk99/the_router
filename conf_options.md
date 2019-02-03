@@ -1212,20 +1212,26 @@ Example:
 
 ### pppoe_max_subsc
 
-Maximum numbers of concurrent pppoe subscribers.
+Maximum number of concurrent pppoe subscribers.
+
+Variable can be used only in the startup configuration file section.
 
 ### pppoe_inactive_ttl
 
-Time is seconds. Pppoe subscriber will be disconnected
-if there no packets during that period of time.
+Time, seconds. Pppoe subscriber will be disconnected
+if there are no packets during this period of time.
 
 ### tcp_mss_fix
 1 - on, 0 - off. Enables or disables using TCP MSS fix for pppoe traffic.
 
 ### ppp_max_terminate
-Max number of PPP FSM (LCP or NCP(IPCP)) terminate packets that may be sent.
+Maximum number of PPP FSM (LCP or NCP(IPCP)) terminate packets that may be sent.
 
 ### ppp_max_configure
-Max number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
+Maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
 
+### pppoe_sub_uniq_check
+1 - on, 0 - off. Check that each pppoe subscriber has a uniq pair: Host-Uniq TAG and MAC address.
+If a new pppoe discover request containging already existing pair of values is received
+it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
 
