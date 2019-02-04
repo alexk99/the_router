@@ -1239,11 +1239,11 @@ it will be dropped. The pppoe_sub_uniq_check variable can be used only in the st
 
 ### radius_client add server
 
-	radius_client add server <ip address> port <port number>
+	radius_client add server <ip address> [port <port number>]
 
 Add RADIUS server to the list of servers. RADIUS requests
 will be sent to servers in the round-robin way. Maximum numbers
-of servers in the list is 8. 
+of servers in the list is 8. Default port number is 1812.
 
 Example:
 
