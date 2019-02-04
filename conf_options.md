@@ -1235,3 +1235,53 @@ Maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
 If a new pppoe discover request containging already existing pair of the values is received
 it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
 
+## RADIUS and CoA
+
+### radius_client add server
+
+	radius_client add server <ip address> port <port number>
+
+Add RADIUS server to the list of servers. RADIUS requests
+will be sent to servers in the round-robin way. Maximum numbers
+of servers in the list is 8. 
+
+Example:
+
+	radius_client add server 192.168.5.2 port 1612
+
+
+### radius_client add src ip 
+
+	radius_client add src ip <ip address>
+
+Add ip address to the list of source ip addresses that will be used
+by the TheRouter's RADIUS client to send RADIUS requests. A source
+ip address must be assigned to a VIF.
+
+Example:
+
+	radius_client add src ip 192.168.5.111
+
+
+
+### radius_client set secret
+
+	radius_client set secret "secret"
+
+Set the RADIUS client secret.
+
+Example:
+
+	radius_client set secret "1234abcd"
+	
+
+
+### coa server set secret
+
+	coa server set secret "secret"
+
+Set the RADIUS CoA server secret.
+
+Example:
+
+	coa server set secret "abcd1234"
