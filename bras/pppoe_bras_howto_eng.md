@@ -385,6 +385,11 @@ based on subscriber's login.
 The information provided in a radius reply then will be used by the_router to configure
 a subscriber pppoe interface.
 
+therouter_egress_cir and therouter_egress_cir attributes should contain ingress and
+egress CIR values in kbit/s.
+
+therouter_ipv4_addr attribute should contain IPv4 address in numeric format.
+
 ### 5.2.2. FreeRadius dictionary
 
 Add the following lines to the /etc/raddb/dictionary
