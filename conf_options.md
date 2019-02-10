@@ -1285,3 +1285,47 @@ Set the RADIUS CoA server secret.
 Example:
 
 	coa server set secret "abcd1234"
+	
+## RADIUS Accounting
+
+### radius_client set secret
+
+	radius_client set accounting secret "secret"
+
+Set the RADIUS client secret.
+
+Example:
+
+	radius_client set accounting secret "1234abcd"
+
+
+### radius_client add server
+
+	radius_client add accounting server <ip address> [port <port number>]
+
+Add RADIUS server to the list of servers. RADIUS requests
+will be sent to servers in the round-robin way. Maximum numbers
+of servers in the list is 8. Default port number is 1813.
+
+Example:
+
+	radius_client add accounting server 192.168.5.2 port 1813
+
+### Accounting sysctl variables
+
+#### radius_accounting
+
+  1 - enable radius accounting, 0 - disable rodius accounting
+  Note that "vif_stat" sysctl variable should be set to 1, otherwise
+  accounting request's packets and bytes counters will contains
+  zero values.
+
+#### radius_accounting_interim
+
+  1 - enable sending interum accounting-requests, 0 - disable
+
+#### radius_accounting_interim_interval
+
+  Time is seconds, determines how often to send interim requests.
+
+
