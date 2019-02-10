@@ -1292,7 +1292,7 @@ Example:
 
 	radius_client set accounting secret "secret"
 
-Set the RADIUS client secret.
+Set the RADIUS accounting client secret.
 
 Example:
 
@@ -1303,7 +1303,7 @@ Example:
 
 	radius_client add accounting server <ip address> [port <port number>]
 
-Add RADIUS server to the list of servers. RADIUS requests
+Add RADIUS accounting server to the list of servers. RADIUS requests
 will be sent to servers in the round-robin way. Maximum numbers
 of servers in the list is 8. Default port number is 1813.
 
@@ -1322,7 +1322,7 @@ Example:
 
 #### radius_accounting_interim
 
-  1 - enable sending interum accounting-requests, 0 - disable
+  1 - enable sending interim accounting-requests, 0 - disable
 
 #### radius_accounting_interim_interval
 
