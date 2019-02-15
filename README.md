@@ -52,6 +52,7 @@ on high packet rates using commodity hardware.
 
 PPPoE server supports:
  * RADIUS authorization (PAP and CHAP)
+ * RADIUS accounting
  * CoA
  * Shaping (Token bucket filter with extended burst value)
  * TCP MSS FIX
@@ -69,8 +70,8 @@ It's on the very first builds, no production tests have been perfmored yet.
 <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.06.tar.gz">Download</a>
 
 PPPoE roadmap:
- * RADIUS accounting
  * production and performance tests
+ * IPv6 support
 
 ## News
 
