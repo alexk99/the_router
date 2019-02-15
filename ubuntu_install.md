@@ -254,9 +254,6 @@ Run the following commands:
 		make all check CXXFLAGS="-g -O3"
 		make install
 
- Notes: libcityhash should be compiled as dynamic library, but the steps above create a static link lib.
- I haven't so far figured why, so as a workaroung you can download already compiled lib <a href="http://therouter.net/downloads/libcityhash.so.0.0.0">libcityhash.so.0.0.0</a>
- and copy it to /usr/local/lib/libcityhash.so.0.0.0
 
 ### Download TheRouter 
 
