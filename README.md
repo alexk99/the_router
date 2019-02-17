@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://therouter.net/images/r.png" />
+  <img src="http://therouter.net/images/github_header5.png" />
 </p>
 
 # Work in progress.. Stay tuned.
