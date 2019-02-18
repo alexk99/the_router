@@ -4,7 +4,6 @@
 
 # Work in progress.. Stay tuned.
 
-# TheRouter
 TheRouter is a software packet router based on <a href="http://dpdk.org/">DPDK</a> an <a href="https://github.com/alexk99/npf">NPF libraries.</a>
 Using modern software technique such as QSBR, lockless data structures and
 <a href="https://github.com/efficient/libcuckoo">cuckoo hashing</a> enables 
