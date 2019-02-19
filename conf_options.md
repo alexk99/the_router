@@ -1216,6 +1216,15 @@ Maximum number of concurrent pppoe subscribers.
 
 Variable can be used only in the startup configuration file section.
 
+### pppoe_max_online_subsc
+
+Maximum number of online pppoe subscribers.
+Once the number of online pppoe subscribers reaches this
+limit therouter will stop answering to pppoe discovery initiation
+packets (PADI). The difference between this variable and pppoe_max_subsc
+variable is that pppoe_max_online_subsc variable can be changed at runtime.
+Use 0 value to turn off the limit.
+
 ### pppoe_inactive_ttl
 
 Time, seconds. Pppoe subscriber will be disconnected
