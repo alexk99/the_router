@@ -1244,6 +1244,17 @@ Maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
 If a new pppoe discover request containging already existing pair of the values is received
 it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
 
+### lcp_keepalive_interval
+Interval in seconds beetween two keepalive tests.
+Use 0 to turn off keeplive.
+
+## lcp_keepalive_probe_interval
+Interval in milliseconds beetween keepalive probes (LCP echo-requests).
+
+## lcp_keepalive_num_retries
+Maximum number of keepalive probes that could be send during
+one keepalive test.
+
 ## RADIUS and CoA
 
 ### radius_client add server
