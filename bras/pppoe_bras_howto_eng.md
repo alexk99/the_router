@@ -71,7 +71,20 @@ Detailed description of the configuration commands will be provided in the follo
 	  sysctl set subsc_vif_max 50000
 	  sysctl set radius_max_sessions 20000
 	  sysctl set pppoe_sub_uniq_check 1
-	
+	  sysctl set ppp_1session_per_username 1
+
+	  # radius accounting
+	  sysctl set radius_accounting 1
+	  sysctl set radius_accounting_interim 1
+	  sysctl set radius_accounting_interim_interval 5
+
+	  # keepalive	  
+	  # sec
+	  sysctl set lcp_keepalive_interval 30
+	  sysctl set lcp_keepalive_num_retries 3
+	  # msec
+	  sysctl set lcp_keepalive_probes_interval 500
+	  	
 	  # any protocol timeouts (UDP)
 	  sysctl set NPF_ANY_CONN_CLOSED 2
 	  sysctl set NPF_ANY_CONN_NEW 30
@@ -161,6 +174,9 @@ Detailed description of the configuration commands will be provided in the follo
 	  radius_client add server 192.168.5.2
 	  radius_client set secret "secret"
 	  coa server set secret "secret"
+	
+	  radius_client add accounting server 192.168.5.2
+	  radius_client set accounting secret "secret"
 	
 	  #
 	  # ACL
@@ -518,9 +534,17 @@ Closing a pppoe connection:
 
 # 7. CoA
 
-### 7.1 Add subsriber's ip address to ip set of blocked/unuthorised users.
+### 7.1 CoA Subsriber Identification Attributes
 
-	echo User-Name=pppoe5,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
+To identify a pppoe subscriber the following radius attributes could be used:
+User-Name, Acct-Session-ID.
+
+To use User-name attribute as a subscriber's identificator sysctl variable "ppp_1session_per_username"
+must be turned on.
+
+### 7.2 Add subsriber's ip address to ip set of blocked/unuthorised users.
+
+	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
 
 IP set containing blocked subscribers ip addresses is defined by command:
 
@@ -531,13 +555,13 @@ That IP set is used by PBR rules to redirect blocked/unuthorised pppoe users to 
 	# pbr rules
 	ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
 
-### 7.2 Remove subsriber's ip address from ip set of blocked/unuthorised users.
+### 7.3 Remove subsriber's ip address from ip set of blocked/unuthorised users.
 
-	echo User-Name=pppoe5,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
+	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
 
-### 7.2 Change traffic shaping parameters of PPPoE subsriber
+### 7.4 Change traffic shaping parameters of PPPoE subsriber
 
-	echo User-Name=pppoe9,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_ingress_cir=50,therouter_engress_cir=55" | radclient 192.168.5.111:3799 coa secret
+	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_ingress_cir=50,therouter_engress_cir=55" | radclient 192.168.5.111:3799 coa secret
 
 # 8. NAT configuration
 
