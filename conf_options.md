@@ -1244,6 +1244,11 @@ Maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
 If a new pppoe discover request containging already existing pair of the values is received
 it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
 
+### ppp_1session_per_username
+1 - on, 0 - off.
+When enabled the_router will disconnect/prevent from connecting new pppoe subscribers that use a username
+already being used by another subscriber's session
+
 ### lcp_keepalive_interval
 Interval in seconds beetween keepalive tests.
 Use 0 to turn off keeplive.
