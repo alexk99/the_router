@@ -1249,6 +1249,10 @@ it will be dropped. The pppoe_sub_uniq_check variable can be used only in the st
 When enabled the_router will disconnect/prevent from connecting new pppoe subscribers that use a username
 already being used by another subscriber's session
 
+### ppp_install_subsc_linux_routes
+1 - on, 0 - off.
+When enabled the_router will add/remove linux kernel /32 routes for ppp subscribers ip addresses
+
 ### lcp_keepalive_interval
 Interval in seconds beetween keepalive tests.
 Use 0 to turn off keeplive.
