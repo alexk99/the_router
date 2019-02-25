@@ -542,26 +542,36 @@ User-Name, Acct-Session-ID.
 To use User-name attribute as a subscriber's identificator sysctl variable "ppp_1session_per_username"
 must be turned on.
 
-### 7.2 Add subsriber's ip address to ip set of blocked/unuthorised users.
+### 7.2 Add subsriber's ip address to the ip set containing blocked/unauthorised subscriber's ip addresses
 
-	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
+	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
 
-IP set containing blocked subscribers ip addresses is defined by command:
+IP set containing blocked subscribers ip addresses is defined by the command:
 
 	u32set create ips1 size 16384 bucket_size 16
 
-That IP set is used by PBR rules to redirect blocked/unuthorised pppoe users to a direrect routing table:
+That IP set is used by the PBR rules to redirect blocked/unauthorised 
+pppoe subscribers to a special routing table named 'rt_bl':
 
 	# pbr rules
 	ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
 
-### 7.3 Remove subsriber's ip address from ip set of blocked/unuthorised users.
+### 7.3 Remove subsriber's ip address from ip set with blocked/unauthorised subscriber's ip addresses
 
-	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
+	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
 
 ### 7.4 Change traffic shaping parameters of PPPoE subsriber
 
-	echo User-Name=user1,Vendor-Specific = "TheRouter,therouter_ingress_cir=50,therouter_engress_cir=55" | radclient 192.168.5.111:3799 coa secret
+	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_ingress_cir=201000,therouter_egress_cir=202000" | radclient 192.168.5.111:3799 coa secret
+
+or
+
+	echo User-Name=user1,WISPr-Bandwidth-Max-Down=111000000,WISPr-Bandwidth-Max-Up=112000000 | radclient 192.168.5.111:3799 coa secret
+
+
+WISPr-Bandwidth-Max-Down and WISPr-Bandwidth-Max-Up attributes set the shaping using bit/s as unit.
+therouter_ingress_cir and therouter_egress_cir use kbit/s as unit and use traffic directions from
+a router point of view.
 
 # 8. NAT configuration
 
