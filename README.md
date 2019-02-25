@@ -113,10 +113,10 @@ PPPoE roadmap:
 # Use cases
 
  * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">Source NAT</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md">Dymamic routing. Quagga and FRR</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/link_bonding.md">Link bonding</a>
- * BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
+ * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">Border router</a>
+ * IPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
  <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">docs</a>
+ * PPPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">howto</a>, 
 
 # Production cases
 
