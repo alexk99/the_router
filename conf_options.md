@@ -1251,7 +1251,10 @@ already being used by another subscriber's session
 
 ### ppp_install_subsc_linux_routes
 1 - on, 0 - off.
-When enabled the_router will add/remove linux kernel /32 routes for ppp subscribers ip addresses
+When enabled the_router will add/remove linux kernel /32 routes for ppp subscribers ip addresses.
+Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+in FRR/Quagga bgpd or ospfd daemons. 
 
 ### lcp_keepalive_interval
 Interval in seconds beetween keepalive tests.
