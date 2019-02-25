@@ -412,6 +412,12 @@ Example:
  
 		rcli clear stats
 
+## Sysctl variables
+
+### system_name
+
+Router system name.
+
 ## IPv6
 
  * ipv6 enable

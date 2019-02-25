@@ -21,6 +21,8 @@ instructions or <a href="https://github.com/alexk99/the_router/blob/master/ubunt
 instruction and install DPDK and TheRouter on a x86-64 server running Gentoo Linux or Ubuntu.
 A server should be using at least Intel core family processors or similar.
 
+To download pppoe enabled build use the link on main page in the section PPPoE.
+
 # 3. Test network scheme
 
 
@@ -78,6 +80,8 @@ Detailed description of the configuration commands will be provided in the follo
 	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
 	  # in FRR/Quagga bgpd or ospfd daemons. 
 	  sysctl set ppp_install_subsc_linux_routes 1
+
+	  sysctl set system_name tr1
 
 	  # radius accounting
 	  sysctl set radius_accounting 1
