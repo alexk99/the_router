@@ -1126,6 +1126,12 @@ Example:
 
 Output all connected/online pppoe subscribers
 
+### sh pppoe subsc
+
+	sh pppoe subsc <user-name>
+
+Output particular pppoe subscriber with the given user-name
+
 Example:
 
 	h5 ~ # $rvrf rcli sh pppoe subsc
