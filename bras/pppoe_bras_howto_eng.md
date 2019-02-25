@@ -73,6 +73,12 @@ Detailed description of the configuration commands will be provided in the follo
 	  sysctl set pppoe_sub_uniq_check 1
 	  sysctl set ppp_1session_per_username 1
 
+	  # add/remove linux kernel /32 routes for ppp subscribers ip addresses.
+	  # Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+	  # in FRR/Quagga bgpd or ospfd daemons. 
+	  sysctl set ppp_install_subsc_linux_routes 1
+
 	  # radius accounting
 	  sysctl set radius_accounting 1
 	  sysctl set radius_accounting_interim 1
