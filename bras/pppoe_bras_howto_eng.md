@@ -399,8 +399,8 @@ radius attributes and I will also provide the text of TheRouter VAS dictionary.
 	## router_bras_dhcp_relay.conf
 	## router pppoe bras
 	## 168493313 - 10.11.1.1
-	authorize_reply_query = "SELECT 1, '%{SQL-User-Name}', 'therouter_ingress_cir', '100', '=' \
-	UNION SELECT 2, '%{SQL-User-Name}', 'therouter_egress_cir', '100', '+=' \
+	authorize_reply_query = "SELECT 1, '%{SQL-User-Name}', 'therouter_ingress_cir', '100000', '=' \
+	UNION SELECT 2, '%{SQL-User-Name}', 'therouter_egress_cir', '100000', '+=' \
 	UNION SELECT 3, '%{SQL-User-Name}', 'therouter_ipv4_addr', GetPppoeSubscIp('%{SQL-User-Name}'), '+=' \
 	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '32', '+='"
 
@@ -432,6 +432,9 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_port_id 8 integer
 	    ATTRIBUTE therouter_ipv4_gw 9 integer
 	    ATTRIBUTE therouter_pbr 10 integer
+	    ATTRIBUTE therouter_remote_id  11 string
+	    ATTRIBUTE therouter_circuit_id 12 string
+	    ATTRIBUTE therouter_lladdr     13 string	    
 	END-VENDOR   TheRouter
 
 # 6. PPPoE and PPP
