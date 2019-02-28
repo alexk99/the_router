@@ -294,7 +294,11 @@ the configuration file.
 
 		rcli sysctl set <name> <value>
 
- * sysctl set
+ for string variables
+
+		rcli sysctl set <name> "<value>"
+
+ * sysctl get
 
 		rcli sysctl get <name> <value>
 
@@ -417,6 +421,11 @@ Example:
 ### system_name
 
 Router system name.
+
+Example
+
+	sysctl set system_name "tr1"
+
 
 ## IPv6
 

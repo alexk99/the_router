@@ -81,7 +81,7 @@ Detailed description of the configuration commands will be provided in the follo
 	  # in FRR/Quagga bgpd or ospfd daemons. 
 	  sysctl set ppp_install_subsc_linux_routes 1
 
-	  sysctl set system_name tr1
+	  sysctl set system_name "tr1"
 
 	  # radius accounting
 	  sysctl set radius_accounting 1
