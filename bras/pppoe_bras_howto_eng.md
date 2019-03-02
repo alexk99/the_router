@@ -1,7 +1,7 @@
 # 1. Introduction
 
-This howto describes configuration of a PPPoE BRAS server running TheRouter software
-under Linux operating system.
+This howto describes the configuration of a PPPoE BRAS server running TheRouter software
+under the Linux operating system.
 
 The PPPoE BRAS server is going to be integrated into a small test network and it should accomplish the following
 tasks:
@@ -11,7 +11,7 @@ tasks:
  * redirection unauthorized subscriber's traffic to a WEB server;
  * shaping subscriber's traffic;
  * forwarding traffic based on routes received via BGP protocol;
- * SNAT - network adress translation of users source private ip addresses into a pool of public/white
+ * SNAT - network address translation of users source private ip addresses into a pool of public/white
  ip addresses;
 	
 # 2. Configuration Linux and TheRouter software
@@ -44,7 +44,7 @@ To download pppoe enabled build use the link on main page in the section PPPoE.
 ## 4.2. TheRouter's configuration file
 
 Here is the full router's configuration file.
-Detailed description of the configuration commands will be provided in the following paragraphs.
+The detailed description of the configuration commands will be provided in the following paragraphs.
 
 	startup {
 	  # mbuf mempool size
@@ -203,7 +203,7 @@ Detailed description of the configuration commands will be provided in the follo
 
 ## 4.3. Start KNI interfaces and Quagga/FRR
 
-Detailed description of a way TheRouter communicates with Quagga/FRR is provided on the page 
+The detailed description of a way TheRouter communicates with Quagga/FRR is provided on the page 
 <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite">
 Dynamic routing. Integration with Quagga routing suite
 </a>
@@ -211,8 +211,8 @@ Dynamic routing. Integration with Quagga routing suite
 ### 4.3.1. KNI interfaces
 
 a KNI interface must be created for each router's VIF that will be used to communicate
-with other routers via dynamic routing protocols supported by Quagga/FRR. Example of a such interface
-is the v3 interface. The router receives a default route from the bgp peer established via the v3 kni interface.
+with other routers via dynamic routing protocols supported by Quagga/FRR. Example of such interface
+is the v3 interface. The router receives a default route from the BGP peer established via the v3 kni interface.
 
 You should up KNI interfaces and configure their MAC addresses after the_router has started.
 MAC address of a kni interface should be equal to the mac address of the router's interface (VIF) 
@@ -226,7 +226,7 @@ Example of a bash script that up a kni interface and configure it's MAC address:
 ### 4.3.2. Starting FRR
 
 Zebra and bpgd Quagga/FRR components should be configured and started in the router namespace
-"tr" in order the_router to cummunicate with others BPG peers.
+"tr" in order the_router to communicate with other BPG peers.
 
 Zebra's configuration file /etc/frr/zebra.conf
 
@@ -271,19 +271,19 @@ Bgpd's configuration file /etc/frr/bgpd.conf
 	line vty
 	!
 
-A single bgp peer with the uplink border router 192.168.1.3 is described in this configuration file. 
-The router announces network 10.114.0.0/29 which is used in SNAT function and serves as a pulic
-addresses for pppoe subscribers.
+A single BGP peer with the uplink border router 192.168.1.3 is described in this configuration file. 
+The router announces network 10.114.0.0/29 which is used in SNAT function and serves as a public
+addresses for PPPoE subscribers.
 
-Note that a private prefix 10.114.0.0/29 is used only due the test nature of this howto and lack of global public
-ip addresses. In a real environment global public ip addresses are usally used in the similar cases.
+Note that a private prefix 10.114.0.0/29 is used only due to the test nature of this howto and lack of global public
+ip addresses. In a real environment global public ip addresses are usually used in similar cases.
 
 Run bgpd
 
 	/etc/init.d/bgpd start
 	
-Insure that a default (0.0.0.0/0) route is successfully received and installed into 
-both the linux route table and the_router's route table.
+Ensure that a default (0.0.0.0/0) route is successfully received and installed into 
+both the Linux route table and the_router's route table.
 
 Linux routing table in the "tr" namespace
 
@@ -371,11 +371,10 @@ shared radius and CoA secrets.
 	coa server set secret "secret"
 
 The source ip address must be assigned to the router's interface which
-connects the router with a RADIUS server. It is the v5 interface, 
-since it connects the_router to the linux host H5 
+connects the router with a RADIUS server. It is the v5 interface since it connects the_router to the Linux host H5 
 where the RADIUS server is running.
 
-Ip address 192.168.5.2 is configured on the linux side of vlan 5.
+Ip address 192.168.5.2 is configured on the Linux side of vlan 5.
 
 	h5 src # ip addr ls dev vlan5
 	16: vlan5@eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
@@ -388,7 +387,7 @@ Ip address 192.168.5.2 is configured on the linux side of vlan 5.
 ## 5.2. Radius server configuration 
 
 FreeRadius is used as a RADIUS server in this howto.
-The FreeRadius project has a very good documentations and there are a lot of configuration
+The FreeRadius project has a very good documentation and there are a lot of configuration
 examples available on the internet, so, excuse me for not providing any examples here.
 
 But, I will provide the text of the main SQL query that illustrates using of TheRouter specific
@@ -441,8 +440,8 @@ Add the following lines to the /etc/raddb/dictionary
 
 ### 6.1.1. Enable PPPoE on a VIF
 
-First enable PPPoE protocol on a VIF router's interface connected to a L2 subnet
-with pppoe subscribers
+First, enable PPPoE protocol on a VIF router's interface connected to an L2 subnet
+with PPPoE subscribers
 
 	vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
 
@@ -473,7 +472,7 @@ Configure PPPoE parameters:
 
 Now everything is ready to connect pppoe subscribers.
 
-### 6.1.1. Viewing ip subscrubers 
+### 6.1.1. Viewing ip subscribers 
 
 	h5 src # $rvrf rcli sh pppoe subsc
 	vif_id  mac     session_id      ip addr mtu     ingress cir     egress cir      tx_pkts rx_pkts
@@ -552,10 +551,10 @@ Closing a pppoe connection:
 To identify a pppoe subscriber the following radius attributes could be used:
 User-Name, Acct-Session-ID.
 
-To use User-name attribute as a subscriber's identificator sysctl variable "ppp_1session_per_username"
+To use User-name attribute as a subscriber's identification sysctl variable "ppp_1session_per_username"
 must be turned on.
 
-### 7.2 Add subsriber's ip address to the ip set containing blocked/unauthorised subscriber's ip addresses
+### 7.2 Add subscriber's ip address to the ip set containing blocked/unauthorized subscriber's ip addresses
 
 	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_pbr=1" | radclient 192.168.5.111:3799 coa secret
 
@@ -563,17 +562,17 @@ IP set containing blocked subscribers ip addresses is defined by the command:
 
 	u32set create ips1 size 16384 bucket_size 16
 
-That IP set is used by the PBR rules to redirect blocked/unauthorised 
+That IP set is used by the PBR rules to redirect blocked/unauthorized 
 pppoe subscribers to a special routing table named 'rt_bl':
 
 	# pbr rules
 	ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
 
-### 7.3 Remove subsriber's ip address from ip set with blocked/unauthorised subscriber's ip addresses
+### 7.3 Remove subscriber's ip address from ip set with blocked/unauthorized subscriber's ip addresses
 
 	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_pbr=2" | radclient 192.168.5.111:3799 coa secret
 
-### 7.4 Change traffic shaping parameters of PPPoE subsriber
+### 7.4 Change traffic shaping parameters of PPPoE subscriber
 
 	echo User-Name=user1,Vendor-Specific="TheRouter,therouter_ingress_cir=201000,therouter_egress_cir=202000" | radclient 192.168.5.111:3799 coa secret
 
@@ -582,8 +581,8 @@ or
 	echo User-Name=user1,WISPr-Bandwidth-Max-Down=111000000,WISPr-Bandwidth-Max-Up=112000000 | radclient 192.168.5.111:3799 coa secret
 
 
-WISPr-Bandwidth-Max-Down and WISPr-Bandwidth-Max-Up attributes set the shaping using bit/s as unit.
-therouter_ingress_cir and therouter_egress_cir use kbit/s as unit and use traffic directions from
+WISPr-Bandwidth-Max-Down and WISPr-Bandwidth-Max-Up attributes set the shaping using bit/s as a unit.
+therouter_ingress_cir and therouter_egress_cir use kbit/s as a unit and use traffic directions from
 a router point of view.
 
 # 8. NAT configuration
@@ -607,4 +606,4 @@ The new address of a packet is calculated by combining an original packet source
 	new address is: 10.114.0.0 plus first 8 bits from an original address.
 	Where 8 is calculated as: 32 - 29 == 3 ^ 2 == 8, where 29 - is taken from the netmap command.
 
-According to that rule the same source ip address will always be tranlated to the same address from the defined address pool.
+According to that rule, the same source ip address will always be translated to the same address from the defined address pool.
