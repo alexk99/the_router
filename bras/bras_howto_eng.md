@@ -1,6 +1,6 @@
 # 1. Introduction
 
-This howto describes configuration of a BRAS server running TheRouter software
+This howto describes the configuration of a BRAS server running TheRouter software
 under Linux operating system.
 
 The BRAS server is going to be integrated into a small test network and it 
@@ -22,7 +22,7 @@ instruction and install DPDK and TheRouter on a machine running Linux OS.
 
 # 3. Test network scheme
 
-The test network consists of linux host H4, a border router connected to the internet and clients/subscribers.
+The test network consists of Linux host H4, a border router connected to the internet and clients/subscribers.
 H4 host runs TheRouter and other programs required for accomplishing our tasks: dhcpd, freeradius, mysql, quagga or frr.
 Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 broadcast domain.
 
@@ -34,10 +34,10 @@ Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are c
 
 <img src="http://therouter.net/images/bras/bras_howto_l3.png">
 
-Two static sub interfaces (VIF) configured in a router's configuration file
+Two static subinterfaces (VIF) configured in a router's configuration file
 are v3 and v20. V3 VIF connects TheRouter to the border router.
-v20 VIF connects TheTouter to H4 Linux network stack which runs 
-on the same machine as TheRouter does,  but uses its own NICs.
+v20 VIF connects TheTouter to H4 Linux network stack which runs on 
+the same machine as TheRouter does,  but uses its own NICs.
 
 # 4. Starting TheRouter, checking L2 and L3 connectivity.
 
@@ -59,7 +59,7 @@ on the same machine as TheRouter does,  but uses its own NICs.
 ## 4.2. TheRouter's configuration file
 
 Here is the router's configuration file.
-Detailed description of this file configuration commands 
+The detailed description of this file configuration commands 
 will be provided in the following paragraphs.
 
 /etc/router_bras_dhcp_relay_lag.conf
@@ -180,7 +180,7 @@ will be provided in the following paragraphs.
 
 ## 4.4. KNI interfaces and FRR/Quagga integration
 
-Detailed description of a way TheRouter communicates with FRR/Quagga is described on the page 
+The detailed description of a way TheRouter communicates with FRR/Quagga is described on the page 
 <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite">
 Dynamic routing. Integration with FRR/Quagga routing suite
 </a>
@@ -189,7 +189,7 @@ Dynamic routing. Integration with FRR/Quagga routing suite
 
 A KNI interface must be created for each router's VIF that is gonna
 be used to communicate with other routers via a dynamic routing protocol 
-supported by FRR/Quagga. An example of a such interface is the v3 interface. 
+supported by FRR/Quagga. An example of such interface is the v3 interface. 
 The router receives a default route from the BGP peer established 
 via the v3 KNI interface.
 
@@ -226,7 +226,7 @@ Zebra's configuration file /etc/quagga/zebra.conf
 
 Using a separate network namespace is required for routes to not mess with 
 routes Linux stack uses for its own network operations. The routes that 
-FRR/Quagga receives via KNI interfaces and install into the main
+FRR/Quagga receives via KNI interfaces and installs into the main
 routing table of "tr" namespace are meant only for TheTouter software and 
 have no value for the Linux network stack. Zebra will pass that routes 
 to TheRouter via "zebra FIB push interface".
@@ -260,9 +260,9 @@ Bgpd's configuration file /etc/quagga/bgpd.conf
 A single BGP peer with the uplink border router 192.168.1.3 
 is described in this configuration file. 
 TheRouter announces network 10.111.0.0/29 which is used for 
-SNAT function and serves as a public addresses for subscribers. 
-Note that a private prefix 10.111.0.0/29 is used only due 
-the test nature of this howto and lack of global public IP address. 
+SNAT function and serves as public addresses for subscribers. 
+Note that a private prefix 10.111.0.0/29 is used only due the 
+test nature of this howto and lack of global public IP address. 
 In a real environment, global public IP addresses are usually 
 used in cases like this.
 
@@ -270,7 +270,7 @@ Run bgpd
 
 	/etc/init.d/bgpd start
 	
-Insure that a default (0.0.0.0/0) route is successfully received and 
+Ensure that a default (0.0.0.0/0) route is successfully received and 
 installed into both the Linux routing table and TheRouter's routing table.
 
 Linux routing table
@@ -303,15 +303,15 @@ shared radius secret and CoA secret
 	coa server set secret "secret"
 
 The source IP address must be assigned to TheRouter's interface which
-connects TheRouter to a RADIUS server. It is the v20 interface since 
-it connects TheRouter to the linux host H4 
+connects TheRouter to a RADIUS server. It is the v20 interface since it 
+connects TheRouter to the Linux host H4 
 where the RADIUS server is running.
 
 	# link with local linux host
 	vif add name v20 port 0 type dot1q cvid 20
 	ip addr add 192.168.20.1/24 dev v20
 
-Ip address 192.168.20.1 is configured on the linux side of vlan 20.
+Ip address 192.168.20.1 is configured on the Linux side of vlan 20.
 
 	9: vlan20@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
 	    link/ether 90:e2:ba:4b:b3:17 brd ff:ff:ff:ff:ff:ff
@@ -321,7 +321,7 @@ Ip address 192.168.20.1 is configured on the linux side of vlan 20.
 ## 5.2. Radius server configuration 
 
 FreeRadius is used as a RADIUS server in this howto.
-The FreeRadius project has a very good documentation and there are a lot of configuration
+The FreeRadius project has very good documentation and there are a lot of configuration
 examples available on the internet, so, excuse me for not providing any examples here.
 
 But, I will provide the text of the main SQL query that illustrates using of TheRouter specific
@@ -344,7 +344,7 @@ based on subscriber's VLAN id and the port number via it is connected to TheRout
 The information provided in a radius reply will be used by TheRouter to configure
 subscribers routes and IP according to the IP unnumbered rules.
 
-The detailed description of the ip unnumberes rules is provided in the chapter
+The detailed description of the ip unnumbered rules is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 ### 5.2.2. FreeRadius dictionary
@@ -354,7 +354,7 @@ Add the following lines to the /etc/raddb/dictionary
 	VENDOR       TheRouter     12345
 	BEGIN-VENDOR TheRouter
 	    ATTRIBUTE therouter_ingress_cir 1 integer
-	    ATTRIBUTE therouter_engress_cir 2 integer
+	    ATTRIBUTE therouter_egress_cir 2 integer
 	    ATTRIBUTE therouter_ipv4_addr 3 integer
 	    ATTRIBUTE therouter_ipv4_mask 4 integer
 	    ATTRIBUTE therouter_outer_vid 5 integer
@@ -374,10 +374,9 @@ The detailed description of "vlan per subscriber" dynamic interfaces is provided
 I am going to briefly describe them according to the context of our test lab.
 
 Dynamic interfaces (dynamic VIF) are created automatically by TheRouter software in a response
-to user packets received at a router port. They cannot be created via rcli interface 
-or using a configuration file command. In order the router to start creating dynamic VIFs it should
-be configured on which port it should expect a subscribers traffic that should be processed 
-using dynamic VIFs.
+to user packets received at a router port. They cannot be created via rcli interface or 
+using a configuration file command. In order for the router to start creating dynamic VIFs it should
+be configured on which port it should expect a subscribers traffic that should be processed using dynamic VIFs.
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
@@ -385,10 +384,10 @@ When TheRouter receives on such port a packet that doesn't match any known VIFs,
 creates a new dynamic interface provided that creation of the interface is authorized by the RADIUS
 protocol. VLAN id values for the new virtual interface are gathered from the packet's ethernet header.
 
-A RADIUS request to authorize creation of a new dynamic VIF contains subsriber's VLAN data.
+A RADIUS request to authorize the creation of a new dynamic VIF contains subscriber's VLAN data.
 RADIUS response should contain the data required to configure IP protocol of a new dynamic VIF.
 
-### 6.1.1. Viewing ip subscrubers 
+### 6.1.1. Viewing subscribers 
 
 	h4 ~ # $rvrf rcli sh subsc
 	vlan    subsc ip        mode    port    ingress_car     egress_car      rx_pkts tx_pkts
@@ -402,7 +401,7 @@ For example, the dynamic VIF "subsc ip" field is blank.
 ### 6.1.2. Routing of Dynamic VIF
 
 If a radius response to a dynamic VIF creation request includes the radius VSA attribute "therouter_ip_unnumbered",
-TheRouter creates a route for a subscriber. Detailed description of this process is provided in the chapter
+TheRouter creates a route for a subscriber. The detailed description of this process is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#authorization-response">
 Radius Authorization responce</a>.
 
@@ -428,10 +427,10 @@ L3 connected subscribers</a>
 
 Examples of L2/L3 subscribers sessions will be described below.
 
-L2/L3 subscriber session is not a kind of VIF and they it's required any IP configuration steps 
+L2/L3 subscriber's sessions are not a kind of VIF and they are not required any IP configuration steps 
 such as a route creation or assigning an ip address.
 
-L2/L3 subsriber sessions belong to a VIF, therefore in order to create them the special flag should added
+L2/L3 subscriber sessions belong to a VIF, therefore in order to create them, the special flag should be added
 to a VIF creation command. To allow the router to create L2 subscriber sessions the "l2_subs" flag
 should be used. To allow the router to create L3 subscriber sessions the "l3_subs" flag
 should be used.
@@ -445,14 +444,14 @@ L3 sessions are created on VIF v21:
 	vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs	
 
 The only difference between L2 and L3 subscriber sessions is that L2 sessions store
-subscribers MAC address in addition to subscribers IP address. Storing a MAC address 
-allows TheRouter (not implemented yet) to make sure that packets going through a session 
-match the session MAC address, and to execute defined actions when a packet doesn't match a session.
+subscribers MAC address in addition to subscribers IP address. Storing a MAC address allows 
+TheRouter (not implemented yet) to make sure that packets going through a session match 
+the session MAC address, and to execute defined actions when a packet doesn't match a session.
 
 Authorization of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
 but it doesn't require any IP configuration steps (assigning an IP address, creation IP route).
 
-L2/L3 sessions support shaping of traffic going through them.
+L2/L3 sessions support the shaping of traffic going through them.
 
 ### 6.2.2. Viewing L2/L3 sessions
 
@@ -521,16 +520,16 @@ DHCP server is listening for requests on V3 interface and identifies subscribers
 
 In order to DHCP server responses successfully reach their destination
 a DHCP server should know routes to networks DHCP requests are coming from.
-In this example DHCP requests are coming from network 10.10.0.0/24.
-Therefore there should be a route to the destination 10.10.0.0/24 on linux host H4.
+In this example, DHCP requests are coming from network 10.10.0.0/24.
+Therefore there should be a route to the destination 10.10.0.0/24 on Linux host H4.
 The route should point to TheRouter that is connected via vlan 20, so the route 
 should be added by the following command:
 
 	ip route add 10.10.0.0/24 via 192.168.20.1
 
-# 8. Configuration of the redirecting unauthorized users traffic to a site
+# 8. Redirecting unauthorized users traffic to a site
 
-Traffic redirection is implemented via PBR mechanism (Policy based routing) and described in
+Traffic redirection is implemented via PBR mechanism (Policy-based routing) and described in
 the <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#unauthorised-subscribers-traffic-control">Unauthorised subscribers traffic control</a>
 
 # 9. NAT configuration
@@ -556,4 +555,4 @@ The new address of a packet is calculated by combining an original packet source
 	new address is: 10.111.0.0 plus first 8 bits from an original address.
 	Where 8 is calculated as: 32 - 29 == 3 ^ 2 == 8, where 29 - is taken from the netmap command.
 
-According to that rule the same source ip address will always be tranlated to the same address from the defined address pool.
+According to that rule, the same source ip address will always be translated to the same address from the defined address pool.
