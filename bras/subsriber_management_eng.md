@@ -16,21 +16,21 @@
 
 <img src="http://therouter.net/images/bras/l2_connected_subsc_overview.png">
 
-Subsribers are connected to a router via a shared L2 domain.
-A router interface is configured as a kind of a parent interface for subsriber sessions.
-Subsribers parent interface can use any type of ethernet encapsulations: untagged, dot1q, qinq.
-In order to configure an router interface as a subsriber parent interfaces the VIF flag 'l2_subs' 
+Subscribers are connected to a router via a shared L2 domain.
+A router interface is configured as a kind of a parent interface for subscriber sessions.
+Subscribers parent interface can use any type of ethernet encapsulations: untagged, dot1q, qinq.
+In order to configure a router interface as a subscriber parent interfaces the VIF flag 'l2_subs' 
 must be used in the vif configuration command.
 
 	vif add name v_subsc port 0 type qinq svid 2 cvid 121 flags l2_subs
 
-Subsriber session creation is initiated by an ingress or egress unclassified packet going through
-a parent VIF. A packet is considered unclassified when its ip address doesn't matches the ip address stored
-in any subsriber session. When an unclassified packet is a an ingress packet it means its source ip addres doesn't
-belong to any session, when an unclassified packet is egress packet its destination adress was checked.
+Subscriber session creation is initiated by an ingress or egress unclassified packet going through
+a parent VIF. A packet is considered unclassified when its ip address doesn't match the ip address stored
+in any subscriber session. When an unclassified packet is a an ingress packet it means its source ip address doesn't
+belong to any session, when an unclassified packet is egress packet its destination address was checked.
 
-To authorised a subscriber session creation RADIUS protocol is used.
-Session authorization request includes following attributes:
+To authorized a subscriber session creation RADIUS protocol is used.
+Session authorization request includes the following attributes:
 
 todo
 
@@ -38,20 +38,20 @@ todo
 
 <img src="http://therouter.net/images/bras/l3_connected_subsc_overview.png">
 
-Subsribers L2 traffic is terminating on a separate router which is connected to the_router via
-an interface. That interface would be a parent interfaces for the subscribers.
+Subscribers L2 traffic is terminated on a separate router which is connected to the_router via
+an interface. That interface would be a parent interface for the subscribers.
 A parent interface can use any type of ethernet encapsulation: untagged, dot1q, qinq.
-The VIF flag 'l3_subs' should be included into a parent interface creation command.
+The VIF flag 'l3_subs' should be included in a parent interface creation command.
 
 	vif add name v21 port 0 type dot1q cvid 21 flags l3_subs
 
-Subsriber session creation is initiated by an ingress or egress unclassified packet going through
-a parent VIF. A packet is considered unclassified when its ip address doesn't matches the ip address stored
-in any subsriber session. When an unclassified packet is a an ingress packet it means its source ip addres doesn't
-belong to any session, when an unclassified packet is egress packet its destination adress was checked.
+Subscriber session creation is initiated by an ingress or egress unclassified packet going through
+a parent VIF. A packet is considered unclassified when its ip address doesn't match the ip address stored
+in any subscriber session. When an unclassified packet is an ingress packet it means its source ip address doesn't
+belong to any session, when an unclassified packet is egress packet its destination address was checked.
 
-To authorised a subscriber session creation RADIUS protocol is used.
-Session authorization request includes following attributes:
+To authorized a subscriber session creation RADIUS protocol is used.
+Session authorization request includes the following attributes:
 
 todo
 
@@ -59,13 +59,13 @@ todo
 
 <img src="http://therouter.net/images/bras/vlan_per_subsc_overview.png">
 
-Each subsriber is connected to a network via a dedicated vlan (dot1q or qinq).
-TheRouter is connected to the subsriber network via a port having access to
-all subscribers vlans. That port would be a parent port for dynamicly created
-subsribers virtual interfaces (sessions). Each subscriber will have each own
+Each subscriber is connected to a network via a dedicated vlan (dot1q or qinq).
+TheRouter is connected to the subscriber network via a port having access to
+all subscribers vlans. That port would be a parent port for dynamically created
+subscribers virtual interfaces (sessions). Each subscriber will have each own
 dynamic VIF. Creation of a dynamic VIF is initiated by an ingress unclassified packet.
-A packet is considered unclassified when its doesn't belong to any known dynamic or normal/static VIF.
-The port flag 'dynamic_vif' should be included into a parent port creation command.
+A packet is considered unclassified when it doesn't belong to any known dynamic or normal/static VIF.
+The port flag 'dynamic_vif' should be included in a parent port creation command.
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif
 
@@ -81,11 +81,11 @@ Dynamic VIF authorization request includes the following attributes:
  * THE_ROUTER_VSA_PORT_ID - TheRouter port number
 
  * Username - a string containing portid, svid and сvid values.
-Those values a concatenated into a string using dot as a separated field value.
+Those values a concatenated into a string using a dot as a separated field value.
 	
 ### Authorization response
 
-A response may include the attributes described bellow. Depending on which attributes are in the response
+A response may include the attributes described below. Depending on which attributes are in the response
 different actions will be taken as the result of response processing.
 
  * THE_ROUTER_VSA_IP_UNNUMBERED_VIF - this attribute indicates
@@ -97,41 +97,45 @@ different actions will be taken as the result of response processing.
 	ip route add <SUB_IP>/32 dev <dynamic_vif> src <GW_IP>
 
 Where:
- * GW_IP - TheRouter's ip address, the same for all subsribers that belongs the same IP network
- * SUB_IP - subsriber ip address
+ * GW_IP - TheRouter's ip address, the same for all subscribers that belongs the same IP network
+ * SUB_IP - subscriber ip address
 	
 Values of GW_IP,SUB_IP fields are defined by radius attributes:
- * THE_ROUTER_VSA_IPV4 or Framed-IP-Address attibutes define the SUB_IP value.
+ * THE_ROUTER_VSA_IPV4 or Framed-IP-Address attributes define the SUB_IP value.
  The value of the attribute must be unsigned integer.
  * THE_ROUTER_VSA_IPV4_MASK or Framed-IP-Netmask attributes define the network mask for SUB_IP. 
- The value of the attribute must be unsigned interger within the range 1 - 30.
- * THE_ROUTER_VSA_IPV4_GW attibute defines the GW_IP value.
+ The value of the attribute must be unsigned integer within the range 1 - 30.
+ * THE_ROUTER_VSA_IPV4_GW attribute defines the GW_IP value.
  The value of the attribute must be unsigned integer.
 	
 THE_ROUTER_VSA_IPV4_GW attribute is not mandatory. 
-If it is not included the first ip address in network is used as the GW_IP value.
+If it is not included the first ip address in the network is used as the GW_IP value.
 	
 If THE_ROUTER_VSA_IP_UNNUMBERED_VIF is not included in the authorization response
 then the following commands will be executed to configure a dynamic vif:
 
 	ip addr add <IP>/<MASK> dev <dynamic_vif>
 	ip route add <NET>/<MASK> dev <dynamic_vif> src <IP>
-	
+
 Where: IP value is defined by the THE_ROUTER_VSA_IPV4 or Framed-ip-address attribute,
 MASK is defined by THE_ROUTER_VSA_IPV4_MASK or Framed-IP-Netmask attributes
 and NET value is calculated by masking host bits of the IP value.
 	
  * THE_ROUTER_VSA_INGRESS_CIR, THE_ROUTER_VSA_EGRESS_CIR -
-this attributes define ingress and eggress speed values for traffic shaping mechanism.
-The value of the attribute is a speed limit in kbit/s.
+these attributes define ingress and egress traffic rate values for traffic shaping mechanism.
+Value is a traffic rate limit in kbit/s.
 
- * THE_ROUTER_VSA_PBR attribues controls PBR routing mechanism for a subscriber.
-Detailed description of PBR routing mechanism is in the next paragraph.
+* WISPr-Bandwidth-Max-Down, WISPr-Bandwidth-Max-Up -
+these attributes define egress and ingress traffic rate values for traffic shaping mechanism.
+Value is a traffic rate limit in bit/s.
+
+ * THE_ROUTER_VSA_PBR attributes controls PBR routing mechanism for a subscriber.
+The detailed description of PBR routing mechanism is in the next paragraph.
 
 # Unauthorised subscribers traffic
 
-Unauthorised subscribers traffic can be routed to a separate path.
-To do so TheRouter uses Policy Based Routing (PBR). PBR rules define
+Unauthorized subscribers traffic can be routed to a separate path.
+To do so TheRouter uses Policy-Based Routing (PBR). PBR rules define
 which routing table should be used for a particular packet. 
 
 To use this feature the following steps are required:
@@ -142,8 +146,8 @@ To use this feature the following steps are required:
  * use PBR Radius attributes in the authorization process or use CoA radius feature to store id of blocked/unauthorized
  user sessions or dynamic VIFs in the special table with ids;
 
-After this steps are completed TheRouter stores unauthorized subscriber ids in the predefined table or
-CoA mechanism makes TheRouter to store session id in the predefined table.
+After these steps are completed TheRouter stores unauthorized subscriber ids in the predefined table or
+CoA mechanism makes TheRouter store session id in the predefined table.
 Then, PBR rules are applied to a receiving packet and if the the_router finds 
 a match to one of those rules it will route the packet according to the routes of the routing table specified in the matched PBR rule.
 
@@ -159,40 +163,40 @@ Example:
 
 ### PBR description
 
-PBR mechanidm maintain PBR rules table.
+PBR mechanism maintains PBR rules table.
 Rules are applied to each incoming packet and define which routing table should be used to route the packet.
-The rules are applied in the piority order. Once a mathing rule is found futher rules checking is stopped and
+The rules are applied in the priority order. Once a matching rule is found further rules checking is stopped and
 the routing table specified in the found rule is used to route the packet.
 
 ### PBR rules for L2/L2 subscribers
 
 Incoming L2/L3 subscriber packets are identified by source ip addresses.
 Therefore PBR rules that want to match L2/L3 subscribers packets should use tables
-storing ip address. Such PBR rules are match if subscribers source ip address is found
-in the specifed table.
+storing ip address. Such PBR rules match if subscribers source ip address is found
+in the specified table.
 
-For example the follwing command adds PBR rule with priority 10 to the PBR rule list.
-Any packet with source ip address found in table 'ips1' will be route according to the routes
+For example, the following command adds PBR rule with priority 10 to the PBR rule list.
+Any packet with source ip address found in table 'ips1' will be routed according to the routes
 from routing table 'blocked_subsc'
 
 	ip pbr rule add prio 10 u32set ips1 type "ip" table blocked_subsc
 
 ### PBR rules for dynamic VIF subscribers
 
-Incoming traffic of dynamic VIF subscribers is indentified by the L2_ID value, which consists 
-of vlan id values from a packet ehternet header and port number on which the packet was received.
+Incoming traffic of dynamic VIF subscribers is identified by the L2_ID value, which consists 
+of vlan id values from a packet ethernet header and port number on which the packet was received.
 Therefore, PBR rules that want to match dynamic VIF subscribers should use tables storing L2_ID values 
 of unauthorised subscribers.
 
-For example the follwing command adds PBR rule with priority 20 to the PBR rule list.
-Any packet whit L2_ID found in the table 'l2s1' will be route according to the routes
+For example, the following command adds PBR rule with priority 20 to the PBR rule list.
+Any packet whit L2_ID found in the table 'l2s1' will be routed according to the routes
 from routing table 'blocked_subsc'
 
 	ip pbr rule add prio 20 u32set l2s1 type "l2" table blocked_subsc
 
-## Tables storing unauthorised user IDs
+## Tables storing unauthorized user IDs
 
-### Tables stroring IP adresses of unauthorised L2/L3 connected subscribers
+### Tables storing IP addresses of unauthorized L2/L3 connected subscribers
 An example:
 
 	u32set create ips1 size 4096 bucket_size 16
@@ -205,10 +209,10 @@ An example:
 
 ## PBR Radius attributes
 
-THE_ROUTER_VSA_PBR attribute configures PBR mechanism for a subsriber.
-Depending on the attribute value subscriber id is added or deleted from the table for unauthorised subscribers.
-Attribure value 1 is used for addations, 2 for deletions.
-Names of the tables used as tables storing unauthorised subscriber id are defined in the configuration file:
+THE_ROUTER_VSA_PBR attribute configures PBR mechanism for a subscriber.
+Depending on the attribute value subscriber id is added or deleted from the table for unauthorized subscribers.
+Attribute value 1 is used for additions, 2 for deletions.
+Names of the tables used as tables storing unauthorized subscriber id are defined in the configuration file:
 
 	subsc u32set init <IP_TABLE_NAME> <L2_TABLE_NAME>
 
@@ -216,10 +220,10 @@ Where:
 
  * IP_TABLE_NAME - name of the table storing ip address of anauthorized L2/L3 subscribers.
 	
- * L2_TABLE_NAME - name of the table storing L2_ID dynamic VIF susbscribers.
+ * L2_TABLE_NAME - name of the table storing L2_ID dynamic VIF subscribers.
 
-!! IMPORTANT NOTE: routing tables, PBR rules, tables storing unauthorised subscriber ids
-must be defined in the cofiguration file before this command.
+!! IMPORTANT NOTE: routing tables, PBR rules, tables storing unauthorized subscriber ids
+must be defined in the configuration file before this command.
 
 # RADIUS
 
@@ -233,24 +237,26 @@ must be defined in the cofiguration file before this command.
 
 CoA mechanism may be used for
  * changing rate-limiting feature parameters of a subscriber traffic
- * disoconnect subsriber sessions
- * unauthorise subscriber to redirection its traffic by PBR mechanism
+ * disconnect subscriber sessions
+ * unauthorize subscriber to redirection its traffic by PBR mechanism
 
-To accomplish above tasks the following radius attributes can be used:
+To accomplish the above tasks the following radius attributes can be used:
 
  * THE_ROUTER_VSA_PBR
  * THE_ROUTER_VSA_INGRESS_CIR
  * THE_ROUTER_VSA_EGRESS_CIR
+ * WISPr-Bandwidth-Max-Down
+ * WISPr-Bandwidth-Max-Up
 
-## Alter subsriber shaping values
+## Alter subscriber shaping values
 
 ### Changing rate-limiting feature parameters of a subscriber traffic
 
-Example of chaning rate-limiting parameters for dynamic VIF subsribers connected to port 0 via QinQ vlan (svid 10, cvid 20)
+Example of changing rate-limiting parameters for dynamic VIF subscribers connected to port 0 via QinQ vlan (svid 10, cvid 20)
 Rate-limit values are defined in the VSAs therouter_ingress_cir and therouter_engress_cir.
-The following command defines ingress rate-limit as 101 Mbit/s and and egress rate-limit as 102 Mbit/s.
+The following command defines ingress rate-limit as 101 Mbit/s and egress rate-limit as 102 Mbit/s.
 
-	echo User-Name=0:10:20,User-Password=mypass,Vendor-Specific = "TheRouter,therouter_ingress_cir=101", Vendor-Specific = "TheRouter,therouter_engress_cir=102" | radclient 192.168.3.1:3799 coa secret	
+	echo User-Name=0:10:20,Vendor-Specific = "TheRouter,therouter_ingress_cir=101000", Vendor-Specific = "TheRouter,therouter_engress_cir=102000" | radclient 192.168.3.1:3799 coa secret	
 
 	!! both THE_ROUTER_VSA_INGRESS_CIR and THE_ROUTER_VSA_EGRESS_CIR must be defined
 
@@ -260,7 +266,7 @@ The following command defines ingress rate-limit as 101 Mbit/s and and egress ra
 
 Where:
 
-therouter_pbr - code defing which PBR action should be taken:
+therouter_pbr - code defining which PBR action should be taken:
 
 	1 - add
 	2 - delete
@@ -293,7 +299,7 @@ As a result id of the subscriber with name '0:10:20' will be added to the table 
 
 Where dvif0.0.130 - dynamic VIF (svid 0, cvid 130)
 
-### Output list of rouing tables
+### Output list of routing tables
 
 	h4 src # rcli sh ip route tables
 	route table name
@@ -307,7 +313,7 @@ Where dvif0.0.130 - dynamic VIF (svid 0, cvid 130)
 	10      ipset ips1      rt_bl
 	20      l2set l2s1      rt_bl
 
-### Output table storing anauthorised subscriber ids
+### Output table storing unauthorised subscriber ids
 
 #### Output ip address table
 
