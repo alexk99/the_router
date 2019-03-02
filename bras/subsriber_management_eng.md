@@ -93,8 +93,8 @@ different actions will be taken as the result of response processing.
   TheRouter will assign an IP address to the dynamic VIF and create an ip route 
   to subscribers ip address by executing the following commands:
 
-	ip addr add <GW_IP>/32 dev <dynamic_vif>
-	ip route add <SUB_IP>/32 dev <dynamic_vif> src <GW_IP>
+		ip addr add <GW_IP>/32 dev <dynamic_vif>
+		ip route add <SUB_IP>/32 dev <dynamic_vif> src <GW_IP>
 
 Where:
  * GW_IP - TheRouter's ip address, the same for all subscribers that belongs the same IP network
@@ -114,8 +114,8 @@ If it is not included the first ip address in the network is used as the GW_IP v
 If THE_ROUTER_VSA_IP_UNNUMBERED_VIF is not included in the authorization response
 then the following commands will be executed to configure a dynamic vif:
 
-	ip addr add <IP>/<MASK> dev <dynamic_vif>
-	ip route add <NET>/<MASK> dev <dynamic_vif> src <IP>
+		ip addr add <IP>/<MASK> dev <dynamic_vif>
+		ip route add <NET>/<MASK> dev <dynamic_vif> src <IP>
 
 Where: IP value is defined by the THE_ROUTER_VSA_IPV4 or Framed-ip-address attribute,
 MASK is defined by THE_ROUTER_VSA_IPV4_MASK or Framed-IP-Netmask attributes
