@@ -79,8 +79,13 @@ will be provided in the following paragraphs.
 	  sysctl set arp_cache_timeout 300
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
+	  sysctl set vif_stat 1
 	
 	  sysctl set dhcp_relay_enabled 1
+	  
+	  sysctl set radius_max_sessions 20000
+	  sysctl set subsc_vif_max 50000
+	  sysctl set system_name "tr1"
 	}
 	
 	runtime {
@@ -120,7 +125,6 @@ will be provided in the following paragraphs.
 	  radius_client set secret "secret"
 	  coa server set secret "secret"
 	  
-	  
 	  # PBR
 	  ip route table add rt_bl
 	
@@ -140,7 +144,7 @@ will be provided in the following paragraphs.
 
 ## 4.3. Connectivity 
 
-### 4.3.1. Insure that the interfaces described in the configuration file are up and running:
+### 4.3.1. Make sure that the interfaces described in the configuration file are up and running:
 
 	h4 src # $rvrf rcli sh vif
 	name    port    vid     mac                     type    flags   idx     ingress_car     egress_car
