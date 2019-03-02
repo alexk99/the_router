@@ -408,9 +408,9 @@ Example:
 
 		rcli sh mbuf stats
 
- * sh stats
+ * sh stat
 
-		rcli sh stats
+		rcli sh stat
    
  * clear stats
  
