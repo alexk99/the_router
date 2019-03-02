@@ -254,7 +254,7 @@ To accomplish the above tasks the following radius attributes can be used:
 
 Example of changing rate-limiting parameters for dynamic VIF subscribers connected to port 0 via QinQ vlan (svid 10, cvid 20)
 Rate-limit values are defined in the VSAs therouter_ingress_cir and therouter_engress_cir.
-The following command defines ingress rate-limit as 101 Mbit/s and egress rate-limit as 102 Mbit/s.
+The following command define ingress rate-limit 101 Mbit/s and egress rate-limit 102 Mbit/s.
 
 	echo User-Name=0:10:20,Vendor-Specific = "TheRouter,therouter_ingress_cir=101000", Vendor-Specific = "TheRouter,therouter_engress_cir=102000" | radclient 192.168.3.1:3799 coa secret	
 
@@ -349,8 +349,14 @@ Where dvif0.0.130 - dynamic VIF (svid 0, cvid 130)
 	  sysctl set arp_cache_timeout 300
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
-	
+	  sysctl set vif_stat 1
+	  
+	  sysctl set pppoe_max_subsc 50000
+	  sysctl set radius_max_sessions 20000
+	  sysctl set subsc_vif_max 50000
+	  	
 	  sysctl set dhcp_relay_enabled 1
+	  sysctl set system_name "tr1"
 	}
 	
 	runtime {
@@ -376,6 +382,7 @@ Where dvif0.0.130 - dynamic VIF (svid 0, cvid 130)
 	  radius_client add server 192.168.3.2
 	  radius_client add src ip 192.168.3.1
 	  radius_client set secret "secret"
+	  coa server set secret "secret"
 	
 	
 	  # PBR
