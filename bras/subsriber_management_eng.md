@@ -86,37 +86,49 @@ Those values a concatenated into a string using dot as a separated field value.
 ### Authorization response
 
 A response may include the attributes described bellow. Depending on which attributes are in the response
-different actions can be taken as a result of response processing.
+different actions will be taken as the result of response processing.
 
- * THE_ROUTER_VSA_IP_UNNUMBERED_VIF - this attribute presense in the authorization response indicates
-  that dynamic VIF should use ip unnumbered addressing scheme and configuration. TheRouter assigns an IP
-  address to the dynamic VIF and creates an ip route to subscribers ip addres when this attribes is in the response.
-  In other words TheRouter executes the following commands:
+ * THE_ROUTER_VSA_IP_UNNUMBERED_VIF - this attribute indicates
+  that dynamic VIF should be configured according with the ip unnumbered addressing scheme:
+  TheRouter will assign an IP address to the dynamic VIF and create an ip route 
+  to subscribers ip address by executing the following commands:
 
 	ip addr add <GW_IP>/32 dev <dynamic_vif>
-	
 	ip route add <SUB_IP>/32 dev <dynamic_vif> src <GW_IP>
-
 
 Where:
  * GW_IP - TheRouter's ip address, the same for all subsribers that belongs the same IP network
  * SUB_IP - subsriber ip address
 	
 Values of GW_IP,SUB_IP fields are defined by radius attributes:
- * THE_ROUTER_VSA_IPV4 attibute defines value SUB_IP. The value of the attribute must be unsigned integer.
- * THE_ROUTER_VSA_IPV4_MASK attribute defines masl value for SUB_IP. The value of the attribute must be unsigned interger in the range 1 - 30.
- * THE_ROUTER_VSA_IPV4_GW attibute defines values GW_IP. The value of the attribute must be unsigned integer.
+ * THE_ROUTER_VSA_IPV4 or Framed-IP-Address attibutes define the SUB_IP value.
+ The value of the attribute must be unsigned integer.
+ * THE_ROUTER_VSA_IPV4_MASK or Framed-IP-Netmask attributes define the network mask for SUB_IP. 
+ The value of the attribute must be unsigned interger within the range 1 - 30.
+ * THE_ROUTER_VSA_IPV4_GW attibute defines the GW_IP value.
+ The value of the attribute must be unsigned integer.
 	
-THE_ROUTER_VSA_IPV4_GW attribute is not mandatory. When it is not included the first ip address in network is used as GW_IP value.
+THE_ROUTER_VSA_IPV4_GW attribute is not mandatory. 
+If it is not included the first ip address in network is used as the GW_IP value.
+	
+If THE_ROUTER_VSA_IP_UNNUMBERED_VIF is not included in the authorization response
+then the following commands will be executed to configure a dynamic vif:
+
+	ip addr add <IP>/<MASK> dev <dynamic_vif>
+	ip route add <NET>/<MASK> dev <dynamic_vif> src <IP>
+	
+Where: IP value is defined by the THE_ROUTER_VSA_IPV4 or Framed-ip-address attribute,
+MASK is defined by THE_ROUTER_VSA_IPV4_MASK or Framed-IP-Netmask attributes
+and NET value is calculated by masking host bits of the IP value.
 	
  * THE_ROUTER_VSA_INGRESS_CIR, THE_ROUTER_VSA_EGRESS_CIR -
 this attributes define ingress and eggress speed values for traffic shaping mechanism.
-The value of the attribute is a speed limit in Mbits per second.
+The value of the attribute is a speed limit in kbit/s.
 
  * THE_ROUTER_VSA_PBR attribues controls PBR routing mechanism for a subscriber.
 Detailed description of PBR routing mechanism is in the next paragraph.
 
-# Unauthorised subscribers traffic control
+# Unauthorised subscribers traffic
 
 Unauthorised subscribers traffic can be routed to a separate path.
 To do so TheRouter uses Policy Based Routing (PBR). PBR rules define
