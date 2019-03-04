@@ -400,12 +400,11 @@ radius attributes and I will also provide the text of TheRouter VAS dictionary.
 	## 168493313 - 10.11.1.1
 	authorize_reply_query = "SELECT 1, '%{SQL-User-Name}', 'therouter_ingress_cir', '100000', '=' \
 	UNION SELECT 2, '%{SQL-User-Name}', 'therouter_egress_cir', '100000', '+=' \
-	UNION SELECT 3, '%{SQL-User-Name}', 'therouter_ipv4_addr', GetPppoeSubscIp('%{SQL-User-Name}'), '+=' \
-	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '32', '+='"
+	UNION SELECT 3, '%{SQL-User-Name}', 'Framed-IP-Address', GetPppoeSubscIp('%{SQL-User-Name}'), '+='"
 
 This SQL query is used by FreeRadius to query the data required to form a radius response
 to a router's radius request to authorize a subscriber connected via pppoe.
-Mysql stored procedure GetIpoeUserService calculates subscriber's ip address
+Mysql stored procedure GetPppoeSubscIp calculates subscriber's ip address
 based on subscriber's login.
 The information provided in a radius reply then will be used by the_router to configure
 a subscriber pppoe interface.
@@ -413,7 +412,9 @@ a subscriber pppoe interface.
 therouter_egress_cir and therouter_egress_cir attributes should contain ingress and
 egress CIR values in kbit/s.
 
-therouter_ipv4_addr attribute should contain IPv4 address in numeric format.
+WISPr-Bandwidth-Max-Up/WISPr-Bandwidth-Max-Down attributes can be used instead
+of the therouter_ingress_cir/therouter_egress_cir attributes. Unit of WISPr bandwidth
+attriubes is bit/s.
 
 ### 5.2.2. FreeRadius dictionary
 
