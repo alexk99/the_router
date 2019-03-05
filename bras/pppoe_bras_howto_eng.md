@@ -93,7 +93,7 @@ The detailed description of the configuration commands will be provided in the f
 	  sysctl set lcp_keepalive_interval 30
 	  sysctl set lcp_keepalive_num_retries 3
 	  # msec
-	  sysctl set lcp_keepalive_probes_interval 500
+	  sysctl set lcp_keepalive_probe_interval 500
 	  	
 	  # any protocol timeouts (UDP)
 	  sysctl set NPF_ANY_CONN_CLOSED 2
