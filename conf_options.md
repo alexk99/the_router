@@ -1311,28 +1311,28 @@ one keepalive test.
 	ip pool add <ip_pool_name>
 
 Add new ip pool with the given name.
-Maximum name length is 16.
+Maximum pool name length is 16.
 
-### ip pool add
+### ip pool del
 
 	ip pool del <ip_pool_name>
 
-Del the ip pool with the given name.
-Maximum name length is 16.
+Delete ip pool with the given name.
+Maximum pool name length is 16.
 
 ### ip pool add range
 
 	ip pool add range <ip_pool_name> <ip from> - <ip to>
 
 Add ip address range to the pool.
-Maximum name length is 16.
+Maximum pool name length is 16.
 
 ### ip pool del range
 
 	ip pool del range <ip_pool_name> <ip from> - <ip to>
 
-Del ip address range from the pool.
-Maximum name length is 16.
+Delete ip address range from the pool.
+Maximum pool name length is 16.
 
 ## RADIUS and CoA
 
