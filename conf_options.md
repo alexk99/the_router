@@ -1334,6 +1334,12 @@ Maximum pool name length is 16.
 Delete ip address range from the pool.
 Maximum pool name length is 16.
 
+### sh ip pool
+
+	sh ip pool
+
+Output ip pool detailes
+
 ## RADIUS and CoA
 
 ### radius_client add server
