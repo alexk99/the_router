@@ -1229,6 +1229,26 @@ Example:
 
 	ppp ipcp server ip 10.10.1.1
 
+### ppp ip pool
+
+	ppp ip pool <pool_name>
+
+Configure ppp to use local ip pool with the given name.
+The pool will be used if all others ip address sources are failed.
+For example the pool will be used if the authorization response doesn't
+include Framed-ip-address or Framed-pool atributes.
+
+### ppp ip pool disabled
+
+	ppp ip pool disabled
+
+Stop using the local ip pool that was configured with the command
+"ppp ip pool"
+
+Example:
+
+	ppp ipcp server ip 10.10.1.1
+
 ## PPPoE subsribers sysctl variables
 
 ### pppoe_max_subsc
@@ -1287,6 +1307,36 @@ Interval in milliseconds beetween keepalive probes (LCP echo-requests).
 ### lcp_keepalive_num_retries
 Maximum number of keepalive probes that could be send during
 one keepalive test.
+
+## IP pools
+
+### ip pool add
+
+	ip pool add <ip_pool_name>
+
+Add new ip pool with the given name.
+Maximum name length is 16.
+
+### ip pool add
+
+	ip pool del <ip_pool_name>
+
+Del the ip pool with the given name.
+Maximum name length is 16.
+
+### ip pool add range
+
+	ip pool add range <ip_pool_name> <ip from> - <ip to>
+
+Add ip address range to the pool.
+Maximum name length is 16.
+
+### ip pool del range
+
+	ip pool del range <ip_pool_name> <ip from> - <ip to>
+
+Del ip address range from the pool.
+Maximum name length is 16.
 
 ## RADIUS and CoA
 
