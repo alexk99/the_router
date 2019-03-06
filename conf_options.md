@@ -1245,10 +1245,6 @@ include Framed-ip-address or Framed-pool atributes.
 Stop using the local ip pool that was configured with the command
 "ppp ip pool"
 
-Example:
-
-	ppp ipcp server ip 10.10.1.1
-
 ## PPPoE subsribers sysctl variables
 
 ### pppoe_max_subsc
