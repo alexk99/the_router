@@ -13,24 +13,21 @@ refer to DPDK documentation <a href="http://dpdk.org/doc/guides/testpmd_app_ug/r
 for detailed description of them.
 
 Before running TheRouter you must check the following options and use your own values depending on the hardware you use:
+
  * -c
- 
+
 Set the hexadecimal bitmask of the cores to run on.
-	
+
  * --lcores
- 
- !  Note: the_router.a0.01.tar.gz version has supported only a 4 cores cpu. You must use at least a 4 cores cpu and then configure
- TheRouter to use 4 lcores using --lcores='0@0,1@1,2@2,3@3' parameter
- 
- 
+
 Map lcore set to physical cpu set
 
  * -n
- 
+
 Set the number of memory channels to use.
 
  * -w
- 
+
 Add a PCI device in white list.
 
 Example of the startup script cmd options:
@@ -48,6 +45,7 @@ could be very low due the context switching.
 This options are stored in the /etc/router.conf file.
 
 Configuration file consists of the sections:
+
  * startup
  * runtime
 
@@ -119,20 +117,20 @@ the startup section of the configuration file and can't be used by the rcli inte
  * port
 
 		port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled
- 
+
  * rx_queue
- 
+
 	 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
- 	
+
  * sysctl
 
 		sysctl set <name> <value>
- 
+
  * npf load
 
 	 	npf load "<path_to_npf_configuration_file>"
 
-	 
+ 
  Note: that you should enclose path to file with '"'.
 
 ## Runtime commands 
@@ -140,10 +138,11 @@ Runtime commands are the commands that can be either executed via rcli interface
 the configuration file.
 
 ### ip addr
+
  * ip addr add
 
 		rcli ip addr add <net>/<mask> dev <vif_name>
-	
+
  * ip addr del
 
 		rcli ip addr del <net>/<mask> dev <vif_name>
@@ -153,23 +152,25 @@ the configuration file.
 		rcli sh ip addr
 
 ### ip route tables
+
  * ip route table add
 
 		rcli ip route table add <route_table_name>
-		
+
  * ip route table del
 
 		rcli ip route table del <route_table_name>
-	
+
  * rcli sh ip route tables
 
 		rcli rcli sh ip route tables
 
 ### U32 sets
+
  * u32set create
 
 		rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
-		
+
  * u32set destroy
 
 		rcli u32set destroy <u32set_name>
@@ -177,15 +178,15 @@ the configuration file.
  * ipset add
 
 		rcli ipset add <u32set_name> <ipv4>
- 
+
  * ipset del
 
 		rcli ipset del <u32set_name> <ipv4>
- 
+
  * ipset test
 
 		rcli ipset test <u32set_name> <ipv4>
-		
+
  * l2set add
 
 		rcli l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
@@ -193,25 +194,26 @@ the configuration file.
  * l2set del
 
 		rcli l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
-		
+
  * l2set test
 
 		rcli l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
-		
+
 
 ### PBR rules
+
  * sh ip pbr rules
 
 		rcli sh ip pbr rules
-		
+
  * ip pbr rule add
 
 		ip pbr rule add prio <prio_num> u32set <u32set_name> type "ip" table <route_table_name>
-
+		
 		ip pbr rule add prio <prio_num> u32set <u32set_name> type "l2" table <route_table_name>
 		
 		rcli ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
-		
+
  * ip pbr rule del
 
 		rcli ip pbr rule del prio <prio_num>
@@ -220,20 +222,21 @@ the configuration file.
 
 		rcli ip pbr flush
 
-	
+
 ### ip route
+
  * ip route add
 
 		rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
-		
+
 	or
-	
+
 		ip route add <net>/<mask> via <gw_ip> src <src_ip> [table <table_name>]
-		
+
 	or
-	
+
 		ip route add <net>/<mask> unreachable [table <table_name>]
-   
+
  * ip route del
  
 		ip route del <net/mask> [table <table_name>]
