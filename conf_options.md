@@ -238,29 +238,32 @@ the configuration file.
 		ip route add <net>/<mask> unreachable [table <table_name>]
 
  * ip route del
- 
+
 		ip route del <net/mask> [table <table_name>]
-   
+
  * sh ip route
- 
+
 		rcli sh ip route
-   
+
 ### vif
+
  * vif add
 
 		rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
 
    Type parameter can take one of the following values:
+
 	 - untagged
      - dot1q
      - qinq
    
    Flags:
+
      - npf_on
 	 - kni
 	 - proxy_arp
 	 - flow_acct
-   	   
+
  * vif del
 
 		rcli vif del <name>
@@ -1201,6 +1204,24 @@ Sets PPPoE service name.
 Example:
 
 	pppoe service name "*"
+
+### pppoe pppoe blocked subsc add
+
+	pppoe blocked subsc add <lladdr>
+
+Add pppoe subscriber link-layer address to the block list
+
+### pppoe pppoe blocked subsc del
+
+	pppoe blocked subsc del <lladdr>
+
+Del pppoe subscriber link-layer address from the block list
+
+### sh pppoe pppoe blocked subsc
+
+	sh pppoe blocked subsc
+
+Show content of the pppoe subscriber's block list
 
 ### ppp dns primary
 
