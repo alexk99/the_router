@@ -1205,19 +1205,19 @@ Example:
 
 	pppoe service name "*"
 
-### pppoe pppoe blocked subsc add
+### pppoe blocked subsc add
 
 	pppoe blocked subsc add <lladdr>
 
 Add pppoe subscriber link-layer address to the block list
 
-### pppoe pppoe blocked subsc del
+### pppoe blocked subsc del
 
 	pppoe blocked subsc del <lladdr>
 
 Del pppoe subscriber link-layer address from the block list
 
-### sh pppoe pppoe blocked subsc
+### sh pppoe blocked subsc
 
 	sh pppoe blocked subsc
 
