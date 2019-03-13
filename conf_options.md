@@ -1,4 +1,4 @@
-# Configuring TheRouter
+# Configuration
 
 There are three groups of configuration options and commands:
 
@@ -42,14 +42,14 @@ could be very low due the context switching.
 
 ## Configuration file options
 
-This options are stored in the /etc/router.conf file.
+This options are stored a configuration file used with -c command line option.
 
-Configuration file consists of the sections:
+Configuration file consists two sections:
 
  * startup
  * runtime
 
-Each section contains commands. Everything on the same line is considered as a single command.
+Each section contains commands. A section line is considered as a single command.
 Symbol # is used to comment a whole line.
 
 	startup {
@@ -86,7 +86,7 @@ Symbol # is used to comment a whole line.
 	
 	  sysctl set global_packet_counters 1
 	
-	#  sysctl set arp_cache_timeout 300
+	  #  sysctl set arp_cache_timeout 300
 	}
 
 	runtime {
