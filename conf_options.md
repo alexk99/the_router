@@ -1455,6 +1455,6 @@ Example:
 
 #### radius_accounting_interim_interval
 
-  Time is seconds, determines how often to send interim requests.
+  Time in seconds, determines how often to send interim requests.
 
 

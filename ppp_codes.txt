@@ -1,0 +1,27 @@
+shutdown reasons:
+
+1	failed to negotiate a VITAL PPP option
+2	no more attempts to restart
+3	received proto reject
+4	received code reject
+5	inactive timer fired
+6	admin shutdown
+7	received terminate request
+8	auth backend failed
+9	auth: incorrect login/passwd
+10	no response from peer
+11	disconnected by CoA
+12	PPP FSM failed to converge
+14	no resources left
+13	unknown or other reason
+15	the peer hasn't replied to keepalive probes
+16	ppp username is already being used
+
+ppp auth results:
+
+0	undefined
+1	success
+2	denied
+3	auth backend failed
+4	peer failed
+

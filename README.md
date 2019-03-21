@@ -90,7 +90,7 @@ PPPoE roadmap:
  * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">Border router</a>
  * IPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">howto</a>, 
  <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">docs</a>
- * PPPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">howto</a>, 
+ * PPPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">howto</a>
 
 ## Production cases
 
