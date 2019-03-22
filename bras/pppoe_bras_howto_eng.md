@@ -39,7 +39,7 @@ To download pppoe enabled build use the link on main page in the section PPPoE.
 	 -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -d -c /etc/router_pppoe.conf
 	
 	sleep 5
-	$rvrf ip link set up dev rkni_v3 address 6C:B3:11:51:15:50
+	$rvrf ip link set up address 6C:B3:11:51:15:50 dev rkni_v3
 
 ## 4.2. TheRouter's configuration file
 
@@ -221,7 +221,7 @@ coupled with a kni interface. MAC address of a VIF can be found out from the 'rc
 Example of a bash script that up a kni interface and configure it's MAC address:
 
 	#!/bin/bash
-	ip link set up dev rkni_v3 address 00:1B:21:3C:69:44
+	ip link set up address 00:1B:21:3C:69:44 dev rkni_v3
 	
 ### 4.3.2. Starting FRR
 
