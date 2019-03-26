@@ -611,8 +611,8 @@ According to that rule, the same source ip address will always be translated to 
 
 # 9. ACL
 
-Create an special kind interface that will be used as a template interface
-to congigure ACL for pppoe subscribers. ACL configuration of the template
+Create a special kind of interface that will be used as a template interface
+to configure ACL for pppoe subscribers. ACL configuration of the template
 interface will be copied to every pppoe subscriber interface that will
 have been created after.
 
@@ -629,13 +629,13 @@ Assign the created ACL with id 5 to the pppoe ACL template interface
 	vif acl add dev pppoe_acl_template_t1 dir ingress aclid 5 prio 10
 	vif acl add dev pppoe_acl_template_t1 dir egress aclid 5 prio 10
 
-Indicate pppoe engine to use the configured ACL template interface with
+Indicate the pppoe engine to use the configured ACL template interface with
 name "pppoe_acl_template_t1"
 
 	sysctl set pppoe_template_acl "pppoe_acl_template_t1"
 
-From now on, all pppoe interfaces that have been created after this command
+From now on, all PPPoE interfaces that have been created after this command
 are going to use ACL configured on the template interface pppoe_acl_template_t1.
-All ACL changes to pppoe_acl_template_t1 will be used by pppoe interfaces.
+All ACL changes to pppoe_acl_template_t1 will be used by PPPoE interfaces.
 
 Detailed description of ACL commands are provided <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#access-control-lists-acl">here</a> 
