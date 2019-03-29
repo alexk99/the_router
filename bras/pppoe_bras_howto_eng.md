@@ -91,9 +91,13 @@ The detailed description of the configuration commands will be provided in the f
 	  # keepalive	  
 	  # sec
 	  sysctl set lcp_keepalive_interval 30
-	  sysctl set lcp_keepalive_num_retries 3
+	  sysctl set lcp_keepalive_num_retries 9
 	  # msec
 	  sysctl set lcp_keepalive_probe_interval 500
+	  
+	  # PPP FSM
+	  sysctl set ppp_max_configure 6
+  	  sysctl set ppp_initial_restart_time 500
 	  	
 	  # any protocol timeouts (UDP)
 	  sysctl set NPF_ANY_CONN_CLOSED 2
@@ -483,67 +487,65 @@ Since log_level 8 is configured there are a lot of ppp debug info the syslog fil
 
 Establishing a pppoe connection:
 
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: OPEN event
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Initial - Starting
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: OPEN event
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Initial - Starting
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: UP event
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Starting: send a configure request #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Starting - Req sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: receive a configure request #3
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Req sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: received a configure Nak/Reject code 3, #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: send a configure request #2
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Req sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: receive a configure request #4
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Req sent: send a configure ack #4
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Req sent - Ack sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Ack sent: received a configure Ack #2
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Ack sent - Opened
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state initial: start AUTH process
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition initial -- waiting for peer's request
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state waiting for peer's request: received PAP request #3
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition waiting for peer's request -- peer request received
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH PAP, subsc VIF id 7, state: peer request received, send a result code to the peer: code 2, id #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, subsc VIF id 7, state transition peer request received -- finished
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: PPP AUTH, auth proto 49187, subsc VIF id 7, state finished, timer 0x7f4f742e72c0, auth ctx fini
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: UP event
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Starting: send a configure request #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Starting - Req sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Req sent: receive a configure request #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Req sent - Req sent
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Req sent: received a configure Ack #1
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Req sent - Ack rcvd
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: receive a configure request #2
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Ack rcvd - Ack rcvd
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: receive a configure request #3
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Ack rcvd: send a configure ack #3
-	Jan 24 19:06:20 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Ack rcvd - Opened
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: PPPoE discovery request: port 0, lladdr 84:16:F9:BD:54:F7
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 OPEN event
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Initial -> Starting
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 OPEN event
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Initial -> Starting
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 UP event
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Starting: send a configure request #1
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Starting -> Req sent
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Req sent: receive a configure request #1
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Req sent: send a configure ack #1
+	Mar 29 18:31:48 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Req sent -> Ack sent
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Ack sent: send a configure request #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Ack sent -> Ack sent
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Ack sent: received a configure Ack #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Ack sent -> Opened
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH CHAP subsc 4, mac 84:16:F9:BD:54:F7 state initial: start AUTH process
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH subsc 4, mac 84:16:F9:BD:54:F7 state transition initial -> challenge sent
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH CHAP subsc 4, mac 84:16:F9:BD:54:F7 state challenge sent: send a challenge #1 to the peer
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH CHAP subsc 4, mac 84:16:F9:BD:54:F7 state challenge sent: receive response #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH subsc 4, mac 84:16:F9:BD:54:F7 state transition challenge sent -> peer's response received
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH CHAP subsc 4, mac 84:16:F9:BD:54:F7 state peer's response received, send a result code to the peer: code 3, id #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH subsc 4, mac 84:16:F9:BD:54:F7 state transition peer's response received -> finished
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: PPP AUTH subsc 4, mac 84:16:F9:BD:54:F7 username alexk, auth proto CHAP, state finished, result 1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 UP event
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Starting: send a configure request #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Starting -> Req sent
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Req sent: receive a configure request #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Req sent -> Req sent
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Req sent: received a configure Ack #1
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Req sent -> Ack rcvd
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Ack rcvd: receive a configure request #2
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Ack rcvd: send a configure ack #2
+	Mar 29 18:31:49 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Ack rcvd -> Opened
 
 Closing a pppoe connection:
 
-	$rvrf rcli pppoe close 7
+	$rvrf rcli pppoe disconnect 4
 
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 Close event
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Opened: send a terminate request #3
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Opened -> Closing
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state Closing: received a terminate Ack #3
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Closing -> Closed
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: IPCP subsc 4, mac 84:16:F9:BD:54:F7 shutdown, send close event message to LCP
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 Close event
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 Down event
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Closed -> Initial
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM IPCP subsc 4, mac 84:16:F9:BD:54:F7 Close event
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: IPCP subsc 4, mac 84:16:F9:BD:54:F7 shutdown, send close event message to LCP
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Opened: send a terminate request #164
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Opened -> Closing
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 Close event
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Closing -> Closing
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state Closing: received a terminate Ack #164
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 state transition: Closing -> Closed
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: FSM LCP subsc 4, mac 84:16:F9:BD:54:F7 shutdown: admin shutdown (6)
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: PPPoE shutdown: port 0, subsc 4, mac 84:16:F9:BD:54:F7, session 1, username alexk, 4bmac 4189934839, reason 6
+	Mar 29 19:52:02 h5 the_router[7701]: ROUTER: PPPoE shutdown timer: subsc 4, mac 84:16:F9:BD:54:F7, session 1, port 0
 
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Close event
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Opened: send a terminate request #3
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Opened - Closing
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7, state Closing: received a terminate Ack #3
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Closing - Closed
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: IPCP, subsc VIF id 7: shutdown, send close event message to LCP
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: Close event
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Down event
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: state transition: Closed - Initial
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM IPCP, subsc VIF id 7: Close event
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: IPCP, subsc VIF id 7: shutdown, send close event message to LCP
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Opened: send a terminate request #4
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Opened - Closing
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: Close event
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Closing - Closing
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7, state Closing: received a terminate Ack #4
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: state transition: Closing - Closed
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: FSM LCP, subsc VIF id 7: shutdown: admin shutdown (6)
-	Jan 24 19:07:49 h5 the_router[19078]: ROUTER: lcore 0 shutdown PPPoE: port 0, session id 4, 4bmac 1279330852, reason 10252
 
 # 7. CoA
 
