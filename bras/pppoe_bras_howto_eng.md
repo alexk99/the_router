@@ -479,9 +479,10 @@ Now everything is ready to connect pppoe subscribers.
 
 ### 6.1.1. Viewing ip subscribers 
 
-	h5 src # $rvrf rcli sh pppoe subsc
-	vif_id  mac     session_id      ip addr mtu     ingress cir     egress cir      tx_pkts rx_pkts
-	4       60:A4:4C:41:0A:24       1       0.0.0.0 1480    0       0       0       0
+	h5 src # $rvrf rcli sh pppoe
+	vif_id  username        mac     session_id      ip addr mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
+	5       p2      60:A4:4C:41:0A:24       2       10.11.1.3       1440    200000  100000  0       0       0       0       1 hour(s), 21 min(s), 1 sec(s)
+	7       alexk   84:16:F9:BD:54:F7       4       10.11.1.1       1472    200000  100000  0       0       0       0       0 hour(s), 3 min(s), 43 sec(s)
 
 Since log_level 8 is configured there are a lot of ppp debug info the syslog file:
 
