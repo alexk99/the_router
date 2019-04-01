@@ -67,13 +67,14 @@ PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 
 PPPoE roadmap:
 
- * production and performance tests
+ * production tests
  * IPv6 support
 
 ## Performance tests
 
  * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT performance benchmarks</a>
+ * <a href="https://https://github.com/alexk99/the_router/blob/master/pppoe_perf_tests.md>PPPoE performance test</a>
 
 ## Install
 
