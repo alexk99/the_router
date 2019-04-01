@@ -34,21 +34,16 @@ TheRouter sends PPPoE traffic to (port 2).
 
 Number of PPPoE sessions - 30k
 
-rate 80%, maximum pps 11868955
-pkt send 1000000000 pkt received 999999690, lost 0,000031%
-pkt send 1000000000 pkt received 999999671, lost 0,000032%
-
-rate 90%, maximum pps 13359155
-pkt send 1000000000 pkt received 999998702, lost 0,000129%
-pkt send 1000000000 pkt received 999998727, lost 0,000127%
-
-rate 92, maximum pps 13644242
-pkt send 1000000000 pkt received 999998265, lost 0,000173%
-pkt send 1000000000 pkt received 999998588, lost 0,000141%
-
-rate 95, maximum pps 14127746
-pkt send 1000000000 pkt received 979674258, lost 2,032574%
-pkt send 1000000000 pkt received 979672488, lost 2,032751%
+| rate, % | pkt send | pkt received | maximum pps | lost, % |
+| -- | -- | -- | -- | -- |
+| 80 | 1000000000 | 999999690 | 11868955 | 0,000031 |
+| 80 | 1000000000 | 999999671 | 11868955 | 0,000032 |
+| 90 | 1000000000 | 999998702 | 13359155 | 0,000129 |
+| 90 | 1000000000 | 999998727 | 13359155 | 0,000127 |
+| 92 | 1000000000 | 999998265 | 13644242 | 0,000173 |
+| 92 | 1000000000 | 999998588 | 13644242 | 0,000141 |
+| 95 | 1000000000 | 979674258 | 14127746 | 2,032574 |
+| 95 | 1000000000 | 979672488 | 14127746 | 2,032751 |
 
 ## Conclustion
 TheRouter is able to forward 13.3Mpps of pppoe packets for 30k 
