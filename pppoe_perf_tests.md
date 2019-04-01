@@ -8,7 +8,7 @@ A goal of this test is to evalute routing performance of PPPoE BRAS functionalit
 H4 machine creates PPPoE subscribers sessions using <a href="https://github.com/iKuaiNetworks/PPPoEPerf">
 iKuaiNetworks/PPPoEPerf</a> and generates traffic using DPDK Pktgen. Pktgen is configured to send 64bytes
 packets to random destination IP addresses from PPPoE subscriber IP address pool. Packets are send to therouter
-uplink so TheRouter receives and encapsulate them using pppoe and finally send them back.
+uplink so TheRouter receives and encapsulate them using pppoe and finally send them to PPPoE subscribers.
 
 To evaluate maximum performance a number of tests were conducted to find the maximum number of packets
 TheRouter can forward without packet loss. Packet loss was measured by comparing the number
