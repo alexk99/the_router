@@ -46,5 +46,5 @@ Number of PPPoE sessions - 30k
 | 95 | 1000000000 | 979672488 | 14127746 | 2,032751 |
 
 ## Conclustion
-TheRouter is able to forward 13.3Mpps of pppoe packets for 30k 
-subsribers session on a desktop class processfor using only 6 cores.
+TheRouter is able to forward 13.3Mpps of PPPoE packets for 30k 
+subscribers sessions using a desktop class processor with 6 cores.
