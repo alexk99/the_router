@@ -1,9 +1,9 @@
 # PPPoE performance evaluation tests
 
-A goal of this test to evalute rouing performance of PPPoE BRAS functionality of TheRouter.
+A goal of this test is to evalute routing performance of PPPoE BRAS functionality of TheRouter.
 
 ## Test lab scheme
-<img src="http://therouter.net/images/tests/pppoe_tests/perf_tests/pppoe_perf_lab.png">
+<img src="http://therouter.net/images/tests/pppoe_tests/perf_tests/pppoe_perf_lab2.png">
 
 H4 machine creates PPPoE subscribers sessions using <a href="https://github.com/iKuaiNetworks/PPPoEPerf">
 iKuaiNetworks/PPPoEPerf</a> and generates traffic using DPDK Pktgen. Pktgen is configured to send 64bytes
@@ -17,20 +17,20 @@ TheRouter sends PPPoE traffic to (port 2).
 
 ## Hardware configuration
 
-## H4 (Pktgen, PPPoePerf) machine
+### H4 (Pktgen, PPPoePerf) machine
  * Processor: Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
  * NIC: Intel X710-DA2
  * Ram: 8Gb DDR3
 		
-## H5 (TheRouter) machine
+### H5 (TheRouter) machine
  * Processor: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
  * NIC: Intel XL710-DA4
  * Ram: 32Gb 4x8
 
-## AR1 switch
+### AR1 switch
  * Arista 7050S-64
 
-# Results
+## Results
 
 Number of PPPoE sessions - 30k
 
