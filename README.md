@@ -74,7 +74,7 @@ PPPoE roadmap:
 
  * <a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">Routing performance evaluation tests</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">NAT performance benchmarks</a>
- * <a href="https://https://github.com/alexk99/the_router/blob/master/pppoe_perf_tests.md>PPPoE performance test</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/pppoe_perf_tests.md">PPPoE performance test</a>
 
 ## Install
 
