@@ -1478,7 +1478,7 @@ Example:
 
 where mode is one of the following values:
 
- * rewrite_off - off
+ * rewrite_off - turn off option82 rewrite/insert function
  * rewrite_if_doesnt_exist - insert remote_id and circuit_id suboptions
 only if the request doesn't already contain dhcp option82
  * rewrite - rewrite or insert both remote_id and circuit_id DHCP option82 suboptions
@@ -1491,7 +1491,7 @@ only if the request doesn't already contain dhcp option82
 
 ### circuit_id suboption format
 
- TheRouter writes 6 bytes of data into circuit_id option.
+ TheRouter writes 6 bytes of data into the circuit_id option.
  
  This data include the following properties of the interface a dhcp request was received on:
  
