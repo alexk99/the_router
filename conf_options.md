@@ -1474,7 +1474,7 @@ Example:
 
 ### setup dhcp option82 rewrite function
 
-  dhcp_relay opt82 mode <mode>
+	dhcp_relay opt82 mode <mode>
 
 where mode is one of the following values:
 
@@ -1493,7 +1493,8 @@ only if the request doesn't already contain dhcp option82
 
  TheRouter writes 6 bytes of data into circuit_id option.
  
- This data consists of:
+ This data include the following properties of the interface a dhcp request was received on:
+ 
  * 2 bytes - port_id
  * 2 bytes - svlan_id
  * 2 bytes - cvlan_id
