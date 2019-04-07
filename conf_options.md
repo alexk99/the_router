@@ -1462,3 +1462,39 @@ Example:
   Time in seconds, determines how often to send interim requests.
 
 
+## DHCP Relay
+
+### Enable DHCP relay
+
+	sysctl set dhcp_relay_enabled 1
+
+### Setup address of DHCP server to relay requests to
+
+	dhcp_relay <ipv4_address>
+
+### setup dhcp option82 rewrite function
+
+  dhcp_relay opt82 mode <mode>
+
+where mode is one of the following values:
+
+ * rewrite_off - off
+ * rewrite_if_doesnt_exist - insert remote_id and circuit_id suboptions
+only if the request doesn't already contain dhcp option82
+ * rewrite - rewrite or insert both remote_id and circuit_id DHCP option82 suboptions
+ * rewrite_circuit_id - rewrite or insert only the circuit_id DHCP option82 suboption
+ * rewrite_remote_id - rewrite or insert only the remote_id DHCP option82 suboption
+
+### set content of the remote_id suboption
+
+	dhcp_relay opt82 remote_id "tr_h4"
+
+### circuit_id suboption format
+
+ TheRouter writes 6 bytes of data into circuit_id option.
+ 
+ This data consists of:
+ * 2 bytes - port_id
+ * 2 bytes - svlan_id
+ * 2 bytes - cvlan_id
+
