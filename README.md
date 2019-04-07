@@ -37,6 +37,7 @@ TheRouter is a software packet router based on one of the fastest packet process
  * IPoE - VLAN per subscriber with IP unnumbered support
  * Traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
+ * DHCP option82 rewrite function
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Radius/CoA
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
@@ -62,7 +63,7 @@ Configuration
 
 Download
 
- * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.50.tar.gz">Download</a>
+ * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.57.tar.gz">Download</a>
 PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 
 PPPoE roadmap:
