@@ -63,7 +63,7 @@ Configuration
 
 Download
 
- * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.57.tar.gz">Download</a>
+ * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.60.tar.gz">Download</a>
 PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 
 PPPoE roadmap:
@@ -100,3 +100,4 @@ PPPoE roadmap:
 The first experience of using TheRouter as a BGP core router in an internet service provider network.
 Forwarding traffic between a BRAS cluster and a Google Cache Server.
  * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">TheRouter as a BGP border router in a service provider network</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ash_pppoe_nat_isp.md">The first productive BRAS: PPPoE, NAT</a>
