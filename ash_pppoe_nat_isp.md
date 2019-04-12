@@ -1,6 +1,6 @@
-# PPPoE and NAT servers
+# BRAS: PPPoE and NAT
 
-This is the first productive case of using TheRouter as a PPPoE and a NAT server.
+This is the first productive case of using TheRouter as a BRAS performing PPPoE and a NAT.
 Two servers using TheRouter software have been integrated into a network of an 
 ISP which provides internet access to home premices.
 
@@ -12,5 +12,5 @@ ISP which provides internet access to home premices.
 
 ### Statistics
 Images are clickable
-<img src="http://therouter.net/images/production/ash_pppoe_nat.png">
+<img src="http://therouter.net/images/production/ash_pppoe_nat2.png">
 
