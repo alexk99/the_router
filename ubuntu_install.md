@@ -259,7 +259,7 @@ Run the following commands:
 
  #### x86_64
 
- * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.b0.50.tar.gz">the_router.6cores.dpdk.17.11.1.b0.49.tar.gz</a>
+ * Download <a href="http://therouter.net/downloads/the_router.latest.6cores.dpdk.17.11.1.b0.50.tar.gz">the_router.6cores.dpdk.17.11.1.b0.50.tar.gz</a>
  
 ### Install TheRouter
 

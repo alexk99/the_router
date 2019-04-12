@@ -54,7 +54,7 @@ PPPoE server supports:
  * TCP MSS FIX
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
- * Up to 40000 concurrent PPPoE subscribers
+ * Up to 60000 concurrent PPPoE subscribers
 
 Configuration
 
