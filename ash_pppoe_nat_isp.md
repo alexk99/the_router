@@ -12,5 +12,5 @@ ISP which provides internet access to home premices.
 
 ### Statistics
 Images are clickable
-<img src="http://therouter.net/images/production/ash_pppoe_nat2.png">
+<img src="http://therouter.net/images/production/ash_pppoe_nat3.png">
 

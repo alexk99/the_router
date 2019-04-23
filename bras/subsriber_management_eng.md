@@ -275,7 +275,7 @@ As a result id of the subscriber with name '0:10:20' will be added to the table 
 
 ### Subscriber disconnect
 
-	echo User-Name=0:0:130,User-Password=mypass | radclient 192.168.3.1:3799 disconnect secret
+	echo User-Name=0:0:130 | radclient 192.168.3.1:3799 disconnect secret
 
 # DHCP relay
 
