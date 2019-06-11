@@ -101,3 +101,8 @@ The first experience of using TheRouter as a BGP core router in an internet serv
 Forwarding traffic between a BRAS cluster and a Google Cache Server.
  * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">TheRouter as a BGP border router in a service provider network</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ash_pppoe_nat_isp.md">The first productive BRAS: PPPoE, NAT</a>
+ 
+## Customers
+
+| -- | -- | -- | -- | -- |
+| <img src="http://therouter.net/images/customers/cloudbit_250_130.png" /> | <img src="http://therouter.net/images/customers/interra_250_130.png" /> | <img src="http://therouter.net/images/customers/atk_logo_250_130.png" |
