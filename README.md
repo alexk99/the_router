@@ -63,7 +63,7 @@ Configuration
 
 Download
 
- * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.60.tar.gz">Download</a>
+ * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.78.tar.gz">Download</a>
 PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 
 PPPoE roadmap:
@@ -106,4 +106,4 @@ Forwarding traffic between a BRAS cluster and a Google Cache Server.
 
 | <a href="https://www.cloudbit.ch/"><img src="http://therouter.net/images/customers/cloudbit_250_130.png" /></a> | <a href="https://interra.ru/"><img src="http://therouter.net/images/customers/interra_250_130.png" /></a> | <a href="https://inetvl.ru"><img src="http://therouter.net/images/customers/atk_logo_250_130.png" /></a> |
 | -- | -- | -- |
-| | | |
+
