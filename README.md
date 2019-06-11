@@ -104,5 +104,5 @@ Forwarding traffic between a BRAS cluster and a Google Cache Server.
  
 ## Customers
 
-| -- | -- | -- | -- | -- |
+| -- | -- | -- |
 | <img src="http://therouter.net/images/customers/cloudbit_250_130.png" /> | <img src="http://therouter.net/images/customers/interra_250_130.png" /> | <img src="http://therouter.net/images/customers/atk_logo_250_130.png" |
