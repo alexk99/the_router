@@ -104,6 +104,5 @@ Forwarding traffic between a BRAS cluster and a Google Cache Server.
  
 ## Customers
 
-| <a href="https://www.cloudbit.ch/"><img src="http://therouter.net/images/customers/cloudbit_250_130.png" /></a> | <a href="https://interra.ru/"><img src="http://therouter.net/images/customers/interra_250_130.png" /></a> | <a href="https://inetvl.ru"><img src="http://therouter.net/images/customers/atk_logo_250_130.png" /></a> |
-| -- | -- | -- |
-
+| <a href="https://www.cloudbit.ch/"><img src="http://therouter.net/images/customers/cloudbit_250_130.png" /></a> | <a href="https://innofield.com/"><img src="http://therouter.net/images/customers/innofield_250_130.png" /></a> | <a href="https://interra.ru/"><img src="http://therouter.net/images/customers/interra_250_130.png" /></a> |
+| <a href="https://inetvl.ru"><img src="http://therouter.net/images/customers/atk_logo_250_130.png" /></a> | -- | -- |
