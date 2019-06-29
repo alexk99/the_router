@@ -338,12 +338,12 @@ Zebra's configuration file /etc/quagga/zebra.conf
 	no banner motd
 	log file /var/log/quagga/zebra.log
 
-Using a separate network namespace is required for routes to not mess with 
-routes Linux stack uses for its own network operations. The routes that 
+Using a separate network namespace is required so TheRouter's routes don't conflict 
+with routes Linux stack uses for its own network operations. The routes 
 FRR/Quagga receives via KNI interfaces and installs into the main
 routing table of "tr" namespace are meant only for TheTouter software and 
-have no value for the Linux network stack. Zebra will pass that routes 
-to TheRouter via "zebra FIB push interface".
+have no value for the other application running on the same linux host.
+Zebra will pass that routes to TheRouter via "zebra FIB push interface".
 
 Run zebra
 
@@ -439,7 +439,7 @@ The FreeRadius project has very good documentation and there are a lot of config
 examples available on the internet, so, excuse me for not providing any examples here.
 
 But, I will provide the text of the main SQL query that illustrates using of TheRouter specific
-radius attributes and I will provide the text of TheRouter VAS dictionary.
+radius attributes and I will provide the TheRouter's VAS dictionary.
 
 /etc/raddb/sql/mysql/dialup.conf
 
@@ -454,7 +454,9 @@ radius attributes and I will provide the text of TheRouter VAS dictionary.
 
 This SQL query is used by FreeRadius to query data required to form a radius response
 to a TheRouter's RADIUS request to authorize a subscriber connected via a dedicated vlan
-or to authenticate a L2/L3 subscriber.
+or to authenticate a L2/L3 subscriber. 
+The information provided in this radius reply will be used by TheRouter 
+to configure subscribers ip addresses, routes and PBR rules.
 
 The following attributes are used only to configure a dynamic VIF (subscriber connected via
 a dedicated vlan)
@@ -465,6 +467,11 @@ a dedicated vlan)
 	therouter_ingress_cir
 	therouter_engress_cir
 	
+MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
+based on subscriber's VLAN id and the port number via it is connected to TheRouter.
+
+The detailed description of ip configuration of subsriber's connected via a dedicated vlan is provided in the chapter
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 The following attributes are used only to configure a L2/L3 connected vlan
 
@@ -472,15 +479,7 @@ The following attributes are used only to configure a L2/L3 connected vlan
 	therouter_ingress_cir
 	therouter_engress_cir
 
-MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
-based on subscriber's VLAN id and the port number via it is connected to TheRouter.
-The information provided in a radius reply will be used by TheRouter to configure
-subscribers ip addresses and routes.
-
-The detailed description of ip configuration of subsriber's connected via a dedicated vlan is provided in the chapter
-<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
-
-The description of ip configuration of L2/L3 subscribers is provided below in the section 6.2.
+The description of L2/L3 subscribers ip configuration process is provided below in the section 6.2.
 
 ### 5.2.2. FreeRadius dictionary
 
@@ -509,19 +508,20 @@ The detailed description of "vlan per subscriber" dynamic interfaces is provided
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">vlan-per-subscriber</a>.
 I am going to briefly describe them according to the context of our test lab.
 
-Dynamic interfaces (dynamic VIF) are created automatically by TheRouter software in a response
-to user packets received at a router port. They cannot be created via rcli interface or 
+Dynamic interfaces (dynamic VIF or vlan per subscriber) are created automatically by TheRouter software in a response
+to subscriber's packets received at a router port. They cannot be created via rcli interface or 
 using a configuration file command. In order for the router to start creating dynamic VIFs it should
-be configured on which port it should expect a subscribers traffic that should be processed using dynamic VIFs.
+be configured on which port it should expect a subscriber's traffic by using flag "dynamic_vif".
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
-When TheRouter receives on such port a packet that doesn't match any known VIFs, the router
-creates a new dynamic interface provided that creation of the interface is authorized by the RADIUS
-protocol. VLAN id values for the new virtual interface are gathered from the packet's ethernet header.
+When TheRouter receives on a such port a packet that doesn't match any known virtual interfaces (VIFs),
+it creates a new dynamic VIF provided that creation of the VIF is authorized by the RADIUS
+protocol. VLAN id values for the new VIF are gathered from the ethernet header of a packet triggered
+the creation.
 
-A RADIUS request to authorize the creation of a new dynamic VIF contains subscriber's VLAN data.
-RADIUS response should contain the data required to configure IP protocol of a new dynamic VIF.
+The RADIUS request to authorize a creation of a new dynamic VIF contains subscriber's VLAN data.
+The RADIUS response should contain the data required to configure IP protocol of a new dynamic VIF.
 
 ### 6.1.1. Viewing subscribers 
 
@@ -546,7 +546,7 @@ Ensure that a route has been created:
 	10.10.0.19/32 C dev dvif2.0.130 src 10.10.0.1
 	...
 
-10.10.0.11 is the IP address value included in the radius reply.
+10.10.0.19 is the IP address value included in the radius reply.
 dvif2.0.130 is the name of a dynamic interface. "2.0.130" substring of the name is 
 a concatenation of values of the fields port_id, svid, cvid.
 
@@ -572,12 +572,13 @@ L3 sessions are created on VIF v21:
 
 	vif add name v21 port 2 type dot1q cvid 21 flags kni,l3_subs
 
-L2/L3 subscriber's sessions are not a kind of VIF therefore there is no need to assign an ip address to them.
+L2/L3 subscriber's sessions are not a kind of VIF (virtual interface) 
+therefore there is no need to assign an ip address to them.
 L2/L3 subscriber's routing could be configured either by using parent VIF static connected routes or 
 by using ip unnumbered scheme. In this howto ip unnumbered scheme is used.
-Prefix 192.168.5.0/24 is reserved to assign addresses for L2/L3 subscribers connected via v5.
+Prefix 192.168.5.0/24 is reserved to assign ip addresses for L2/L3 subscribers connected via v5.
 Address 192.168.5.1/32 is assigned to TheRouter v5 interface. Once a subscriber is connected
-and authorized a /32 route is created for it.
+and authorized a /32 route is created.
 
 	  ip addr add 192.168.5.1/32 dev v5
 	  ip route add 192.168.5.1/32 local
