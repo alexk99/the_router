@@ -11,6 +11,7 @@ should be performing the following tasks:
  * redirection unauthorized  users traffic to a web server;
  * shaping users traffic;
  * forwarding traffic based on routes received via BGP protocol;
+ * Announsing subscriber's /32 prefixes via BGP protocol;
  * SNAT - network address translation of users source private IP addresses into a pool of public/white
  IP addresses;
 	
@@ -46,6 +47,7 @@ the same machine as TheRouter does,  but uses its own NICs.
 	ip netns add tr
 	export rvrf="ip netns exec tr"
 	$rvrf ip link set up lo
+	$rvrf ip route flush dev lo
 	
 	$rvrf the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' \
 	  --syslog='daemon' -n2 -w 0000:60:00.0 -w 0000:60:00.1 \
@@ -114,6 +116,11 @@ will be provided in the following paragraphs.
 	  sysctl set dynamic_vif_ttl 600
 	  sysctl set dhcp_relay_enabled 1
 	  sysctl set fpm_debug 1
+	  
+	  # add/remove linux kernel /32 routes for ppp subscribers ip addresses.
+	  # Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+	  # in FRR/Quagga bgpd or ospfd daemons. 	  
 	  sysctl set install_subsc_linux_routes 1
 	}
 	
@@ -375,7 +382,7 @@ A single BGP peer with the uplink border router 192.168.1.3
 is described in this configuration file. 
 TheRouter announces network 10.111.0.0/29 which is used for 
 SNAT function and serves as public addresses for subscribers. 
-Note that a private prefix 10.111.0.0/29 is used only due the 
+Note that a private prefix 10.111.0.0/29 is used only due to the 
 test nature of this howto and lack of global public IP address. 
 In a real environment, global public IP addresses are usually 
 used in cases like this.
@@ -402,6 +409,19 @@ The TheRouter's main routing table:
 	192.168.1.0/24 C dev v3 src 192.168.1.112
 	10.10.0.0/24 is unreachable
 	0.0.0.0/0 via 192.168.1.3 dev v3 src 192.168.1.112
+
+# 4.4.2.1 Announcing subscriber's /32 prefixes
+
+	To announce subscriber's ip routes via BGP those
+	routes should be accessible to FRR/Quagga software.
+	To make the routes accessible TheRouter install them
+	at Linux lo interfaces in the network namespace, it is running in.
+	There is a sysctl variable named "install_subsc_linux_routes" that controls
+	whether or not TheRouter will install those linux routes.
+	
+	Once subscriber's routes are installed on linux lo interfaces
+	they could be redistributed via BGP protocol. To configure
+	the FRR to redistribute such routes use "redistribute kernel" command.
 
 # 5. RADIUS
 
@@ -470,7 +490,7 @@ a dedicated vlan)
 MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
 based on subscriber's VLAN id and the port number via it is connected to TheRouter.
 
-The detailed description of ip configuration of subsriber's connected via a dedicated vlan is provided in the chapter
+The detailed description of the ip configuration of subscriber's connected via a dedicated VLAN is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
 The following attributes are used only to configure a L2/L3 connected vlan
@@ -479,7 +499,7 @@ The following attributes are used only to configure a L2/L3 connected vlan
 	therouter_ingress_cir
 	therouter_engress_cir
 
-The description of L2/L3 subscribers ip configuration process is provided below in the section 6.2.
+The description of L2/L3 subscribers IP configuration process is provided below in section 6.2.
 
 ### 5.2.2. FreeRadius dictionary
 
@@ -600,10 +620,11 @@ L2/L3 sessions support the shaping of traffic going through them.
 
 ### 6.2.2. Viewing L2/L3 sessions
 
-	h4 ~ # $rvrf rcli sh subsc
-	vlan    subsc ip        mode    port    ingress_car     egress_car      rx_pkts tx_pkts
-	        192.168.5.132   1       0       200 mbit/s      200 mbit/s      0       0
-	        192.168.5.133   1       0       200 mbit/s      200 mbit/s      0       0
+	h4 ~ # $rvrf rcli sh sub
+	vlan    ip      mode    port    ingress_car     egress_car      rx_pkts tx_pkts rx_bytes        tx_bytes
+	0.130   10.10.0.19      1       2       200 mbit/s      200 mbit/s      0       0       0       0
+	0.5     192.168.5.101   1       2       200 mbit/s      200 mbit/s      0       0       0       0
+	0.5     192.168.5.103   1       2       200 mbit/s      200 mbit/s      0       0       0       0
 
 # 7. DHCP server and DHCP Relay configuration
 
