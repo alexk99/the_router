@@ -8,7 +8,7 @@ should be performing the following tasks:
 
  * termination users QinQ ethernet vlans;
  * user authorization and authentication via RADIUS protocol;
- * redirection unauthorized  users traffic to a web server;
+ * redirection unauthorized  users traffic to a captive portal;
  * shaping users traffic;
  * forwarding traffic based on routes received via BGP protocol;
  * Announsing subscriber's /32 prefixes via BGP protocol;
