@@ -58,8 +58,7 @@ the same machine as TheRouter does,  but uses its own NICs.
 
 ## 4.2. TheRouter's configuration file
 
-Here is the router's configuration file.
-The detailed description of this file configuration commands 
+A detailed description of configuration commands 
 will be provided in the following paragraphs.
 
 /etc/router_bras_dhcp_relay_lag.conf
@@ -68,123 +67,234 @@ will be provided in the following paragraphs.
 	  sysctl set mbuf 8192
 	  sysctl set log_level 7
 	
-	  # LAG (slave ports 1,2)
-	  port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
+	  #
+	  # port and queues setup
+	  #
+	  # LAG (slave ports 0,1)
+	  port 2 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 0,1
 	
-	  rx_queue port 0 queue 0 lcore 1
-	  rx_queue port 0 queue 1 lcore 2
-	  rx_queue port 0 queue 2 lcore 3
+	  rx_queue port 2 queue 0 lcore 1
+	  rx_queue port 2 queue 1 lcore 2
+	  rx_queue port 2 queue 2 lcore 3
 	
+	  #
+	  # NPF timeouts
+	  #
+	
+	  # any protocol timeouts (UDP)
+	  sysctl set NPF_ANY_CONN_CLOSED 0
+	  sysctl set NPF_ANY_CONN_NEW 30
+	  sysctl set NPF_ANY_CONN_ESTABLISHED 60
+	
+	  # TCP timeouts
+	  sysctl set NPF_TCPS_CLOSED 10
+	  sysctl set NPF_TCPS_SYN_SENT 30
+	  sysctl set NPF_TCPS_SIMSYN_SENT 30
+	  sysctl set NPF_TCPS_SYN_RECEIVED 60
+	  sysctl set NPF_TCPS_ESTABLISHED 14400
+	  sysctl set NPF_TCPS_FIN_SENT 240
+	  sysctl set NPF_TCPS_FIN_RECEIVED 240
+	  sysctl set NPF_TCPS_CLOSE_WAIT 45
+	  sysctl set NPF_TCPS_FIN_WAIT 60
+	  sysctl set NPF_TCPS_CLOSING 30
+	  sysctl set NPF_TCPS_LAST_ACK 30
+	  sysctl set NPF_TCPS_TIME_WAIT 120
+	
+	  #
+	  # IPFIX accounting
+	  #
+	  sysctl set flow_acct 1
+	  sysctl set flow_acct_dropped_pkts 1
+	  sysctl set flow_idle_timeout 20
+	
+	  #
 	  sysctl set global_packet_counters 1
 	  sysctl set arp_cache_timeout 300
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
-	  sysctl set vif_stat 1
-	
 	  sysctl set dhcp_relay_enabled 1
-	  
-	  sysctl set radius_max_sessions 20000
-	  sysctl set subsc_vif_max 50000
-	  sysctl set system_name "tr1"
+	  sysctl set fpm_debug 1
+	  sysctl set install_subsc_linux_routes 1
 	}
 	
 	runtime {
+	  #
+	  # Flow accounting
+	  #
+	  flow ipfix_collector addr 192.168.1.165
+	
+	  #
+	  # Interfaces
+	  #
+	
+	  # loopback
+	  ip addr add 4.4.4.4/32 dev lo
+	
+	  # blackhole nat address
+	  ip route add 10.111.0.1/32 unreachable
+	
 	  # blackhole multicast addresses
 	  ip route add 224.0.0.0/4 unreachable
 	
-	  radius_client add src ip 192.168.20.1
-	
-	
+	  # blackhole ipoe subscriber's prefix
 	  ip route add 10.10.0.0/24 unreachable
 	
 	  # link with local linux host
-	  vif add name v20 port 0 type dot1q cvid 20
+	  vif add name v20 port 2 type dot1q cvid 20
 	  ip addr add 192.168.20.1/24 dev v20
 	
-	  # home network link (vlan3)
-	  vif add name v3 port 0 type dot1q cvid 3 flags npf_on, kni
+	  # uplink
+	  vif add name v3 port 2 type dot1q cvid 3 flags npf_on, kni, flow_acct
 	  ip addr add 192.168.1.112/24 dev v3
 	  #ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.112
 	
-	  # cisco L3 connected
-	  vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs
+	  # L3 connected subscribers (cisco)
+	  vif add name v21 port 2 type dot1q cvid 21 flags kni,l3_subs
 	  ip addr add 192.168.21.1/24 dev v21
 	
-	  # L2 connected (zyxel 5Ghz WiFi)
-	  vif add name v5 port 0 type dot1q cvid 5 flags kni,l2_subs
-	  ip addr add 192.168.5.1/24 dev v5
+	  # L2 connected subsribers (zyxel 5Ghz WiFi)
+	  vif add name v5 port 2 type dot1q cvid 5 flags kni,l2_subs,proxy_arp
+	  ip addr add 192.168.5.1/32 dev v5
+	  ip route add 192.168.5.1/32 local
 	
+	  #
+	  # DHCP relay
+	  #
+	  dhcp_relay opt82 mode rewrite_if_doesnt_exist
+	  dhcp_relay opt82 remote_id "tr_h4"
+	  dhcp_relay 192.168.20.3
 	
-	  ## static arp records
-	  # radius server
-	  arp add 192.168.20.2 90:e2:ba:4b:b3:17 dev v20 static
-	
-	  dhcp_relay 192.168.20.2
-	
-	  radius_client add server 192.168.20.2
+	  #
+	  # Radius
+	  #
+	  radius_client add src ip 192.168.20.1
+	  radius_client add server 192.168.20.3
 	  radius_client set secret "secret"
 	  coa server set secret "secret"
-	  
-	  # PBR
-	  ip route table add rt_bl
 	
+	  #
+	  # Blocked subscriber's route table
+	  #
+	  ip route table add rt_bl
+	  ip route add 192.168.1.0/24 dev v3 src 192.168.1.112 table rt_bl
+	  ip route add 0.0.0.0/0 via 192.168.1.230 src 192.168.1.112 table rt_bl
+	
+	  #
+	  # PBR
+	  #
 	  u32set create ips1 size 4096 bucket_size 16
 	  u32set create l2s1 size 4096 bucket_size 16
 	  subsc u32set init ips1 l2s1
 	
+	  # PBR rules
 	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
 	  ip pbr rule add prio 20 u32set l2s1 type "l2" table rt_bl
 	
+	  #
+	  # NAT events
+	  #
+	  sysctl set ipfix_nat_events 1
+	  ipfix_collector addr 192.168.20.2
 	
-	  # NPF
-	  # npf load "/etc/npf.conf.accept_all_2"
-	
+	  #
+	  # NPF (NAT)
+	  #
 	  npf load "/etc/npf.conf.bras_dhcp_relay"
 	}
+
 
 ## 4.3. Connectivity 
 
 ### 4.3.1. Make sure that the interfaces described in the configuration file are up and running:
 
-	h4 src # $rvrf rcli sh vif
-	name    port    vid     mac                     type    flags   idx     ingress_car     egress_car
-	v20     0       0.20    00:1B:21:3C:69:44       dot1q           10      -       -
-	v5      0       0.5     00:1B:21:3C:69:44       dot1q   kni,l2 subs     13      -       -
-	v3      0       0.3     00:1B:21:3C:69:44       dot1q   kni,NPF 11      -       -
+	h4 ~ # $rvrf rcli sh vif
+	vif v3
+	  id 3
+	  port 2, vlan 0.3, encapsulation dot1q
+	  mac address 00:1B:21:3C:69:44
+	  NPF index 10
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress not set
+	      egress not set
+	  flags KNI,NPF,FLOW
+	  mtu 1500
+	vif v5
+	  id 5
+	  port 2, vlan 0.5, encapsulation dot1q
+	  mac address 00:1B:21:3C:69:44
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress not set
+	      egress not set
+	  flags PA,KNI,L2P
+	  mtu 1500
+	vif lo
+	  id 1
+	  port 255, vlan 4095.4095, encapsulation qinq
+	  mac address 00:00:00:00:00:01
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress not set
+	      egress not set
+	  flags none
+	  mtu 1500
+	vif v21
+	  id 4
+	  port 2, vlan 0.21, encapsulation dot1q
+	  mac address 00:1B:21:3C:69:44
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress not set
+	      egress not set
+	  flags KNI,L3P
+	  mtu 1500
+	vif v20
+	  id 2
+	  port 2, vlan 0.20, encapsulation dot1q
+	  mac address 00:1B:21:3C:69:44
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress not set
+	      egress not set
+	  flags none
+	  mtu 1500
 
 ### 4.3.2. ARP
 
-	h4 src # $rvrf rcli sh arp
+	h4 ~ # $rvrf rcli sh arp
 	port    vid     ip      mac     type    state
-	0       0.20    192.168.20.2    90:E2:BA:4B:B3:17       static  ok
-	0       0.5     192.168.5.124   A8:5B:78:09:0C:E1       dynamic ok
-	0       0.3     192.168.1.3     D4:CA:6D:7C:D0:DC       dynamic ok
+	2       0.3     192.168.1.165   E0:D5:5E:8D:35:2E       dynamic ok
+	2       0.5     192.168.5.101   A8:5B:78:09:0C:E1       dynamic ok
+	2       0.3     192.168.1.3     D4:CA:6D:7C:D0:DF       dynamic ok
+	2       0.20    192.168.20.3    E0:D5:5E:8D:35:2E       dynamic ok
+	2       0.20    192.168.20.2    60:A4:4C:41:0A:24       dynamic ok
 
 ### 4.3.3. ICMP
 
-	h4 src # $rvrf rcli ping -c3 192.168.1.3
+	h4 ~ # $rvrf rcli ping -c3 192.168.1.3
 	Ping 192.168.1.3 56(84) bytes of data.
-	reply 56 bytes icmp_seq=1 time=0.283 ms
-	reply 56 bytes icmp_seq=2 time=0.279 ms
-	reply 56 bytes icmp_seq=3 time=0.278 ms
+	reply 56 bytes icmp_seq=1 time=0.418 ms
+	reply 56 bytes icmp_seq=2 time=0.204 ms
+	reply 56 bytes icmp_seq=3 time=0.203 ms
 	---
 	Ping 192.168.1.3 statistics:
 	sent: 3, recv: 3 (100%), lost: 0 (0%)
-	round-trip min/avg/max = 0.278/0.280/0.283
-
-	h4 src # $rvrf rcli ping -c3 192.168.20.2
-	Ping 192.168.20.2 56(84) bytes of data.
-	reply 56 bytes icmp_seq=1 time=0.501 ms
-	reply 56 bytes icmp_seq=2 time=0.557 ms
-	reply 56 bytes icmp_seq=3 time=0.279 ms
+	round-trip min/avg/max = 0.203/0.275/0.418
+	h4 ~ #
+	h4 ~ # $rvrf rcli ping -c3 192.168.20.3
+	Ping 192.168.20.3 56(84) bytes of data.
+	reply 56 bytes icmp_seq=1 time=0.208 ms
+	reply 56 bytes icmp_seq=2 time=0.206 ms
+	reply 56 bytes icmp_seq=3 time=0.205 ms
 	---
-	Ping 192.168.20.2 statistics:
+	Ping 192.168.20.3 statistics:
 	sent: 3, recv: 3 (100%), lost: 0 (0%)
-	round-trip min/avg/max = 0.279/0.445/0.557
+	round-trip min/avg/max = 0.205/0.206/0.208
 
 ## 4.4. KNI interfaces and FRR/Quagga integration
 
-The detailed description of a way TheRouter communicates with FRR/Quagga is described on the page 
+The detailed description of the way TheRouter communicates with FRR/Quagga is described on the page 
 <a href="https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite">
 Dynamic routing. Integration with FRR/Quagga routing suite
 </a>
@@ -192,7 +302,7 @@ Dynamic routing. Integration with FRR/Quagga routing suite
 ### 4.4.1. KNI interfaces
 
 A KNI interface must be created for each router's VIF that is gonna
-be used to communicate with other routers via a dynamic routing protocol 
+be used in communication with other routers via a dynamic routing protocol 
 supported by FRR/Quagga. An example of such interface is the v3 interface. 
 The router receives a default route from the BGP peer established 
 via the v3 KNI interface.
@@ -200,7 +310,7 @@ via the v3 KNI interface.
 You should manually up KNI interfaces and configure their 
 MAC addresses once TheRouter has started. MAC address of a KNI interface 
 should be equal to the MAC address of the router's interface coupled with the KNI.
-MAC address of a VIF can be learned from an output of the 'rcli sh vif' command.
+To figure out the MAC address of a VIF from use the output of the 'rcli sh vif' command.
 
 Example of a bash script that up kni interfaces and configure their MAC address:
 
@@ -301,12 +411,12 @@ Following commands define RADIUS server IP address,
 source IP address of RADIUS router's requests,
 shared radius secret and CoA secret
 
-	radius_client add server 192.168.20.2
 	radius_client add src ip 192.168.20.1
+	radius_client add server 192.168.20.3
 	radius_client set secret "secret"
 	coa server set secret "secret"
 
-The source IP address must be assigned to TheRouter's interface which
+The source IP address must be assigned to a TheRouter's interface which
 connects TheRouter to a RADIUS server. It is the v20 interface since it 
 connects TheRouter to the Linux host H4 
 where the RADIUS server is running.
@@ -315,11 +425,11 @@ where the RADIUS server is running.
 	vif add name v20 port 0 type dot1q cvid 20
 	ip addr add 192.168.20.1/24 dev v20
 
-Ip address 192.168.20.1 is configured on the Linux side of vlan 20.
+Ip address 192.168.20.3 is configured on the Linux side of vlan 20.
 
-	9: vlan20@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
-	    link/ether 90:e2:ba:4b:b3:17 brd ff:ff:ff:ff:ff:ff
-	    inet 192.168.20.2/24 brd 192.168.20.255 scope global vlan20
+	9: vlan20@eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+	    link/ether e0:d5:5e:8d:35:2e brd ff:ff:ff:ff:ff:ff
+	    inet 192.168.20.3/24 brd 192.168.20.255 scope global vlan20
 	       valid_lft forever preferred_lft forever
 
 ## 5.2. Radius server configuration 
@@ -339,17 +449,38 @@ radius attributes and I will provide the text of TheRouter VAS dictionary.
 	UNION SELECT 2, '%{SQL-User-Name}', 'therouter_engress_cir', '200', '+=' \
 	UNION SELECT 3, '%{SQL-User-Name}', 'therouter_ipv4_addr', GetIpoeUserService(%{request:therouter_port_id}, '%{request:therouter_outer_vid}', '%{request:therouter_inner_vid}'), '+=' \
 	UNION SELECT 4, '%{SQL-User-Name}', 'therouter_ipv4_mask', '24', '+=' \
-	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='"
+	UNION SELECT 5, '%{SQL-User-Name}', 'therouter_ip_unnumbered', '1', '+='\
+	UNION SELECT 6, '%{SQL-User-Name}', 'therouter_install_subsc_route', 1, '+=' \
 
 This SQL query is used by FreeRadius to query data required to form a radius response
-to a TheRouter's RADIUS request to authorize a subscriber connected via a dedicated vlan.
+to a TheRouter's RADIUS request to authorize a subscriber connected via a dedicated vlan
+or to authenticate a L2/L3 subscriber.
+
+The following attributes are used only to configure a dynamic VIF (subscriber connected via
+a dedicated vlan)
+
+	therouter_ipv4_addr
+	therouter_ipv4_mask
+	therouter_ip_unnumbered
+	therouter_ingress_cir
+	therouter_engress_cir
+	
+
+The following attributes are used only to configure a L2/L3 connected vlan
+
+	therouter_install_subsc_route
+	therouter_ingress_cir
+	therouter_engress_cir
+
 MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
 based on subscriber's VLAN id and the port number via it is connected to TheRouter.
 The information provided in a radius reply will be used by TheRouter to configure
-subscribers routes and IP according to the IP unnumbered rules.
+subscribers ip addresses and routes.
 
-The detailed description of the ip unnumbered rules is provided in the chapter
+The detailed description of ip configuration of subsriber's connected via a dedicated vlan is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
+
+The description of ip configuration of L2/L3 subscribers is provided below in the section 6.2.
 
 ### 5.2.2. FreeRadius dictionary
 
@@ -358,7 +489,7 @@ Add the following lines to the /etc/raddb/dictionary
 	VENDOR       TheRouter     12345
 	BEGIN-VENDOR TheRouter
 	    ATTRIBUTE therouter_ingress_cir 1 integer
-	    ATTRIBUTE therouter_egress_cir 2 integer
+	    ATTRIBUTE therouter_engress_cir 2 integer
 	    ATTRIBUTE therouter_ipv4_addr 3 integer
 	    ATTRIBUTE therouter_ipv4_mask 4 integer
 	    ATTRIBUTE therouter_outer_vid 5 integer
@@ -367,6 +498,7 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_port_id 8 integer
 	    ATTRIBUTE therouter_ipv4_gw 9 integer
 	    ATTRIBUTE therouter_pbr 10 integer
+	    ATTRIBUTE therouter_install_subsc_route 17 integer
 	END-VENDOR   TheRouter
 
 # 6. Configure subscriber's sessions or dynamic VIF
@@ -393,14 +525,12 @@ RADIUS response should contain the data required to configure IP protocol of a n
 
 ### 6.1.1. Viewing subscribers 
 
-	h4 ~ # $rvrf rcli sh subsc
-	vlan    subsc ip        mode    port    ingress_car     egress_car      rx_pkts tx_pkts
-		...
-	0.130                   1       0       200 mbit/s      200 mbit/s      0       0
-		...
+	h4 ~ # $rvrf rcli sh sub
+	vlan    ip      mode    port    ingress_car     egress_car      rx_pkts tx_pkts rx_bytes        tx_bytes
+	0.130   10.10.0.19      1       2       200 mbit/s      200 mbit/s      0       0       0       0
+	0.5     192.168.5.101   1       2       200 mbit/s      200 mbit/s      0       0       0       0
+	0.5     192.168.5.103   1       2       200 mbit/s      200 mbit/s      0       0       0       0
 
-The "sh subsc" command also outputs a list of L2/L3 subscriber sessions, therefore some field values may be blank.
-For example, the dynamic VIF "subsc ip" field is blank.
 
 ### 6.1.2. Routing of Dynamic VIF
 
@@ -413,11 +543,11 @@ Ensure that a route has been created:
 
 	h4 ~ # $rvrf rcli sh ip route
 	...
-	10.10.0.11/32 C dev dvif0.130 src 10.10.0.1
+	10.10.0.19/32 C dev dvif2.0.130 src 10.10.0.1
 	...
 
 10.10.0.11 is the IP address value included in the radius reply.
-dvif1.0.130 is the name of a dynamic interface. "1.0.130" substring of the name is 
+dvif2.0.130 is the name of a dynamic interface. "2.0.130" substring of the name is 
 a concatenation of values of the fields port_id, svid, cvid.
 
 ## 6.2. L2/L3 connected subscribers
@@ -429,31 +559,41 @@ L2 connected subscribers</a>, and L3 connected subscriber detailed descriptions 
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#l3-connected-subscribers">
 L3 connected subscribers</a>
 
-Examples of L2/L3 subscribers sessions will be described below.
-
-L2/L3 subscriber's sessions are not a kind of VIF and they are not required any IP configuration steps 
-such as a route creation or assigning an ip address.
-
-L2/L3 subscriber sessions belong to a VIF, therefore in order to create them, the special flag should be added
+L2/L3 subscriber sessions belong to a VIF, therefore to create them a special flag should be added
 to a VIF creation command. To allow the router to create L2 subscriber sessions the "l2_subs" flag
 should be used. To allow the router to create L3 subscriber sessions the "l3_subs" flag
 should be used.
 
 In this test lab L2 subscriber sessions are created on VIF v5:
 
-	vif add name v5 port 0 type dot1q cvid 5 flags kni,l2_subs
+	vif add name v5 port 2 type dot1q cvid 5 flags kni,l2_subs,proxy_arp
 
 L3 sessions are created on VIF v21:
 
-	vif add name v21 port 0 type dot1q cvid 21 flags kni,l3_subs	
+	vif add name v21 port 2 type dot1q cvid 21 flags kni,l3_subs
+
+L2/L3 subscriber's sessions are not a kind of VIF therefore there is no need to assign an ip address to them.
+L2/L3 subscriber's routing could be configured either by using parent VIF static connected routes or 
+by using ip unnumbered scheme. In this howto ip unnumbered scheme is used.
+Prefix 192.168.5.0/24 is reserved to assign addresses for L2/L3 subscribers connected via v5.
+Address 192.168.5.1/32 is assigned to TheRouter v5 interface. Once a subscriber is connected
+and authorized a /32 route is created for it.
+
+	  ip addr add 192.168.5.1/32 dev v5
+	  ip route add 192.168.5.1/32 local
+
+TheRouter should be implicitly configured to create subscriber's ip routes /32 by using
+the "therouter_install_subsc_route" radius attribute.
+
+	h4 ~ # $rvrf rcli sh ip route
+	192.168.5.103/32 C dev v5 src 192.168.5.1
+	192.168.5.101/32 C dev v5 src 192.168.5.1
+	...
 
 The only difference between L2 and L3 subscriber sessions is that L2 sessions store
 subscribers MAC address in addition to subscribers IP address. Storing a MAC address allows 
 TheRouter (not implemented yet) to make sure that packets going through a session match 
 the session MAC address, and to execute defined actions when a packet doesn't match a session.
-
-Authorization of creation L2/L3 sessions works the same way as the authorization process of dynamic VIFs,
-but it doesn't require any IP configuration steps (assigning an IP address, creation IP route).
 
 L2/L3 sessions support the shaping of traffic going through them.
 
@@ -467,12 +607,13 @@ L2/L3 sessions support the shaping of traffic going through them.
 # 7. DHCP server and DHCP Relay configuration
 
 TheRouter software supports DHCP Relay feature.
-The only configure option available so far is the ip address of a DHCP server
-to relay DHCP requests to.
 
-	dhcp_relay 192.168.20.2
+	dhcp_relay opt82 mode rewrite_if_doesnt_exist
+	dhcp_relay opt82 remote_id "tr_h4"
+	dhcp_relay 192.168.20.3
 
-Ip address 192.168.20.2 is the address of H4 host where a DHCP server is running.
+Ip address 192.168.20.3 is the address of H4 host where a DHCP server is running.
+Additional information about dhcp_relay commands is <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#dhcp-relay">here</a>
 
 ## 7.1. DHCP server config /etc/dhcp/dhcpd.conf
 	
