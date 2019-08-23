@@ -56,6 +56,23 @@ For example, if you are installing Quagga using sources then just run:
 	make
 	make install
 
+## Running Quagga/FRR
+
+FRRs zebra component should be executed with -M fpm
+command line option. (Note: Quaggas zebra doesn't need that option).
+
+It's better to run Quagga/FRR and TheRouter in the same dedicated linux network
+namespace. To run Quagga/FRR components in a namaspace just use a prefix
+"ip netns exec tr" before executable file, where "tr" is the name of the namespace.
+
+For example,
+
+	ip netns exec tr /usr/local/sbin/bgpd
+
+Once Quagga/FRR is started it should listen FPM port tcp/2620.
+
+	ip netns exec tr netstat -an | grep 2620
+
 # Configuration examples
 
 ## BGP
@@ -78,10 +95,15 @@ Create a network namespace and set up the loopback interface:
 	$rvrf ip link set up lo
 
 Start TheRouter and setup kni interfaces.
-Each kni interface should be set up after the router has started:
+Each kni interface should be set up and the proper MAC address 
+should be configured after the router has started:
 
 	router_run.sh /etc/router.conf
-	$rvrf ip link set up rkni_p0
+	$rvrf ip link set address 6C:B3:11:51:15:50 up rkni_p0
+	
+KNIs MAC address should be equal to the MAC address of the corresponding
+TheRouter's VIF interfaces which can be found out using the "rcli sh vif"
+command.
 
 Check out the routing table. There are only directly connected routes and a default route there:
 
