@@ -102,7 +102,7 @@ should be configured after the router has started:
 	$rvrf ip link set address 6C:B3:11:51:15:50 up rkni_p0
 	
 KNIs MAC address should be equal to the MAC address of the corresponding
-TheRouter's VIF interfaces which can be found out using the "rcli sh vif"
+VIF interface which can be found out using the "rcli sh vif"
 command.
 
 Check out the routing table. There are only directly connected routes and a default route there:
