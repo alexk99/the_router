@@ -850,6 +850,14 @@ to view or modity a sysctl variable.
  * flow_acct
 
     Flow account state.
+    When enabled flow accouting is generated for the forwarded/transit traffic.
+
+		0 - disabled
+		1 - enabled
+
+ * flow_acct_in_out
+
+    Generate flow accounting for the input/output traffic.
 
 		0 - disabled
 		1 - enabled
@@ -861,11 +869,11 @@ to view or modity a sysctl variable.
 		0 - disabled
 		1 - enabled
 
- * flow_acct_idle_timeout
+ * flow_idle_timeout
 
     Idle timeout of a flow, secs. When the idle timeout expires an idle flow is exported.
 
- * flow_acct_active_timeout
+ * flow_active_timeout
 
     active timeout of a flow, secs. When the active timeout expires an active flow is exported.
 
