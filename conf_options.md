@@ -428,6 +428,17 @@ Example:
 
 Router system name.
 
+## mac_addr_format
+
+Integer. Defines the format of convertion
+MAC addresses to strings.
+
+Valid values are:
+
+	0 - cisco like, xxxx.xxxx.xxxx
+	1 - linux, xx:xx:xx:xx:xx:xx
+	2 - no delimiters, xxxxxxxxxxxx 
+
 Example
 
 	sysctl set system_name "tr1"
@@ -1340,6 +1351,20 @@ Interval in milliseconds beetween keepalive probes (LCP echo-requests).
 Maximum number of keepalive probes that could be send during
 one keepalive test.
 
+### ppp_username_strip_domain_cli_log
+
+Strip the domain part of ppp username before output a username
+to CLI or log files.
+
+### pppoe_sub_uptime_in_sec
+
+Show PPPoE subscriber's uptime in seconds instead of a human-readable time format.
+
+### ppp_auth_max_peer_name_len
+
+Read only. Indicates maximum length of ppp peers names (usernames) allowed
+by TheRouter.
+
 ## IP pools
 
 ### ip pool add
@@ -1469,6 +1494,60 @@ Example:
 
   Time in seconds, determines how often to send interim requests.
 
+# IPoE subscribers
+
+## IPoE subsribers sysctl variables
+
+### subsc_vif_max
+
+Maximum number of concurrent ipoe subscribers.
+Variable can be used only in the startup configuration file section.
+
+### install_subsc_linux_routes
+
+1 - on, 0 - off.
+When enabled the_router will add/remove linux kernel /32 routes for ipoe subscriber's ip addresses.
+Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+in FRR/Quagga bgpd or ospfd daemons. 
+
+### subsc_initiate_by_egress_pkts 
+
+1 - on, 0 - off.
+Initiate L2 connected subscriber sessions by unclassified egress packets.
+
+### subsc_initiate_by_ingress_pkts 
+
+1 - on, 0 - off.
+Initiate L2 connected subscriber sessions by unclassified ingress packets.
+
+### l2_subsc_initiate_by_dhcp 
+
+1 - on, 0 - off.
+Initiate L2 connected subscriber sessions by DHCP ACK messages going
+though TheRouter's DHCP Relay subsystem.
+
+### subsc_update_expiration_by_ingress_pkts
+
+1 - on, 0 - off.
+Update expiration/TTL time of L2 subscriber by ingress packets.
+On by default.
+
+### subsc_update_expiration_by_egress_pkts
+
+1 - on, 0 - off.
+Update expiration/TTL time of L2 subscriber by egress packets.
+On by default.
+
+### l2_subsc_arp_security
+
+1 - on, 0 - off.
+When enabled TheRouter will filter ARP requests at VIF with flag l2_subsc
+and reply only to requests received from authorized L2 subscribers.
+TheRouter will be trying to find a match of ARP source ip and ARP source hardware address
+to IP and MAC address pair of an L2 subscriber, also it will check that ARP
+request is received from a VIF the matching subscriber is connected to. If no matches found,
+the request will be ignored.
 
 ## DHCP Relay
 
