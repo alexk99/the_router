@@ -428,7 +428,11 @@ Example:
 
 Router system name.
 
-## mac_addr_format
+Example
+
+	sysctl set system_name "tr1"
+
+### mac_addr_format
 
 Integer. Defines the format of convertion
 MAC addresses to strings.
@@ -438,11 +442,6 @@ Valid values are:
 	0 - cisco like, xxxx.xxxx.xxxx
 	1 - linux, xx:xx:xx:xx:xx:xx
 	2 - no delimiters, xxxxxxxxxxxx 
-
-Example
-
-	sysctl set system_name "tr1"
-
 
 ## IPv6
 
@@ -1525,7 +1524,7 @@ Initiate L2 connected subscriber sessions by unclassified ingress packets.
 
 1 - on, 0 - off.
 Initiate L2 connected subscriber sessions by DHCP ACK messages going
-though TheRouter's DHCP Relay subsystem.
+through TheRouter's DHCP Relay subsystem.
 
 ### subsc_update_expiration_by_ingress_pkts
 
@@ -1536,18 +1535,20 @@ On by default.
 ### subsc_update_expiration_by_egress_pkts
 
 1 - on, 0 - off.
+
 Update expiration/TTL time of L2 subscriber by egress packets.
 On by default.
 
 ### l2_subsc_arp_security
 
 1 - on, 0 - off.
+
 When enabled TheRouter will filter ARP requests at VIF with flag l2_subsc
 and reply only to requests received from authorized L2 subscribers.
 TheRouter will be trying to find a match of ARP source ip and ARP source hardware address
 to IP and MAC address pair of an L2 subscriber, also it will check that ARP
-request is received from a VIF the matching subscriber is connected to. If no matches found,
-the request will be ignored.
+request is received from the VIF the matching subscriber is connected to. 
+If no matches are found, the request will be ignored.
 
 ## DHCP Relay
 
