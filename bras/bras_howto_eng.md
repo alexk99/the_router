@@ -518,6 +518,8 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_ipv4_gw 9 integer
 	    ATTRIBUTE therouter_pbr 10 integer
 	    ATTRIBUTE therouter_install_subsc_route 17 integer
+	    ATTRIBUTE therouter_subsc_ttl 18 integer
+    	ATTRIBUTE therouter_subsc_static_arp 19 integer
 	END-VENDOR   TheRouter
 
 # 6. Configure subscriber's sessions or dynamic VIF
