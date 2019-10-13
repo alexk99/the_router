@@ -1505,6 +1505,7 @@ Variable can be used only in the startup configuration file section.
 ### install_subsc_linux_routes
 
 1 - on, 0 - off.
+
 When enabled the_router will add/remove linux kernel /32 routes for ipoe subscriber's ip addresses.
 Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
 This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
@@ -1513,22 +1514,26 @@ in FRR/Quagga bgpd or ospfd daemons.
 ### subsc_initiate_by_egress_pkts 
 
 1 - on, 0 - off.
+
 Initiate L2 connected subscriber sessions by unclassified egress packets.
 
 ### subsc_initiate_by_ingress_pkts 
 
 1 - on, 0 - off.
+
 Initiate L2 connected subscriber sessions by unclassified ingress packets.
 
 ### l2_subsc_initiate_by_dhcp 
 
 1 - on, 0 - off.
+
 Initiate L2 connected subscriber sessions by DHCP ACK messages going
 through TheRouter's DHCP Relay subsystem.
 
 ### subsc_update_expiration_by_ingress_pkts
 
 1 - on, 0 - off.
+
 Update expiration/TTL time of L2 subscriber by ingress packets.
 On by default.
 
