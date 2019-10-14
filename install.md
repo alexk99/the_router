@@ -1,7 +1,7 @@
 # Install
 
 The latest builds of TheRouter are available only by request.
-Please contract us by email alex at therouter.net.
+Please contact us by email alex at therouter.net.
 
 Here are the installations steps for Gentoo Linux.
 
