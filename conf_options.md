@@ -1641,7 +1641,7 @@ Example:
 
 	ip addr del svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
 
-## ACL range commans
+## ACL range commands
 
 ### vif acl add range
 
