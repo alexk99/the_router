@@ -1592,3 +1592,66 @@ only if the request doesn't already contain dhcp option82
  * 2 bytes - svlan_id
  * 2 bytes - cvlan_id
 
+# Range commands
+
+Some commands could be applied to a set of interfaces
+or create a set of interfaces. Those type of commands
+are called 'range' commands in TheRouter terms.
+
+Syntax of the range commands is symilar to the syntax of corresponing
+commands that operate with only one VIF only with a exceptions that
+range commands have additional range parameter.
+
+The main purpuse of the range commands is create multiple
+interfaces with the same parameters but different vlan numbers.
+
+
+## VIF range commands
+
+### VIF add range
+
+	vif add name <name> port <port_num> type <type> range svid <vlan_range> cvid <vlan_range> [flags <flag1,flag2...>] [mtu <mtu>]
+
+Where 'vlan_range' is a vlan number, or a vlan range, for example 
+
+	svid 4 cvid 100 200
+
+would create 101 VIFs from vlan number 4.100 to 4.200
+
+	svid 4 5 cvid 100 200
+
+would create 202 VIFs from vlan number 4.100 to 5.200.
+The rest of parameters are the same as for the simple 'vif add' command. 
+
+Example:
+
+	vif add name vlanr port 0 type qinq range svid 2079 cvid 2500 2800 flags l2_subs
+
+### VIF del range
+
+	vif del range svid <vlan_range> cvid <vlan_range> name <name>
+
+## IP address range commands
+
+### ip addr add range
+
+	ip addr add svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+
+### ip addr del range
+
+	ip addr del svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+
+## ACL range commans
+
+### vif acl add range
+
+	vif acl add svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+
+### vif acl del range
+
+	vif acl del svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id>
+
+### vif acl mod range
+
+	vif acl modify svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+
