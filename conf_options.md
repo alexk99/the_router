@@ -263,6 +263,9 @@ the configuration file.
 	 - kni
 	 - proxy_arp
 	 - flow_acct
+	 - rpf
+
+	rpf - reverse path filter
 
  * vif car
 
