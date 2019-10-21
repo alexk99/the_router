@@ -29,7 +29,7 @@ but different vlan numbers:
 
 	vif add name vlanr port 0 type qinq range svid 2079 cvid 2500 2800 flags l2_subs
 
-Other range commands described <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#vif-range-commands">
+Other range commands are described <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#vif-range-commands">
 here</a>.
 
 L2 subscriber session creation could initiated by an ingress or egress unclassified packet going through

@@ -24,7 +24,7 @@ instruction and install DPDK and TheRouter on a machine running Linux OS.
 # 3. Test network scheme
 
 The test network consists of Linux host H4, a border router connected to the internet and clients/subscribers.
-H4 host runs TheRouter and other programs required for accomplishing our tasks: dhcpd, freeradius, mysql, quagga or frr.
+H4 host runs TheRouter and other sofrware required for accomplishing our tasks: dhcpd, freeradius, mysql, quagga or frr.
 Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are connected via a shared L2 broadcast domain.
 
 ## 3.1. L2 network scheme
@@ -35,10 +35,10 @@ Subscribers 1 and 2 are connected via dedicated vlans, subscribers 3 and 4 are c
 
 <img src="http://therouter.net/images/bras/bras_howto_l3.png">
 
-Two static subinterfaces (VIF) configured in a router's configuration file
-are v3 and v20. V3 VIF connects TheRouter to the border router.
-v20 VIF connects TheTouter to H4 Linux network stack which runs on 
-the same machine as TheRouter does,  but uses its own NICs.
+There are two static sub-interfaces (VIF) configured in a router's configuration file:
+v3 and v20. VIF v3 connects TheRouter to the border router.
+VIF v20 connects TheTouter to H4's Linux network stack running on 
+the same machine but using its own NICs.
 
 # 4. Starting TheRouter, checking L2 and L3 connectivity.
 
@@ -308,8 +308,8 @@ Dynamic routing. Integration with FRR/Quagga routing suite
 
 ### 4.4.1. KNI interfaces
 
-A KNI interface must be created for each router's VIF that is gonna
-be used in communication with other routers via a dynamic routing protocol 
+A KNI interface must be created for each router's VIF which is gonna
+be used to communicate with other routers via a dynamic routing protocol 
 supported by FRR/Quagga. An example of such interface is the v3 interface. 
 The router receives a default route from the BGP peer established 
 via the v3 KNI interface.
@@ -317,7 +317,7 @@ via the v3 KNI interface.
 You should manually up KNI interfaces and configure their 
 MAC addresses once TheRouter has started. MAC address of a KNI interface 
 should be equal to the MAC address of the router's interface coupled with the KNI.
-To figure out the MAC address of a VIF from use the output of the 'rcli sh vif' command.
+To figure out the MAC address of a VIF use the 'rcli sh vif' command.
 
 Example of a bash script that up kni interfaces and configure their MAC address:
 
@@ -384,8 +384,8 @@ TheRouter announces network 10.111.0.0/29 which is used for
 SNAT function and serves as public addresses for subscribers. 
 Note that a private prefix 10.111.0.0/29 is used only due to the 
 test nature of this howto and lack of global public IP address. 
-In a real environment, global public IP addresses are usually 
-used in cases like this.
+In a real environment global public IP addresses are usually 
+used in similar cases.
 
 Run bgpd
 
@@ -412,10 +412,10 @@ The TheRouter's main routing table:
 
 # 4.4.2.1 Announcing subscriber's /32 prefixes
 
-	To announce subscriber's ip routes via BGP those
-	routes should be accessible to FRR/Quagga software.
-	To make the routes accessible TheRouter install them
-	at Linux lo interfaces in the network namespace, it is running in.
+	To announce subscriber's ip routes via BGP they
+	should be visible to FRR/Quagga software,
+	to do that TheRouter install them at Linux 'lo' interfaces 
+	in the network namespace it is running in.
 	There is a sysctl variable named "install_subsc_linux_routes" that controls
 	whether or not TheRouter will install those linux routes.
 	
@@ -478,26 +478,34 @@ or to authenticate a L2/L3 subscriber.
 The information provided in this radius reply will be used by TheRouter 
 to configure subscribers ip addresses, routes and PBR rules.
 
-The following attributes are used only to configure a dynamic VIF (subscriber connected via
+The following attributes are used to configure a dynamic VIF (subscriber connected via
 a dedicated vlan)
 
-	therouter_ipv4_addr
-	therouter_ipv4_mask
+	therouter_ipv4_addr or Framed-IP-Address
+	therouter_ipv4_mask or Framed-IP-Netmask
 	therouter_ip_unnumbered
-	therouter_ingress_cir
-	therouter_engress_cir
-	
+	therouter_ingress_cir or WISPr-Bandwidth-Max-Up
+	therouter_engress_cir or WISPr-Bandwidth-Max-Down	
+	therouter_subsc_ttl
+	therouter_pbr
+
 MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
 based on subscriber's VLAN id and the port number via it is connected to TheRouter.
 
 The detailed description of the ip configuration of subscriber's connected via a dedicated VLAN is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
-The following attributes are used only to configure a L2/L3 connected vlan
+The following attributes could be used to configure a L2/L3 connected subscriber:
 
+	therouter_ingress_cir or WISPr-Bandwidth-Max-Up
+	therouter_engress_cir or WISPr-Bandwidth-Max-Down
+	therouter_subsc_ttl
+	therouter_subsc_static_arp
 	therouter_install_subsc_route
-	therouter_ingress_cir
-	therouter_engress_cir
+	therouter_pbr
+
+Description of TheRouter VSA is provided
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#radius-attributes">here</a>
 
 The description of L2/L3 subscribers IP configuration process is provided below in section 6.2.
 
@@ -531,15 +539,15 @@ The detailed description of "vlan per subscriber" dynamic interfaces is provided
 I am going to briefly describe them according to the context of our test lab.
 
 Dynamic interfaces (dynamic VIF or vlan per subscriber) are created automatically by TheRouter software in a response
-to subscriber's packets received at a router port. They cannot be created via rcli interface or 
-using a configuration file command. In order for the router to start creating dynamic VIFs it should
-be configured on which port it should expect a subscriber's traffic by using flag "dynamic_vif".
+to subscriber's packets received at a router port. They can not be created via rcli interface or 
+using a configuration file command. To start creating dynamic VIFs TheRouter should
+be told on which port subscriber's traffic is expected, which could be done by using the "dynamic_vif" port flag.
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags dynamic_vif bond_slaves 1,2
 
-When TheRouter receives on a such port a packet that doesn't match any known virtual interfaces (VIFs),
+When TheRouter receives on a such port a packet that doesn't match any known virtual interfaces (VIF),
 it creates a new dynamic VIF provided that creation of the VIF is authorized by the RADIUS
-protocol. VLAN id values for the new VIF are gathered from the ethernet header of a packet triggered
+protocol. VLAN id values for the new VIF are gathered from the ethernet header of the packet triggered
 the creation.
 
 The RADIUS request to authorize a creation of a new dynamic VIF contains subscriber's VLAN data.
@@ -557,20 +565,20 @@ The RADIUS response should contain the data required to configure IP protocol of
 ### 6.1.2. Routing of Dynamic VIF
 
 If a radius response to a dynamic VIF creation request includes the radius VSA attribute "therouter_ip_unnumbered",
-TheRouter creates a route for a subscriber. The detailed description of this process is provided in the chapter
+TheRouter creates a route to a subscriber. The detailed description of this process is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#authorization-response">
 Radius Authorization responce</a>.
 
-Ensure that a route has been created:
+Ensure that subscriber's route has been created:
 
 	h4 ~ # $rvrf rcli sh ip route
 	...
 	10.10.0.19/32 C dev dvif2.0.130 src 10.10.0.1
 	...
 
-10.10.0.19 is the IP address value included in the radius reply.
-dvif2.0.130 is the name of a dynamic interface. "2.0.130" substring of the name is 
-a concatenation of values of the fields port_id, svid, cvid.
+10.10.0.19 is the IP address value received in the radius reply.
+dvif2.0.130 is the name of a dynamic interface. "2.0.130" part of the name is 
+a concatenation of values of the fields: port_id, svid, cvid.
 
 ## 6.2. L2/L3 connected subscribers
 
@@ -594,19 +602,24 @@ L3 sessions are created on VIF v21:
 
 	vif add name v21 port 2 type dot1q cvid 21 flags kni,l3_subs
 
-L2/L3 subscriber's sessions are not a kind of VIF (virtual interface) 
-therefore there is no need to assign an ip address to them.
-L2/L3 subscriber's routing could be configured either by using parent VIF static connected routes or 
-by using ip unnumbered scheme. In this howto ip unnumbered scheme is used.
-Prefix 192.168.5.0/24 is reserved to assign ip addresses for L2/L3 subscribers connected via v5.
+L2/L3 subscriber's sessions are not a kind of VIF (virtual interface),
+so there is no need to manually assign an ip address to them.
+L2/L3 subscriber's routing is configured either by using a parent VIF's static connected route or 
+by using the ip unnumbered scheme. In this howto ip unnumbered scheme is used.
+Prefix 192.168.5.0/24 is reserved for assigning ip addresses to L2/L3 subscribers connected via v5.
 Address 192.168.5.1/32 is assigned to TheRouter v5 interface. Once a subscriber is connected
 and authorized a /32 route is created.
+
+This commands configure IP for L2 subscriber's parent VIF:
 
 	  ip addr add 192.168.5.1/32 dev v5
 	  ip route add 192.168.5.1/32 local
 
-TheRouter should be implicitly configured to create subscriber's ip routes /32 by using
+TheRouter should be implicitly configured to create L2/L3 subscriber's ip routes /32 by using
 the "therouter_install_subsc_route" radius attribute.
+
+This are two routes to L2 subscribers with addresses 192.168.5.103 and 192.168.5.101
+connected via VIF v5:
 
 	h4 ~ # $rvrf rcli sh ip route
 	192.168.5.103/32 C dev v5 src 192.168.5.1
@@ -620,13 +633,36 @@ the session MAC address, and to execute defined actions when a packet doesn't ma
 
 L2/L3 sessions support the shaping of traffic going through them.
 
-### 6.2.2. Viewing L2/L3 sessions
+### 6.2.2. Subscriber initiataion
 
-	h4 ~ # $rvrf rcli sh sub
-	vlan    ip      mode    port    ingress_car     egress_car      rx_pkts tx_pkts rx_bytes        tx_bytes
-	0.130   10.10.0.19      1       2       200 mbit/s      200 mbit/s      0       0       0       0
-	0.5     192.168.5.101   1       2       200 mbit/s      200 mbit/s      0       0       0       0
-	0.5     192.168.5.103   1       2       200 mbit/s      200 mbit/s      0       0       0       0
+L2 and L3 subscriber could be initiated by ingress/egress unclassified packets,
+also L2 subscriber could be initiated with help of the DCHP protocol when the
+dhcp relay function is enabled. Initiation methods could be enabled/disabled by
+sysctl variables:
+
+For example, when dhcp initiation is used it makes sence to turn off L2 subscriber
+session initiation by ingress/egress unclassified packets:
+
+	sysctl set l2_subsc_initiate_by_dhcp 1
+	sysctl set subsc_initiate_by_egress_pkts 0
+	sysctl set subsc_initiate_by_ingress_pkts 0
+
+### 6.2.3. L2 subscribers ARP security
+
+For a security reason TheRouter could be instructed to install a static ARP record for each 
+L2 subscribers by using the radius attribute 'therouter_subsc_static_arp' with value 1 (enabled).
+
+Also, TheRouter could be instructed to perform additional arp security checks by 
+enabling the arp security mode on all L2 subscriber parent VIFs by using sysctl variable 
+therouter_subsc_static_arp. Detailed description of ARP security checks is provided 
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#l2_subsc_arp_security">here</a>
+
+### 6.2.4. Viewing L2/L3 sessions
+
+	h4 ~ # $rvrf rcli sh subsc
+	vlan    ip      mac     mode    port    ingress_car     egress_car      rx_pkts tx_pkts rx_bytes        tx_bytes        ttl     expire_in       uptime
+	0.5     192.168.5.101   f018.9853.4688  1       2       200 mbit/s      200 mbit/s      0       0       0       0       600     590     19 hour(s), 23 min(s), 37 sec(s)
+	0.5     192.168.5.103   f079.6095.3102  1       2       200 mbit/s      200 mbit/s      0       0       0       0       600     583     11 hour(s), 54 min(s), 18 sec(s)
 
 # 7. DHCP server and DHCP Relay configuration
 
@@ -688,10 +724,10 @@ DHCP server is listening for requests on V3 interface and identifies subscribers
 ## 7.2. DHCP response routing
 
 In order to DHCP server responses successfully reach their destination
-a DHCP server should know routes to networks DHCP requests are coming from.
-In this example, DHCP requests are coming from network 10.10.0.0/24.
-Therefore there should be a route to the destination 10.10.0.0/24 on Linux host H4.
-The route should point to TheRouter that is connected via vlan 20, so the route 
+the DHCP server should know routes to networks DHCP requests are coming from.
+In this example, one of the networks DHCP requests are coming from is 10.10.0.0/24.
+Therefore there should be a route to 10.10.0.0/24 on Linux host H4.
+The route should point to TheRouter that is connected via vlan 20, so it 
 should be added by the following command:
 
 	ip route add 10.10.0.0/24 via 192.168.20.1
@@ -709,12 +745,15 @@ NAT configuration is conntrolled by a separate configuration file which is defin
 
 File /etc/npf.conf.bras_dhcp_relay
 
-	map v3 netmap 10.111.0.0/29
+	map v3 netmap 10.111.0.0/29 from 192.168.5.0/24
+	map v3 netmap 10.111.0.0/29 from 10.10.0.0/24
 	
-	#alg "icmp"
+	alg "icmp"
+	alg "pptp"
 	
 	group default {
-	  pass stateful final on v3 all
+ 		block stateful final on v3 proto 47 all
+ 		pass stateful final on v3 all
 	}
 	
 Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 

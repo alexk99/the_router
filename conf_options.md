@@ -1511,7 +1511,7 @@ This is the list of TheRouter VAS:
 	    ATTRIBUTE therouter_pbr 10 integer
 	    ATTRIBUTE therouter_install_subsc_route 17 integer
 	    ATTRIBUTE therouter_subsc_ttl 18 integer
-		ATTRIBUTE therouter_subsc_static_arp 19 integer
+	    ATTRIBUTE therouter_subsc_static_arp 19 integer
 	END-VENDOR   TheRouter
 
 #### therouter_ingress_cir
