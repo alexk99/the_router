@@ -1548,11 +1548,11 @@ On by default.
 
 1 - on, 0 - off.
 
-When enabled TheRouter will filter ARP requests at VIF with flag l2_subsc
+When enabled TheRouter will filter ARP requests at VIFs with flag l2_subsc
 and reply only to requests received from authorized L2 subscribers.
 TheRouter will be trying to find a match of ARP source ip and ARP source hardware address
 to IP and MAC address pair of an L2 subscriber, also it will check that ARP
-request is received from the VIF the matching subscriber is connected to. 
+request has been received from the VIF the matching subscriber is connected to. 
 If no matches are found, the request will be ignored.
 
 ## DHCP Relay
