@@ -249,7 +249,7 @@ the configuration file.
 
  * vif add
 
-		rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>]
+		rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>] [MTU <mtu_size>]
 
    Type parameter can take one of the following values:
 
@@ -263,6 +263,14 @@ the configuration file.
 	 - kni
 	 - proxy_arp
 	 - flow_acct
+
+ * vif car
+
+		rcli vif car name <name> ingress <cir_val> egress <cir_value>
+
+   Define eggress/ingress bandwith limit for a VIF.
+   <cir_val> unit is kbit/s. a zero value could be used
+   to delete a limit.
 
  * vif del
 
