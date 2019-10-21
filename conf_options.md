@@ -1521,6 +1521,7 @@ This is the list of TheRouter VAS:
 	    ATTRIBUTE therouter_subsc_ttl 18 integer
 	    ATTRIBUTE therouter_subsc_static_arp 19 integer
 	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
+	    ATTRIBUTE therouter_subsc_rp_filter 21 integer
 	END-VENDOR   TheRouter
 
 #### therouter_ingress_cir
@@ -1553,10 +1554,19 @@ intstall the static arp record for L2 subscriber.
 #### therouter_subsc_proxy_arp
 
 The attribute with value 1 instructs TheRouter to enable
-proxy arp on dynamic VIF (subscriber per customer).
+proxy arp on dynamic VIF (vlan per subscriber).
 
 Note that to enable proxy arp for L2 subscribers
 the proxy arp flag should be used in VIF configuration command
+when the L2 subscriber's parent interface is created. 
+
+#### therouter_subsc_rp_filter
+
+The attribute with value 1 instructs TheRouter to enable
+reverse path filter on dynamic VIF (vlan per subscriber) 
+
+Note that to enable reverse path filter for L2 subscribers
+the rpf flag should be used in VIF configuration command
 when the L2 subscriber's parent interface is created. 
 
 #### therouter_pbr

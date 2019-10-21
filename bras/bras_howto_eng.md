@@ -489,6 +489,7 @@ a dedicated vlan)
 	therouter_subsc_ttl
 	therouter_pbr
 	therouter_subsc_proxy_arp
+	therouter_subsc_rp_filter
 
 MySql stored procedure GetIpoeUserService will calculate the subscriber's IP address
 based on subscriber's VLAN id and the port number via it is connected to TheRouter.
@@ -530,6 +531,7 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_subsc_ttl 18 integer
 	    ATTRIBUTE therouter_subsc_static_arp 19 integer
 	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
+	    ATTRIBUTE therouter_subsc_rp_filter 21 integer
 	END-VENDOR   TheRouter
 
 # 6. Configure subscriber's sessions or dynamic VIF
