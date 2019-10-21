@@ -1520,6 +1520,7 @@ This is the list of TheRouter VAS:
 	    ATTRIBUTE therouter_install_subsc_route 17 integer
 	    ATTRIBUTE therouter_subsc_ttl 18 integer
 	    ATTRIBUTE therouter_subsc_static_arp 19 integer
+	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
 	END-VENDOR   TheRouter
 
 #### therouter_ingress_cir
@@ -1540,14 +1541,23 @@ subscriber's session time to live in seconds.
 
 #### therouter_install_subsc_route
 
-Value 1 of this attributes instructs TheRouter to
+Value 1 of this attribute instructs TheRouter to
 intstall subscriber ipv4 address /32 prefix into the main 
 routing table.
 
 #### therouter_subsc_static_arp
 
-Value 1 of this attributes instructs TheRouter to
+Value 1 of this attribute instructs TheRouter to
 intstall the static arp record for L2 subscriber.
+
+#### therouter_subsc_proxy_arp
+
+The attribute with value 1 instructs TheRouter to enable
+proxy arp on dynamic VIF (subscriber per customer).
+
+Note that to enable proxy arp for L2 subscribers
+the proxy arp flag should be used in VIF configuration command
+when the L2 subscriber's parent interface is created. 
 
 #### therouter_pbr
 
