@@ -16,21 +16,48 @@
 
 <img src="http://therouter.net/images/bras/l2_connected_subsc_overview.png">
 
-Subscribers are connected to a router via a shared L2 domain.
-A router interface is configured as a kind of a parent interface for subscriber sessions.
-Subscribers parent interface can use any type of ethernet encapsulations: untagged, dot1q, qinq.
-In order to configure a router interface as a subscriber parent interfaces the VIF flag 'l2_subs' 
-must be used in the vif configuration command.
+L2 subscribers are connected to a router via a shared L2 domain.
+A router interface is configured as a parent interface for subscriber sessions.
+Subscriber's parent interfaces can use any type of ethernet encapsulations: untagged, dot1q, qinq.
+To configure a router interface as a subscriber parent interface VIF flag 'l2_subs' 
+must be used in the VIF configuration command.
 
 	vif add name v_subsc port 0 type qinq svid 2 cvid 121 flags l2_subs
 
-Subscriber session creation is initiated by an ingress or egress unclassified packet going through
-a parent VIF. A packet is considered unclassified when its ip address doesn't match the ip address stored
-in any subscriber session. When an unclassified packet is a an ingress packet it means its source ip address doesn't
-belong to any session, when an unclassified packet is egress packet its destination address was checked.
+There is a version of this command that creates multiple interfaces with same parameters
+but different vlan numbers:
+
+	vif add name vlanr port 0 type qinq range svid 2079 cvid 2500 2800 flags l2_subs
+
+Other range commands described <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#vif-range-commands">
+here</a>.
+
+L2 subscriber session creation could initiated by an ingress or egress unclassified packet going through
+a parent VIF. A packet is considered unclassified when its ip address and port doesn't match the ip address and port pair
+stored in any subscriber session. When an unclassified packet is a an ingress packet it means that it's source ip address doesn't
+belong to any session, when an unclassified packet is egress packet it's destination address was checked.
+
+Also, L2 subscriber sessions could be initiated with the help of DHCP protocol.
+To do that the dhcp relay function should be configured on TheRouter.
+
+Once DHCP initiation is turned on and TheRouter receives a DHCP ACK packet
+forwarded to a VIF configured as the L2 subscriber parent VIF, TheRouter will
+use the information from the DHCP ACK to create an L2 subscriber session.
+More precisely, once DHCP ACK is received TheRouter will send the radius authorization
+request and then upon receiving positive responce it will create a L2 subscriber.
+
+L2 subscriber initiation method could be turned off/on by using
+sysctl boolean variables:
+
+For example, when dhcp initiation is used it makes sence to turn off
+L2 subscriber session initiation by ingress/egress unclassified packets:
+
+	sysctl set l2_subsc_initiate_by_dhcp 1
+	sysctl set subsc_initiate_by_egress_pkts 0
+	sysctl set subsc_initiate_by_ingress_pkts 0
 
 To authorized a subscriber session creation RADIUS protocol is used.
-Session authorization request includes the following attributes:
+L2 subscriber session authorization requests includes the following attributes:
 
 todo
 
