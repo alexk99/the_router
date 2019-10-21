@@ -1493,6 +1493,59 @@ Example:
 
   Time in seconds, determines how often to send interim requests.
 
+## Radius attributes
+
+This is the list of TheRouter VAS:
+
+	VENDOR       TheRouter     12345
+	BEGIN-VENDOR TheRouter
+	    ATTRIBUTE therouter_ingress_cir 1 integer
+	    ATTRIBUTE therouter_engress_cir 2 integer
+	    ATTRIBUTE therouter_ipv4_addr 3 integer
+	    ATTRIBUTE therouter_ipv4_mask 4 integer
+	    ATTRIBUTE therouter_outer_vid 5 integer
+	    ATTRIBUTE therouter_inner_vid 6 integer
+	    ATTRIBUTE therouter_ip_unnumbered 7 integer
+	    ATTRIBUTE therouter_port_id 8 integer
+	    ATTRIBUTE therouter_ipv4_gw 9 integer
+	    ATTRIBUTE therouter_pbr 10 integer
+	    ATTRIBUTE therouter_install_subsc_route 17 integer
+	    ATTRIBUTE therouter_subsc_ttl 18 integer
+		ATTRIBUTE therouter_subsc_static_arp 19 integer
+	END-VENDOR   TheRouter
+
+#### therouter_ingress_cir
+
+Ingress CIR (commited information rate) - kbit/s
+It's used to limit bandwith availabe for any type of subscriber.
+Ingress direction means the direction from the subscriber to TheRouter interface. 
+
+#### therouter_egress_cir
+
+Egress CIR (commited information rate) - kbit/s
+It's used to limit bandwith availabe for any type of subscriber.
+Egress direction means the direction from the TheRouter to the subscriber. 
+
+#### therouter_subsc_ttl
+
+subscriber's session time to live in seconds.
+
+#### therouter_install_subsc_route
+
+Value 1 of this attributes instructs TheRouter to
+intstall subscriber ipv4 address /32 prefix into the main 
+routing table.
+
+#### therouter_subsc_static_arp
+
+Value 1 of this attributes instructs TheRouter to
+intstall the static arp record for L2 subscriber.
+
+#### therouter_pbr
+
+Description is available 
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#pbr-rules">here</a>
+
 # IPoE subscribers
 
 ## IPoE subsribers sysctl variables
