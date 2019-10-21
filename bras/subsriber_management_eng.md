@@ -34,22 +34,19 @@ here</a>.
 
 L2 subscriber session creation could initiated by an ingress or egress unclassified packet going through
 a parent VIF. A packet is considered unclassified when its ip address and port doesn't match the ip address and port pair
-stored in any subscriber session. When an unclassified packet is a an ingress packet it means that it's source ip address doesn't
-belong to any session, when an unclassified packet is egress packet it's destination address was checked.
+stored in any established subscriber session. For ingress unclassified packets source ip address is used in the lookup process for
+already established sessions, for egress unclassified packets destination ip address is used.
 
 Also, L2 subscriber sessions could be initiated with the help of DHCP protocol.
 To do that the dhcp relay function should be configured on TheRouter.
-
 Once DHCP initiation is turned on and TheRouter receives a DHCP ACK packet
 forwarded to a VIF configured as the L2 subscriber parent VIF, TheRouter will
 use the information from the DHCP ACK to create an L2 subscriber session.
 More precisely, once DHCP ACK is received TheRouter will send the radius authorization
 request and then upon receiving positive responce it will create a L2 subscriber.
 
-L2 subscriber initiation method could be turned off/on by using
-sysctl boolean variables:
-
-For example, when dhcp initiation is used it makes sence to turn off
+L2 subscriber initiation methods could be enabled/disabled by using
+sysctl boolean variables. For example, when dhcp initiation is used it makes sence to turn off
 L2 subscriber session initiation by ingress/egress unclassified packets:
 
 	sysctl set l2_subsc_initiate_by_dhcp 1
