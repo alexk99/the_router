@@ -1608,7 +1608,7 @@ interfaces with the same parameters but different vlan numbers.
 
 ## VIF range commands
 
-### VIF add range
+### vif add range
 
 	vif add name <name> port <port_num> type <type> range svid <vlan_range> cvid <vlan_range> [flags <flag1,flag2...>] [mtu <mtu>]
 
@@ -1627,7 +1627,7 @@ Example:
 
 	vif add name vlanr port 0 type qinq range svid 2079 cvid 2500 2800 flags l2_subs
 
-### VIF del range
+### vif del range
 
 	vif del range svid <vlan_range> cvid <vlan_range> name <name>
 
