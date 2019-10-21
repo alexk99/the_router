@@ -268,7 +268,7 @@ the configuration file.
 
 		rcli vif car name <name> ingress cir <cir_val> egress cir <cir_value>
 
-   Define eggress/ingress bandwith limit for a VIF.
+   Define ingress/egress bandwidth limit for a VIF.
    <cir_val> unit is kbit/s. a zero value could be used
    to delete a limit.
 
