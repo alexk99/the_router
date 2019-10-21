@@ -527,7 +527,7 @@ Add the following lines to the /etc/raddb/dictionary
 	    ATTRIBUTE therouter_pbr 10 integer
 	    ATTRIBUTE therouter_install_subsc_route 17 integer
 	    ATTRIBUTE therouter_subsc_ttl 18 integer
-    	ATTRIBUTE therouter_subsc_static_arp 19 integer
+        ATTRIBUTE therouter_subsc_static_arp 19 integer
 	END-VENDOR   TheRouter
 
 # 6. Configure subscriber's sessions or dynamic VIF
@@ -615,6 +615,20 @@ This commands configure IP for L2 subscriber's parent VIF:
 	  ip addr add 192.168.5.1/32 dev v5
 	  ip route add 192.168.5.1/32 local
 
+If you have a very big number of L2 interfaces which should be configured
+as L2 subscribers parent interfaces instead of using multiple configuration
+commands that differs only by vlan numbers consider using the range configuration
+commands:
+
+	vif add name l2subs_a port 0 type qinq range svid 2010 cvid 2500 2800 flags l2_subs
+	ip addr add range svid 2010 cvid 2500 2800 10.0.0.1/32 name l2subs_a
+	vif acl add range svid 2010 cvid 2500 2800 name l2subs_a dir ingress aclid 5 prio 5
+
+Those commands will create multiple interfaces with the same parameters but different 
+vlan numbers as if you issued the same number of single configuration commands.
+Description of the range commands is
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#vif-range-commands">here</a>
+
 TheRouter should be implicitly configured to create L2/L3 subscriber's ip routes /32 by using
 the "therouter_install_subsc_route" radius attribute.
 
@@ -636,9 +650,9 @@ L2/L3 sessions support the shaping of traffic going through them.
 ### 6.2.2. Subscriber initiataion
 
 L2 and L3 subscriber could be initiated by ingress/egress unclassified packets,
-also L2 subscriber could be initiated with help of the DCHP protocol when the
+also L2 subscribers could be initiated with help of the DHCP protocol when the
 dhcp relay function is enabled. Initiation methods could be enabled/disabled by
-sysctl variables:
+sysctl variables.
 
 For example, when dhcp initiation is used it makes sence to turn off L2 subscriber
 session initiation by ingress/egress unclassified packets:
@@ -650,7 +664,7 @@ session initiation by ingress/egress unclassified packets:
 ### 6.2.3. L2 subscribers ARP security
 
 For a security reason TheRouter could be instructed to install a static ARP record for each 
-L2 subscribers by using the radius attribute 'therouter_subsc_static_arp' with value 1 (enabled).
+L2 subscriber by using the radius attribute 'therouter_subsc_static_arp' with value 1 (enabled).
 
 Also, TheRouter could be instructed to perform additional arp security checks by 
 enabling the arp security mode on all L2 subscriber parent VIFs by using sysctl variable 
