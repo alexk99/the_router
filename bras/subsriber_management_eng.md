@@ -34,20 +34,21 @@ here</a>.
 
 L2 subscriber session creation could initiated by an ingress or egress unclassified packet going through
 a parent VIF. A packet is considered unclassified when its ip address and port doesn't match the ip address and port pair
-stored in any established subscriber session. For ingress unclassified packets source ip address is used in the lookup process for
-already established sessions, for egress unclassified packets destination ip address is used.
+stored in any established subscriber session. In the lookup process the source ip address is used for ingress unclassified packets
+and the destination ip address is used for egress unclassified packets.
 
 Also, L2 subscriber sessions could be initiated with the help of DHCP protocol.
 To do that the dhcp relay function should be configured on TheRouter.
-Once DHCP initiation is turned on and TheRouter receives a DHCP ACK packet
+Once DHCP initiation is enabled and TheRouter receives a DHCP ACK packet
 forwarded to a VIF configured as the L2 subscriber parent VIF, TheRouter will
 use the information from the DHCP ACK to create an L2 subscriber session.
 More precisely, once DHCP ACK is received TheRouter will send the radius authorization
 request and then upon receiving positive responce it will create a L2 subscriber.
 
 L2 subscriber initiation methods could be enabled/disabled by using
-sysctl boolean variables. For example, when dhcp initiation is used it makes sence to turn off
-L2 subscriber session initiation by ingress/egress unclassified packets:
+sysctl boolean variables. For example, when dhcp initiation is used 
+it makes sence to turn off L2 subscriber session initiation 
+by ingress/egress unclassified packets:
 
 	sysctl set l2_subsc_initiate_by_dhcp 1
 	sysctl set subsc_initiate_by_egress_pkts 0
@@ -94,7 +95,7 @@ The athorization reply could contrain the following attributes
 ### L2 subscriber ARP security
 
 For a security reason TheRouter could be instructed to install
-a static ARP record for each L2 subscribers by using the
+a static ARP record for each L2 subscriber by using the
 radius attribute 'therouter_subsc_static_arp' with value 1 (enabled).
 
 Also, TheRouter could be instructed to perform additional arp
@@ -114,7 +115,7 @@ The VIF flag 'l3_subs' should be included in a parent interface creation command
 	vif add name v21 port 0 type dot1q cvid 21 flags l3_subs
 
 Subscriber session creation is initiated by an ingress or egress unclassified packet going through
-a parent VIF. A packet is considered unclassified when its ip address doesn't match the ip address stored
+a parent VIF. A packet is considered unclassified when it's ip address doesn't match the ip address stored
 in any subscriber session. When an unclassified packet is an ingress packet it means its source ip address doesn't
 belong to any session, when an unclassified packet is egress packet its destination address was checked.
 
