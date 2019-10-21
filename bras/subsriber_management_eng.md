@@ -56,7 +56,51 @@ L2 subscriber session initiation by ingress/egress unclassified packets:
 To authorized a subscriber session creation RADIUS protocol is used.
 L2 subscriber session authorization requests includes the following attributes:
 
-todo
+	Attribute Value Pairs
+	AVP: t=User-Name(1) l=17 val=2:192.168.5.140
+	AVP: t=Calling-Station-Id(31) l=16 val=f079.6095.3102
+	AVP: t=Service-Type(6) l=6 val=Framed(2)
+	AVP: t=NAS-Identifier(32) l=12 val=the_router
+	AVP: t=NAS-Port-Type(61) l=6 val=Virtual(5)
+	AVP: t=User-Password(2) l=18 val=Encrypted
+	AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	    Type: 26
+	    Length: 12
+	    Vendor ID: VWB Group (12345)
+	    VSA: t=therouter_port_id(8) l=6 val=2
+	AVP: t=Framed-IP-Address(8) l=6 val=192.168.5.140
+	AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	    Type: 26
+	    Length: 12
+	    Vendor ID: VWB Group (12345)
+	    VSA: t=therouter_outer_vid(5) l=6 val=0
+	AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	    Type: 26
+	    Length: 12
+	    Vendor ID: VWB Group (12345)
+	    VSA: t=therouter_inner_vid(6) l=6 val=5
+
+The athorization reply could contrain the following attributes
+
+	therouter_ingress_cir
+	therouter_engress_cir
+	WISPr-Bandwidth-Max-Down
+	WISPr-Bandwidth-Max-Up
+	therouter_pbr
+	therouter_install_subsc_route
+	therouter_subsc_ttl
+	therouter_subsc_static_arp
+
+### L2 subscriber ARP security
+
+For a security reason TheRouter could be instructed to install
+a static ARP record for each L2 subscribers by using the
+radius attribute 'therouter_subsc_static_arp' with value 1 (enabled).
+
+Also, TheRouter could be instructed to perform additional arp
+security checks by enabling the arp security mode on all L2 subscriber
+parent VIFs by using sysctl variable 
+<a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#l2_subsc_arp_security">therouter_subsc_static_arp</a>
 
 ## L3 connected subscribers
 
