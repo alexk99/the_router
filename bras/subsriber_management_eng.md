@@ -91,6 +91,36 @@ The athorization reply could contrain the following attributes
 	therouter_install_subsc_route
 	therouter_subsc_ttl
 	therouter_subsc_static_arp
+	
+#### L2 subscriber time to live (TTL)
+
+L2 subscribers have a TTL that controls a its life-time.
+TTL could be defined globally by using the sysctl variable 'dynamic_vif_ttl'
+or it could be defined for each subscriber individually in the radius
+authorization response in the VAS 'therouter_subsc_ttl'.
+
+Once a L2 subscriber is created, it's life-time could updated/prolonged
+by traffic associated with the subscriber. There are several methods to do
+that:
+
+ * ingress packets
+ * egress packets
+ * dhcp ack packets
+
+ingress/egress packets update subscriber's TTL to initial
+value once a packet goes through the subscriber session. 
+TTL is updated only when its value less than half of the initial value.
+
+Dhcp ack packets update TTL of the subscriber every time.
+
+TTL update methods could be enabled/disabled by using the following
+sysctl boolean (0/1 values) variables:
+
+ * subsc_update_expiration_by_ingress_pkts
+ * subsc_update_expiration_by_egress_pkts
+
+TTL update by DHCP can't be disabled and always enabled
+once L2 subscriber DHCP initiation is on.
 
 ### L2 subscriber ARP security
 
@@ -124,7 +154,7 @@ Session authorization request includes the following attributes:
 
 todo
 
-## Vlan per subscriber
+## Vlan per subscriber - dynamic VIF
 
 <img src="http://therouter.net/images/bras/vlan_per_subsc_overview.png">
 
@@ -276,6 +306,30 @@ Example of the authorization response:
 	            Length: 12
 	            Vendor ID: VWB Group (12345)
 	            VSA: t=therouter_subsc_proxy_arp(20) l=6 val=1
+
+#### Dynamic VIF  time to live (TTL)
+
+The dynamic VIF have a TTL that controls its life-time.
+TTL could be defined globally by using the sysctl variable 'dynamic_vif_ttl'
+or it could be defined for each subscriber individually in the radius
+authorization response in the VAS 'therouter_subsc_ttl'.
+
+Once a dynamic VIF is created, it's life-time could updated/prolonged
+by traffic associated with it. There are couple of methods to do
+that:
+
+ * ingress packets
+ * egress packets
+
+ingress/egress packets update dynamic VIF's TTL to initial
+value once a packet goes through the VIF. TTL is updated only
+when its value less than half of the initial value.
+
+TTL update methods could be enabled/disabled by using the following
+sysctl boolean (0/1 values) variables:
+
+ * subsc_update_expiration_by_ingress_pkts
+ * subsc_update_expiration_by_egress_pkts
 
 # Unauthorised subscribers traffic
 
