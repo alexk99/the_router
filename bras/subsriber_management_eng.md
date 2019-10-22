@@ -12,7 +12,14 @@
 
 # Subsriber types
 
-## L2 connected subscribers
+There are several subscriber types supported by TheRouter:
+
+ * dynamic VIF - vlan per subscriber
+ * L2 connected subscribers
+ * L3 connected subscribers
+ * PPPoE subscribers
+
+# L2 connected subscribers
 
 <img src="http://therouter.net/images/bras/l2_connected_subsc_overview.png">
 
@@ -92,7 +99,7 @@ The athorization reply could contrain the following attributes
 	therouter_subsc_ttl
 	therouter_subsc_static_arp
 	
-#### L2 subscriber time to live (TTL)
+### L2 subscriber time to live (TTL)
 
 L2 subscribers have a TTL that controls a its life-time.
 TTL could be defined globally by using the sysctl variable 'dynamic_vif_ttl'
@@ -133,7 +140,7 @@ security checks by enabling the arp security mode on all L2 subscriber
 parent VIFs by using sysctl variable 
 <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#l2_subsc_arp_security">therouter_subsc_static_arp</a>
 
-## L3 connected subscribers
+# L3 connected subscribers
 
 <img src="http://therouter.net/images/bras/l3_connected_subsc_overview.png">
 
@@ -154,7 +161,7 @@ Session authorization request includes the following attributes:
 
 todo
 
-## Vlan per subscriber - dynamic VIF
+# Vlan per subscriber - dynamic VIF
 
 <img src="http://therouter.net/images/bras/vlan_per_subsc_overview.png">
 
@@ -350,7 +357,7 @@ CoA mechanism makes TheRouter store session id in the predefined table.
 Then, PBR rules are applied to a receiving packet and if the the_router finds 
 a match to one of those rules it will route the packet according to the routes of the routing table specified in the matched PBR rule.
 
-## Additional routing table
+### Additional routing table
 
 	ip route table add <table name>
 
@@ -393,20 +400,20 @@ from routing table 'blocked_subsc'
 
 	ip pbr rule add prio 20 u32set l2s1 type "l2" table blocked_subsc
 
-## Tables storing unauthorized user IDs
+### Tables storing unauthorized user IDs
 
-### Tables storing IP addresses of unauthorized L2/L3 connected subscribers
+#### Tables storing IP addresses of unauthorized L2/L3 connected subscribers
 An example:
 
 	u32set create ips1 size 4096 bucket_size 16
 
 
-### Tables stroring L2_IDs of unauthorised dynamic VIF subscribers
+#### Tables stroring L2_IDs of unauthorised dynamic VIF subscribers
 An example:
 
 	u32set create l2s1 size 4096 bucket_size 16
 
-## PBR Radius attributes
+### PBR Radius attributes
 
 THE_ROUTER_VSA_PBR attribute configures PBR mechanism for a subscriber.
 Depending on the attribute value subscriber id is added or deleted from the table for unauthorized subscribers.
@@ -432,7 +439,7 @@ must be defined in the configuration file before this command.
 	radius_client add src ip 192.168.3.1
 	radius_client set secret "secret"
 
-# Radius/COA
+## Radius/COA
 
 CoA mechanism may be used for
  * changing rate-limiting feature parameters of a subscriber traffic
@@ -527,7 +534,7 @@ Where dvif0.0.130 - dynamic VIF (svid 0, cvid 130)
 	portid.svid.cvid
 
 
-## TheRouter configuration example
+# TheRouter configuration example
 
 #### TheRouter
 
