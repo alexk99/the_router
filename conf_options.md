@@ -445,14 +445,18 @@ Example
 
 ### mac_addr_format
 
-Integer. Defines the format of convertion
+String. Defines the format of convertion
 MAC addresses to strings.
 
 Valid values are:
 
-	0 - cisco like, xxxx.xxxx.xxxx
-	1 - linux, xx:xx:xx:xx:xx:xx
-	2 - no delimiters, xxxxxxxxxxxx 
+	cisco - xxxx.xxxx.xxxx
+	linux - xx:xx:xx:xx:xx:xx
+	raw - no delimiters, xxxxxxxxxxxx
+	
+Example:
+
+	rcli sysctl set mac_addr_format linux
 
 ## IPv6
 
