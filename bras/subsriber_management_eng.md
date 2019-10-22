@@ -143,15 +143,45 @@ The port flag 'dynamic_vif' should be included in a parent port creation command
 Authorization of dynamic VIFs is using RADIUS protocol.
 Dynamic VIF authorization request includes the following attributes:
 
- * THE_ROUTER_VSA_OUTER_VID - outer vlan id or service vlan id (svid). 0 value is used for dot1q dynamic VIFs
-	
- * THE_ROUTER_VSA_INNER_VID - inner vlan id or customer vlan id (cvid)
-
- * THE_ROUTER_VSA_PORT_ID - TheRouter port number
-
- * Username - a string containing portid, svid and сvid values.
+ * the_router_vsa_outer_vid - outer vlan id or service vlan id (svid). 0 value is used for dot1q dynamic VIFs
+ * the_router_vsa_inner_vid - inner vlan id or customer vlan id (cvid)
+ * the_router_vsa_port_id - TheRouter port number
+ * User-Name - a string containing portid, svid and сvid values.
 Those values a concatenated into a string using a dot as a separated field value.
-	
+ * Calling-Station-Id - MAC address of the subscriber initiated creation of the dynamic VIF
+ * Service-Type
+ * NAS-Identifier - name of TheRouter instance
+ * NAS-Port-Id - a string containing TheRouter port_id and vlan info from the packet initiated
+dynamic VIF. Format is port_id/svlan.cvlan, for example: "2/0.200"
+ * User-Password - not used, include only for radius compatability.
+ This attribute always contains value '1234567890123456'.
+
+Example of the authorization request:
+
+	Attribute Value Pairs
+	    AVP: t=User-Name(1) l=9 val=2:0:200
+	    AVP: t=Calling-Station-Id(31) l=16 val=8416.f9bd.54f7
+	    AVP: t=Service-Type(6) l=6 val=Framed(2)
+	    AVP: t=NAS-Identifier(32) l=12 val=the_router
+	    AVP: t=NAS-Port-Type(61) l=6 val=Virtual(5)
+	    AVP: t=NAS-Port-Id(87) l=9 val=2/0.200
+	    AVP: t=User-Password(2) l=18 val=Encrypted
+	    AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	        Type: 26
+	        Length: 12
+	        Vendor ID: VWB Group (12345)
+	        VSA: t=therouter_outer_vid(5) l=6 val=0
+	    AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	        Type: 26
+	        Length: 12
+	        Vendor ID: VWB Group (12345)
+	        VSA: t=therouter_inner_vid(6) l=6 val=200
+	    AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	        Type: 26
+	        Length: 12
+	        Vendor ID: VWB Group (12345)
+	        VSA: t=therouter_port_id(8) l=6 val=2
+
 ### Authorization response
 
 A response may include the attributes described below. Depending on which attributes are in the response
@@ -200,6 +230,52 @@ Value is a traffic rate limit in bit/s.
 
  * THE_ROUTER_VSA_PBR attributes controls PBR routing mechanism for a subscriber.
 The detailed description of PBR routing mechanism is in the next paragraph.
+
+Example of the authorization response:
+
+	RADIUS Protocol
+	    Code: Access-Accept (2)
+	    Packet identifier: 0x0 (0)
+	    Length: 128
+	    Authenticator: 464075e886c13a7d2e5b645fef47edd6
+	    [This is a response to a request in frame 3]
+	    [Time from request: 0.000771000 seconds]
+	    Attribute Value Pairs
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_ingress_cir(1) l=6 val=200000
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_engress_cir(2) l=6 val=200000
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_ipv4_addr(3) l=6 val=3232236943
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_ipv4_mask(4) l=6 val=24
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_ip_unnumbered(7) l=6 val=1
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_subsc_rp_filter(21) l=6 val=1
+	        AVP: t=Vendor-Specific(26) l=12 vnd=VWB Group(12345)
+	            Type: 26
+	            Length: 12
+	            Vendor ID: VWB Group (12345)
+	            VSA: t=therouter_subsc_proxy_arp(20) l=6 val=1
 
 # Unauthorised subscribers traffic
 
