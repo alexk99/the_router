@@ -161,7 +161,8 @@ Session authorization request includes the following attributes:
 
 todo
 
-# Vlan per subscriber - dynamic VIF
+# Vlan per subscriber
+# Dynamic VIF
 
 <img src="http://therouter.net/images/bras/vlan_per_subsc_overview.png">
 
