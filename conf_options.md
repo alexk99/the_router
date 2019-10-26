@@ -264,8 +264,23 @@ the configuration file.
 	 - proxy_arp
 	 - flow_acct
 	 - rpf
+	 - dhcp_rel
 
 	rpf - reverse path filter
+
+	The following flags are enabled by default:
+	
+		dhcp_rel
+
+ * vif flags
+
+	rcli vif flags <up|down> name <name> flags <flag1,flag2...>
+
+  Example:
+
+	rcli vif flags down name v20 flags dhcp_rel
+
+  Up/down (enable/disable) a flag on a VIF.
 
  * vif car
 
@@ -1665,6 +1680,14 @@ only if the request doesn't already contain dhcp option82
  * rewrite - rewrite or insert both remote_id and circuit_id DHCP option82 suboptions
  * rewrite_circuit_id - rewrite or insert only the circuit_id DHCP option82 suboption
  * rewrite_remote_id - rewrite or insert only the remote_id DHCP option82 suboption
+
+### setup dhcp gateway-ip address (giaddr)
+
+	dhcp_relay giaddr <ipv4>
+
+Set global dhcp realy giaddr address. When defined TheRouter will
+use it instead of picking up an ip address with minimum value from
+the interface where dhcp request was received.
 
 ### set content of the remote_id suboption
 
