@@ -6,7 +6,7 @@ There are three groups of configuration options and commands:
  * configuration file commands
  * rcli commands
 	
-## Command line options
+# Command line options
 Command line options can be modified by editing the run script /usr/local/sbin/router_run.sh.
 Most of them are DPDK EAL command line options, therefore you can
 refer to DPDK documentation <a href="http://dpdk.org/doc/guides/testpmd_app_ug/run_app.html?highlight=eal%20options">EAL Command-line Options</a>
@@ -40,7 +40,7 @@ The other cores will be used in TheRouter's data plane process. You should isola
 linux kernel command line parameters isolcpus. Otherwise, performance of TheRouter's working threads
 could be very low due the context switching.
 
-## Configuration file options
+# Configuration file options
 
 This options are stored a configuration file used with -c command line option.
 
@@ -67,7 +67,7 @@ Symbol # is used to comment a whole line.
 		runtime_command_n
 	}
 
-### Configuration file example
+## Configuration file example
 
 	startup {
 	  # total number of mbufs
@@ -101,112 +101,112 @@ Symbol # is used to comment a whole line.
 	  npf load "/etc/npf.conf"
 	}
 
-### NPF configaration file example
+## NPF configaration file example
 
 	group default {
 	  pass final on p0 all
 	  pass final on p1 all
 	}
 
-## Startup commands
+# Startup commands
 
 Startup commands are the commands that are used to initilize TheRouter's susbystem and properties 
 that can't be modified once TheRouter have started. This commands can only be used in
 the startup section of the configuration file and can't be used by the rcli interface.
 
- * port
+## port
 
 		port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled
 
- * rx_queue
+## rx_queue
 
 	 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
 
- * sysctl
+## sysctl
 
 		sysctl set <name> <value>
 
- * npf load
+## npf load
 
 	 	npf load "<path_to_npf_configuration_file>"
 
  
  Note: that you should enclose path to file with '"'.
 
-## Runtime commands 
+# Runtime commands 
 Runtime commands are the commands that can be either executed via rcli interface or used in the runtime section of
 the configuration file.
 
-### ip addr
+## ip addr
 
- * ip addr add
+### ip addr add
 
 		rcli ip addr add <net>/<mask> dev <vif_name>
 
- * ip addr del
+### ip addr del
 
 		rcli ip addr del <net>/<mask> dev <vif_name>
 
- * sh ip addr  
+### sh ip addr  
 
 		rcli sh ip addr
 
-### ip route tables
+## ip route tables
 
- * ip route table add
+### ip route table add
 
 		rcli ip route table add <route_table_name>
 
- * ip route table del
+### ip route table del
 
 		rcli ip route table del <route_table_name>
 
- * rcli sh ip route tables
+### rcli sh ip route tables
 
 		rcli rcli sh ip route tables
 
-### U32 sets
+## U32 sets
 
- * u32set create
+### u32set create
 
 		rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
 
- * u32set destroy
+### u32set destroy
 
 		rcli u32set destroy <u32set_name>
 
- * ipset add
+### ipset add
 
 		rcli ipset add <u32set_name> <ipv4>
 
- * ipset del
+### ipset del
 
 		rcli ipset del <u32set_name> <ipv4>
 
- * ipset test
+### ipset test
 
 		rcli ipset test <u32set_name> <ipv4>
 
- * l2set add
+### l2set add
 
 		rcli l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
- * l2set del
+### l2set del
 
 		rcli l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
- * l2set test
+### l2set test
 
 		rcli l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
 
-### PBR rules
+## PBR rules
 
- * sh ip pbr rules
+### sh ip pbr rules
 
 		rcli sh ip pbr rules
 
- * ip pbr rule add
+### ip pbr rule add
 
 		ip pbr rule add prio <prio_num> u32set <u32set_name> type "ip" table <route_table_name>
 		
@@ -214,18 +214,18 @@ the configuration file.
 		
 		rcli ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
 
- * ip pbr rule del
+### ip pbr rule del
 
 		rcli ip pbr rule del prio <prio_num>
 
- * ip pbr flush
+### ip pbr flush
 
 		rcli ip pbr flush
 
 
-### ip route
+## ip route
 
- * ip route add
+### ip route add
 
 		rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
 
@@ -237,130 +237,131 @@ the configuration file.
 
 		ip route add <net>/<mask> unreachable [table <table_name>]
 
- * ip route del
+### ip route del
 
 		ip route del <net/mask> [table <table_name>]
 
- * sh ip route [table <name>]
+### sh ip route [table <name>]
 
 		rcli sh ip route
 
-### vif
+## vif
 
- * vif add
+### vif add
 
-		rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>] [MTU <mtu_size>]
+	rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>] [MTU <mtu_size>]
 
-   Type parameter can take one of the following values:
+Type parameter can take one of the following values:
 
-	 - untagged
-     - dot1q
-     - qinq
-   
-   Flags:
+ - untagged
+ - dot1q
+ - qinq
 
-     - npf_on
-	 - kni
-	 - proxy_arp
-	 - flow_acct
-	 - rpf
-	 - dhcp_rel
+Flags:
 
-	rpf - reverse path filter
+ - npf_on
+ - kni
+ - proxy_arp
+ - flow_acct
+ - rpf
+ - dhcp_rel
 
-	The following flags are enabled by default:
-	
-		dhcp_rel
+rpf - reverse path filter
 
- * vif flags
+The following flags are enabled by default:
+
+ - dhcp_rel
+
+### vif flags
 
 	rcli vif flags <up|down> name <name> flags <flag1,flag2...>
 
-  Example:
+Example:
 
 	rcli vif flags down name v20 flags dhcp_rel
 
-  Up/down (enable/disable) a flag on a VIF.
+Up/down (enable/disable) a flag on a VIF.
 
- * vif car
+### vif car
 
-		rcli vif car name <name> ingress cir <cir_val> egress cir <cir_value>
+	rcli vif car name <name> ingress cir <cir_val> egress cir <cir_value>
 
-   Define ingress/egress bandwidth limit for a VIF.
-   <cir_val> unit is kbit/s. a zero value could be used
-   to delete a limit.
+Define ingress/egress bandwidth limit for a VIF.
+<cir_val> unit is kbit/s. a zero value could be used
+to delete a limit.
 
- * vif del
+### vif del
 
-		rcli vif del <name>
+	rcli vif del <name>
 
- * sh vif
+### sh vif
 
-		rcli sh vif
+	rcli sh vif
    
- * sh vif counters
+### sh vif counters
 
-		rcli sh vif counters
+	rcli sh vif counters
    
- * clear vif counters
+### clear vif counters
 
-		rcli clear vif counters
+	rcli clear vif counters
 
-### arp
+## arp
    
- * arp add
+### arp add
 
-		rcli arp add <ip> <mac> dev <vif_name> [static]
+	rcli arp add <ip> <mac> dev <vif_name> [static]
 
- * arp del
+### arp del
  
-		rcli arp del <ip> dev <vif_name>
+	rcli arp del <ip> dev <vif_name>
     
- * sh arp cache
+### sh arp cache
  
-		rcli sh arp cache
+	rcli sh arp cache
 
-### sysctl
+## sysctl
 
- * sysctl set
+### sysctl set
 
-		rcli sysctl set <name> <value>
+	rcli sysctl set <name> <value>
 
- for string variables
+for string variables
 
-		rcli sysctl set <name> "<value>"
+	rcli sysctl set <name> "<value>"
 
- * sysctl get
+### sysctl get
 
-		rcli sysctl get <name> <value>
+	rcli sysctl get <name> <value>
+
+## ping
 
 ### ping
-
- * ping
 
 		rcli ping --help
 		Usage: ping [-c,--count count] [-i,--interval interval_in_ms] [-s icmp_payload_size]
 		[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
 		[-h,--help] destination
 
-### NPF
- * sh npf conndb size
+## NPF
 
-		rcli sh npf conndb size
+### sh npf conndb size
+
+	rcli sh npf conndb size
    
- * sh npf conndb summary
+### sh npf conndb summary
 
-		rcli sh npf conndb summary
+	rcli sh npf conndb summary
 
- * sh npf stat
+### sh npf stat
 
-		rcli sh npf stat
+	rcli sh npf stat
 
- * npf clear stat
+### npf clear stat
 
-		rcli npf clear stat
+	rcli npf clear stat
 
-#### NPF sysctl variables controlling connection tracking state timeouts
+### NPF sysctl variables controlling connection tracking state timeouts
 
 	* NPF_TCPS_CLOSED
 	* NPF_TCPS_SYN_SENT
@@ -405,50 +406,50 @@ Example:
 		...
 	}
 
-### NAT events logging via IPFIX
+## NAT events logging via IPFIX
 
- * Enable nat events 
+### Enable nat events 
 
-		sysctl set ipfix_nat_events 1
+	sysctl set ipfix_nat_events 1
 
 
- * Setup ipfix collector
+### Setup ipfix collector
 
-		ipfix_collector addr 192.168.20.2
+	ipfix_collector addr 192.168.20.2
 
-### Other commands
+## Other commands
 
- * shutdown
+### shutdown
 
-		rcli shutdown
+	rcli shutdown
 
-### Router statistic commands
+## Router statistic commands
 
- * sh port ext stat
+### sh port ext stat
 
-		rcli sh port ext stat
+	rcli sh port ext stat
 
- * sh port stat
+### sh port stat
  
-		rcli sh port stat
+	rcli sh port stat
 
- * sh cmbuf stats
+### sh cmbuf stats
 
-		rcli sh cmbuf stats
+	rcli sh cmbuf stats
 
- * sh mbuf stats
+### sh mbuf stats
 
-		rcli sh mbuf stats
+	rcli sh mbuf stats
 
- * sh stat
+### sh stat
 
-		rcli sh stat
+	rcli sh stat
    
- * clear stats
+### clear stats
  
-		rcli clear stats
+	rcli clear stats
 
-## Sysctl variables
+# Sysctl variables
 
 ### system_name
 
