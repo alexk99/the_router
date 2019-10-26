@@ -241,9 +241,9 @@ the configuration file.
 
 		ip route del <net/mask> [table <table_name>]
 
-### sh ip route [table <name>]
+### sh ip route
 
-		rcli sh ip route
+		sh ip route [table <name>]
 
 ## vif
 
