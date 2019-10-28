@@ -1302,21 +1302,24 @@ Example:
 
 	ppp ipcp server ip 10.10.1.1
 
-### ppp ip pool
+### ppp ip pool add
 
-	ppp ip pool <pool_name>
+	ppp ip pool add <pool_name>
 
 Configure ppp to use local ip pool with the given name.
 The pool will be used if all others ip address sources are failed.
 For example the pool will be used if the authorization response doesn't
 include Framed-ip-address or Framed-pool atributes.
 
-### ppp ip pool disabled
+Multiple pools can be added to ppp. In that case they will
+be used in a round-robin way.
 
-	ppp ip pool disabled
+### ppp ip pool del
+
+	ppp ip pool del <pool_name>
 
 Stop using the local ip pool that was configured with the command
-"ppp ip pool"
+"ppp ip pool add"
 
 ## PPPoE subsribers sysctl variables
 
@@ -1430,6 +1433,18 @@ Maximum pool name length is 16.
 	sh ip pool
 
 Output ip pool detailes
+
+## IP pools sysct variables
+
+### ippool_cache_size
+
+Size of the ip pool's glabal pool cache.
+Default value is 4096.
+
+### ippool_cache_entry_ttl
+
+Time to live of the ip pool cache entry, seconds.
+Default value is 60 seconds.
 
 ## RADIUS and CoA
 
