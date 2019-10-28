@@ -597,17 +597,22 @@ NAT configuration is conntrolled by a separate configuration file which is defin
 
 File /etc/npf.conf.bras_dhcp_relay
 
-	map v3 netmap 10.114.0.0/29
+	map v3 netmap 10.111.0.0/29 from 192.168.5.0/24
+	map v3 netmap 10.111.0.0/29 from 10.10.0.0/24
+	
+	alg "icmp"
+	alg "pptp"
 	
 	group default {
-	  pass stateful final on v3 all
+ 		block stateful final on v3 proto 47 all
+ 		pass stateful final on v3 all
 	}
 	
-Command "map v3 netmap 10.114.0.0/29" defines NAT translation of source IP addresses of packets going through 
-v3 interface. Translation replaces a source ip address with an address from the pool 10.114.0.0/29.
-The new address of a packet is calculated by combining an original packet source address and the prefix 10.114.0.0/29.
+Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 
+v3 interface. Translation replaces a source ip address with an address from the pool 10.111.0.0/29.
+The new address of a packet is calculated by combining an original packet source address and the prefix 10.111.0.0/29.
 
-	new address is: 10.114.0.0 plus first 8 bits from an original address.
+	new address is: 10.111.0.0 plus first 8 bits from an original address.
 	Where 8 is calculated as: 32 - 29 == 3 ^ 2 == 8, where 29 - is taken from the netmap command.
 
 According to that rule, the same source ip address will always be translated to the same address from the defined address pool.
