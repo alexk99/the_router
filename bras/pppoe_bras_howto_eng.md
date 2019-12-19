@@ -30,16 +30,29 @@ To download pppoe enabled build use the link on main page in the section PPPoE.
 
 ## 4.1. Starting TheRouter
 
+	# stop FRR/Quagga daemons
+	fixme
+
 	ip netns add tr
 	export rvrf="ip netns exec tr"
 	$rvrf ip link set up lo
+	$rvrf ip route flush dev lo
 	
 	ip netns exec tr the_router \
 	 --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' \
 	 -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -d -c /etc/router_pppoe.conf
 	
 	sleep 5
+	#
+	# !! use your own MAC address of a physical port
+	# !! use the 'rcli sh vif' command to figure out MAC addresses of ports
+	#
 	$rvrf ip link set up address 6C:B3:11:51:15:50 dev rkni_v3
+	
+	#
+	# start FRR/Quagga daemons
+	#
+	fixme
 
 ## 4.2. TheRouter's configuration file
 
