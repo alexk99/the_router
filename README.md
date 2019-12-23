@@ -62,11 +62,6 @@ Configuration
  * <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE configuration options</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">PPPoE BRAS howto</a>
 
-Download
-
- * <a href="http://therouter.net/downloads/the_router.6cores.dpdk.17.11.1.pppoe.pppoe_a0.78.tar.gz">Download</a>
-PPPoE enabled the_router binary for x86_64 (intel core family or higher)
-
 PPPoE roadmap:
 
  * IPv6 support
