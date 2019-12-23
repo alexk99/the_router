@@ -34,6 +34,7 @@ TheRouter is a software packet router based on one of the fastest packet process
 
  * IPoE L2/L3 connected subscribers
  * PPPoE subscribers
+ * VRRP - enables redundancy and active-active BNG mode
  * IPoE - VLAN per subscriber with IP unnumbered support
  * Traffic shaping (Token bucket filter with extended burst value)
  * DHCP relay
@@ -68,7 +69,6 @@ PPPoE enabled the_router binary for x86_64 (intel core family or higher)
 
 PPPoE roadmap:
 
- * production tests
  * IPv6 support
 
 ## Performance tests
