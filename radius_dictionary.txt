@@ -1,0 +1,18 @@
+VENDOR       TheRouter     12345
+BEGIN-VENDOR TheRouter
+    ATTRIBUTE therouter_ingress_cir 1 integer
+    ATTRIBUTE therouter_engress_cir 2 integer
+    ATTRIBUTE therouter_ipv4_addr 3 integer
+    ATTRIBUTE therouter_ipv4_mask 4 integer
+    ATTRIBUTE therouter_outer_vid 5 integer
+    ATTRIBUTE therouter_inner_vid 6 integer
+    ATTRIBUTE therouter_ip_unnumbered 7 integer
+    ATTRIBUTE therouter_port_id 8 integer
+    ATTRIBUTE therouter_ipv4_gw 9 integer
+    ATTRIBUTE therouter_pbr 10 integer
+    ATTRIBUTE therouter_install_subsc_route 17 integer
+    ATTRIBUTE therouter_subsc_ttl 18 integer
+    ATTRIBUTE therouter_subsc_static_arp 19 integer
+    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
+    ATTRIBUTE therouter_subsc_rp_filter 21 integer
+END-VENDOR   TheRouter
