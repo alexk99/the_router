@@ -221,7 +221,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 Download the patches:
 
- * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch</a>bonding_mempool</a>
+ * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch">bonding_mempool</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch">bonding_rx_capabilities</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch">librte_ip_frag_add_mbuf_counter</a>
  * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch">rte_timer</a>
