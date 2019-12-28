@@ -1,9 +1,9 @@
 # Install
 
-The latest builds of TheRouter are available only by request.
-Please contact us by email alex at therouter.net.
+Latest builds of TheRouter are available only by request.
+Please contact alex at therouter.net.
 
-Here are the installations steps for Ubuntu 16.04.
+Here are installation steps for Ubuntu 16.04.
 
 ## Install the following utilities and libs:
 
