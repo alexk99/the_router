@@ -1417,6 +1417,21 @@ Show PPPoE subscriber's uptime in seconds instead of a human-readable time forma
 Read only. Indicates maximum length of ppp peers names (usernames) allowed
 by TheRouter.
 
+### ppp_default_auth_proto
+
+String. Defines the default ppp auth proto.
+Default values is "chap".
+
+Valid values:
+
+	chap
+	pap
+
+Example
+
+	sysctl set ppp_default_auth_proto "chap"
+
+
 ## IP pools
 
 ### ip pool add
