@@ -268,7 +268,7 @@ The detailed description of the configuration commands will be provided in the f
 	  flow ipfix_collector addr 192.168.1.73
 	
 	  #
-	  # NAT evetns (NSEL)
+	  # NAT events (NSEL)
 	  #
 	  sysctl set ipfix_nat_events 1
 	  ipfix_collector addr 192.168.1.74
