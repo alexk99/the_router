@@ -61,68 +61,84 @@ The detailed description of the configuration commands will be provided in the f
 
 	startup {
 	  # mbuf mempool size
-	  sysctl set mbuf 8192
+	  sysctl set mbuf 16384
 	
-	  # note: RSS mode rss_l2_src_dst is supported only on Intel X710 series NICs
-	  port 0 mtu 1500 tpid 0x8100 state enabled rss rss_l2_src_dst
+	  port 0 mtu 1500 tpid 0x8100 state enabled
+	  port 1 mtu 1500 tpid 0x8100 state enabled
 	
 	  rx_queue port 0 queue 0 lcore 1
 	  rx_queue port 0 queue 1 lcore 2
 	  rx_queue port 0 queue 2 lcore 3
+
+	  rx_queue port 1 queue 0 lcore 1
+	  rx_queue port 1 queue 1 lcore 2
+	  rx_queue port 1 queue 2 lcore 3
 		
-	  sysctl set log_level 8
+	  sysctl set log_level 7
 	  sysctl set global_packet_counters 1
 	  sysctl set arp_cache_timeout 600
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
 	  sysctl set vif_stat 1
-	
+	  sysctl set frag_mbuf 4000
+	  sysctl set mac_addr_format "linux"
 	  sysctl set flow_acct 0
 	  sysctl set flow_acct_dropped_pkts 0
-	  sysctl set nd_neighbor_cache_entry_ttl 120
-	
-	  # PPPoE
+	  
 	  sysctl set pppoe_max_subsc 50000
-	  sysctl set subsc_vif_max 50000
 	  sysctl set radius_max_sessions 20000
+	  sysctl set subsc_vif_max 50000
 	  sysctl set pppoe_sub_uniq_check 1
 	  sysctl set ppp_1session_per_username 1
-
-	  # add/remove linux kernel /32 routes for ppp subscribers ip addresses.
-	  # Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
-	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
-	  # in FRR/Quagga bgpd or ospfd daemons. 
 	  sysctl set ppp_install_subsc_linux_routes 1
-
+	
+	  #
+	  # IP Pool cache size, TTL
+	  #
+	  # IP Pool serve the same purpose as DHCP lease database does
+	  # and allows to have persistente ipv4 addresses as long as
+	  # TheRouter doens't reboot (no filesystem storage)
+	  #
+	  sysctl set ippool_cache_size 4096
+	  sysctl set ippool_cache_entry_ttl 172800
+	
+	  #
+	  # System name
+	  #
 	  sysctl set system_name "tr1"
-
-	  # radius accounting
+	 
+	  #
+	  # Radius accounting
+	  # 
 	  sysctl set radius_accounting 1
 	  sysctl set radius_accounting_interim 1
-	  sysctl set radius_accounting_interim_interval 5
-
-	  # keepalive	  
-	  # sec
+	  sysctl set radius_accounting_interim_interval 600
+	  sysctl set radius_initial_retransmit_timeout 500
+	  
+	  sysctl set ppp_max_configure 6
+	  sysctl set ppp_initial_restart_time 500
+	  
 	  sysctl set lcp_keepalive_interval 30
-	  sysctl set lcp_keepalive_num_retries 9
-	  # msec
+	  sysctl set lcp_keepalive_num_retries 10
 	  sysctl set lcp_keepalive_probe_interval 500
 	  
-	  # PPP FSM
-	  sysctl set ppp_max_configure 6
-  	  sysctl set ppp_initial_restart_time 500
-	  	
+	  # 
+	  # NPF, NAT, 
 	  # any protocol timeouts (UDP)
+	  #
 	  sysctl set NPF_ANY_CONN_CLOSED 2
 	  sysctl set NPF_ANY_CONN_NEW 30
 	  sysctl set NPF_ANY_CONN_ESTABLISHED 60
-	  
+	
+	  # 
+	  # NPF, NAT
 	  # TCP timeouts
+	  #
 	  sysctl set NPF_TCPS_CLOSED 10
 	  sysctl set NPF_TCPS_SYN_SENT 30
 	  sysctl set NPF_TCPS_SIMSYN_SENT 30
 	  sysctl set NPF_TCPS_SYN_RECEIVED 60
-	  sysctl set NPF_TCPS_ESTABLISHED 600
+	  sysctl set NPF_TCPS_ESTABLISHED 6000
 	  sysctl set NPF_TCPS_FIN_SENT 240
 	  sysctl set NPF_TCPS_FIN_RECEIVED 240
 	  sysctl set NPF_TCPS_CLOSE_WAIT 45
@@ -130,93 +146,138 @@ The detailed description of the configuration commands will be provided in the f
 	  sysctl set NPF_TCPS_CLOSING 30
 	  sysctl set NPF_TCPS_LAST_ACK 30
 	  sysctl set NPF_TCPS_TIME_WAIT 120
+	  
+	  #
+	  # LPM DIR24-8 IPv4 FIB
+	  #
+	  sysctl set lpm_table8_size 2048
+	
+	  #
+	  # 3 - RTPROT_BOOT (linux netlink routes proto) 
+	  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
+	  # but it sees BOOT routes
+	  #
+	  sysctl set linux_route_proto 3  
 	}
 	
 	runtime {
-	
-	  flow ipfix_collector addr 192.168.1.73
-	
-	  # loopback address
-	  ip addr add 5.5.5.5/32 dev lo
-	
+	  #
+	  # static IP routes
+	  #
+	  
 	  # blackhole multicast addresses
 	  ip route add 224.0.0.0/4 unreachable
-		
-	  vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
-	  vif add name v5 port 0 type dot1q cvid 5 flags flow_acct
 	
-	  arp add 192.168.1.73 60:a4:4c:41:0a:24 dev v3 static
+	  # blackhole NAT pool
+	  ip route add 10.114.0.0/29 unreachable
 	
+	  #
+	  # Interfaces
+	  #
+	  # uplink interface
+	  vif add name v3 port 0 type dot1q cvid 3 flags npf_on,kni
+	  
+	  # interfaces to L2 domains with pppoe subscribers 
+	  vif add name pppoe1 port 1 type dot1q cvid 101 flags pppoe_on
+	  vif add name pppoe2 port 1 type dot1q cvid 102 flags pppoe_on
+	  vif add name pppoe3 port 1 type dot1q cvid 103 flags pppoe_on
+	  
+	  # interface to a subnet with radius server
+	  vif add name v5 port 0 type dot1q cvid 5
 	
-	  ip addr add 192.168.1.111/24 dev v3
+	  #
+	  # Assigning IP addresses to interfaces
+	  #
 	  ip addr add 192.168.1.118/24 dev v3
-	
 	  ip addr add 192.168.5.111/24 dev v5
-	  # ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.111
 	
-	  ipv6 enable dev v3
-	  ipv6 addr add 2001:470:1f0b:1460::10/64 dev v3
+	  # 
+	  # pppoe
+	  #
+	  sysctl set tcp_mss_fix 1
+	  pppoe ac_cookie key "13071232717"
+	  pppoe ac_name "trouter1"
+	  pppoe service name "*"
 	
-	  ipv6 enable dev v5
-	  ipv6 addr add 2001:470:1f0b:1460::5:2/112 dev v5
-	  ipv6 nd ra enable dev v5
-	
-	  # default route
-	  ipv6 route add ::/0 via 2001:470:1f0b:1460::1
-	
-	  ipv6 addr add 2001:470:1f0b:1460::6:2/112 dev v5
+	  # 
+	  # ppp
+	  #
+	  ppp dns primary 8.8.8.8
+	  ppp dns secondary 8.8.4.4
+	  
+	  #
+	  # it's an IP address that will be assigned to each ptp pppoe interface
+	  #
+	  ppp ipcp server ip 10.10.1.1
+	  ip route add 10.10.1.1/32 local
 	
 	  #
-	  # PPPoE subscribers
+	  # IP pools
 	  #
+	  #
+	  
+	  # create IP pools
+	  ip pool add ppp_pool_1
+	  ip pool add range ppp_pool_1 10.11.1.10 - 10.11.100.250
+	
+	  ip pool add ppp_pool_2
+	  ip pool add range ppp_pool_2 10.11.12.30 - 10.11.200.250
+	  
+	  # configure ppp to use ip pools 1 and 2
+	  ppp ip pool add ppp_pool_1
+	  ppp ip pool add ppp_pool_2
+	  
+	  #
+	  # radius (authorization)
+	  #
+	  
+	  # specify an addres assigned to the vif to the radius subnet (v5)
+	  radius_client add src ip 192.168.5.111
+	  	  
+	  # 
+	  # use your own ip of a radius server
+	  #
+	  radius_client add server 192.168.5.2 port 1812
+	  radius_client set secret "xxx"
+	  coa server set secret "xxx"
+	  
+	  #
+	  # radius accounting
+	  # 
+	  # replace 192.168.5.2 with an ip address of your radius server
+	  #
+	  radius_client add accounting server 192.168.5.2
+	  radius_client set accounting secret "xx"
+	
+	  #
+	  # PBR
+	  #	  
 	  ip route table add rt_bl
 	  u32set create ips1 size 16384 bucket_size 16
 	  u32set create l2s1 size 16384 bucket_size 16
 	  subsc u32set init ips1 l2s1
 	
 	  # pbr rules
-	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl
-	
-	  # pppoe
-	  	  
-	  # enable TCP MSS fix
-	  sysctl set tcp_mss_fix 1
-	  
-	  pppoe ac_cookie key "13071232717"
-	  pppoe ac_name "trouter1"
-	  pppoe service name "*"
-	
-	  # ppp
-	  ppp dns primary 8.8.8.8
-	  ppp dns secondary 8.8.4.4
-	  ppp ipcp server ip 10.10.1.1
-	
-	  # pppoe p-t-p address
-	  ip route add 10.10.1.1/32 local
+	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl	
 	
 	  #
-	  # radius
+	  # Flow accounting
 	  #
-	  radius_client add src ip 192.168.5.111
-	  radius_client add server 192.168.5.2
-	  radius_client set secret "secret"
-	  coa server set secret "secret"
-	
-	  radius_client add accounting server 192.168.5.2
-	  radius_client set accounting secret "secret"
+	  sysctl set flow_acct 1
+	  sysctl set flow_acct_dropped_pkts 0	  
+	  flow ipfix_collector addr 192.168.1.73
 	
 	  #
-	  # ACL
+	  # NAT evetns (NSEL)
 	  #
-	  vif acl create aclid 10 type ipv6_tuple permit
-	  vif acl rule ipv6 add aclid 10 prio 20 dst 2a02:6b8::2:242 dport 80
-	  vif acl add dev v5 dir ingress aclid 10 prio 30
+	  sysctl set ipfix_nat_events 1
+	  ipfix_collector addr 192.168.1.74
 	
-	  vif acl create aclid 11 type ipv6_tuple deny
-	  vif acl add dev v5 dir ingress aclid 11 prio 31
-	
+	  #
+	  # NPF (NAT)
+	  #
 	  npf load "/etc/npf.conf.bras_dhcp_relay"
-	}
+	}	
 
 ## 4.3. Start KNI interfaces and Quagga/FRR
 
