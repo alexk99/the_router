@@ -474,6 +474,25 @@ Example:
 
 	rcli sysctl set mac_addr_format linux
 
+### linux_route_proto
+
+Integer. Defines the route proto type 
+of linux routes TheRouter create for subscribers, etc.
+
+Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
+but it sees BOOT routes.
+
+Valid values are:
+
+	2 - RTPROT_KERNEL
+	3 - RTPROT_BOOT
+	4 - RTPROT_STATIC
+	
+Example:
+
+	rcli sysctl set linux_route_proto 3
+
+
 ## IPv6
 
  * ipv6 enable
