@@ -1753,6 +1753,11 @@ the interface where dhcp request was received.
  * 2 bytes - svlan_id
  * 2 bytes - cvlan_id
 
+### dhcp_relay_opt82_curcuit_id_plain_text
+
+dhcp_relay_opt82_curcuit_id_plain_text is a systcl boolean variable.
+Valid values 0 and 1. When enabled therouter uses the plain text format for circuit_id suboption.
+
 # Range commands
 
 Some commands could be applied to a set of interfaces
