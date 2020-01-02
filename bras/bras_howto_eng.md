@@ -66,7 +66,10 @@ will be provided in the following paragraphs.
 /etc/router_bras_dhcp_relay_lag.conf
 
 	startup {
-	  sysctl set mbuf 8192
+	  sysctl set numa 0
+	
+	  # mbuf mempool size
+	  sysctl set mbuf 16384
 	  sysctl set log_level 7
 	
 	  #
@@ -78,9 +81,39 @@ will be provided in the following paragraphs.
 	  rx_queue port 2 queue 0 lcore 1
 	  rx_queue port 2 queue 1 lcore 2
 	  rx_queue port 2 queue 2 lcore 3
-	
+		
 	  #
-	  # NPF timeouts
+	  sysctl set global_packet_counters 1
+	  sysctl set vif_stat 1
+	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_size 65536
+	  sysctl set dynamic_vif_ttl 600
+	  sysctl set fpm_debug 0
+	  sysctl set frag_mbuf 4000
+	  sysctl set mac_addr_format "linux"
+	  
+	  #
+	  # LPM DIR24-8 IPv4 FIB
+	  #
+	  sysctl set lpm_table8_size 2048	  
+	  	  
+	  # add/remove linux kernel /32 routes for ppp subscribers ip addresses.
+	  # Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+	  # in FRR/Quagga bgpd or ospfd daemons. 	  
+	  sysctl set install_subsc_linux_routes 1
+	  
+	  #
+	  # 3 - RTPROT_BOOT (linux netlink routes proto) 
+	  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
+	  # but it sees BOOT routes
+	  #
+	  sysctl set linux_route_proto 3	  
+	}
+	
+	runtime {
+	  #
+	  # NPF NAT timeouts
 	  #
 	
 	  # any protocol timeouts (UDP)
@@ -103,32 +136,12 @@ will be provided in the following paragraphs.
 	  sysctl set NPF_TCPS_TIME_WAIT 120
 	
 	  #
-	  # IPFIX accounting
-	  #
-	  sysctl set flow_acct 1
-	  sysctl set flow_acct_dropped_pkts 1
-	  sysctl set flow_idle_timeout 20
-	
-	  #
-	  sysctl set global_packet_counters 1
-	  sysctl set arp_cache_timeout 300
-	  sysctl set arp_cache_size 65536
-	  sysctl set dynamic_vif_ttl 600
-	  sysctl set dhcp_relay_enabled 1
-	  sysctl set fpm_debug 1
-	  
-	  # add/remove linux kernel /32 routes for ppp subscribers ip addresses.
-	  # Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
-	  # This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
-	  # in FRR/Quagga bgpd or ospfd daemons. 	  
-	  sysctl set install_subsc_linux_routes 1
-	}
-	
-	runtime {
-	  #
 	  # Flow accounting
 	  #
 	  flow ipfix_collector addr 192.168.1.165
+	  sysctl set flow_acct 1
+	  sysctl set flow_acct_dropped_pkts 1
+	  sysctl set flow_idle_timeout 20
 	
 	  #
 	  # Interfaces
@@ -155,11 +168,11 @@ will be provided in the following paragraphs.
 	  ip addr add 192.168.1.112/24 dev v3
 	  #ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.112
 	
-	  # L3 connected subscribers (cisco)
+	  # L3 connected subscribers
 	  vif add name v21 port 2 type dot1q cvid 21 flags kni,l3_subs
 	  ip addr add 192.168.21.1/24 dev v21
 	
-	  # L2 connected subsribers (zyxel 5Ghz WiFi)
+	  # L2 connected subsribers
 	  vif add name v5 port 2 type dot1q cvid 5 flags kni,l2_subs,proxy_arp
 	  ip addr add 192.168.5.1/32 dev v5
 	  ip route add 192.168.5.1/32 local
@@ -170,6 +183,7 @@ will be provided in the following paragraphs.
 	  dhcp_relay opt82 mode rewrite_if_doesnt_exist
 	  dhcp_relay opt82 remote_id "tr_h4"
 	  dhcp_relay 192.168.20.3
+	  sysctl set dhcp_relay_enabled 1
 	
 	  #
 	  # Radius
@@ -198,10 +212,10 @@ will be provided in the following paragraphs.
 	  ip pbr rule add prio 20 u32set l2s1 type "l2" table rt_bl
 	
 	  #
-	  # NAT events
-	  #
-	  sysctl set ipfix_nat_events 1
+	  # NAT events, NSEL
+	  #	  
 	  ipfix_collector addr 192.168.20.2
+	  sysctl set ipfix_nat_events 1
 	
 	  #
 	  # NPF (NAT)
