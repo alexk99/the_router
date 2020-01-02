@@ -353,6 +353,10 @@ for string variables
 
 	rcli sh npf conndb summary
 
+### sh npf conndb summary sip
+
+	rcli sh npf conndb summary sip
+
 ### sh npf stat
 
 	rcli sh npf stat
