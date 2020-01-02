@@ -60,6 +60,8 @@ Here is the full router's configuration file.
 The detailed description of the configuration commands will be provided in the following paragraphs.
 
 	startup {
+	  sysctl set numa 0
+	
 	  # mbuf mempool size
 	  sysctl set mbuf 16384
 	
@@ -82,8 +84,6 @@ The detailed description of the configuration commands will be provided in the f
 	  sysctl set vif_stat 1
 	  sysctl set frag_mbuf 4000
 	  sysctl set mac_addr_format "linux"
-	  sysctl set flow_acct 0
-	  sysctl set flow_acct_dropped_pkts 0
 	  
 	  sysctl set pppoe_max_subsc 50000
 	  sysctl set radius_max_sessions 20000
@@ -106,22 +106,21 @@ The detailed description of the configuration commands will be provided in the f
 	  # System name
 	  #
 	  sysctl set system_name "tr1"
-	 
+	  		  
 	  #
-	  # Radius accounting
-	  # 
-	  sysctl set radius_accounting 1
-	  sysctl set radius_accounting_interim 1
-	  sysctl set radius_accounting_interim_interval 600
-	  sysctl set radius_initial_retransmit_timeout 500
-	  
-	  sysctl set ppp_max_configure 6
-	  sysctl set ppp_initial_restart_time 500
-	  
-	  sysctl set lcp_keepalive_interval 30
-	  sysctl set lcp_keepalive_num_retries 10
-	  sysctl set lcp_keepalive_probe_interval 500
-	  
+	  # LPM DIR24-8 IPv4 FIB
+	  #
+	  sysctl set lpm_table8_size 2048
+	
+	  #
+	  # 3 - RTPROT_BOOT (linux netlink routes proto) 
+	  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
+	  # but it sees BOOT routes
+	  #
+	  sysctl set linux_route_proto 3  
+	}
+	
+	runtime {
 	  # 
 	  # NPF, NAT, 
 	  # any protocol timeouts (UDP)
@@ -146,21 +145,7 @@ The detailed description of the configuration commands will be provided in the f
 	  sysctl set NPF_TCPS_CLOSING 30
 	  sysctl set NPF_TCPS_LAST_ACK 30
 	  sysctl set NPF_TCPS_TIME_WAIT 120
-	  
-	  #
-	  # LPM DIR24-8 IPv4 FIB
-	  #
-	  sysctl set lpm_table8_size 2048
 	
-	  #
-	  # 3 - RTPROT_BOOT (linux netlink routes proto) 
-	  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
-	  # but it sees BOOT routes
-	  #
-	  sysctl set linux_route_proto 3  
-	}
-	
-	runtime {
 	  #
 	  # static IP routes
 	  #
@@ -198,12 +183,19 @@ The detailed description of the configuration commands will be provided in the f
 	  pppoe ac_cookie key "13071232717"
 	  pppoe ac_name "trouter1"
 	  pppoe service name "*"
-	
+		
 	  # 
 	  # ppp
 	  #
 	  ppp dns primary 8.8.8.8
 	  ppp dns secondary 8.8.4.4
+	
+	  sysctl set ppp_max_configure 6
+	  sysctl set ppp_initial_restart_time 500
+	  
+	  sysctl set lcp_keepalive_interval 30
+	  sysctl set lcp_keepalive_num_retries 10
+	  sysctl set lcp_keepalive_probe_interval 500
 	  
 	  #
 	  # it's an IP address that will be assigned to each ptp pppoe interface
@@ -242,13 +234,19 @@ The detailed description of the configuration commands will be provided in the f
 	  coa server set secret "xxx"
 	  
 	  #
-	  # radius accounting
-	  # 
+	  # Radius accounting
+	  #
+	   
 	  # replace 192.168.5.2 with an ip address of your radius server
 	  #
 	  radius_client add accounting server 192.168.5.2
 	  radius_client set accounting secret "xx"
-	
+
+	  sysctl set radius_accounting 1
+	  sysctl set radius_accounting_interim 1
+	  sysctl set radius_accounting_interim_interval 600
+	  sysctl set radius_initial_retransmit_timeout 500
+	  
 	  #
 	  # PBR
 	  #	  
@@ -263,16 +261,16 @@ The detailed description of the configuration commands will be provided in the f
 	  #
 	  # Flow accounting
 	  #
+	  flow ipfix_collector addr 192.168.1.73
 	  sysctl set flow_acct 1
 	  sysctl set flow_acct_dropped_pkts 0	  
-	  flow ipfix_collector addr 192.168.1.73
 	
 	  #
 	  # NAT events (NSEL)
 	  #
-	  sysctl set ipfix_nat_events 1
 	  ipfix_collector addr 192.168.1.74
-	
+	  sysctl set ipfix_nat_events 1	
+	  
 	  #
 	  # NPF (NAT)
 	  #
