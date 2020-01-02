@@ -2,7 +2,7 @@
 
 # 3. Network scheme
 
-<img src="http://therouter.net/images/bras/bras_ipoe_vrrp.png">
+<img src="http://therouter.net/images/bras/bras vrrp.png">
 
 # 4. Configuration
 
