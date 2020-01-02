@@ -153,7 +153,6 @@
 	
 	  # vlan 8-15
 	  vif add name gr2_sub port 0 type dot1q range svid 0 cvid 8 15 flags l2_subs,proxy_arp
-	  ip addr add range svid 0 cvid 8 15 192.168.6.5/32 name gr2_sub
 		
 	  subsc vrrp create group 2 prio 10 neighbor 192.168.1.112
 	  subsc vrrp group 2 primary ip 192.168.6.10
