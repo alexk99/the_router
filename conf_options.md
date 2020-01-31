@@ -1227,9 +1227,9 @@ Output particular pppoe subscriber with the given user-name
 
 Example:
 
-	h5 ~ # $rvrf rcli sh pppoe subsc
-	vif_id  mac     session_id      ip addr mtu     ingress cir     egress cir      tx_pkts rx_pkts
-	9       60:A4:4C:41:0A:24       6       10.11.1.1       1480    50      55      0       0
+	rcli sh pppoe subsc alexk
+	vif_id  username        mac     svid    cvid    session_id      ip addr mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
+	5       alexk   84:16:F9:BD:54:F7       0       3       1       10.11.12.30     1492    100000  100000  182057  269266  18608751        328714627       2 hour(s), 58 min(s), 7 sec(s)
 
 ### pppoe disconnect
 
@@ -1435,6 +1435,220 @@ Example
 
 	sysctl set ppp_default_auth_proto "chap"
 
+## PPPoE IPv6
+
+### sh pppoe ipv6 subsc
+
+	sh pppoe ipv6 subsc
+
+Output all connected/online pppoe subscribers
+
+### sh pppoe ipv6 subsc <name>
+
+	sh pppoe ipv6 subsc <name>
+
+Output particular pppoe subscriber with the given name
+
+Example:
+
+	rcli sh pppoe ipv6 subsc alexk
+	vif_id  username        mac     svid    cvid    session_id      ia_na   ia_pd   slaac   mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
+	5       alexk   84:16:F9:BD:54:F7       0       3       1       xxx:237f:ee39:5584:17eb  xxx60::/64 xxxaf::/64 1492    100000  100000  182736  26991718793821
+
+### dhcpv6 add dns
+
+	dhcpv6 add dns <ipv6_address>
+
+Add a recursive DNS server to the global list of servers.
+Values on the list will be used in RAs sent to pppoe subsribers and 
+by DHCPv6 server. 
+
+### dhcpv6 del dns
+
+	dhcpv6 del dns <ipv6_address>
+
+Delete a recursive dns server address from the RDNSS list.
+
+### dhcpv6 domain search list
+
+	dhcpv6 domain search list <string>
+	
+Example
+
+	dhcpv6 domain search list i6.therouter.net
+
+### ppp ipv6 pool
+
+	ppp ipv6 pool <ppp_address_type> <pool_name>
+
+Set the default address pool for ppp ipv6 adresses/prefixes of particular type
+
+Where <address_type> can take one of the following values:
+
+	ia_na
+	ia_pd
+	slaac
+
+Example
+
+	# default pools
+	ppp ipv6 pool ia_na ppp6_na_pool
+	ppp ipv6 pool ia_pd ppp6_pd_pool
+	ppp ipv6 pool slaac ppp6_slaac_pool
+
+### ppp ipv6 pool <ppp_address_type> disable
+
+	ppp ipv6 pool <ppp_address_type> disable
+
+Delete (don't use) the default address/prefix pool for ppp adresses/prefixes of particular type
+
+Example:
+
+	ppp ipv6 pool ia_na disable
+	ppp ipv6 pool ia_pd disable
+	ppp ipv6 pool slaac disable
+
+## PPP IPv6 sysctl variables
+
+### ppp_ipv6
+
+Scope: startup only
+Enable/disable ipv6 for ppp	
+
+### ppp_ra_mtu
+
+Set the size of the mtu router advertisement option of RA's sent to ppp interfaces.
+
+### ipv6_tcp_mss_fix
+
+Enable/disable the MSS fix/clumping for IPv6.
+
+### ppp_dhcpv6_ia_na
+
+Setup the IA_NA for PPP DHCPv6 server.
+
+Valid values are:
+0 - disable, the IA_NA option will no be included in DHCPv6 messages sent to ppp interface.
+1 - enable, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
+from a pool only if the DHCPv6 user ask for that option
+2 - allways allocate, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
+from a pool immidiately
+
+### ppp_dhcpv6_ia_pd
+
+Setup the IA_PD for PPP DHCPv6 server.
+
+Valid values are:
+0 - disable, the IA_PD option will no be included in DHCPv6 messages sent to ppp interface.
+1 - enable, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
+from a pool only if the DHCPv6 user ask for that option
+2 - allways allocate, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
+from a pool immidiately
+
+### ppp_slaac
+
+Enable/disable use of SLAAC for ppp interfaces.
+
+0 - disable
+1 - enable
+
+### dhcpv6_preferred_lt
+
+The Preferred value for ipv6 addresses received via RADIUS protocol.
+
+### dhcpv6_valid_lt
+
+The valid value for ipv6 addresses received via RADIUS protocol.
+
+### ppp_rad_acct_slaac
+
+0 - disable
+1 - enable
+
+Include the slaac prefix into radius accounting start messages
+Framed-IPv6-Prefix attribute.
+
+### ppp_rad_acct_ia_na
+
+0 - disable
+1 - enable
+
+Include the ia_na address into radius accounting start messages
+Framed-IPv6-Address attribute.
+
+### ppp_rad_acct_ia_pd
+
+0 - disable
+1 - enable
+
+Include the IA_PD prefix into radius accounting start messages
+Delegated-IPv6-Prefix attribute.
+
+## IPv6 Pools
+
+### sh ipv6 pool
+
+Output details about ipv6 pools
+
+Example:
+
+	rcli sh ipv6 pools
+	---
+	name ppp6_pd_pool
+	address space xxxe::/48
+	address/prefix length 64
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 65536
+	used 0
+	---
+	name ppp6_na_pool
+	address space xxx1::/64
+	address/prefix length 128
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 4294967294
+	used 1
+	---
+	name ppp6_slaac_pool
+	address space xxx0b::/48
+	address/prefix length 64
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 65535
+	used 1
+
+## ipv6 pool add
+
+	ipv6 pool add <pool_name> <prefix> length <len> preferred_lt <integer> valid_lt <integer> flags <flag,...>
+
+Create an ipv6 address pool.
+
+<prefix> - address space for a pool.
+<len> - length of prefixes allocated from a pool.
+
+Flags:
+ 
+	rand - allocate random values.
+	cache - after alocation an address/prefix is reserved for the user allocated the value for a valid_lt seconds.
+	During this time the user will be given the same address/prefix. After the valid_lt seconds ellapse the address/prefix
+	will be returned back to the pool.
+
+Example
+
+	ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+	
+## ipv6 pool del
+
+	ipv6 pool del <pool_name>
+
+Delete an ipv6 pool.
+
+## ipv6 pool modify
+
+	ipv6 pool modify <pool_name> valid_lt <integer> preferred_lt <integer>
+
+Modify a existing ipv6 pool lifetime values.
 
 ## IP pools
 
