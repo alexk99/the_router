@@ -19,7 +19,7 @@ TheRouter is a software packet router based on one of the fastest packet process
  * Link Aggregation/Link Bonding/LACP
  * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
  * VRRP (v2 for IPv4 and v3 for IPv6)
- * IPv6 (test phase)
+ * IPv6
  	- Unicast routing
 	- ICMPv6
 	- Neighbor Discovery Protocol
@@ -28,7 +28,7 @@ TheRouter is a software packet router based on one of the fastest packet process
 	- MLD v1, v2
 	- SLAAC
 	- VRRP v3
- * Flow accounting via IPFIX (test phase)
+ * Flow accounting via IPFIX
 
 ## BRAS/BNG - Broadband Remote Access Server  
 
@@ -47,24 +47,22 @@ TheRouter is a software packet router based on one of the fastest packet process
 ## PPPoE
 
 PPPoE server supports:
-
+  
+ * IPv4 and IPv6
  * RADIUS authorization (PAP and CHAP)
  * RADIUS accounting
  * CoA
  * Shaping (Token bucket filter with extended burst value)
- * TCP MSS FIX
+ * TCP MSS Fix/Clumping
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
  * Up to 60000 concurrent PPPoE subscribers
+ * Local address/prefix pools
 
 Configuration
 
  * <a href="https://github.com/alexk99/the_router/blob/master/conf_options.md#pppoe-subscribers">PPPoE configuration options</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">PPPoE BRAS howto</a>
-
-PPPoE roadmap:
-
- * IPv6 support
 
 ## Performance tests
 
