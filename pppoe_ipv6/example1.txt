@@ -1,0 +1,249 @@
+startup {
+  # mbuf mempool size
+  #sysctl set mbuf 8192
+  sysctl set mbuf 16384
+
+  port 0 mtu 1500 tpid 0x8100 state enabled
+#  port 0 mtu 1500 tpid 0x8100 state enabled
+#  port 1 mtu 1500 tpid 0x8100 state enabled
+
+#  port 2 mtu 1500 tpid 0x8100 state enabled
+
+
+  rx_queue port 0 queue 0 lcore 1
+  rx_queue port 0 queue 1 lcore 2
+  rx_queue port 0 queue 2 lcore 3
+
+#  rx_queue port 1 queue 0 lcore 1
+#  rx_queue port 1 queue 1 lcore 2
+#  rx_queue port 1 queue 2 lcore 3
+
+#  rx_queue port 2 queue 0 lcore 1
+#  rx_queue port 2 queue 1 lcore 2
+#  rx_queue port 2 queue 2 lcore 3
+
+  sysctl set log_level 8
+  sysctl set global_packet_counters 1
+  sysctl set arp_cache_timeout 600
+  sysctl set arp_cache_size 65536
+  sysctl set dynamic_vif_ttl 300
+  sysctl set vif_stat 1
+  sysctl set frag_mbuf 4000
+  sysctl set mac_addr_format "linux"
+  sysctl set nd_neighbor_cache_entry_ttl 120
+
+  sysctl set pppoe_max_subsc 50000
+  sysctl set radius_max_sessions 20000
+  sysctl set subsc_vif_max 50000
+  sysctl set pppoe_sub_uniq_check 0
+  sysctl set ppp_1session_per_username 1
+  sysctl set ppp_install_subsc_linux_routes 1
+
+  sysctl set dhcpv6_server 1
+
+  # enable ipv6 for pppoe
+  sysctl set ppp_ipv6 1
+
+  #
+  # System name
+  #
+  sysctl set system_name "tr1"
+
+  #
+  # LPM DIR24-8 IPv4 FIB
+  #
+  sysctl set lpm_table8_size 2048
+
+  #
+  # 3 - RTPROT_BOOT (linux netlink routes proto)
+  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
+  # but it sees BOOT routes
+  #
+  sysctl set linux_route_proto 3
+}
+
+runtime {
+  #
+  # NAT timeouts
+  #
+
+  # any protocol timeouts (UDP)
+  sysctl set NPF_ANY_CONN_CLOSED 2
+  sysctl set NPF_ANY_CONN_NEW 30
+  sysctl set NPF_ANY_CONN_ESTABLISHED 60
+
+  # TCP timeouts
+  sysctl set NPF_TCPS_CLOSED 10
+  sysctl set NPF_TCPS_SYN_SENT 30
+  sysctl set NPF_TCPS_SIMSYN_SENT 30
+  sysctl set NPF_TCPS_SYN_RECEIVED 60
+  sysctl set NPF_TCPS_ESTABLISHED 6000
+  sysctl set NPF_TCPS_FIN_SENT 240
+  sysctl set NPF_TCPS_FIN_RECEIVED 240
+  sysctl set NPF_TCPS_CLOSE_WAIT 45
+  sysctl set NPF_TCPS_FIN_WAIT 60
+  sysctl set NPF_TCPS_CLOSING 30
+  sysctl set NPF_TCPS_LAST_ACK 30
+  sysctl set NPF_TCPS_TIME_WAIT 120
+
+  # loopback address
+  ip addr add 5.5.5.5/32 dev lo
+
+  # blackhole multicast addresses
+  ip route add 224.0.0.0/4 unreachable
+
+  # blackhole NAT addresses
+  # ip route add 10.114.0.0/29 unreachable
+
+  # pppoe ptp address
+  ip route add 10.10.1.1/32 local
+
+  vif add name v3 port 0 type dot1q cvid 3 flags pppoe_on,npf_on,kni,flow_acct
+  # vif add name v3 port 0 type dot1q cvid 3 flags pppoe_on,npf_on
+  vif add name v20 port 0 type dot1q cvid 20
+
+  arp add 192.168.1.73 60:a4:4c:41:0a:24 dev v3 static
+  arp add 192.168.20.2 60:a4:4c:41:0a:24 dev v20 static
+
+  ip addr add 192.168.1.111/24 dev v3
+  ip addr add 192.168.1.118/24 dev v3
+
+  ip addr add 192.168.20.111/24 dev v20
+  ip addr add 192.168.20.112/24 dev v20
+
+  #
+  # IPv6
+  #
+  ipv6 enable dev lo
+  ipv6 addr add xxx:4/112 dev lo
+
+  # ipv6 uplink
+  vif add name v100 port 0 type dot1q cvid 100 flags kni
+  ipv6 enable dev v100
+  ipv6 addr add xxx:3/112 dev v100
+
+  ipv6 route add ::/0 via xx60::1:1
+
+  #
+  # pppoe
+  #
+  sysctl set tcp_mss_fix 1
+  sysctl set ipv6_tcp_mss_fix 1
+  
+  pppoe ac_cookie key "13071232717"
+  pppoe ac_name "trouter1"
+  pppoe service name "*"
+
+  #
+  # ppp
+  #
+  ppp dns primary 8.8.8.8
+  ppp dns secondary 8.8.4.4
+  ppp ipcp server ip 10.10.1.1
+
+  sysctl set ppp_max_configure 6
+  sysctl set ppp_initial_restart_time 500
+
+  sysctl set lcp_keepalive_interval 30
+  sysctl set lcp_keepalive_num_retries 6
+  sysctl set lcp_keepalive_probe_interval 500
+
+  #
+  # PPP pools
+  #
+
+  # create pools
+  ip pool add ppp_pool_1
+  ip pool add range ppp_pool_1 10.11.1.10 - 10.11.100.250
+
+  ip pool add ppp_pool_2
+  ip pool add range ppp_pool_2 10.11.12.30 - 10.11.200.250
+
+  # use pool
+  ppp ip pool add ppp_pool_1
+
+
+  #
+  # IPv6
+  #
+
+  # google dns
+  dhcpv6 add dns 2001:4860:4860::8888
+  dhcpv6 add dns 2001:4860:4860::8844
+  dhcpv6 domain search list i6.therouter.net
+
+  # default lifetime values for ipv6 addresses
+  sysctl set dhcpv6_preferred_lt 7200
+  sysctl set dhcpv6_valid_lt 14400
+
+  # enable IA_NA, IA_PD and SLAAC for ppp
+  sysctl set ppp_dhcpv6_ia_na 2
+  sysctl set ppp_dhcpv6_ia_pd 2
+  sysctl set ppp_slaac 1
+
+  # ipv6 radius accounting. include all adresses/prefixes into start packets.
+  sysctl set ppp_rad_acct_slaac 1
+  sysctl set ppp_rad_acct_ia_na 1
+  sysctl set ppp_rad_acct_ia_pd 1
+
+  #
+  # IPv6 Pools
+  #
+  
+  # SLAAC pool
+  ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+  # NA address pool
+  ipv6 pool add ppp6_na_pool xxx::/64 length 128 preferred_lt 3600 valid_lt 7200 flags rand,cache
+  # ND address pool
+  ipv6 pool add ppp6_pd_pool xx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+
+  #
+  # use the following ipv6 pools by default for ppp
+  # when no radius pools attr are supplied
+  # 
+  ppp ipv6 pool ia_na ppp6_na_pool
+  ppp ipv6 pool ia_pd ppp6_pd_pool
+  ppp ipv6 pool slaac ppp6_slaac_pool
+
+  #
+  # radius (auth)
+  #
+  radius_client add src ip 192.168.20.111
+  radius_client add src ip 192.168.20.112
+
+  radius_client add server 192.168.20.2 port 1812
+  radius_client set secret "xx"
+  coa server set secret "xx"
+
+  #
+  # radius accounting
+  #
+  radius_client add accounting server 192.168.20.2
+  radius_client set accounting secret "xx"
+
+  sysctl set radius_accounting 1
+  sysctl set radius_accounting_interim 1
+  sysctl set radius_accounting_interim_interval 60
+  sysctl set radius_initial_retransmit_timeout 500
+
+  # radius h4
+  #radius_client add src ip 192.168.1.111
+  #radius_client add accounting server 192.168.1.165
+  #radius_client add server 192.168.1.165 port 1812
+
+  #
+  # Flow accounting
+  #
+  flow ipfix_collector addr 192.168.1.73
+  sysctl set flow_acct 1
+  sysctl set flow_acct_dropped_pkts 0
+
+  #
+  # NAT events (NSEL)
+  #
+
+  #
+  # NPF (NAT)
+  #
+  npf load "/etc/npf.conf.bras_dhcp_relay_npf_alg"
+}
