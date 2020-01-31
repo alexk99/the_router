@@ -1528,22 +1528,24 @@ Enable/disable the MSS fix/clumping for IPv6.
 Setup the IA_NA for PPP DHCPv6 server.
 
 Valid values are:
-0 - disable, the IA_NA option will no be included in DHCPv6 messages sent to ppp interface.
-1 - enable, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
-from a pool only if the DHCPv6 user ask for that option
-2 - allways allocate, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
-from a pool immidiately
+
+	0 - disable, the IA_NA option will no be included in DHCPv6 messages sent to ppp interface.
+	1 - enable, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
+	from a pool only if the DHCPv6 user ask for that option
+	2 - allways allocate, the IA_NA option will be included in DHCPv6 replies, IA_NA value will be allocated
+	from a pool immidiately
 
 ### ppp_dhcpv6_ia_pd
 
 Setup the IA_PD for PPP DHCPv6 server.
 
 Valid values are:
-0 - disable, the IA_PD option will no be included in DHCPv6 messages sent to ppp interface.
-1 - enable, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
-from a pool only if the DHCPv6 user ask for that option
-2 - allways allocate, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
-from a pool immidiately
+
+	0 - disable, the IA_PD option will no be included in DHCPv6 messages sent to ppp interface.
+	1 - enable, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
+	from a pool only if the DHCPv6 user ask for that option
+	2 - allways allocate, the IA_PD option will be included in DHCPv6 replies, the IA_PD value will be allocated
+	from a pool immidiately
 
 ### ppp_slaac
 
@@ -1554,11 +1556,13 @@ Enable/disable use of SLAAC for ppp interfaces.
 
 ### dhcpv6_preferred_lt
 
-The Preferred value for ipv6 addresses received via RADIUS protocol.
+Default preferred value for ipv6 addresses. For example, this values will
+be used for ipv6 addresses received via RADIUS protocol.
 
 ### dhcpv6_valid_lt
 
-The valid value for ipv6 addresses received via RADIUS protocol.
+Default valid value for ipv6 addresses. For example, this values will
+be used for ipv6 addresses received via RADIUS protocol.
 
 ### ppp_rad_acct_slaac
 
@@ -1648,7 +1652,7 @@ Delete an ipv6 pool.
 
 	ipv6 pool modify <pool_name> valid_lt <integer> preferred_lt <integer>
 
-Modify a existing ipv6 pool lifetime values.
+Modify an existing ipv6 pool lifetime values.
 
 ## IP pools
 
