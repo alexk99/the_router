@@ -277,7 +277,7 @@ Run the following commands:
 		modprobe uio
 		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
 		# loading kni module 
-		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko
+		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko carrier=on
 
 * Bind your NIC's to DPDK by using $RTE_SDK/usertools/dpdk-devbind.py
 
