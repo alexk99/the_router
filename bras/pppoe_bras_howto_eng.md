@@ -669,8 +669,8 @@ NAT configuration is conntrolled by a separate configuration file which is defin
 
 File /etc/npf.conf.bras_dhcp_relay
 
-	map v3 netmap 10.111.0.0/29 from 192.168.5.0/24
-	map v3 netmap 10.111.0.0/29 from 10.10.0.0/24
+	map v3 netmap 10.111.0.0/29 pass from 192.168.5.0/24
+	map v3 netmap 10.111.0.0/29 pass from 10.10.0.0/24
 	
 	alg "icmp"
 	alg "pptp"
