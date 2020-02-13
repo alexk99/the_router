@@ -101,5 +101,5 @@ Forwarding traffic between a BRAS cluster and a Google Cache Server.
 | -- | -- | -- |
 
 | <a href="https://inetvl.ru"><img src="http://therouter.net/images/customers/atk_logo_250_130.png" /></a> | <a href="https://www.smbits.com.br/"><img src="http://therouter.net/images/customers/smbits_250_130.png" /></a> | <a href="http://www.stampedecom.in/"><img src="http://therouter.net/images/customers/stampede.png" /></a> |
-| -- | -- |
+| -- | -- | -- |
 
