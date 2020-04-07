@@ -14,10 +14,6 @@ for detailed description of them.
 
 Before running TheRouter you must check the following options and use your own values depending on the hardware you use:
 
- * -c
-
-Set the hexadecimal bitmask of the cores to run on.
-
  * --lcores
 
 Map lcore set to physical cpu set
@@ -32,13 +28,13 @@ Add a PCI device in white list.
 
 Example of the startup script cmd options:
 
-	the_router --proc-type=primary -c 0xF --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
+	the_router --proc-type=primary --lcores='0@0,1@1,2@2,3@3' --syslog='daemon' -n2 -w 0000:01:00.0 -w 0000:01:00.1 -- -c $1 -d
 
 Note:
-Lcore 0 will be used for TheRouter's control plane task and can be shared with any linux tasks.
-The other cores will be used in TheRouter's data plane process. You should isolate them during the linux starup process by using
-linux kernel command line parameters isolcpus. Otherwise, performance of TheRouter's working threads
-could be very low due the context switching.
+Lcore 0 is used by the TheRouter's control plane function and can be shared with linux.
+Other cores are used by TheRouter's data plane functions and should be isolated during the linux starup process by using
+the linux kernel command line parameter isolcpus. Otherwise, performance of TheRouter's data plane working threads
+might be very low due the context switching.
 
 # Configuration file options
 
@@ -90,10 +86,10 @@ Symbol # is used to comment a whole line.
 	}
 
 	runtime {
-	  vif add name p0 port 1 type untagged
+	  vif add name p0 port 1 type untagged flags npf_on
 	  ip addr add 10.0.0.1/24 dev p0
 	
-	  vif add name p1 port 0 type untagged
+	  vif add name p1 port 0 type untagged flags npf_on
 	  ip addr add 10.0.1.1/24 dev p1
 	
 	  ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
@@ -103,6 +99,9 @@ Symbol # is used to comment a whole line.
 
 ## NPF configaration file example
 
+	alg "icmp"
+	alg "pptp"
+	
 	group default {
 	  pass final on p0 all
 	  pass final on p1 all
