@@ -72,8 +72,7 @@ Configuration
 
 ## Install
 
- * <a href="https://github.com/alexk99/the_router/blob/master/install.md">Gentoo Install</a>
- * <a href="https://github.com/alexk99/the_router/blob/master/ubuntu_install.md">Ubuntu 16.04 Install</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/ubuntu_install_dpdk18.md">Ubuntu Install</a>
 
 ## Configuration
 
