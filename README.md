@@ -88,10 +88,9 @@ Configuration
  * PPPoE BNG/BRAS <a href="https://github.com/alexk99/the_router/blob/master/bras/pppoe_bras_howto_eng.md">howto</a>
 
 ## Production cases
-
+ * <a href="https://github.com/alexk99/the_router/blob/master/production/bro_ant/ipv4_pppoe_bras.md">PPPoE BRAS with 20k+ subscribers</a>
+ * <a href="https://github.com/alexk99/the_router/blob/master/production/stampede/stampede_ipv6_pppoe_bras.md">Stampede. PPPoE IPv6 BRAS</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bizin_eng.md">Bizin. TheRouter as a core BGP router.</a>
-The first experience of using TheRouter as a BGP core router in an internet service provider network.
-Forwarding traffic between a BRAS cluster and a Google Cache Server.
  * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">TheRouter as a BGP border router in a service provider network</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ash_pppoe_nat_isp.md">The first productive BRAS: PPPoE, NAT</a>
  
