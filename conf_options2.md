@@ -13,8 +13,6 @@ Table of Contents
    * [Commands](#commands)
       * [Startup commands](#startup-commands)
          * [port](#port)
-            * [qinq_enabled](#qinq_enabled)
-            * [extend_vlan_offload](#extend_vlan_offload)
          * [rx_queue](#rx_queue)
          * [sysctl](#sysctl)
       * [Virtual interfaces](#virtual-interfaces)
@@ -154,9 +152,8 @@ the startup section of a configuration file and can't be used with rcli configur
 
 Flags:
 
-- qinq_enabled
-- extend_vlan_offload
-
+ - qinq_enabled
+ - extend_vlan_offload
 
 Examples:
 
