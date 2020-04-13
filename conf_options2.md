@@ -1,3 +1,32 @@
+Table of Contents
+=================
+
+   * [Configuration overview](#configuration-overview)
+      * [Command line options](#command-line-options)
+         * [--lcores](#--lcores)
+         * [-n](#-n)
+         * [-w](#-w)
+      * [Configuration file commands](#configuration-file-commands)
+      * [Configuration file example](#configuration-file-example)
+         * [TheRouter configuration file example](#therouter-configuration-file-example)
+         * [NPF configaration file example](#npf-configaration-file-example)
+   * [Commands](#commands)
+      * [Startup commands](#startup-commands)
+         * [port](#port)
+            * [qinq_enabled](#qinq_enabled)
+            * [extend_vlan_offload](#extend_vlan_offload)
+         * [rx_queue](#rx_queue)
+         * [sysctl](#sysctl)
+      * [Virtual interfaces](#virtual-interfaces)
+         * [vif add](#vif-add)
+         * [vif flags](#vif-flags)
+         * [vif del](#vif-del)
+         * [vif car](#vif-car)
+         * [sh vif](#sh-vif)
+         * [sh vif counters](#sh-vif-counters)
+         * [clear vif counters](#clear-vif-counters)
+      * [IP addresses](#ip-addresses)
+
 # Configuration overview
 
 There are three groups of configuration options and commands:
@@ -121,14 +150,13 @@ the startup section of a configuration file and can't be used with rcli configur
 
 ### port
 
-		port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled flags [flag, ...] [bond_slaves <slave>,...]
+	port <dpdk_port_number> mtu <mtu_size> tpid <tpid_value> state enabled flags [flag, ...] [bond_slaves <slave>,...]
 
 Flags:
 
-#### qinq_enabled
+- qinq_enabled
+- extend_vlan_offload
 
-#### extend_vlan_offload
-	
 
 Examples:
 
@@ -183,11 +211,9 @@ Up/down (enable/disable) a VIF's flag.
 
 	rcli vif flags <up|down> name <name> flags <flag1,flag2...>
 
-<name> is the name of a VIF
+The name parameter is the name of a VIF.
 
-Example:
-
-Disable/down the dhcp_rel flag of the VIF v20.
+Example: disable/down the dhcp_rel flag of the VIF v20.
 
 	rcli vif flags down name v20 flags dhcp_rel
 
