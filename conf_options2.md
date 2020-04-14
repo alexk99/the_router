@@ -288,7 +288,7 @@ Creates a connected route.
 	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
 
 Creates a route to a prefix reachable via a gateway.
-Note that IP address of the gateway should be reachable via a directly connected
+Note that the IP address of the gateway should be reachable via a directly connected
 route. A directly connected route is created automatically when an ip address is added
 to an interface, but only for the main routing table. All routes for additional route
 tables should be created manually.
@@ -315,7 +315,7 @@ Displays content of a routing table.
 
 ### u32set create
 
-Creates a U32 set.
+Creates a new U32 set.
 
 	rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
 
@@ -710,7 +710,7 @@ Generates a link-local address using the eui-64 scheme and assigns it to an inte
 
 	ipv6 addr link-local eui-64 dev <vif_name>
 
-## ipv6 addr auto
+### ipv6 addr auto
 
 Enables SLAAC client on an interface. Once enabled TheRouter starts assigning dynamic 
 ipv6 addresses on an interface based on the information received in Router Advertisement messages.
@@ -802,11 +802,11 @@ Deletes an ipv6 PBR rule from the rule list from the position "rule priority num
 
 ### ipv6 nd ra
 
-		ipv6 nd ra enable|disable dev <vif_name>
+Enables or disables Router Advertisements at an interface.
+If disabled router will not transmit Router Advertisement messages at an interface
+and will not answer to Router Solicitation messages.
 
-  Enables or disables Router Advertisements at an interface.
-  If disabled router will not transmit Router Advertisement messages at an interface
-  and will not answer to Router Solicitation messages
+	ipv6 nd ra enable|disable dev <vif_name>
 
 ### sh ipv6 arp
 
@@ -834,7 +834,7 @@ Enables or disables generation of ICMP messages with the given type and code.
 
 ### sh icmp6 error msg
 
-Displays the state of icmp error message.
+Displays the state of an ICMP error message.
 
 	sh icmp6 error msg type <number> code <number>
 
@@ -849,7 +849,7 @@ from an interface.
 
 Configures the MinRtrAdvInterval and MaxRtrAdvInterval values (seconds)
 See https://tools.ietf.org/html/rfc4861#page-40
-6.2.1.  Router Configuration Variables
+6.2.1.  Router Configuration Variables.
 
 	ipv6 nd ra interval <min_number> <max_number> dev <vif_name>
 
