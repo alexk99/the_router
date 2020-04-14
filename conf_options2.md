@@ -92,7 +92,7 @@ Symbol # is used to comment a whole line.
 		runtime_command_n
 	}
 
-## Configuration file example
+## Configuration file examples
 
 ### TheRouter configuration file example
 
@@ -246,4 +246,404 @@ Output information about a particular VIF
 	rcli clear vif counters
 
 ## IP addresses
+
+### ip addr add
+
+		rcli ip addr add <net>/<mask> dev <vif_name>
+
+### ip addr del
+
+		rcli ip addr del <net>/<mask> dev <vif_name>
+
+### sh ip addr  
+
+		rcli sh ip addr
+
+## ip route tables
+
+### ip route table add
+
+Create a new routing table.
+
+	rcli ip route table add <route_table_name>
+
+### ip route table del
+
+Delete a routing table.
+
+	rcli ip route table del <route_table_name>
+
+### sh ip route tables
+
+Dispaly routing tables.
+
+	rcli sh ip route tables
+
+## ip routes
+
+### ip route add
+
+Create a connected route.
+
+	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
+
+Create a route to a prefix reachable via a gateway
+Note that IP address of the gateway should be reachable via a directly connected
+route. A directly connected route is created automatically when an ip address is added
+to an interface, but only for the main routing table. All routes for additional route
+tables should be created manually.
+
+	ip route add <net>/<mask> via <gw_ip> src <src_ip> [table <table_name>]
+
+Create an unreachable route.
+
+	ip route add <net>/<mask> unreachable [table <table_name>]
+
+### ip route del
+
+Delete a route from a routing table.
+
+	ip route del <net/mask> [table <table_name>]
+
+### sh ip route
+
+Output content of a routing table.
+
+	sh ip route [table <name>]
+
+## U32 sets
+
+### u32set create
+
+Create a U32 set.
+
+	rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
+
+### u32set destroy
+
+Delete a U32 set.
+
+	rcli u32set destroy <u32set_name>
+
+### ipset add
+
+Add an ip address to a U32 set.
+
+	rcli ipset add <u32set_name> <ipv4>
+
+### ipset del
+
+Del an ip address from a U32 set.
+
+	rcli ipset del <u32set_name> <ipv4>
+
+### ipset test
+
+Test whether a u32 set containts an ip address or not.
+
+	rcli ipset test <u32set_name> <ipv4>
+
+### l2set add
+
+Add an VIF identifier (port, svid, and cvid) to a u32 set.
+
+	rcli l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
+
+### l2set del
+
+Delete a VIF identifier (port, svid, and cvid) from a u32 set.
+
+	rcli l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
+
+### l2set test
+
+Test whether a u32 set containts a VIF identifier or not.
+
+	rcli l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
+
+## PBR rules
+
+### ip pbr rule add
+
+Create a PBR rule to match the traffic originated from one of addresses contained in an ip set.
+
+	ip pbr rule add prio <prio_num> u32set <u32set_name> type "ip" table <route_table_name>
+
+Create a PBR rule to match the traffic originated from one of VIFs contained in a L2 set.
+
+	ip pbr rule add prio <prio_num> u32set <u32set_name> type "l2" table <route_table_name>
+
+Create a PBR rule to match the traffic originated from a given network.
+
+	rcli ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
+
+### ip pbr rule del
+
+Delete a PBR rule with the given priority.
+
+	rcli ip pbr rule del prio <prio_num>
+
+### ip pbr flush
+
+Delete all PBR rules.
+
+	rcli ip pbr flush
+
+### sh ip pbr rules
+
+Display PBR rules.
+
+	rcli sh ip pbr rules
+
+## ARP
+   
+### arp add
+
+Create an ARP record.
+
+	rcli arp add <ip> <mac> dev <vif_name> [static]
+
+### arp del
+
+Delete an ARP record.
+
+	rcli arp del <ip> dev <vif_name>
+    
+### sh arp cache
+
+Display content of the ARP cache.
+
+	rcli sh arp cache
+
+## ping
+
+### ping
+
+	rcli ping --help
+	Usage: ping [-c,--count count] [-i,--interval interval_in_ms] [-s icmp_payload_size]
+	[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
+	[-h,--help] destination
+
+## NPF
+
+### sh npf conndb size
+
+	rcli sh npf conndb size
+   
+### sh npf conndb summary
+
+	rcli sh npf conndb summary
+
+### sh npf conndb summary sip
+
+	rcli sh npf conndb summary sip
+
+### sh npf stat
+
+	rcli sh npf stat
+
+### npf clear stat
+
+	rcli npf clear stat
+
+### NPF sysctl variables controlling connection tracking state timeouts
+
+	* NPF_TCPS_CLOSED
+	* NPF_TCPS_SYN_SENT
+	* NPF_TCPS_SIMSYN_SENT
+	* NPF_TCPS_SYN_RECEIVED
+	* NPF_TCPS_ESTABLISHED
+	* NPF_TCPS_FIN_SENT
+	* NPF_TCPS_FIN_RECEIVED
+	* NPF_TCPS_CLOSE_WAIT
+	* NPF_TCPS_FIN_WAIT
+	* NPF_TCPS_CLOSING
+	* NPF_TCPS_LAST_ACK
+	* NPF_TCPS_TIME_WAIT
+	* NPF_ANY_CONN_CLOSED
+	* NPF_ANY_CONN_NEW
+	* NPF_ANY_CONN_ESTABLISHED
+
+Example:
+
+	runtime {
+		...
+	
+		# any protocol timeouts (UDP)
+		sysctl set NPF_ANY_CONN_CLOSED 2
+		sysctl set NPF_ANY_CONN_NEW 30
+		sysctl set NPF_ANY_CONN_ESTABLISHED 60
+		
+		# TCP timeouts
+		sysctl set NPF_TCPS_CLOSED 10
+		sysctl set NPF_TCPS_SYN_SENT 30
+		sysctl set NPF_TCPS_SIMSYN_SENT 30
+		sysctl set NPF_TCPS_SYN_RECEIVED 60
+		sysctl set NPF_TCPS_ESTABLISHED 600
+		sysctl set NPF_TCPS_FIN_SENT 240
+		sysctl set NPF_TCPS_FIN_RECEIVED 240
+		sysctl set NPF_TCPS_CLOSE_WAIT 45
+		sysctl set NPF_TCPS_FIN_WAIT 60
+		sysctl set NPF_TCPS_CLOSING 30
+		sysctl set NPF_TCPS_LAST_ACK 30
+		sysctl set NPF_TCPS_TIME_WAIT 120
+	
+		...
+	}
+
+## NAT events logging via IPFIX
+
+### Enable nat events 
+
+	sysctl set ipfix_nat_events 1
+
+### Setup ipfix collector
+
+	ipfix_collector addr 192.168.20.2
+
+## Other commands
+
+### shutdown
+
+	rcli shutdown
+
+### sh ver
+
+Display the version of TheRouter software.
+
+	sh ver
+
+### sh uptime
+
+Display the uptime of TheRouter process.
+
+	sh uptime
+
+## Router statistic commands
+
+### sh port general stat
+
+Display port's packet counters.
+
+Example:
+
+	rcli sh port general stat
+	port 0
+	        pkts rx 2701128
+	        pkts tx 2221199
+	        bytes rx 1586718600
+	        bytes tx 1540072355
+	        errors rx 0
+	        errors tx 0
+	        missed 0
+	        rx_nombuf 0
+
+### rcli sh port stat
+
+Display packet counters grouped by lcores.
+
+Example:
+
+	# rcli sh port stat
+	port    send_failed     send_ok
+	lcore 1: 0      0       1556192
+	lcore 2: 0      0       437540
+	lcore 3: 0      0       227333
+	lcore 4: 0      0       0
+	lcore 5: 0      0       0
+	lcore 6: 0      0       0
+	lcore 7: 0      0       0
+	lcore 8: 0      0       0
+	lcore 9: 0      0       0
+	lcore 10: 0     0       0
+	lcore 11: 0     0       0
+	lcore 12: 0     0       0
+	lcore 13: 0     0       0
+	lcore 14: 0     0       0
+	lcore 15: 0     0       0
+	total: 0        0       2221065
+
+### sh port xstat
+
+Display port's extended packet counters.
+
+Example:
+
+	# rcli sh port xstat
+	port 0
+	        rx_good_packets 2702535
+	        tx_good_packets 2221993
+	        rx_good_bytes 1586895940
+	        tx_good_bytes 1540186436
+	        rx_q0packets 2702535
+	        rx_q0bytes 1586895940
+	        tx_q0packets 2221993
+	        tx_q0bytes 1540034116
+	        mac_local_errors 3
+	        mac_remote_errors 1
+	        rx_size_64_packets 350936
+	        rx_size_65_to_127_packets 1050314
+	        rx_size_128_to_255_packets 257371
+	        rx_size_256_to_511_packets 47232
+	        rx_size_512_to_1023_packets 32387
+	        rx_size_1024_to_max_packets 964295
+	        rx_broadcast_packets 35939
+	        rx_multicast_packets 98145
+	        rx_total_packets 2702819
+	        rx_total_bytes 1586951636
+	        tx_total_packets 2221993
+	        tx_size_64_packets 18027
+	        tx_size_65_to_127_packets 1035247
+	        tx_size_128_to_255_packets 155297
+	        tx_size_256_to_511_packets 27883
+	        tx_size_512_to_1023_packets 21215
+	        tx_size_1024_to_max_packets 964324
+	        tx_multicast_packets 1016
+	        tx_broadcast_packets 62
+	        rx_l3_l4_xsum_error 8513
+	        out_pkts_untagged 2221993
+
+### sh mbuf stats
+
+Display mbuf usages.
+
+Example:
+
+	# rcli sh mbuf stats
+	socket 0 mbuf: free 14450, allocated 1934
+
+### sh stat
+
+Display global statistics counters.
+
+Example:
+
+	h5 ~ # rcli sh stat
+	dropped local                   0
+	dropped unknown_vif             43027
+	dropped invalid_ipv4            0
+	dropped dst unreachable         12
+	dropped blackhole               52084
+	dropped bad_port                0
+	dropped dst_mac_is_unknown      4
+	dropped npf_in                  0
+	dropped npf_out                 7003
+	blocked by npf_in               0
+	blocked by npf_out              0
+	dropped other_errs              0
+	local pkts in                   92539
+	local pkts out                  0
+	local UDP pkts in               5578
+	local UDP pkts out              0
+	local pkts dropped              0
+	fragmentation overflow          0
+	no ctrl mbuf left               0
+	no mbuf left                    0
+	no timer left                   0
+	worker-cplane ring overflow     0
+	invalid ipv6 pkts               0
+
+### clear stats
+
+Clear global statistic counters.
 
