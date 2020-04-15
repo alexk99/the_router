@@ -1,3 +1,34 @@
+Table of Contents
+=================
+
+   * [1. Introduction](#1-introduction)
+   * [2. Configuration Linux and TheRouter software](#2-configuration-linux-and-therouter-software)
+   * [3. Test network scheme](#3-test-network-scheme)
+   * [4. Starting TheRouter, checking L2 and L3 connectivity.](#4-starting-therouter-checking-l2-and-l3-connectivity)
+      * [4.1. Starting TheRouter](#41-starting-therouter)
+      * [4.2. TheRouter's configuration file](#42-therouters-configuration-file)
+      * [4.3. Start KNI interfaces and Quagga/FRR](#43-start-kni-interfaces-and-quaggafrr)
+         * [4.3.1. KNI interfaces](#431-kni-interfaces)
+         * [4.3.2. Starting FRR](#432-starting-frr)
+      * [4.4. Connectivity checking](#44-connectivity-checking)
+         * [4.4.1. Insure that the interfaces described in the configuration file are up and running:](#441-insure-that-the-interfaces-described-in-the-configuration-file-are-up-and-running)
+         * [4.4.2. ARP](#442-arp)
+         * [4.4.3. ICMP](#443-icmp)
+   * [5. Radius configuration](#5-radius-configuration)
+      * [5.1. TheRouter radius client configuration](#51-therouter-radius-client-configuration)
+      * [5.2. Radius server configuration](#52-radius-server-configuration)
+         * [5.2.2. FreeRadius dictionary](#522-freeradius-dictionary)
+   * [6. PPPoE and PPP](#6-pppoe-and-ppp)
+         * [6.1.1. Enable PPPoE on a VIF](#611-enable-pppoe-on-a-vif)
+         * [6.1.1. Viewing ip subscribers](#611-viewing-ip-subscribers)
+   * [7. CoA](#7-coa)
+         * [7.1 CoA Subsriber Identification Attributes](#71-coa-subsriber-identification-attributes)
+         * [7.2 Add subscriber's ip address to the ip set containing blocked/unauthorized subscriber's ip addresses](#72-add-subscribers-ip-address-to-the-ip-set-containing-blockedunauthorized-subscribers-ip-addresses)
+         * [7.3 Remove subscriber's ip address from ip set with blocked/unauthorized subscriber's ip addresses](#73-remove-subscribers-ip-address-from-ip-set-with-blockedunauthorized-subscribers-ip-addresses)
+         * [7.4 Change traffic shaping parameters of PPPoE subscriber](#74-change-traffic-shaping-parameters-of-pppoe-subscriber)
+   * [8. NAT configuration](#8-nat-configuration)
+   * [9. ACL](#9-acl)
+
 # 1. Introduction
 
 This howto describes the configuration of a PPPoE BRAS server running TheRouter software
@@ -680,12 +711,13 @@ File /etc/npf.conf.bras_dhcp_relay
  		pass stateful final on v3 all
 	}
 	
-Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 
-v3 interface. Translation replaces a source ip address with an address from the pool 10.111.0.0/29.
-The new address of a packet is calculated by combining an original packet source address and the prefix 10.111.0.0/29.
+Command "map v3 netmap 10.111.0.0/29" defines NAT translation of the source IP address of packets going through 
+v3 interface. Translation replaces the source ip address with an address from the pool 10.111.0.0/29.
+The translated source address is calculated by combining the prefix 10.111.0.0/29 and some bits from
+the original source address.
 
-	new address is: 10.111.0.0 plus first 8 bits from an original address.
-	Where 8 is calculated as: 32 - 29 == 3 ^ 2 == 8, where 29 - is taken from the netmap command.
+	new address is: 10.111.0.0 plus first 3 bits from the original address.
+	Where 3 is calculated as: 32 - pool prefix length, 32 - 29 == 3
 
 According to that rule, the same source ip address will always be translated to the same address from the defined address pool.
 

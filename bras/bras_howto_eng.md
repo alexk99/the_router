@@ -1,3 +1,41 @@
+Table of Contents
+=================
+
+   * [1. Introduction](#1-introduction)
+   * [2. Configuring Linux OS and TheRouter software](#2-configuring-linux-os-and-therouter-software)
+   * [3. Test network scheme](#3-test-network-scheme)
+      * [3.1. L2 network scheme](#31-l2-network-scheme)
+      * [3.2. L3 network scheme](#32-l3-network-scheme)
+   * [4. Starting TheRouter, checking L2 and L3 connectivity.](#4-starting-therouter-checking-l2-and-l3-connectivity)
+      * [4.1. Starting TheRouter](#41-starting-therouter)
+      * [4.2. TheRouter's configuration file](#42-therouters-configuration-file)
+      * [4.3. Connectivity](#43-connectivity)
+         * [4.3.1. Make sure that the interfaces described in the configuration file are up and running:](#431-make-sure-that-the-interfaces-described-in-the-configuration-file-are-up-and-running)
+         * [4.3.2. ARP](#432-arp)
+         * [4.3.3. ICMP](#433-icmp)
+      * [4.4. KNI interfaces and FRR/Quagga integration](#44-kni-interfaces-and-frrquagga-integration)
+         * [4.4.1. KNI interfaces](#441-kni-interfaces)
+         * [4.4.2. FRR/Quagga](#442-frrquagga)
+   * [4.4.2.1 Announcing subscriber's /32 prefixes](#4421-announcing-subscribers-32-prefixes)
+   * [5. RADIUS](#5-radius)
+      * [5.1. TheRouter radius client configuration](#51-therouter-radius-client-configuration)
+      * [5.2. Radius server configuration](#52-radius-server-configuration)
+         * [5.2.2. FreeRadius dictionary](#522-freeradius-dictionary)
+   * [6. Configure subscriber's sessions or dynamic VIF](#6-configure-subscribers-sessions-or-dynamic-vif)
+      * [6.1. Dynamic "Vlan per subscriber" subscriber's interfaces](#61-dynamic-vlan-per-subscriber-subscribers-interfaces)
+         * [6.1.1. Viewing subscribers](#611-viewing-subscribers)
+         * [6.1.2. Routing of Dynamic VIF](#612-routing-of-dynamic-vif)
+      * [6.2. L2/L3 connected subscribers](#62-l2l3-connected-subscribers)
+         * [6.2.1. L2/L3 subscribers](#621-l2l3-subscribers)
+         * [6.2.2. Subscriber initiataion](#622-subscriber-initiataion)
+         * [6.2.3. L2 subscribers ARP security](#623-l2-subscribers-arp-security)
+         * [6.2.4. Viewing L2/L3 sessions](#624-viewing-l2l3-sessions)
+   * [7. DHCP server and DHCP Relay configuration](#7-dhcp-server-and-dhcp-relay-configuration)
+      * [7.1. DHCP server config /etc/dhcp/dhcpd.conf](#71-dhcp-server-config-etcdhcpdhcpdconf)
+      * [7.2. DHCP response routing](#72-dhcp-response-routing)
+   * [8. Redirecting unauthorized users traffic to a site](#8-redirecting-unauthorized-users-traffic-to-a-site)
+   * [9. NAT configuration](#9-nat-configuration)
+
 # 1. Introduction
 
 This howto describes the configuration of a BRAS server running TheRouter software
@@ -788,11 +826,12 @@ File /etc/npf.conf.bras_dhcp_relay
  		pass stateful final on v3 all
 	}
 	
-Command "map v3 netmap 10.111.0.0/29" defines NAT translation of source IP addresses of packets going through 
-v3 interface. Translation replaces a source ip address with an address from the pool 10.111.0.0/29.
-The new address of a packet is calculated by combining an original packet source address and the prefix 10.111.0.0/29.
+Command "map v3 netmap 10.111.0.0/29" defines NAT translation of the source IP address of packets going through 
+v3 interface. Translation replaces the source ip address with an address from the pool 10.111.0.0/29.
+The translated source address is calculated by combining the prefix 10.111.0.0/29 and some bits from
+the original source address.
 
-	new address is: 10.111.0.0 plus first 8 bits from an original address.
-	Where 8 is calculated as: 32 - 29 == 3 ^ 2 == 8, where 29 - is taken from the netmap command.
+	new address is: 10.111.0.0 plus first 3 bits from the original address.
+	Where 3 is calculated as: 32 - pool prefix length, 32 - 29 == 3
 
 According to that rule, the same source ip address will always be translated to the same address from the defined address pool.
