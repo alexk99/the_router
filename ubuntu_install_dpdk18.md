@@ -283,6 +283,10 @@ Use the 'lspci' utility to find out NIC's addresses.
 
  * run the router
 
+  Define a bash variable 'rvrf'
+
+  		export rvrf="ip netns exec tr"
+
   Edit therouter_start.sh script located in TheRouter's archive sbin directory
   and use your NIC's addresses as values for -w parameters. If you have only
   one NIC then delete the second -w parameter.
@@ -293,5 +297,10 @@ Use the 'lspci' utility to find out NIC's addresses.
 
   Check the syslog to ensure that TheRouter have started successfully.
   
- 		ROUTER: router configuration file '/etc/router_bras_dhcp_relay_lag_ipv6_v3_rad_acct.conf' successfully loaded  
+ 		ROUTER: router configuration file '/etc/router.conf' successfully loaded  
+ 		
+  Use the 'rcli' utility from the archive to configure and control TheRouter
+
+		h4 src # $rvrf rcli sh uptime
+		Uptime: 0 day(s), 1 hour(s), 38 minute(s), 14 sec(s)
 
