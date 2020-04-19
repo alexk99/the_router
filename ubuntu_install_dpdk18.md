@@ -1,6 +1,6 @@
 # Install
 
-Latest builds of TheRouter are available only by request.
+Latest 30 day trial build of TheRouter is available only by request.
 Please contact alex at therouter.net.
 
 Here are installation steps for Ubuntu 16.04.
@@ -115,7 +115,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 ## Install NPF
 
- * Clone NPF (https://github.com/alexk99/npf/tree/alexk)
+ * Clone NPF (https://github.com/alexk99/npf/tree/pptp_alg)
 
 		git clone -b pptp_alg https://github.com/alexk99/npf
 
@@ -238,7 +238,7 @@ Run the following commands:
 		make install T=x86_64-native-linuxapp-gcc
 
 
-## Install TheRouter
+## TheRouter
 
  
 ### Install dependencies
@@ -251,38 +251,23 @@ Run the following commands:
 		make all check CXXFLAGS="-g -O3"
 		make install
 
-
 ### Download TheRouter 
 
  #### x86_64
 
  * Please, contact alex@therouter.net
- 
-### Install TheRouter
 
- * Run the following commands:
- 
- 		tar xvf ./the_router.xxx.tar.gz
- 		cd ./the_router.xxx
- 		./install.sh
-
-### Configure dpdk ports
+### Configure DPDK ports
 
 * Define $RTE_SDK variable
 
 		export RTE_SDK=/path_to_dpdk
 
-* Load drivers
+* Load drivers and bind your NICs to DPDK
 
-		modprobe uio
-		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
-		# loading kni module 
-		insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/rte_kni.ko carrier=on
-
-* Bind your NIC's to DPDK by using $RTE_SDK/usertools/dpdk-devbind.py
-
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0
-		$RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:02:00.1
+Edit load_dpdk_drivers.sh script from TheRouter archive's sbin directory
+and replace 0000:xx:xx.x values with PCI addresses of your NICs, for examaple 0000:02:00.0.
+Use the 'lspci' utility to find out NIC's addresses.
 
 ### Run TheRouter
 
@@ -292,11 +277,21 @@ Run the following commands:
 
 			nano /etc/router.conf
 
- 	- create npf conf
+ 	- create NPF conf
 
 			nano /etc/npf.conf
 
  * run the router
 
-		/usr/local/sbin/router_run.sh /etc/router.conf
+  Edit therouter_start.sh script located in TheRouter's archive sbin directory
+  and use your NIC's addresses as values for -w parameters. If you have only
+  one NIC then delete the second -w parameter.
+
+  Start TheRouter
+  
+		therouter_start.sh /etc/router.conf
+
+  Check the syslog to ensure that TheRouter have started successfully.
+  
+ 		ROUTER: router configuration file '/etc/router_bras_dhcp_relay_lag_ipv6_v3_rad_acct.conf' successfully loaded  
 
