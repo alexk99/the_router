@@ -211,7 +211,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 	
 			mount huge
 
-* download dpdk 18.11.3 (LTS)
+* download DPDK 18.11.3 (LTS)
 
 		wget https://fast.dpdk.org/rel/dpdk-18.11.3.tar.xz
 		tar xvf dpdk-18.11.3.tar.xz
@@ -240,7 +240,6 @@ Run the following commands:
 
 ## TheRouter
 
- 
 ### Install dependencies
 
  * city hash
@@ -257,7 +256,7 @@ Run the following commands:
 
 ### Configure DPDK ports
 
-#### Define $RTE_SDK variable
+#### Define RTE_SDK variable
 
 		export RTE_SDK=/path_to_dpdk
 
@@ -281,7 +280,7 @@ For configuration examples and options see the page <a href="/conf_options.md">C
 
 			nano /etc/npf.conf
 
-#### run the router
+#### Run TheRouter
 
   Define a bash variable 'rvrf'
 
