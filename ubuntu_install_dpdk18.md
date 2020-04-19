@@ -295,12 +295,12 @@ Use the 'lspci' utility to find out NIC's addresses.
   
 		therouter_start.sh /etc/router.conf
 
-  Check the syslog to ensure that TheRouter have started successfully.
+  Check the syslog to ensure that TheRouter has started successfully.
   
  		ROUTER: router configuration file '/etc/router.conf' successfully loaded  
  		
   Use the 'rcli' utility from the archive to configure and control TheRouter
 
-		h4 src # $rvrf rcli sh uptime
+		# $rvrf rcli sh uptime
 		Uptime: 0 day(s), 1 hour(s), 38 minute(s), 14 sec(s)
 
