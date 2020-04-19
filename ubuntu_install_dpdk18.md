@@ -253,17 +253,15 @@ Run the following commands:
 
 ### Download TheRouter 
 
- #### x86_64
-
- * Please, contact alex@therouter.net
+ Please, contact alex@therouter.net
 
 ### Configure DPDK ports
 
-* Define $RTE_SDK variable
+#### Define $RTE_SDK variable
 
 		export RTE_SDK=/path_to_dpdk
 
-* Load drivers and bind your NICs to DPDK
+#### Load drivers and bind your NICs to DPDK
 
 Edit load_dpdk_drivers.sh script from TheRouter archive's sbin directory
 and replace 0000:xx:xx.x values with PCI addresses of your NICs, for examaple 0000:02:00.0.
@@ -271,7 +269,9 @@ Use the 'lspci' utility to find out NIC's addresses.
 
 ### Run TheRouter
 
- * Prepare configuration files. For configuration examples and options see the page <a href="/conf_options.md">Configure TheRouter</a>
+#### Prepare configuration files
+
+For configuration examples and options see the page <a href="/conf_options.md">Configure TheRouter</a>
 
  	- create router.conf
 
@@ -281,7 +281,7 @@ Use the 'lspci' utility to find out NIC's addresses.
 
 			nano /etc/npf.conf
 
- * run the router
+#### run the router
 
   Define a bash variable 'rvrf'
 
