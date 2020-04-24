@@ -5,8 +5,8 @@ network with more 100k customers.
  
 ### Hardware
 
-XL710 for 40GbE QSFP+ (rev 02)
-Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz 
+ - XL710 for 40GbE QSFP+ (rev 02)
+ - Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz 
  
 ### Stats
 
