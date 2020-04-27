@@ -32,6 +32,12 @@ startup {
   sysctl set mac_addr_format "linux"
   sysctl set nd_neighbor_cache_entry_ttl 120
 
+  # LPM6
+  # note: a subscriber's /128 ipv6 address might consume up to 8 tbl8 entries
+  # when the address is allocated from /64 pool
+  #
+  sysctl set fib6_max_lpm_tbl8 65536
+
   sysctl set pppoe_max_subsc 50000
   sysctl set radius_max_sessions 20000
   sysctl set subsc_vif_max 50000
