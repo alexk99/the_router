@@ -1895,10 +1895,10 @@ An integer sysctl variable that defines the IA_NA option behavior of the PPP DHC
 
 Valid values are:
 
-	0 - disable, the IA_NA option is not included in DHCPv6 messages;
-	1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
+ - 0 - disable, the IA_NA option is not included in DHCPv6 messages;
+ - 1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
 	from a pool only if the DHCPv6 client asks for that option;
-	2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
+ - 2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
 	from a pool immidiately after the PPP subscriber has connected;
 
 ### ppp_dhcpv6_ia_pd
@@ -1907,10 +1907,10 @@ Setup the IA_PD for PPP DHCPv6 server.
 
 Valid values are:
 
-	0 - disable, the IA_PD option is not included in the DHCPv6 messages;
-	1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
+ - 0 - disable, the IA_PD option is not included in the DHCPv6 messages;
+ - 1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
 	from a pool only if the DHCPv6 client asks for that option;
-	2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
+ - 2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
 	the IA_PD value will be allocated from a pool immidiately after the PPP subscriber has connected;
 
 ### ppp_slaac
@@ -2000,8 +2000,8 @@ Create a new IPv6 address pool.
 	ipv6 pool add <pool_name> <prefix> length <len> preferred_lt <integer> valid_lt <integer> flags <flag,...>
 
 Parameters:
- - <prefix> - the pool's address space;
- - <len> - length of prefixes allocated from the pool;
+ - prefix - the pool's address space;
+ - len - length of prefixes allocated from the pool;
 
 Flags:
  
