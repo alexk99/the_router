@@ -1999,15 +1999,16 @@ Create a new IPv6 address pool.
 
 	ipv6 pool add <pool_name> <prefix> length <len> preferred_lt <integer> valid_lt <integer> flags <flag,...>
 
-<prefix> - address space for a pool.
-<len> - length of prefixes allocated from a pool.
+Parameters:
+ - <prefix> - the pool's address space;
+ - <len> - length of prefixes allocated from the pool;
 
 Flags:
  
 - rand - allocate random values;
-- cache - after alocation an address/prefix is reserved for the user allocated the value for a valid_lt seconds.
-	During this time the user will be given the same address/prefix. After the valid_lt seconds ellapse the address/prefix
-	will be returned back to the pool;
+- cache - an address/prefix is reserved for a valid_lt seconds for the user allocated the value;
+	During this time the subscriber will be given the same address/prefix if it reconnects. 
+	After the valid_lt seconds has ellapsed and the address/prefix is not in use it will be returned back to the pool;
 
 Example:
 
