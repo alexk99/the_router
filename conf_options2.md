@@ -858,7 +858,7 @@ Enables IPv6 protocol on an interface, create link-local address using the eui-6
 
 ### ipv6 disable
 
-Disables IPv6 protocol on an interface. Deletes all addresses and routes depending on the interface.
+Disables IPv6 protocol on the interface. Deletes all addresses and routes depending on the interface.
 
 	ipv6 disable dev <vif_name>
 
@@ -1566,3 +1566,462 @@ Example:
 	      egress not set
 	  ACL ingress prio 30 acl 10, prio 40 acl 11
 	      egress not set
+
+## PPPoE subscribers
+
+### sh pppoe subsc
+
+Outputs connected/online pppoe subscribers
+
+	sh pppoe subsc
+
+### sh pppoe subsc
+
+Outputs the particular pppoe subscriber with the given user-name
+
+	sh pppoe subsc <user-name>
+
+Example:
+
+	sh pppoe subsc alexk
+	vif_id  username        mac     svid    cvid    session_id      ip addr mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
+	5       alexk   84:16:F9:BD:54:F7       0       3       1       10.11.12.30     1492    100000  100000  182057  269266  18608751        328714627       2 hour(s), 58 min(s), 7 sec(s)
+
+### pppoe disconnect
+
+Disconnects the pppoe subscriber with id <pppoe_vif_id>
+
+	pppoe disconnect <pppoe_vif_id>
+
+### Enable PPPoE at VIF
+
+Enables PPPoE protocol on the interface. See "vif add" for details.
+
+Example:
+
+	vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
+
+
+### pppoe ac_cookie key
+
+	pppoe ac_cookie key "key_data"
+
+Sets ac_cookie key value.
+
+Example:
+
+	pppoe ac_cookie key "13071232717"
+
+### pppoe ac_name
+
+Sets PPPoE AC name.
+
+	pppoe ac_name "ac_name"
+
+Example:
+
+	pppoe ac_name "trouter1"
+
+### pppoe service name
+
+Sets PPPoE service name.
+
+	pppoe service name "service_name"
+
+Example:
+
+	pppoe service name "*"
+
+### pppoe blocked subsc add
+
+Adds the subscriber link-layer address to the block list.
+
+	pppoe blocked subsc add <lladdr>
+
+### pppoe blocked subsc del
+
+Deletes the subscriber link-layer address from the block list.
+
+	pppoe blocked subsc del <lladdr>
+
+### sh pppoe blocked subsc
+
+Outputs the content of the PPPoE subscriber block list
+
+	sh pppoe blocked subsc
+
+### ppp dns primary
+
+Sets the ip address of the primary DNS server for ppp subscribers.
+
+	ppp dns primary <ip_address>
+
+Example:
+
+	ppp dns primary 8.8.8.8
+
+### ppp dns secondary
+
+Sets the ip address of the secondary DNS server for ppp subscribers.
+
+	ppp dns secondary <ip_address>
+
+Example:
+
+	ppp dns primary 8.8.4.4
+
+### ppp ipcp server ip
+
+Sets the ip address of TheRouter side ot PPP p-t-p tunnels
+
+	ppp ipcp server ip <ip_address>
+
+Example:
+
+	ppp ipcp server ip 10.10.1.1
+
+### ppp ip pool add
+
+Configures the PPP stack to use the local ip pool with the given name.
+The pool will be used if all others ip address sources are failed.
+For example, the pool will be used if an authorization response doesn't
+include Framed-ip-address or Framed-pool atributes.
+
+Multiple pools can be added to ppp. In that case they will
+be used in a round-robin way.
+
+	ppp ip pool add <pool_name>
+
+### ppp ip pool del
+
+Stops using the local ip pool that was configured with the command
+"ppp ip pool add"
+
+	ppp ip pool del <pool_name>
+
+## PPPoE sysctl variables
+
+### pppoe_max_subsc
+
+The maximum number of concurrent pppoe subscribers.
+
+This variable can be used only in the startup configuration file section.
+
+### pppoe_max_online_subsc
+
+Maximum number of online pppoe subscribers.
+Once the number of online pppoe subscribers reaches this
+limit TheRouter will stop answering to the pppoe discovery initiation
+packets (PADI). The difference between this variable and pppoe_max_subsc
+variable is that pppoe_max_online_subsc variable can be changed at runtime.
+Use 0 value to turn off the limit.
+
+### pppoe_inactive_ttl
+
+Time in seconds. A PPPoE subscriber will be disconnected
+if there are no packets during this period of time.
+
+### tcp_mss_fix
+
+1 - on, 0 - off. Enables or disables using TCP MSS fix for pppoe traffic.
+
+### ppp_max_terminate
+
+The maximum number of PPP FSM (LCP or NCP(IPCP)) terminate packets that may be sent.
+
+### ppp_max_configure
+
+The maximum number of PPP FSM (LCP or NCP(IPCP)) configure packets that may be sent.
+
+### ppp_initial_restart_time
+
+Time is milliseconds to wait before resend a PPP FSM configure request.
+This time will be multiplied by 1.5 with each attempt to resend a request.
+
+### pppoe_sub_uniq_check
+
+1 - on, 0 - off. Check that each pppoe subscriber has a uniq pair: Host-Uniq TAG and MAC address.
+If a new pppoe discover request containging already existing pair of the values is received
+it will be dropped. The pppoe_sub_uniq_check variable can be used only in the startup configuration file section.
+
+### ppp_1session_per_username
+
+1 - on, 0 - off.
+When enabled the_router will disconnect/prevent from connecting new pppoe subscribers that use a username
+already being used by another subscriber's session
+
+### ppp_install_subsc_linux_routes
+
+1 - on, 0 - off.
+When enabled the_router will add/remove linux kernel /32 routes for ppp subscribers ip addresses.
+Linux kernel routes are installed to 'lo' interface in the namespace therouter is running in.
+This option allows to announce subscriber's /32 prefixes by using "redisribute kernel" command
+in FRR/Quagga bgpd or ospfd daemons. 
+
+### lcp_keepalive_interval
+
+Interval in seconds beetween keepalive tests.
+Use 0 to turn off keeplive.
+
+### lcp_keepalive_probe_interval
+
+Interval in milliseconds beetween keepalive probes (LCP echo-requests).
+
+### lcp_keepalive_num_retries
+
+Maximum number of keepalive probes that could be send during
+one keepalive test.
+
+### ppp_username_strip_domain_cli_log
+
+A booean sysctl variable. When enabled instructs TheRouter to strip 
+the domain part of the PPP username before output the username to CLI or log files.
+
+### pppoe_sub_uptime_in_sec
+
+An integer sysctl variable. When enabled TheRouter outputs 
+the PPPoE subscriber uptime in seconds instead of a human-readable time format.
+
+### ppp_auth_max_peer_name_len
+
+An integers read-only sysctl variable that stores 
+the maximum length of the PPP peers name (usernames) supported by TheRouter.
+
+### ppp_default_auth_proto
+
+A string sysctl variable that defines the default PPP auth proto.
+The default value is "chap".
+
+Valid values:
+
+	chap
+	pap
+
+Example
+
+	sysctl set ppp_default_auth_proto "chap"
+
+## PPPoE IPv6
+
+### sh pppoe ipv6 subsc
+
+Outputs connected/online PPPoE IPv6 subscribers
+
+	sh pppoe ipv6 subsc
+
+### sh pppoe ipv6 subsc <name>
+
+Output the PPPoE subscriber with the given name
+
+	sh pppoe ipv6 subsc <name>
+
+Example:
+
+	rcli sh pppoe ipv6 subsc alexk
+	vif_id  username        mac     svid    cvid    session_id      ia_na   ia_pd   slaac   mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
+	5       alexk   84:16:F9:BD:54:F7       0       3       1       xxx:237f:ee39:5584:17eb  xxx60::/64 xxxaf::/64 1492    100000  100000  182736  26991718793821
+
+### dhcpv6 add dns
+
+Adds a recursive DNS server to the global list of servers.
+Values on the list will be used in the RA messages sent to PPPoE subsribers and 
+by DHCPv6 server. 
+
+	dhcpv6 add dns <ipv6_address>
+
+### dhcpv6 del dns
+
+Deletes a recursive DNS server address from the RDNSS list.
+
+	dhcpv6 del dns <ipv6_address>
+
+### dhcpv6 domain search list
+
+	dhcpv6 domain search list <string>
+
+Example
+
+	dhcpv6 domain search list i6.therouter.net
+
+### ppp ipv6 pool
+
+Sets the default address pool for PPP IPv6 addresses of a particular type
+
+	ppp ipv6 pool <ppp_address_type> <pool_name>
+
+Where <address_type> can take one of the following values:
+
+	ia_na
+	ia_pd
+	slaac
+
+Example
+
+	# default pools
+	ppp ipv6 pool ia_na ppp6_na_pool
+	ppp ipv6 pool ia_pd ppp6_pd_pool
+	ppp ipv6 pool slaac ppp6_slaac_pool
+
+### ppp ipv6 pool <ppp_address_type> disable
+
+Unsets the default address pool for PPP adresses of a particular type
+
+	ppp ipv6 pool <ppp_address_type> disable
+
+Example:
+
+	ppp ipv6 pool ia_na disable
+	ppp ipv6 pool ia_pd disable
+	ppp ipv6 pool slaac disable
+
+## PPP IPv6 sysctl variables
+
+### ppp_ipv6
+
+A startup bolean sysctl variable that enables/disables the IPv6 protocol for PPP subscribers	
+
+### ppp_ra_mtu
+
+An integer sysctl variables that defines the size of the MTU Router Advertisement option 
+of RA messages sent to PPP interfaces.
+
+### ipv6_tcp_mss_fix
+
+A bolean sysctl variable that enables/disables the MSS fix/clumping for IPv6.
+
+### ppp_dhcpv6_ia_na
+
+An integer sysctl variable that defines the IA_NA option behavior of the PPP DHCPv6 server.
+
+Valid values are:
+
+	0 - disable, the IA_NA option is not included in DHCPv6 messages;
+	1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
+	from a pool only if the DHCPv6 client asks for that option;
+	2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
+	from a pool immidiately after the PPP subscriber has connected;
+
+### ppp_dhcpv6_ia_pd
+
+Setup the IA_PD for PPP DHCPv6 server.
+
+Valid values are:
+
+	0 - disable, the IA_PD option is not included in the DHCPv6 messages;
+	1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
+	from a pool only if the DHCPv6 client asks for that option;
+	2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
+	the IA_PD value will be allocated from a pool immidiately after the PPP subscriber has connected;
+
+### ppp_slaac
+
+A boolean sysctl varialbe that enables/disables the use of SLAAC for the PPP interfaces.
+
+0 - disable
+1 - enable
+
+### dhcpv6_preferred_lt
+
+An integer sysctl variable that defines the default preferred value for IPv6 addresses. 
+For example, This value will be used for IPv6 addresses received via RADIUS protocol.
+
+### dhcpv6_valid_lt
+
+An integer sysctl variable that defines the default valid value for IPv6 addresses. 
+For example, this value will be used for IPv6 addresses received via RADIUS protocol.
+
+### ppp_rad_acct_slaac
+
+A boolen sysctl variable that controls whether or not to include 
+into the radius accounting start messages the Framed-IPv6-Prefix attribute 
+carrying the PPP subscriber's SLAAC prefix. 
+
+0 - disable
+1 - enable
+
+### ppp_rad_acct_ia_na
+
+A boolen sysctl variable that controls whether or not to include
+into the radius accounting start messages
+the Framed-IPv6-Address attribute with the PPP subscriber's IA_NA address.
+
+0 - disable
+1 - enable
+
+
+### ppp_rad_acct_ia_pd
+
+A boolen sysctl variable that controls whether or not to include 
+into the radius accounting start messages the Delegated-IPv6-Prefix attribute 
+carrying the PPP subscriber's IA_PD prefix
+
+0 - disable
+1 - enable
+
+
+## IPv6 Pools
+
+### sh ipv6 pool
+
+Outputs details about IPv6 pools
+
+Example:
+
+	rcli sh ipv6 pools
+	---
+	name ppp6_pd_pool
+	address space xxxe::/48
+	address/prefix length 64
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 65536
+	used 0
+	---
+	name ppp6_na_pool
+	address space xxx1::/64
+	address/prefix length 128
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 4294967294
+	used 1
+	---
+	name ppp6_slaac_pool
+	address space xxx0b::/48
+	address/prefix length 64
+	preferred lifetime 3600
+	valid lifetime 7200
+	free 65535
+	used 1
+
+## ipv6 pool add
+
+Create a new IPv6 address pool.
+
+	ipv6 pool add <pool_name> <prefix> length <len> preferred_lt <integer> valid_lt <integer> flags <flag,...>
+
+<prefix> - address space for a pool.
+<len> - length of prefixes allocated from a pool.
+
+Flags:
+ 
+- rand - allocate random values;
+- cache - after alocation an address/prefix is reserved for the user allocated the value for a valid_lt seconds.
+	During this time the user will be given the same address/prefix. After the valid_lt seconds ellapse the address/prefix
+	will be returned back to the pool;
+
+Example:
+
+	ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+
+## ipv6 pool del
+
+Deletes the ipv6 pool with the given name.
+
+	ipv6 pool del <pool_name>
+
+## ipv6 pool modify
+
+Modifies an existing ipv6 pool lifetime values.
+
+	ipv6 pool modify <pool_name> valid_lt <integer> preferred_lt <integer>
+
