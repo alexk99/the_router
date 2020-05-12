@@ -72,7 +72,7 @@ Table of Contents
          * [sh uptime](#sh-uptime)
       * [Router statistic commands](#router-statistic-commands)
          * [sh port general stat](#sh-port-general-stat)
-         * [rcli sh port stat](#rcli-sh-port-stat)
+         * [sh port stat](#rcli-sh-port-stat)
          * [sh port xstat](#sh-port-xstat)
          * [sh mbuf stats](#sh-mbuf-stats)
          * [sh stat](#sh-stat)
@@ -297,13 +297,65 @@ or
 
 		sysctl set <name> <value>
 
+## Global parameters
+
+### system_name
+
+A string sysctl variable that defines the system name.
+
+Example
+
+	sysctl set system_name "tr1"
+
+### mac_addr_format
+
+A string sysctl variable that defines the format of convertion
+MAC addresses to strings.
+
+Valid values are:
+
+	cisco - xxxx.xxxx.xxxx
+	linux - xx:xx:xx:xx:xx:xx
+	raw - no delimiters, xxxxxxxxxxxx
+	
+Example:
+
+	sysctl set mac_addr_format linux
+
+### linux_route_proto
+
+An integer sysctl variable that defines the route proto type 
+of linux routes TheRouter creates for subscribers, etc.
+
+Note: FRR 4.0 bgpd redistribute kernel command doesn't see linux routes with proto STATIC,
+but it sees BOOT routes.
+
+Valid values are:
+
+	2 - RTPROT_KERNEL
+	3 - RTPROT_BOOT
+	4 - RTPROT_STATIC
+	
+Example:
+
+	sysctl set linux_route_proto 3
+
+### mbuf
+
+An integet startup sysctl variable that defines the number of mbufs.
+16384 value is a typical number of mbufs that is enough for normal operations.
+
+Example:
+
+	sysctl set mbuf linux 16384
+
 ## Virtual interfaces
 
 ### vif add
 
 Creates a new virtual L3 interface (VIF)
 
-	rcli vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>] [MTU <mtu_size>]
+	vif add name <name> port <port_num> type <type> [svid <svid>] [cvid <cvid>] [flags <flag1,flag2...>] [MTU <mtu_size>]
 
 The Type parameter can take one of the following values:
 
@@ -330,58 +382,58 @@ The following flags are enabled by default:
 
 Up/down (enable/disable) a VIF's flag.
 
-	rcli vif flags <up|down> name <name> flags <flag1,flag2...>
+	vif flags <up|down> name <name> flags <flag1,flag2...>
 
 The name parameter is the name of a VIF.
 
 Example: disable/down the dhcp_rel flag of the VIF v20.
 
-	rcli vif flags down name v20 flags dhcp_rel
+	vif flags down name v20 flags dhcp_rel
 
 ### vif del
 
 Deletes a VIF
 
-	rcli vif del <name>
+	vif del <name>
 
 ### vif car
 
 Defines ingress/egress bandwidth limit for a VIF.
 <cir_val> unit is Kbit/s. Zero value is used to delete a limit.
 
-	rcli vif car name <name> ingress cir <cir_val> egress cir <cir_value>
+	vif car name <name> ingress cir <cir_val> egress cir <cir_value>
 
 ### sh vif
 
 Displays all VIFs
 
-	rcli sh vif
+	sh vif
 
 Displays information about a particular VIF
 
-	rcli sh vif <name>
+	sh vif <name>
 
 ### sh vif counters
 
-	rcli sh vif counters
+	sh vif counters
    
 ### clear vif counters
 
-	rcli clear vif counters
+	clear vif counters
 
 ## IP addresses
 
 ### ip addr add
 
-	rcli ip addr add <net>/<mask> dev <vif_name>
+	ip addr add <net>/<mask> dev <vif_name>
 
 ### ip addr del
 
-	rcli ip addr del <net>/<mask> dev <vif_name>
+	ip addr del <net>/<mask> dev <vif_name>
 
 ### sh ip addr  
 
-	rcli sh ip addr
+	sh ip addr
 
 ## ip route tables
 
@@ -389,19 +441,19 @@ Displays information about a particular VIF
 
 Creates a new routing table.
 
-	rcli ip route table add <route_table_name>
+	ip route table add <route_table_name>
 
 ### ip route table del
 
 Deletes a routing table.
 
-	rcli ip route table del <route_table_name>
+	ip route table del <route_table_name>
 
 ### sh ip route tables
 
 Displays routing tables.
 
-	rcli sh ip route tables
+	sh ip route tables
 
 ## ip routes
 
@@ -409,7 +461,7 @@ Displays routing tables.
 
 Creates a connected route.
 
-	rcli ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
+	ip route add <net>/<mask> dev <vif_name> src <src_ip> [table <table_name>]
 
 Creates a route to a prefix reachable via a gateway.
 Note that the IP address of the gateway should be reachable via a directly connected
@@ -441,49 +493,49 @@ Displays content of a routing table.
 
 Creates a new U32 set.
 
-	rcli u32set create <u32set_name> size <size> bucket_size <bucket_size>
+	u32set create <u32set_name> size <size> bucket_size <bucket_size>
 
 ### u32set destroy
 
 Deletes a U32 set.
 
-	rcli u32set destroy <u32set_name>
+	u32set destroy <u32set_name>
 
 ### ipset add
 
 Adds an ip address to a U32 set.
 
-	rcli ipset add <u32set_name> <ipv4>
+	ipset add <u32set_name> <ipv4>
 
 ### ipset del
 
 Deletes an ip address from a U32 set.
 
-	rcli ipset del <u32set_name> <ipv4>
+	ipset del <u32set_name> <ipv4>
 
 ### ipset test
 
 Tests whether a u32 set containts an ip address or not.
 
-	rcli ipset test <u32set_name> <ipv4>
+	ipset test <u32set_name> <ipv4>
 
 ### l2set add
 
 Adds an VIF identifier (port, svid, and cvid) to a u32 set.
 
-	rcli l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
+	l2set add <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
 ### l2set del
 
 Delete a VIF identifier (port, svid, and cvid) from a u32 set.
 
-	rcli l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
+	l2set del <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
 ### l2set test
 
 Tests whether a u32 set containts a VIF identifier or not.
 
-	rcli l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
+	l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
 ## PBR rules
 
@@ -499,25 +551,25 @@ Creates a PBR rule to match the traffic originated from one of VIFs contained in
 
 Creates a PBR rule to match the traffic originated from a given network.
 
-	rcli ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
+	ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
 
 ### ip pbr rule del
 
 Deletes a PBR rule with the given priority.
 
-	rcli ip pbr rule del prio <prio_num>
+	ip pbr rule del prio <prio_num>
 
 ### ip pbr flush
 
 Deletes all PBR rules.
 
-	rcli ip pbr flush
+	ip pbr flush
 
 ### sh ip pbr rules
 
 Displays PBR rules.
 
-	rcli sh ip pbr rules
+	sh ip pbr rules
 
 ## ARP
    
@@ -525,19 +577,19 @@ Displays PBR rules.
 
 Creates an ARP record.
 
-	rcli arp add <ip> <mac> dev <vif_name> [static]
+	arp add <ip> <mac> dev <vif_name> [static]
 
 ### arp del
 
 Deletes an ARP record.
 
-	rcli arp del <ip> dev <vif_name>
+	arp del <ip> dev <vif_name>
     
 ### sh arp cache
 
 Displays content of the ARP cache.
 
-	rcli sh arp cache
+	sh arp cache
 
 ## ping
 
@@ -550,25 +602,32 @@ Displays content of the ARP cache.
 
 ## NPF
 
+### npf load
+
+Loads NPF configuration file.
+Note that a path to the file should be double-quoted.
+
+	npf load "<path_to_npf_configuration_file>"
+
 ### sh npf conndb size
 
-	rcli sh npf conndb size
+	sh npf conndb size
    
 ### sh npf conndb summary
 
-	rcli sh npf conndb summary
+	sh npf conndb summary
 
 ### sh npf conndb summary sip
 
-	rcli sh npf conndb summary sip
+	sh npf conndb summary sip
 
 ### sh npf stat
 
-	rcli sh npf stat
+	sh npf stat
 
 ### npf clear stat
 
-	rcli npf clear stat
+	npf clear stat
 
 ### NPF sysctl variables controlling connection tracking state timeouts
 
@@ -629,7 +688,7 @@ Example:
 
 ### shutdown
 
-	rcli shutdown
+	shutdown
 
 ### sh ver
 
@@ -651,7 +710,7 @@ Displays port's packet counters.
 
 Example:
 
-	rcli sh port general stat
+	sh port general stat
 	port 0
 	        pkts rx 2701128
 	        pkts tx 2221199
@@ -662,7 +721,7 @@ Example:
 	        missed 0
 	        rx_nombuf 0
 
-### rcli sh port stat
+### sh port stat
 
 Displays packet counters grouped by lcores.
 
@@ -777,17 +836,17 @@ Clears global statistic counters.
 
 Sets a sysctl variable value.
 
-	rcli sysctl set <name> <value>
+	sysctl set <name> <value>
 
 for string variables:
 
-	rcli sysctl set <name> "<value>"
+	sysctl set <name> "<value>"
 
 ### sysctl get
 
 Display a sysctl variable value.
 
-	rcli sysctl get <name> <value>
+	sysctl get <name> <value>
 
 ## IPv6
 
@@ -1197,3 +1256,313 @@ Deletes a prefix from Router Advertisement messages sent for a VRRP IPV6 group.
 
 	vrrp group <vrrp_id> dev <vif_name>  nd ra prefix add <prefix/length> dev <vif_name>
 
+## Flow accounting IPFIX. 
+
+### flow ipfix_collector
+
+Configures flow accounting ipfix collector address and port. Default port value is 4739.
+
+	flow ipfix_collector addr <ipv4 address> [port <port-number>]
+
+### sh flow stat
+
+Shows flow accounting statistic counters.
+
+	sh flow stat
+
+## enabling flow accounting on an interface
+
+To enable flow accounting on a particular VIF use the VIF flag "flow_acct". For example:
+
+	vif add name v3 port 2 type dot1q cvid 3 flags npf_on, kni, flow_acct
+
+or use "vif flags" command
+
+	vif flags up name v3 flags flow_acct
+
+### flow_acct
+
+A boolen sysctl variable that defines the flow accounting state.
+When enabled flow accouting is generated for forwarded/transit traffic.
+
+	0 - disabled
+	1 - enabled
+
+### flow_acct_in_out
+
+A boolean sysctl variable that controls whether to 
+generate flow accounting for the input/output traffic or not.
+
+	0 - disabled
+	1 - enabled
+
+### flow_acct_dropped_pkts
+
+A boolean sysctl variable that enables flow accounting of dropped packets.
+
+	0 - disabled
+	1 - enabled
+
+### flow_idle_timeout
+
+An integer sysctl variable. It defines the idle timeout of traffic flow in seconds.
+When the idle timeout expires a traffic flow is exported.
+
+### flow_active_timeout
+
+An integer sysctl variable that defines the active timeout of traffic flow in seconds.
+When the active timeout expires a traffic flow is exported.
+
+### flow_ipv4_max
+
+An integer sysctl variable that defines the maximum number of concurrent ipv4 flows entries.
+
+### flow_ipv6_max
+
+An integer sysctl variable that defines the maximum number of concurrent ipv6 flows entries.
+
+### flow_ipv4_worker_max
+
+An integer sysctl variable that defines the maximum number of ipv4 flows 
+entries that a worker lcore can process concurrently.
+
+### flow_ipv6_worker_max
+
+An integer sysctl variable that defines the maximum number of ipv6 flows entries 
+that a worker lcore can process concurrently.
+
+## Access control lists (ACL)
+
+Access control lists can be used to filter traffic incoming to an interface (ingress) or
+outging from an interface. Multiple ACL can be applied to the same interface and a single ACL
+can be applied to many interfaces. 
+
+Each interface has two ACL list: ingress and egress. An interface ACL list stores ACL
+in sorted order. The position of ACL in the list is defined by a priority specified by a user.
+
+An ACL, in turn, consists of rules. The position of a rule in an ACL is also defined by priority.
+
+When a packet comes into an interface it is compared to the rules of ACLs from the ingress list,
+when a packet is transmitted from an interface it is compared to the rules of ACLs from the egress list.
+First, a packet is compared to the rules of the ACL with the minimum priority. Then the process 
+goes to the next ACL with greater priority.
+
+When a packet is matched to an ACL rule, the ACL process is stopped and the action defined
+by the ACL is taken to the packet. It could be a drop or permit action.
+
+If a packet is not matched to any ACL rule the process goes to the next ACL in the list.
+If there are no more ACL in the list, then the action opposite to the action defined by ACL is taken.
+For example, if a packet is not matched to any rule of a deny ACL, then the packet is permitted.
+And when a packet isn't matched to any rule of a permit ACL the packet is dropped.
+So, the last ACL in the list defines the fate of a packet when no matches are found.
+Note that empty ACLs are not included into interfaces list of ACL and won't be taken
+into account when a packet isn't matched to any ACL rules. 
+
+### vif acl create
+
+Creates a new access control list.
+
+	vif acl create aclid <acl_id> type <acl_type> <action>
+
+Parameters:
+ - acl_id - unique numeric identificator
+ - acl_type - type. It can be one of the following types:
+   - ipv4_tuple - define an ACL that can classify packets using combination 
+of following fields: protocol type, ipv4 source address, ipv4 destination address, 
+l4 source port, l4 destination port
+   - ipv6_tuple - define an ACL that can classify packets using combination 
+of following fields: protocol type, ipv6 source address, ipv6 destination address, 
+l4 source port, l4 destination port
+ - action: action to take for a packet when a match is found. It can be one of the following
+ values:
+   - deny - drop a packet when a match is found
+   - permit - permit a packet when a match is found
+
+Example:
+
+	vif acl create aclid 10 type ipv6_tuple deny
+
+### vif acl destroy
+
+Destroys the ACL with the given ID.
+
+	vif acl destroy aclid <acl_id>
+
+Parameters:
+ - acl_id - unique numeric identificator of a ACL to delete
+
+Example:
+
+	vif acl destroy aclid 10
+
+### vif acl add
+
+Apply an ACL to an interface. The command adds an ACL to the ingress or egress list of ACLs of an interface
+at position with number prio.
+
+	vif acl add dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
+
+Parameters:
+ - vif_name - the name of the interface to add the ACL to;
+ - direction - specifies the interface list of ACLs to add to
+ Can be one the two values: ingress or egress;
+ - acl_id - the numeric identificator of the ACL to add to the interface;
+ - prio - position in the interface's ACL list to put the ACL at
+ 
+Example:
+
+	vif acl add dev v5 dir ingress aclid 10 prio 30
+
+### vif acl del
+
+Removes an ACL from an interface. The command deletes an ACL
+from the ingress or egress list of ACLs of an interface.
+
+	vif acl del dev <vif_name> dir <direction> aclid <acl_id>
+
+Parameters:
+ - vif_name - the name of the interface to delete the ACL from;
+ - direction - specifies the interface list of ACLs to delete from.
+ Can be one the two values: ingress or egress;
+ - acl_id - the numeric identificator of the ACL to delete
+ 
+Example:
+
+	vif acl del dev v5 dir ingress aclid 10
+
+### vif acl mod
+
+Changes the position of an ACL in the list of ACLs on an interface
+
+	vif acl modify dev <vif_name> dir <direction> aclid <acl_id> prio <prio>
+
+Parameters:
+ - vif_name - the name of the interface;
+ - direction - specifies the interface list of ACLs.
+ Can be one the two values: ingress or egress;
+ - acl_id - the numeric identificator of the ACL to modify;
+ - prio - a new position of the ACL;
+
+Example:
+
+	vif acl modify dev v5 dir ingress aclid 10 prio 40
+
+### vif acl flush
+
+Deletes all rules from an ACL.
+
+	vif acl flush aclid <acl_id>
+
+Parameters:
+ - acl_id - the numeric identificator of the ACL to delete rules from
+ 
+Example:
+
+	vif acl flush aclid 10
+
+### vif acl rule add
+
+Adds a rule to an ACL.
+
+	vif acl rule <ip_version> add aclid <acl_id> prio <prio> [proto <protocol_number>]
+	[src <src_prefix>] [dst <dst_prefix>] [sport <src_port_range>] [dport <dst_port_range>] 
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6;
+ - acl_id - the numeric identificator of the ACL to add the rule to;
+ - prio - position of the rule in the ACL
+ - proto - ip protocol number
+ - src_prefix - source ip prefix
+ - dst_prefix - destination ip prefix
+ - src_port_range - l4 source port range: for example: 8080 8090
+ - dst_port_range - l4 destination port range
+
+Examples:
+
+	vif acl rule ipv4 add aclid 11 prio 21 proto 6 src 10.1.0.0/24 dst 10.2.0.0/24 sport 10 20 dport 80
+
+or
+
+	vif acl rule ipv4 add aclid 11 prio 21 dst 10.1.0.0/24 dport 80
+
+or
+
+	vif acl rule ipv6 add aclid 10 prio 20 dst 2a00:1450:400c:c07::8b dport 80
+
+### vif acl rule del
+
+Deletes a rule from an ACL.
+
+	vif acl rule <ip_version> del aclid <acl_id> prio <prio>
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6
+ - acl_id - numeric identificator of an ACL to add a rule to
+ - prio - position of a rule in the ACL
+ 
+Example:
+
+	vif acl rule ipv4 del aclid 11 prio 21
+
+### vif acl rule mod
+
+Modify a rule in an ACL.
+
+	vif acl rule <ip_version> modify aclid <acl_id> prio <prio> [proto <protocol_number>]
+	[src <src_prefix>] [dst <dst_prefix>] [sport <src_port_range>] [dport <dst_port_range>] 
+
+Parameters:
+ - ip_version - version of the IP protocol. Can be on of two values: ipv4 or ipv6
+ - acl_id - the numeric identificator of the ACL to add the rule to
+ - prio - position of the rule in the ACL
+ - proto - ip protocol number
+ - src_prefix - source ip prefix
+ - dst_prefix - destination ip prefix
+ - src_port_range - l4 source port range: for example: 8080 8090
+ - dst_port_range - l4 destination port range
+ 
+Examples:
+
+	vif acl rule ipv4 modify aclid 11 prio 21 proto 6 src 10.1.0.0/24 dst 10.2.0.0/24 sport 10 20 dport 80
+
+or
+
+	vif acl rule ipv4 modify aclid 11 prio 21 dst 10.1.0.0/24 dport 80
+
+or
+
+	vif acl rule ipv6 modify aclid 10 prio 20 dst 2a00:1450:400c:c07::8b dport 80
+
+### sh vif acl rules
+
+Outputs ACL rules.
+
+	sh vif acl rules aclid <acl_id>
+
+Parameters:
+ - acl_id - numeric identificator of an ACL to show
+ 
+Example:
+
+	sh vif acl rules aclid 11
+		acl id 11, type ipv4_tuple, action deny, num rules 1
+		--
+		prio 21, proto any, src any, dst 10.1.1.0/24, sport any, dport 81
+
+### sh vif
+
+Outputs interfaces and ACL applied to them
+
+	sh vif
+ 
+Example:
+
+	# rcli sh vif
+	vif v5, id 3
+	  port 0, vlan 0.5, encapsulation dot1q
+	  mac address 00:1B:21:A3:0C:88
+	  NPF index 12
+	  CAR ingress not set
+	      egress not set
+	  ACL ingress prio 30 acl 10, prio 40 acl 11
+	      egress not set
