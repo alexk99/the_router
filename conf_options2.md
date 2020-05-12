@@ -2026,3 +2026,377 @@ Modifies an existing ipv6 pool lifetime values.
 
 	ipv6 pool modify <pool_name> valid_lt <integer> preferred_lt <integer>
 
+## IP pools
+
+### ip pool add
+
+Adds a new ip pool with the given name.
+Maximum pool name length is 16.
+
+	ip pool add <ip_pool_name>
+
+### ip pool del
+
+Deletes ip pool with the given name.
+Maximum pool name length is 16.
+
+	ip pool del <ip_pool_name>
+
+### ip pool add range
+
+Adds ip address range to the pool.
+Maximum pool name length is 16.
+
+	ip pool add range <ip_pool_name> <ip from> - <ip to>
+
+### ip pool del range
+
+Deletes ip address range from the pool.
+Maximum pool name length is 16.
+
+	ip pool del range <ip_pool_name> <ip from> - <ip to>
+
+### sh ip pool
+
+Outputs ip pool details
+
+	sh ip pool
+
+## IP pools sysct variables
+
+### ippool_cache_size
+
+Size of the ip pool's glabal pool cache.
+Default value is 4096.
+
+### ippool_cache_entry_ttl
+
+Time to live of the ip pool cache entry, seconds.
+Default value is 60 seconds.
+
+## RADIUS and CoA
+
+### radius_client add server
+
+Adds RADIUS server to the list of servers. RADIUS requests
+will be sent to servers in the round-robin way. Maximum numbers
+of servers in the list is 8. Default port number is 1812.
+
+	radius_client add server <ip address> [port <port number>]
+
+Example:
+
+	radius_client add server 192.168.5.2 port 1612
+
+### radius_client add src ip 
+
+Adds an ip address to the list of source ip addresses that will be used
+by the TheRouter RADIUS client to send RADIUS requests. A source
+ip address must be assigned to a VIF.
+
+	radius_client add src ip <ip address>
+
+Example:
+
+	radius_client add src ip 192.168.5.111
+
+
+### radius_client set secret
+
+Sets the RADIUS client secret.
+
+	radius_client set secret "secret"
+
+Example:
+
+	radius_client set secret "1234abcd"
+
+### coa server set secret
+
+Sets the RADIUS CoA server secret.
+
+	coa server set secret "secret"
+
+Example:
+
+	coa server set secret "abcd1234"
+
+## RADIUS Accounting
+
+### radius_client set secret
+
+Sets the RADIUS accounting client secret.
+
+	radius_client set accounting secret "secret"
+
+Example:
+
+	radius_client set accounting secret "1234abcd"
+
+### radius_client add server
+
+Adds a new RADIUS accounting server to the list of servers. RADIUS requests
+will be sent to servers in the round-robin way. Maximum numbers
+of servers in the list is 8. Default port number is 1813.
+
+	radius_client add accounting server <ip address> [port <port number>]
+
+Example:
+
+	radius_client add accounting server 192.168.5.2 port 1813
+
+## Radius Accounting sysctl variables
+
+### radius_accounting
+
+A boolean sysctl variable that globally enables or disables the radius accounting
+  
+Note that the "vif_stat" sysctl variable should be set to 1, otherwise
+accounting request's packets and bytes counters will contain zero values.
+
+### radius_accounting_interim
+
+A boolean sysctl variable that enables or disables sending radius accounting
+interim requests.
+
+### radius_accounting_interim_interval
+
+  A integer sysctl variable that defines how often to send interim requests, seconds.
+
+## Radius attributes
+
+TheRouter VAS:
+
+	VENDOR       TheRouter     12345
+	BEGIN-VENDOR TheRouter
+	    ATTRIBUTE therouter_ingress_cir 1 integer
+	    ATTRIBUTE therouter_engress_cir 2 integer
+	    ATTRIBUTE therouter_ipv4_addr 3 integer
+	    ATTRIBUTE therouter_ipv4_mask 4 integer
+	    ATTRIBUTE therouter_outer_vid 5 integer
+	    ATTRIBUTE therouter_inner_vid 6 integer
+	    ATTRIBUTE therouter_ip_unnumbered 7 integer
+	    ATTRIBUTE therouter_port_id 8 integer
+	    ATTRIBUTE therouter_ipv4_gw 9 integer
+	    ATTRIBUTE therouter_pbr 10 integer
+	    ATTRIBUTE therouter_install_subsc_route 17 integer
+	    ATTRIBUTE therouter_subsc_ttl 18 integer
+	    ATTRIBUTE therouter_subsc_static_arp 19 integer
+	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
+	    ATTRIBUTE therouter_subsc_rp_filter 21 integer
+	END-VENDOR   TheRouter
+
+### therouter_ingress_cir
+
+Ingress CIR (commited information rate) - kbit/s
+It's used to limit the bandwith availabe for any type of subscriber.
+Ingress direction means the direction from the subscriber to TheRouter interface. 
+
+### therouter_egress_cir
+
+Egress CIR (commited information rate) - kbit/s
+It's used to limit the bandwith availabe for any type of subscriber.
+Egress direction means the direction from the TheRouter to the subscriber. 
+
+### therouter_subsc_ttl
+
+Subscriber's session time to live in seconds.
+
+#### therouter_install_subsc_route
+
+Value 1 of this attribute instructs TheRouter to
+intstall subscriber ipv4 address /32 prefix into the main 
+routing table.
+
+#### therouter_subsc_static_arp
+
+Value 1 of this attribute instructs TheRouter to
+intstall the static arp record for L2 subscriber.
+
+#### therouter_subsc_proxy_arp
+
+The attribute with value 1 instructs TheRouter to enable
+the Proxy ARP on dynamic VIFs (vlan per subscriber).
+
+Note that to enable the Proxy ARP for L2 subscribers
+the Proxy ARP flag should be used in the VIF configuration command
+when the L2 subscriber parent interface is created. 
+
+#### therouter_subsc_rp_filter
+
+The attribute with value 1 instructs TheRouter to enable
+the Reverse Path Filter on dynamic VIFs (vlan per subscriber) 
+
+Note that to enable the Reverse Path Filter for L2 subscribers
+the 'rpf' flag should be used in the VIF configuration command
+when the L2 subscriber's parent interface is created. 
+
+### therouter_pbr
+
+Description is available 
+<a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#pbr-rules">here</a>
+
+## IPoE subsribers
+
+### subsc_vif_max
+
+A startup integer sysctl variable that defines the maximum number of concurrent IPoE subscribers.
+The variable can be used only in the startup configuration file section.
+
+### install_subsc_linux_routes
+
+A boolean sysctl variable. When enabled TheRouter will add/remove linux kernel /32 routes for ipoe subscriber's ip addresses.
+Linux kernel routes are installed to the linux 'lo' interface in the namespace therouter is running in.
+This option allows to announce subscriber's /32 prefixes by using the "redisribute kernel" command
+of FRR/Quagga bgpd or ospfd daemons. 
+
+### subsc_initiate_by_egress_pkts
+
+A boolean sysctl variable that instructs TheRouter 
+to initiate a new L2 connected subscriber sessions if an unclassified egress packet
+is received.
+
+### subsc_initiate_by_ingress_pkts
+
+A boolean sysctl variable that instructs TheRouter 
+to initiate a new L2 connected subscriber sessions if an unclassified ingress packets
+is received.
+
+### l2_subsc_initiate_by_dhcp
+
+A boolean sysctl variable that instructs TheRouter to 
+initiate a new L2 connected subscriber sessions when the DHCP ACK message goes
+through TheRouter's DHCP Relay subsystem.
+
+### subsc_update_expiration_by_ingress_pkts
+
+A boolean sysctl variable that instructs TheRouter to 
+update the expiration/TTL time of L2 subscribers when an ingress packet
+is received. Default value is true (1).
+
+### subsc_update_expiration_by_egress_pkts
+
+A boolean sysctl variable that instructs TheRouter to 
+update the expiration/TTL time of L2 subscribers when an egress packet
+is received. Default value is true (1).
+
+### l2_subsc_arp_security
+
+A boolean sysctl variable. When enabled TheRouter will filter ARP requests on VIFs with flag 'l2_subsc'
+and will reply only to requests received from authorized L2 subscribers.
+TheRouter will be trying to find a match of the ARP source IP and 
+the ARP source hardware address in a request to the IP and the MAC address pair 
+of one of online L2 subscribers and if no match is found, the request will be ignored.
+Also it will check that the ARP request has been received from the VIF the matching 
+subscriber is connected to.
+
+## DHCP Relay
+
+### enabling DHCP relay
+
+Globally enables the DHCP relay function.
+
+	sysctl set dhcp_relay_enabled 1
+
+### configuring the relay address
+
+Setups the address of DHCP server to relay requests to
+
+	dhcp_relay <ipv4_address>
+
+### configuring the DHCP Option82 rewrite function
+
+	dhcp_relay opt82 mode <mode>
+
+the mode is one of the following values:
+
+ - rewrite_off - turn off option82 rewrite/insert function;
+ - rewrite_if_doesnt_exist - insert remote_id and circuit_id suboptions
+only if the request doesn't already contain dhcp option82;
+ - rewrite - rewrite or insert both remote_id and circuit_id DHCP option82 suboptions;
+ - rewrite_circuit_id - rewrite or insert only the circuit_id DHCP option82 suboption;
+ - rewrite_remote_id - rewrite or insert only the remote_id DHCP option82 suboption;
+
+### configuring the DHCP gateway-ip address (giaddr)
+
+Sets the global DHCP relay giaddr address. When defined TheRouter will
+use this address instead of choosing an ip address with minimum value from
+the interface the DHCP request was received at.
+
+	dhcp_relay giaddr <ipv4>
+
+### configuring content of the remote_id suboption
+
+	dhcp_relay opt82 remote_id "tr_h4"
+
+### circuit_id suboption format
+
+ TheRouter writes 6 bytes of data into the circuit_id option.
+ This data include the following properties of the interface the DHCP request was received on:
+ 
+ - 2 bytes - port_id
+ - 2 bytes - svlan_id
+ - 2 bytes - cvlan_id
+
+### dhcp_relay_opt82_curcuit_id_plain_text
+
+A boolean sysctl variable that instruct TheRouter to use a plain text format 
+for the circuit_id suboption.
+
+## Range commands
+
+Some commands could be applied to a set of interfaces
+or create a set of interfaces. Those type of commands
+are called 'range' commands.
+
+Syntax of a range command is similar to the syntax of corresponing
+command that operates on a single VIF.
+
+The main purpuse of the range commands is to create multiple
+interfaces with the same parameters but different vlan numbers.
+
+## VIF range commands
+
+### vif add range
+
+	vif add name <name> port <port_num> type <type> range svid <vlan_range> cvid <vlan_range> [flags <flag1,flag2...>] [mtu <mtu>]
+
+Where 'vlan_range' is a vlan number, or a vlan range, for example 
+
+	svid 4 cvid 100 200
+
+would create 101 VIFs from vlan number 4.100 to 4.200
+
+	svid 4 5 cvid 100 200
+
+would create 202 VIFs from vlan number 4.100 to 5.200.
+The rest of parameters is the same as for the simple 'vif add' command. 
+
+Example:
+
+	vif add name vlanr port 0 type qinq range svid 2079 cvid 2500 2800 flags l2_subs
+
+### vif del range
+
+	vif del range svid <vlan_range> cvid <vlan_range> name <name>
+
+### ip addr add range
+
+	ip addr add svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+
+### ip addr del range
+
+	ip addr del svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+
+### vif acl add range
+
+	vif acl add svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+
+### vif acl del range
+
+	vif acl del svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id>
+
+### vif acl mod range
+
+	vif acl modify svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+
