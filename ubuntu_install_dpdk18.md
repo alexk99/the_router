@@ -3,7 +3,7 @@
 Latest 30 day trial build of TheRouter is available only by request.
 Please contact alex at therouter.net.
 
-Here are installation steps for Ubuntu 16.04.
+Here are installation steps for Ubuntu 18.04.
 
 ## Install the following utilities and libs:
 
@@ -23,6 +23,7 @@ Here are installation steps for Ubuntu 16.04.
 	apt install rpm
 	apt install libreadline6 libreadline6-dev
 	apt install libnuma-dev
+	apt install libnl-genl-3-dev
 
 ## Install libcap
 
@@ -34,34 +35,26 @@ Here are installation steps for Ubuntu 16.04.
 	make install
 
 ## Install Proplib
-
-Download <a href="http://therouter.net/downloads/proplib-0.6.3.tar.xz">proplib-0.6.3.tar.xz</a>
-
-		tar xvf ./proplib-0.6.3.tar.xz
-		cd ./proplib-0.6.3
-		./configure
-		make
-		make install
+		
+	wget http://therouter.net/downloads/proplib-0.6.3.tar.xz
+	tar xvf ./proplib-0.6.3.tar.xz
+	cd ./proplib-0.6.3
+	./configure
+	make
+	make install
 
 ## Install libcdb
- 
- * Download <a href="http://therouter.net/downloads/libcdb.tar.gz">libcdb.tar.gz</a>
-   or
-
-		git clone https://github.com/rmind/libcdb
-
- * Download the patch <a href="http://therouter.net/downloads/libcdb_alexk.patch">libcdb_alexk.patch</a>
- * Execute the following commands:
- 
-
-		cd ./libcdb
-		cat libcdb_alexk.patch | patch -p1
-
-		export LIBDIR=lib
-		export INCDIR=include
-		export DESTDIR=/usr/local
-		make all
-		make install
+  
+	wget http://therouter.net/downloads/libcdb.tar.gz
+	tar xvf ./libcdb.tar.gz
+	cd ./libcdb
+	wget http://therouter.net/downloads/libcdb_alexk.patch
+	cat libcdb_alexk.patch | patch -p1
+	export LIBDIR=lib
+	export INCDIR=include
+	export DESTDIR=/usr/local
+	make all
+	make install
 
 Notes: install process ends successfully even if it indicates that there has been the following error:
 
@@ -74,82 +67,75 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 ## Install qsbr
 
- * Download <a href="http://therouter.net/downloads/libqsbr.tar.gz">libqsbr.tar.gz</a>
- * Download the patch <a href="http://therouter.net/downloads/libqsbr_alexk.patch">libqsbr_alexk.patch</a>
- * Execute the following commands:
-
-		tar xzvf libqsbr.tar.gz
-		cd ./libqsbr/src
-		cat libqsbr_alexk.patch | patch -p1
-
-		export LIBDIR=lib
-		export INCDIR=include/qsbr
-		export DESTDIR=/usr/local
-		make all
-		make install
-
+	wget http://therouter.net/downloads/libqsbr.tar.gz
+	tar xzvf libqsbr.tar.gz
+	cd ./libqsbr/src
+	wget http://therouter.net/downloads/libqsbr_alexk.patch
+	cat libqsbr_alexk.patch | patch -p1
+	export LIBDIR=lib
+	export INCDIR=include/qsbr
+	export DESTDIR=/usr/local
+	make all
+	make install
 
 ## Install bpfjit
 
- * Download <a href="http://therouter.net/downloads/bpfjit.tar.gz">bpfjit.tar.gz</a>
- * Download <a href="http://therouter.net/downloads/sljit-0.92.tgz">sljit-0.92.tgz</a>
- * Execute the following commands:
-
-		mkdir /usr/lib64
-		tar xzvf ./bpfjit.tar.gz
-		tar xzvf ./sljit-0.92.tgz
-		cd ./bpfjit/sljit/
-		cp -rpn ../../sljit-0.92/* ./
-		cd ..
+	wget http://therouter.net/downloads/bpfjit.tar.gz
+	wget http://therouter.net/downloads/sljit-0.92.tgz
+	mkdir /usr/lib64
+	tar xzvf ./bpfjit.tar.gz
+	tar xzvf ./sljit-0.92.tgz
+	cd ./bpfjit/sljit/
+	cp -rpn ../../sljit-0.92/* ./
+	cd ..
 
  * Edit ./SPECS/libbpfjit.spec and delete or comment the following lines:
  
-		BuildRequires:>make
-		BuildRequires:>libtool
+	BuildRequires:>make
+	BuildRequires:>libtool
 
  * Run
 
-		make rpm
-		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
+	make rpm
+	rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
 
 
 ## Install NPF
 
  * Clone NPF (https://github.com/alexk99/npf/tree/pptp_alg)
 
-		git clone -b pptp_alg https://github.com/alexk99/npf
+	git clone -b pptp_alg https://github.com/alexk99/npf
 
  * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
-		cp city.h /usr/local/include/
+	cp city.h /usr/local/include/
 
  * Run the following commands:
  
-		cd npf/src
-		
-		cd libnpf/net
-		rm ./npf.h
-		ln -s ../../kern/npf.h npf.h		
-		cd ../..
-		
-		export DESTDIR=/
-		export LIBDIR=/usr/lib64
-		export INCDIR=/usr/local/include
-		export MANDIR=/usr/local
-		make
-		make install
+	cd npf/src	
+	cd libnpf/net
+	rm ./npf.h
+	ln -s ../../kern/npf.h npf.h		
+	cd ../..
+	
+	export DESTDIR=/
+	export LIBDIR=/usr/lib64
+	export INCDIR=/usr/local/include
+	export MANDIR=/usr/local
+	make
+	make install
 
 ## Update system library paths
 
  Add the following lines to the /etc/ld.so.conf.d/router.conf
 
-		/usr/lib64
-		/usr/local/lib
-		/usr/lib/x86_64-linux-gnu
+	/usr/lib64
+	/usr/local/lib
+	/usr/lib/x86_64-linux-gnu
 
  Run
 
-		ldconfig
+	ldconfig
 
 ## Install DPDK
 
@@ -157,18 +143,18 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 * Make sure the following options are enabled:
 
-		UIO support
-		   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
-		      symbol UIO_PCI_GENERIC
-		
-		PROC_PAGE_MONITOR
-		   File systems -> Pseudo filesystems -> /proc file system support      
-		
-		HUGETLBFS
-		  File systems -> Pseudo filesystems
-		
-		HPET and HPET_MMAP
-		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
+	UIO support
+	   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
+	      symbol UIO_PCI_GENERIC
+	
+	PROC_PAGE_MONITOR
+	   File systems -> Pseudo filesystems -> /proc file system support      
+	
+	HUGETLBFS
+	  File systems -> Pseudo filesystems
+	
+	HPET and HPET_MMAP
+	   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
 * Turn on linux boot time options:
 	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
@@ -219,24 +205,21 @@ Notes: install process ends successfully even if it indicates that there has bee
 		
 ### Patch DPDK
 
-Download the patches:
+Download and apply the patches:
 
- * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch">bonding_mempool</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch">bonding_rx_capabilities</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch">librte_ip_frag_add_mbuf_counter</a>
- * <a href="http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch">rte_timer</a>
+	wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch
+	wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch
+	wget http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch
+	wget http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch
 
-Apply the patches:
-
-		cat ./bonding_mempool.patch | patch -p1
-		cat ./bonding_rx_capabilities.patch | patch -p1
-		cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
-		cat ./rte_timer.patch | patch -p1
+	cat ./bonding_mempool.patch | patch -p1
+	cat ./bonding_rx_capabilities.patch | patch -p1
+	cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
+	cat ./rte_timer.patch | patch -p1
 
 Run the following commands:		
 
-		make install T=x86_64-native-linuxapp-gcc
-
+	make install T=x86_64-native-linuxapp-gcc
 
 ## TheRouter
 
@@ -244,11 +227,11 @@ Run the following commands:
 
  * city hash
 
-		git clone https://github.com/google/cityhash
-		cd ./cityhash/
-		./configure
-		make all check CXXFLAGS="-g -O3"
-		make install
+	git clone https://github.com/google/cityhash
+	cd ./cityhash/
+	./configure
+	make all check CXXFLAGS="-g -O3"
+	make install
 
 ### Download TheRouter 
 
