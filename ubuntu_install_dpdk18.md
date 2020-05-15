@@ -7,123 +7,122 @@ Here are installation steps for Ubuntu 18.04.
 
 ## Install the following utilities and libs:
 
-	apt install g++
-	apt install libjemalloc-dev
-	apt install libpcap-dev
-	apt install python
-	apt install libpcre2-8-0
-	apt install autoconf
-	apt install zlib1g-dev
-	apt install flex
-	apt install byacc
-	apt install cmake
-	apt install libtool
-	apt install libtool-bin
-	apt install subversion
-	apt install rpm
-	apt install libreadline6 libreadline6-dev
-	apt install libnuma-dev
-	apt install libnl-genl-3-dev
+		apt install g++
+		apt install libjemalloc-dev
+		apt install libpcap-dev
+		apt install python
+		apt install libpcre2-8-0
+		apt install autoconf
+		apt install zlib1g-dev
+		apt install flex
+		apt install byacc
+		apt install cmake
+		apt install libtool
+		apt install libtool-bin
+		apt install subversion
+		apt install rpm
+		apt install libreadline6 libreadline6-dev
+		apt install libnuma-dev
+		apt install libnl-genl-3-dev
 
 ## Install libcap
 
-	wget http://www.tcpdump.org/release/libpcap-1.5.3.tar.gz
-	tar xzvf ./libpcap-1.5.3.tar.gz
-	cd ./libpcap-1.5.3/
-	./configure
-	make
-	make install
+		wget http://www.tcpdump.org/release/libpcap-1.5.3.tar.gz
+		tar xzvf ./libpcap-1.5.3.tar.gz
+		cd ./libpcap-1.5.3/
+		./configure
+		make
+		make install
 
 ## Install Proplib
-		
-	wget http://therouter.net/downloads/proplib-0.6.3.tar.xz
-	tar xvf ./proplib-0.6.3.tar.xz
-	cd ./proplib-0.6.3
-	./configure
-	make
-	make install
+
+		wget http://therouter.net/downloads/proplib-0.6.3.tar.xz
+		tar xvf ./proplib-0.6.3.tar.xz
+		cd ./proplib-0.6.3
+		./configure
+		make
+		make install
 
 ## Install libcdb
-  
-	wget http://therouter.net/downloads/libcdb.tar.gz
-	tar xvf ./libcdb.tar.gz
-	cd ./libcdb
-	wget http://therouter.net/downloads/libcdb_alexk.patch
-	cat libcdb_alexk.patch | patch -p1
-	export LIBDIR=lib
-	export INCDIR=include
-	export DESTDIR=/usr/local
-	make all
-	make install
+
+		wget http://therouter.net/downloads/libcdb.tar.gz
+		tar xvf ./libcdb.tar.gz
+		cd ./libcdb
+		wget http://therouter.net/downloads/libcdb_alexk.patch
+		cat libcdb_alexk.patch | patch -p1
+		export LIBDIR=lib
+		export INCDIR=include
+		export DESTDIR=/usr/local
+		make all
+		make install
 
 Notes: install process ends successfully even if it indicates that there has been the following error:
 
-	make -C man install
-	make[1]: Entering directory '/home/alex/libcdb/man'
-	make[1]: *** No rule to make target 'install'.  Stop.
-	make[1]: Leaving directory '/home/alex/libcdb/man'
-	Makefile:5: recipe for target 'install' failed
-	make: *** [install] Error 2	
+		make -C man install
+		make[1]: Entering directory '/home/alex/libcdb/man'
+		make[1]: *** No rule to make target 'install'.  Stop.
+		make[1]: Leaving directory '/home/alex/libcdb/man'
+		Makefile:5: recipe for target 'install' failed
+		make: *** [install] Error 2	
 
 ## Install qsbr
 
-	wget http://therouter.net/downloads/libqsbr.tar.gz
-	tar xzvf libqsbr.tar.gz
-	cd ./libqsbr/src
-	wget http://therouter.net/downloads/libqsbr_alexk.patch
-	cat libqsbr_alexk.patch | patch -p1
-	export LIBDIR=lib
-	export INCDIR=include/qsbr
-	export DESTDIR=/usr/local
-	make all
-	make install
+		wget http://therouter.net/downloads/libqsbr.tar.gz
+		tar xzvf libqsbr.tar.gz
+		cd ./libqsbr/src
+		wget http://therouter.net/downloads/libqsbr_alexk.patch
+		cat libqsbr_alexk.patch | patch -p1
+		export LIBDIR=lib
+		export INCDIR=include/qsbr
+		export DESTDIR=/usr/local
+		make all
+		make install
 
 ## Install bpfjit
 
-	wget http://therouter.net/downloads/bpfjit.tar.gz
-	wget http://therouter.net/downloads/sljit-0.92.tgz
-	mkdir /usr/lib64
-	tar xzvf ./bpfjit.tar.gz
-	tar xzvf ./sljit-0.92.tgz
-	cd ./bpfjit/sljit/
-	cp -rpn ../../sljit-0.92/* ./
-	cd ..
+		wget http://therouter.net/downloads/bpfjit.tar.gz
+		wget http://therouter.net/downloads/sljit-0.92.tgz
+		mkdir /usr/lib64
+		tar xzvf ./bpfjit.tar.gz
+		tar xzvf ./sljit-0.92.tgz
+		cd ./bpfjit/sljit/
+		cp -rpn ../../sljit-0.92/* ./
+		cd ..
 
  * Edit ./SPECS/libbpfjit.spec and delete or comment the following lines:
- 
-	BuildRequires:>make
-	BuildRequires:>libtool
+
+		BuildRequires:>make
+		BuildRequires:>libtool
 
  * Run
 
-	make rpm
-	rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
-
+		make rpm
+		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
 
 ## Install NPF
 
  * Clone NPF (https://github.com/alexk99/npf/tree/pptp_alg)
 
-	git clone -b pptp_alg https://github.com/alexk99/npf
+		git clone -b pptp_alg https://github.com/alexk99/npf
 
  * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
-	cp city.h /usr/local/include/
+		cp city.h /usr/local/include/
 
  * Run the following commands:
- 
-	cd npf/src	
-	cd libnpf/net
-	rm ./npf.h
-	ln -s ../../kern/npf.h npf.h		
-	cd ../..
-	
-	export DESTDIR=/
-	export LIBDIR=/usr/lib64
-	export INCDIR=/usr/local/include
-	export MANDIR=/usr/local
-	make
-	make install
+
+		cd npf/src	
+		cd libnpf/net
+		rm ./npf.h
+		ln -s ../../kern/npf.h npf.h		
+		cd ../..
+		
+		export DESTDIR=/
+		export LIBDIR=/usr/lib64
+		export INCDIR=/usr/local/include
+		export MANDIR=/usr/local
+		make
+		make install
 
 ## Update system library paths
 
@@ -158,11 +157,11 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 * Turn on linux boot time options:
 	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
-	
+
 			GRUB_CMDLINE_LINUX="intel_idle.max_cstate=1 isolcpus=1,2,3,4,5,6,7,9,10,11,12,13,14,15 default_hugepagesz=2M hugepagesz=2M hugepages=3072"
 
 	- Run
-		
+
 			update-grub
 
 	- Note:
@@ -190,11 +189,11 @@ Notes: install process ends successfully even if it indicates that there has bee
 			mkdir /mnt/huge
 
 	- Create a mount point entry in the /etc/fstab
-	
+
 			huge         /mnt/huge   hugetlbfs pagesize=2M   0       0
-	
+
 	- Mount hugepages
-	
+
 			mount huge
 
 * download DPDK 18.11.3 (LTS)
@@ -202,7 +201,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 		wget https://fast.dpdk.org/rel/dpdk-18.11.3.tar.xz
 		tar xvf dpdk-18.11.3.tar.xz
 		cd ./dpdk-stable-18.11.3
-		
+
 ### Patch DPDK
 
 Download and apply the patches:
@@ -211,7 +210,7 @@ Download and apply the patches:
 	wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch
 	wget http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch
 	wget http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch
-
+	
 	cat ./bonding_mempool.patch | patch -p1
 	cat ./bonding_rx_capabilities.patch | patch -p1
 	cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
@@ -274,13 +273,13 @@ For configuration examples and options see the page <a href="/conf_options.md">C
   one NIC then delete the second -w parameter.
 
   Start TheRouter
-  
+
 		therouter_start.sh /etc/router.conf
 
   Check the syslog to ensure that TheRouter has started successfully.
-  
+
  		ROUTER: router configuration file '/etc/router.conf' successfully loaded  
- 		
+
   Use the 'rcli' utility from the archive to configure and control TheRouter
 
 		# $rvrf rcli sh uptime
