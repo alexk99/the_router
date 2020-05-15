@@ -142,18 +142,18 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 * Make sure the following options are enabled:
 
-	UIO support
-	   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
-	      symbol UIO_PCI_GENERIC
-	
-	PROC_PAGE_MONITOR
-	   File systems -> Pseudo filesystems -> /proc file system support      
-	
-	HUGETLBFS
-	  File systems -> Pseudo filesystems
-	
-	HPET and HPET_MMAP
-	   Device Drivers -> Character devices -> HPET - High Precision Event Timer
+		UIO support
+		   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
+		      symbol UIO_PCI_GENERIC
+		
+		PROC_PAGE_MONITOR
+		   File systems -> Pseudo filesystems -> /proc file system support      
+		
+		HUGETLBFS
+		  File systems -> Pseudo filesystems
+		
+		HPET and HPET_MMAP
+		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
 
 * Turn on linux boot time options:
 	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
@@ -196,25 +196,25 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 			mount huge
 
-* download DPDK 18.11.3 (LTS)
+### Patch and install DPDK
+
+Download DPDK 18.11.3
 
 		wget https://fast.dpdk.org/rel/dpdk-18.11.3.tar.xz
 		tar xvf dpdk-18.11.3.tar.xz
 		cd ./dpdk-stable-18.11.3
 
-### Patch DPDK
-
 Download and apply the patches:
 
-	wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch
-	wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch
-	wget http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch
-	wget http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch
-	
-	cat ./bonding_mempool.patch | patch -p1
-	cat ./bonding_rx_capabilities.patch | patch -p1
-	cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
-	cat ./rte_timer.patch | patch -p1
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_mempool.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch
+		
+		cat ./bonding_mempool.patch | patch -p1
+		cat ./bonding_rx_capabilities.patch | patch -p1
+		cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
+		cat ./rte_timer.patch | patch -p1
 
 Run the following commands:		
 
