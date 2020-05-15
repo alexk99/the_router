@@ -128,13 +128,13 @@ Notes: install process ends successfully even if it indicates that there has bee
 
  Add the following lines to the /etc/ld.so.conf.d/router.conf
 
-	/usr/lib64
-	/usr/local/lib
-	/usr/lib/x86_64-linux-gnu
+		/usr/lib64
+		/usr/local/lib
+		/usr/lib/x86_64-linux-gnu
 
  Run
 
-	ldconfig
+		ldconfig
 
 ## Install DPDK
 
