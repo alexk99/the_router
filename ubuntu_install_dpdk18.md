@@ -218,7 +218,7 @@ Download and apply the patches:
 
 Run the following commands:		
 
-	make install T=x86_64-native-linuxapp-gcc
+		make install T=x86_64-native-linuxapp-gcc
 
 ## TheRouter
 
@@ -226,11 +226,11 @@ Run the following commands:
 
  * city hash
 
-	git clone https://github.com/google/cityhash
-	cd ./cityhash/
-	./configure
-	make all check CXXFLAGS="-g -O3"
-	make install
+		git clone https://github.com/google/cityhash
+		cd ./cityhash/
+		./configure
+		make all check CXXFLAGS="-g -O3"
+		make install
 
 ### Download TheRouter 
 
@@ -254,13 +254,13 @@ Use the 'lspci' utility to find out NIC's addresses.
 
 For configuration examples and options see the page <a href="/conf_options.md">Configure TheRouter</a>
 
- 	- create router.conf
+ - create router.conf
 
-			nano /etc/router.conf
+		nano /etc/router.conf
 
- 	- create NPF conf
+ - create NPF conf
 
-			nano /etc/npf.conf
+		nano /etc/npf.conf
 
 #### Run TheRouter
 
