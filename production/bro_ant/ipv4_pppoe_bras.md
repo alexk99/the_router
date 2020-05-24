@@ -10,6 +10,6 @@ network with more 100k customers.
  
 ### Stats
 
-<img src="http://therouter.net/images/production/brs_anto/pppoe-01-ng.png">
+<img src="http://therouter.net/images/production/brs_anto/pppoe_01_ng_2_2days.jpg">
 
-<img src="http://therouter.net/images/production/brs_anto/pppoe-01-ng_2_days.png">
+<img src="http://therouter.net/images/production/brs_anto/pppoe_01_ng_2_month.jpg">
