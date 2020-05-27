@@ -2330,6 +2330,11 @@ TheRouter VAS:
 	    ATTRIBUTE therouter_subsc_static_arp 19 integer
 	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
 	    ATTRIBUTE therouter_subsc_rp_filter 21 integer
+	    ATTRIBUTE therouter_shaper_type 22 integer
+	    ATTRIBUTE therouter_shaper_ingress_params 23 string
+	    ATTRIBUTE therouter_shaper_egress_params 24 string
+	    ATTRIBUTE therouter_subsc_addr_prefix_map_id 25 integer
+	    ATTRIBUTE therouter_subsc_addr_prefix_map_value 26 integer	    
 	END-VENDOR   TheRouter
 
 ### therouter_ingress_cir
@@ -2414,6 +2419,18 @@ attribute values for the multi policer is
 		- prefix_map_mode - prefix map's mode of operation: 
 		    1 - use packet's src ip address to find a match;
 		    0 - use packet's dst ip address to find a match;
+
+### therouter_subsc_addr_prefix_map_id
+
+This attribute instructs TheRouter to add subscriber's ipv4 address to
+the prefix map with the given id upon subscriber connection and to delete
+subscriber's ipv4 address from the prefix map after the subscriber has been
+disconnected.
+
+### therouter_subsc_addr_prefix_map_value
+
+Defines a value associated with the subscriber's ipv4 address added to a prefix map.
+See the description of the therouter_subsc_addr_prefix_map_id attribute.
 
 ### therouter_pbr
 
