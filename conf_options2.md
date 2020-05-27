@@ -2377,6 +2377,44 @@ Note that to enable the Reverse Path Filter for L2 subscribers
 the 'rpf' flag should be used in the VIF configuration command
 when the L2 subscriber's parent interface is created. 
 
+### therouter_shaper_ingress_params
+
+This attribute carries a string containing parameters for subscriber's ingress shaper.
+A string format depends on a shaper type. see therouter_shaper_type for the details.
+
+### therouter_shaper_egress_params
+This attribute carries a string containing parameters for subscriber's egress shaper.
+A string format depends on a shaper type. see therouter_shaper_type for the details.
+
+### therouter_shaper_type
+
+This attributes defines the type of subscriber's shaper.
+
+ - 1 - a general policer. This is the default shaper type, i.e.
+when a radius request contains no therouter_shaper_type attribute,
+TheRouter uses this type. Shapers of this type are configured using
+therouter_ingress_cir and therouter_egress_cir attributes.
+
+ - 2 - a multi policer. The multi policer applies different bandwidth 
+ limits depending on the packet src/dst ip address.
+
+Shapers of this type are configured using therouter_shaper_ingress_params
+and therouter_shaper_egress_params attributes. 
+Format of therouter_shaper_ingress_params/therouter_shaper_egress_params 
+attribute values for the multi policer is
+
+	<nb_policers/limit1/limit2/../prefix_map_id/prefix_map_mode>	
+	Where
+		- nb_policers - number of policers;
+		- limit1 - bandwidth limit of policer 1;
+		- ...
+		- limitN - bandwidth limit of policer N;
+		- prefix_map_id - id of a prefix map to classify a packet
+		  and to decide which policer apply;
+		- prefix_map_mode - prefix map's mode of operation: 
+		    1 - use packet's src ip address to find a match;
+		    0 - use packet's dst ip address to find a match;
+
 ### therouter_pbr
 
 Description is available 
