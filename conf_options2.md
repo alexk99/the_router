@@ -683,6 +683,66 @@ Tests whether a u32 set containts a VIF identifier or not.
 
 	l2set test <u32set_name> port <port_number> svid <svid> cvid <cvid>
 
+## Prefix Map
+
+The prefix map is a map containing ipv4 prefixes and 
+integer values associated with them. It can be used 
+to classify a packet and then use the value associated 
+with the prefix the packet belongs to in further packet processing.
+For example, the prefix map is used by the multi policer
+which applies different policers depending on the packet's
+source or destination address. The values associated with
+the prefix indicates the policer's number in that case.
+
+### prefix map create
+
+Creates a new prefix map with the given id.
+
+	prefix map create <prefix_map_id>
+
+
+### prefix map destroy
+
+Destroys the prefix map with the given id.
+
+	prefix map destroy <prefix_map_id>
+
+### prefix map add
+
+Adds a prefix and associated with it value
+into the prefix map with the given id.
+
+	prefix map add <prefix_map_id> <ipv4_prefix> value <value>
+
+Example:
+
+	prefix map add 10 192.168.1.115/32 value 2
+
+### prefix map del
+
+Deletes a prefix from the prefix map with the given id.
+
+	prefix map del <prefix_map_id> <ipv4_prefix>
+
+Example:
+
+	prefix map del 10 192.168.1.115/32
+
+### sh prefix map
+
+Outputs the content of a prefix map.
+
+	sh prefix map <prefix_map_id>
+
+For example:
+
+	rcli sh prefix map 10
+	prefix map id 10, num prefixes 4
+	192.168.1.116/32	3
+	192.168.1.117/32	4
+	10.11.1.10/32	101
+	192.168.1.115/32	2
+
 ## PBR rules
 
 ### ip pbr rule add
