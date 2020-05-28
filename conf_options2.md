@@ -838,10 +838,10 @@ Note that a path to the file should be double-quoted.
 ### npf connection limit filter add
 
 Adds a prefix to the NPF connection limit list.
-NPF uses the connection limit list when decides where or not
-to limit the number of connections for a particular host.
-See the description of the "npf_conn_limit_filter_mode" sysctl
-variable for more details.
+NPF uses the connection limit list when decides whether or not
+to limit the number of connections in a group.
+See the description of the "npf_conn_limit_group_by" and "npf_conn_limit_filter_mode" sysctl
+variables for more details.
 
 	npf connection limit filter add <net>/<mask>
 
@@ -852,10 +852,10 @@ Example:
 ### npf connection limit filter del
 
 Deletes a prefix from the NPF connection limit list.
-NPF uses the connection limit list when decides where or not
-to limit the number of connections for a particular host.
-See the description of the "npf_conn_limit_filter_mode" sysctl
-variable for more details.
+NPF uses the connection limit list when decides whether or not
+to limit the number of connections in a group.
+See the description of the "npf_conn_limit_group_by" and "npf_conn_limit_filter_mode" sysctl
+variables for more details.
 
 	npf connection limit filter del <net>/<mask>
 
@@ -888,8 +888,8 @@ Example:
 
 ### npf_conn_limit_group_by
 
-An integer sysctl variable that sets up mode of operation of the
-NPF connection limit function.
+An integer sysctl variable that defines a criteria
+how to group connections.
 
 	sysctl set npf_conn_limit_group_by <mode>
 	or
@@ -897,7 +897,7 @@ NPF connection limit function.
 
 Where:
  - mode
- 	 0 - don't limit the number of connections;
+ 	 0 - don't group connections and don't limit the number of connections in a group;
 	 1 - limit the number of connection in a group. group connections
 	 by the source ip address;
 	 2 - limit the number of connection in a group. group connections
