@@ -880,7 +880,9 @@ Example:
 
 ### rcli npf connection limit set
 
-Sets the maximum number of connections a host can establish.
+Sets the maximum number of connections of a group.
+See the description of "npf_conn_limit_group_by" sysctl variable to
+see how connections could be grouped.
 
 	rcli npf connection limit set <ip> <max_connections>
 
