@@ -835,6 +835,96 @@ Note that a path to the file should be double-quoted.
 
 	npf clear stat
 
+### npf connection limit filter add
+
+Adds a prefix to the NPF connection limit list.
+NPF uses the connection limit list when decides where or not
+to limit the number of connections for a particular host.
+See the description of the "npf_conn_limit_filter_mode" sysctl
+variable for more details.
+
+	npf connection limit filter add <net>/<mask>
+
+Example:
+
+	rcli npf connection limit filter add 10.11.1.0/24
+
+### npf connection limit filter del
+
+Deletes a prefix from the NPF connection limit list.
+NPF uses the connection limit list when decides where or not
+to limit the number of connections for a particular host.
+See the description of the "npf_conn_limit_filter_mode" sysctl
+variable for more details.
+
+	npf connection limit filter del <net>/<mask>
+
+Example:
+
+	rcli npf connection limit filter del 10.11.1.0/24
+
+### rcli npf connection limit get
+
+Outputs the number of connections of a host with particular ip address
+and the maximum number of connections that host can establish.
+
+	rcli npf connection limit get <ip>
+
+Example:
+
+	rcli npf connection limit get 10.11.1.10
+	ip      connections     max connections
+	10.11.1.10      114     1024
+
+### rcli npf connection limit set
+
+Sets the maximum number of connections a host can establish.
+
+	rcli npf connection limit set <ip> <max_connections>
+
+Example:
+
+	rcli npf connection limit set 10.11.1.10 1024
+
+### npf_conn_limit_group_by
+
+An integer sysctl variable that sets up mode of operation of the
+NPF connection limit function.
+
+	sysctl set npf_conn_limit_group_by <mode>
+	or
+	sysctl get npf_conn_limit_group_by
+
+Where:
+ - mode
+ 	 0 - don't limit the number of connections;
+	 1 - limit the number of connection in a group. group connections
+	 by the source ip address;
+	 2 - limit the number of connection in a group. group connections
+	 by the destination ip address;
+
+### npf_conn_limit_filter_mode
+
+An integer sysctl variable that sets up a filtering mode of the
+NPF connection limit function.
+
+	sysctl set npf_conn_limit_filter_mode <mode>
+	or
+	sysctl get npf_conn_limit_filter_mode
+
+Where:
+ - mode
+ 	 0 - turn filtering off, i.e. limit all connections;
+	 1 - turn filtering on and filter the conections with source ip addresses
+	 that match prefixes in the connection limit list;
+	 2 - turn filtering on and filter the conections with adestination ip addresses
+	 that match prefixes in the connection limit list;
+	 
+### npf_conn_limit_default_max_conn
+
+An integer sysctl variable that defines the default maximum number of connections
+in the group.
+
 ### NPF sysctl variables controlling connection tracking state timeouts
 
 	* NPF_TCPS_CLOSED
