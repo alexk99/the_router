@@ -865,8 +865,10 @@ Example:
 
 ### rcli npf connection limit get
 
-Outputs the number of connections of a host with particular ip address
-and the maximum number of connections that host can establish.
+Outputs the number of connections in the group with the given ip address
+and the maximum number of connections that can be in the group.
+See the description of "npf_conn_limit_group_by" sysctl variable to
+see how connections could be grouped.
 
 	rcli npf connection limit get <ip>
 
