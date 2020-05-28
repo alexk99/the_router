@@ -899,15 +899,14 @@ how to group connections.
 	or
 	sysctl get npf_conn_limit_group_by
 
-Where:
- - mode
+Where mode is:
 
- 	 0 - don't group connections and don't limit the number of connections 
-	     in a group;
-	 1 - limit the number of connection in a group. group connections
-	     by the source ip address;
-	 2 - limit the number of connection in a group. group connections
-	     by the destination ip address;
+	0 - don't group connections and don't limit the number of connections 
+	    in a group;
+	1 - limit the number of connection in a group. group connections
+	    by the source ip address;
+	2 - limit the number of connection in a group. group connections
+	    by the destination ip address;
 
 ### npf_conn_limit_filter_mode
 
@@ -918,14 +917,13 @@ NPF connection limit function.
 	or
 	sysctl get npf_conn_limit_filter_mode
 
-Where:
- - mode
+Where mode is:
  
- 	 0 - turn filtering off, i.e. limit all connections;
-	 1 - turn filtering on and filter the conections with source ip addresses
-	     that match prefixes in the connection limit list;
-	 2 - turn filtering on and filter the conections with adestination ip addresses
-	     that match prefixes in the connection limit list;
+	0 - turn filtering off, i.e. limit all connections;
+	1 - turn filtering on and filter the conections with source ip addresses
+	    that match prefixes in the connection limit list;
+	2 - turn filtering on and filter the conections with adestination ip addresses
+	    that match prefixes in the connection limit list;
 
 ### npf_conn_limit_default_max_conn
 
