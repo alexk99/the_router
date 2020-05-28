@@ -901,11 +901,13 @@ how to group connections.
 
 Where:
  - mode
- 	 0 - don't group connections and don't limit the number of connections in a group;
+
+ 	 0 - don't group connections and don't limit the number of connections 
+	     in a group;
 	 1 - limit the number of connection in a group. group connections
-	 by the source ip address;
+	     by the source ip address;
 	 2 - limit the number of connection in a group. group connections
-	 by the destination ip address;
+	     by the destination ip address;
 
 ### npf_conn_limit_filter_mode
 
@@ -918,12 +920,13 @@ NPF connection limit function.
 
 Where:
  - mode
+ 
  	 0 - turn filtering off, i.e. limit all connections;
 	 1 - turn filtering on and filter the conections with source ip addresses
-	 that match prefixes in the connection limit list;
+	     that match prefixes in the connection limit list;
 	 2 - turn filtering on and filter the conections with adestination ip addresses
-	 that match prefixes in the connection limit list;
-	 
+	     that match prefixes in the connection limit list;
+
 ### npf_conn_limit_default_max_conn
 
 An integer sysctl variable that defines the default maximum number of connections
