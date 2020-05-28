@@ -276,10 +276,10 @@ Table of Contents
          * [therouter_ingress_cir](#therouter_ingress_cir)
          * [therouter_egress_cir](#therouter_egress_cir)
          * [therouter_subsc_ttl](#therouter_subsc_ttl)
-            * [therouter_install_subsc_route](#therouter_install_subsc_route)
-            * [therouter_subsc_static_arp](#therouter_subsc_static_arp)
-            * [therouter_subsc_proxy_arp](#therouter_subsc_proxy_arp)
-            * [therouter_subsc_rp_filter](#therouter_subsc_rp_filter)
+         * [therouter_install_subsc_route](#therouter_install_subsc_route)
+         * [therouter_subsc_static_arp](#therouter_subsc_static_arp)
+         * [therouter_subsc_proxy_arp](#therouter_subsc_proxy_arp)
+         * [therouter_subsc_rp_filter](#therouter_subsc_rp_filter)
          * [therouter_shaper_ingress_params](#therouter_shaper_ingress_params)
          * [therouter_shaper_egress_params](#therouter_shaper_egress_params)
          * [therouter_shaper_type](#therouter_shaper_type)
@@ -2526,18 +2526,18 @@ Egress direction means the direction from the TheRouter to the subscriber.
 
 Subscriber's session time to live in seconds.
 
-#### therouter_install_subsc_route
+### therouter_install_subsc_route
 
 Value 1 of this attribute instructs TheRouter to
 intstall subscriber ipv4 address /32 prefix into the main 
 routing table.
 
-#### therouter_subsc_static_arp
+### therouter_subsc_static_arp
 
 Value 1 of this attribute instructs TheRouter to
 intstall the static arp record for L2 subscriber.
 
-#### therouter_subsc_proxy_arp
+### therouter_subsc_proxy_arp
 
 The attribute with value 1 instructs TheRouter to enable
 the Proxy ARP on dynamic VIFs (vlan per subscriber).
@@ -2546,7 +2546,7 @@ Note that to enable the Proxy ARP for L2 subscribers
 the Proxy ARP flag should be used in the VIF configuration command
 when the L2 subscriber parent interface is created. 
 
-#### therouter_subsc_rp_filter
+### therouter_subsc_rp_filter
 
 The attribute with value 1 instructs TheRouter to enable
 the Reverse Path Filter on dynamic VIFs (vlan per subscriber) 
