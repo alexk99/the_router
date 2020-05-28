@@ -1,5 +1,5 @@
 # HCAR
 HCAR is a hierarchial shaper/policer.
 
-## A haerarchy example
+## A hierarchy example
 <img src="http://therouter.net/images/hcar.png">
