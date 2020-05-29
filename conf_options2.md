@@ -938,9 +938,9 @@ NPF connection limit function.
 Where mode is:
  
 	0 - turn filtering off, i.e. limit all connections;
-	1 - turn filtering on and filter the conections with source ip addresses
+	1 - turn filtering on and limit only the conections with source ip addresses
 	    that match prefixes in the connection limit list;
-	2 - turn filtering on and filter the conections with adestination ip addresses
+	2 - turn filtering on and limit only the conections with destination ip addresses
 	    that match prefixes in the connection limit list;
 
 ### npf_conn_limit_default_max_conn
