@@ -2,8 +2,6 @@
   <img src="http://therouter.net/images/github_header5.png" />
 </p>
 
-# Work in progress.. Stay tuned.
-
 TheRouter is a software packet router based on one of the fastest packet processing libraries. </a> Using modern software technique such as QSBR, lockless data structures and <a href="https://github.com/efficient/libcuckoo">cuckoo hashing</a> enables the router to perform routing (<a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">up to 32Mpps</a>) and NAT (<a href="https://github.com/alexk99/the_router/blob/master/source_nat.md">up to 6 Mpps</a>) on high packet rates using commodity hardware.
 
 ## It supports
