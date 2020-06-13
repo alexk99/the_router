@@ -215,6 +215,21 @@ The detailed description of the configuration commands will be provided in the f
 	  pppoe ac_name "trouter1"
 	  pppoe service name "*"
 		
+	  #
+	  # pppoe profiles
+	  #
+	  pppoe profile create 1
+	  pppoe profile set 1 service name "*"
+	  pppoe profile set 1 pado delay 0
+
+	  pppoe profile create 2
+	  pppoe profile set 2 service name sn1
+	  pppoe profile set 2 pado delay 200
+	  
+	  # use profile 1 on interfaces pppoe1 and pppoe2
+	  pppoe profile add 1 vif pppoe1
+	  pppoe profile add 1 vif pppoe2
+	  
 	  # 
 	  # ppp
 	  #
