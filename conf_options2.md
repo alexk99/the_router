@@ -2160,7 +2160,17 @@ Example
 
 ### rad_acct_on_off_pkts
 
-An boolen startup sysctl variable that enables the use of the radius accounting on/off packets.
+An boolean startup sysctl variable that enables the use of the radius accounting on/off packets.
+
+### pppoe_max_nb_delayed_pado
+
+An integer variable that defines the maximum number of PPPoE PADO packets that could be delayed.
+at the same time. Once TR receives and delays that number of PADI/PADO all new PADI packets will be dropped.
+
+### pppoe_nb_delayed_pado
+
+An integer read-only sysctl variable which contains the number of currently delayed PADO packets that are
+waiting to be sent to the wire.
 
 ## PPPoE IPv6
 
