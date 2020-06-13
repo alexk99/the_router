@@ -2056,6 +2056,37 @@ PPPoE parameters (profile 0)
 
 	pppoe profile del <id> vif <vif_name>
 
+### sh pppoe profile
+
+Outputs all pppoe profiles.
+
+	Example:
+		h5 the_router_build # rcli sh pppoe profile
+	profile id 2
+	  pado delay: 10000 ms
+	  service name: sn1
+
+	profile id 1
+	  pado delay: 100 ms
+	  service name: *
+
+	profile id 0
+	  pado delay: 0 ms
+	  service name: *
+	  
+### sh pppoe profile <id>
+
+Outputs the pppoe profile with the given id.
+
+### sh pppoe profile vif <vif_name>
+
+Outputs the pppoe profile used by a particular iinterface
+
+	h5 ~ # rcli sh pppoe profile vif v3
+	profile id 1
+	  pado delay: 100 ms
+	  service name: *
+
 ## PPPoE sysctl variables
 
 ### pppoe_max_subsc
