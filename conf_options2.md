@@ -2018,6 +2018,44 @@ Stops using the local ip pool that was configured with the command
 
 	ppp ip pool del <pool_name>
 
+### pppoe profile create
+
+Creates a new pppoe profile.
+
+	pppoe profile create <id>
+
+### pppoe profile destroy
+
+Destroys a pppoe profile.
+
+	pppoe profile destroy <id>
+
+### pppoe profile set
+
+Configures a pppoe profile.
+
+Sets profiles's service name.
+
+	pppoe profile set <id> service name "<service_name>"
+
+Sets profiles's PADO delay value in milliseconds.
+
+	pppoe profile set <id> pado delay <pado_delay_in_ms>
+
+### pppoe profile add
+
+Adds an interface into a profile. As a result the interface will start using PPPoE parameters
+defined by the profile.
+
+	pppoe profile add <id> vif <vif_name>
+
+### pppoe profile del
+
+Deletes an interface from a profile. As a result the interface will start using globally defined
+PPPoE parameters (profile 0)
+
+	pppoe profile del <id> vif <vif_name>
+
 ## PPPoE sysctl variables
 
 ### pppoe_max_subsc
@@ -2119,6 +2157,10 @@ Valid values:
 Example
 
 	sysctl set ppp_default_auth_proto "chap"
+
+### rad_acct_on_off_pkts
+
+An boolen startup sysctl variable that enables the use of the radius accounting on/off packets.
 
 ## PPPoE IPv6
 
