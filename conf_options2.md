@@ -2074,7 +2074,7 @@ Outputs all pppoe profiles.
 	  pado delay: 0 ms
 	  service name: *
 	  
-### sh pppoe profile <id>
+### sh pppoe profile <profile_id>
 
 Outputs the pppoe profile with the given id.
 
