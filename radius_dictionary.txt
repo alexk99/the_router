@@ -15,4 +15,10 @@ BEGIN-VENDOR TheRouter
     ATTRIBUTE therouter_subsc_static_arp 19 integer
     ATTRIBUTE therouter_subsc_proxy_arp 20 integer
     ATTRIBUTE therouter_subsc_rp_filter 21 integer
+    ATTRIBUTE therouter_shaper_type 22 integer
+    ATTRIBUTE therouter_shaper_ingress_params 23 string
+    ATTRIBUTE therouter_shaper_egress_params 24 string
+    ATTRIBUTE therouter_subsc_addr_prefix_map_id 25 integer
+    ATTRIBUTE therouter_subsc_addr_prefix_map_value 26 integer
+    ATTRIBUTE therouter_subsc_nat_connection_limit 27 integer
 END-VENDOR   TheRouter
