@@ -2673,8 +2673,8 @@ attribute values for the multi policer is
 		- prefix_map_id - id of a prefix map to classify a packet
 		  and to decide which policer apply;
 		- prefix_map_mode - prefix map's mode of operation: 
-		    1 - use packet's src ip address to find a match;
-		    0 - use packet's dst ip address to find a match;
+		    0 - use packet's src ip address to find a match;
+		    1 - use packet's dst ip address to find a match;
 
 ### therouter_subsc_addr_prefix_map_id
 
