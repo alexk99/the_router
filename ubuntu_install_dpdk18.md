@@ -101,9 +101,9 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 ## Install NPF
 
- * Clone NPF (https://github.com/alexk99/npf/tree/pptp_alg)
+ * Clone NPF
 
-		git clone -b pptp_alg https://github.com/alexk99/npf
+		git clone -b conn_limits https://github.com/alexk99/npf
 
  * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
 
