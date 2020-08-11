@@ -2498,6 +2498,8 @@ Creates a new radius client with the given id.
 Note that radius client with id 0 is created by default, 
 it's the default radius client.
 
+	radius_client create [id]
+
 Example:
 
 	radius_client create 1
