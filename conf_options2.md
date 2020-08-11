@@ -815,6 +815,20 @@ Displays content of the ARP cache.
 
 	sh arp cache
 
+## ICMP
+
+### icmp_packet_rate
+
+An integer startup scope sysctl variable. ICMP error transmission rate in packets per seconds.
+
+### icmp_transmission_burst
+
+An integer startup scope sysctl variable. Max number of ICMP error messages that could be sent at once.
+
+### icmp_num_buckets
+
+An integer startup scope sysctl variable. Number of ICMP buckets.
+
 ## ping
 
 ### ping
