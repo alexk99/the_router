@@ -278,6 +278,7 @@ Table of Contents
       * [RADIUS and CoA](#radius-and-coa)
          * [radius_client create](#radius_client-create)
          * [radius_client add server](#radius_client-add-server)
+         * [radius_client del server](#radius_client-del-server)
          * [radius_client add src ip](#radius_client-add-src-ip)
          * [radius_client set secret](#radius_client-set-secret)
          * [coa server set secret](#coa-server-set-secret)
