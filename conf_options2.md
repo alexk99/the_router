@@ -2492,13 +2492,26 @@ Default value is 60 seconds.
 
 ## RADIUS and CoA
 
+### radius_client create
+
+Creates a new radius client with the given id.
+Note that radius client with id 0 is created by default, 
+it's the default radius client.
+
+Example:
+
+	radius_client create 1
+
+
 ### radius_client add server
 
 Adds RADIUS server to the list of servers. RADIUS requests
 will be sent to servers in the round-robin way. Maximum numbers
 of servers in the list is 8. Default port number is 1812.
 
-	radius_client add server <ip address> [port <port number>]
+	radius_client [id] add server <ip address> [port <port number>]
+
+id value might be omitted, in this case default radius client id 0 is used.
 
 Example:
 
@@ -2510,7 +2523,9 @@ Adds an ip address to the list of source ip addresses that will be used
 by the TheRouter RADIUS client to send RADIUS requests. A source
 ip address must be assigned to a VIF.
 
-	radius_client add src ip <ip address>
+	radius_client [id] add src ip <ip address>
+
+id value might be omitted, in this case default radius client id 0 is used.
 
 Example:
 
@@ -2521,7 +2536,9 @@ Example:
 
 Sets the RADIUS client secret.
 
-	radius_client set secret "secret"
+	radius_client [id] set secret "secret"
+
+id value might be omitted, in this case default radius client id 0 is used.
 
 Example:
 
@@ -2536,6 +2553,10 @@ Sets the RADIUS CoA server secret.
 Example:
 
 	coa server set secret "abcd1234"
+
+### sh radius client
+
+Outputs radius clients settings
 
 ## RADIUS Accounting
 
