@@ -2544,6 +2544,18 @@ Example:
 
 	radius_client add server 192.168.5.2 port 1612
 
+### radius_client del server
+
+Deletes RADIUS server from the list of servers.
+
+	radius_client [id] del server <ip address> [port <port number>]
+
+id value might be omitted, in this case default radius client id 0 is used.
+
+Example:
+
+	radius_client del server 192.168.5.2 port 1612
+
 ### radius_client add src ip 
 
 Adds an ip address to the list of source ip addresses that will be used
