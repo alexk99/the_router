@@ -2056,6 +2056,10 @@ Sets profiles's PADO delay value in milliseconds.
 
 	pppoe profile set <id> pado delay <pado_delay_in_ms>
 
+Sets profiles's radius client id.
+
+	pppoe profile set <id> radius_client [radius_client_id]
+
 ### pppoe profile add
 
 Adds an interface into a profile. As a result the interface will start using PPPoE parameters
@@ -2074,19 +2078,23 @@ PPPoE parameters (profile 0)
 
 Outputs all pppoe profiles.
 
-	Example:
-		h5 the_router_build # rcli sh pppoe profile
+Example:
+
+	h5 the_router_build # rcli sh pppoe profile
 	profile id 2
 	  pado delay: 10000 ms
 	  service name: sn1
+	  radius client id: 0
 
 	profile id 1
 	  pado delay: 100 ms
 	  service name: *
+	  radius client id: 0
 
 	profile id 0
 	  pado delay: 0 ms
 	  service name: *
+	  radius client id: 0
 	  
 ### sh pppoe profile <profile_id>
 
