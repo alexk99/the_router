@@ -1033,7 +1033,7 @@ Example:
 
 ### Configuring ipfix collector
 
-	ipfix_collector addr 192.168.20.2
+	ipfix_collector addr 192.168.20.2 port 1234
 
 ## Other commands
 
@@ -2078,19 +2078,33 @@ Sets profiles's radius client id.
 
 	pppoe profile set <id> radius_client [radius_client_id]
 
-### pppoe profile add
+### pppoe profile add vif
 
-Adds an interface into a profile. As a result the interface will start using PPPoE parameters
+Adds an interface into a pppoe profile. As a result the interface will start using PPPoE parameters
 defined by the profile.
 
 	pppoe profile add <id> vif <vif_name>
 
-### pppoe profile del
+### pppoe profile del vif
 
-Deletes an interface from a profile. As a result the interface will start using globally defined
+Deletes an interface from a pppoe profile. As a result the interface will start using globally defined
 PPPoE parameters (profile 0)
 
 	pppoe profile del <id> vif <vif_name>
+
+### pppoe profile add vif range
+
+Adds a range of interfaces into a pppoe profile. As a result the interfaces will start using PPPoE parameters
+defined by the profile.
+
+	pppoe profile add <id> vif range svid <vlan_range> cvid <vlan_range> name <name>
+
+### pppoe profile del vif range
+
+Deletes a range of interfaces from a pppoe profile. As a result the interfaces will start using globally defined
+PPPoE parameters (profile 0)
+
+	pppoe profile del <id> vif range svid <vlan_range> cvid <vlan_range> name <name>
 
 ### sh pppoe profile
 
@@ -2897,11 +2911,11 @@ Where 'vlan_range' is a vlan number, or a vlan range, for example
 
 	svid 4 cvid 100 200
 
-would create 101 VIFs from vlan number 4.100 to 4.200
+would create 101 VIFs with vlan numbers from 4.100 to 4.200
 
 	svid 4 5 cvid 100 200
 
-would create 202 VIFs from vlan number 4.100 to 5.200.
+would create 202 VIFs with vlan numbers from 4.100 to 5.200.
 The rest of parameters is the same as for the simple 'vif add' command. 
 
 Example:
@@ -2914,21 +2928,21 @@ Example:
 
 ### ip addr add range
 
-	ip addr add svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+	ip addr add range svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
 
 ### ip addr del range
 
-	ip addr del svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
+	ip addr del range svid <vlan_range> cvid <vlan_range> <net>/<mask> name <name>
 
 ### vif acl add range
 
-	vif acl add svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+	vif acl add range svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
 
 ### vif acl del range
 
-	vif acl del svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id>
+	vif acl del range svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id>
 
 ### vif acl mod range
 
-	vif acl modify svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
+	vif acl modify range svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
 
