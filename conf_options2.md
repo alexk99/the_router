@@ -2913,10 +2913,10 @@ Example:
 
 Sets traffic class's parameters of the profile.
 
-	hqos set profile <profile-id> tc <tc-class-number> rate <rate> wrr weights <weights>
+	hqos set profile <profile-id> tc <tc-number> rate <rate> wrr weights <weights>
 
  - rate is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G
- - tc-class-number is a number of the traffic class. Valid values are 1 - 4
+ - tc-number is a number of the traffic class. Valid values are 1 - 4
  - weights - traffic class's weights used by the WRR algorithm
 
 By default all TC rates are equal to the profile's rate.
@@ -2928,6 +2928,65 @@ Example:
 	hqos set profile 1 tc 2 rate 15 M wrr weights 1 1 1 1
 	hqos set profile 1 tc 3 rate 15 M wrr weights 1 1 1 1
 	hqos set profile 1 tc 4 rate 15 M wrr weights 1 1 1 1
+
+### hqos add port
+
+Creates a hqos port.
+
+	hqos add port <port-number> rate <rate> mtu <mtu> frame overhead <frame-overhead> queue sizes <queue sizes>
+
+ - port-number is number or id of a new hqos port. Valid values are 0 - 15.
+ - rate is a rate of an egress ethernet port. Typical value is 10 G.
+ - mtu is packet's MTU. Typical value is 1522.
+ - frame overhead is packet's frame overhead that takes into account Start of Frame Delimiter, Frame Check Sequence
+ and other packet's fields. Typical value is 24.
+ - queue sizes - list of TC's queue sizes. Each traffic class has 4 queues of the same size.
+ 
+Example:
+
+	hqos add port 0 rate 10 G mtu 1522 frame overhead 24 queue sizes 64 64 64 64
+
+### hqos add port subport
+
+Creates a subport for the hqos port.
+Currently only one subport per port is supported.
+
+	hqos add port <port-number> subport <subport-number> rate <rate> size <size> tc period <tc-period>
+
+- port-number is number of an already created hqos port.
+- subpor-number is number of a new subport.
+- rate is traffic shaping rate of subport. It's the upper limit for traffic going through subport's pipes.
+- size - is the subport's bucket size. Typical value is 1000000.
+- tc-period - is time period that should elapse since the last credit update in order for the subport's bucket to be awarded credits.
+typical values is 40.
+
+Example:
+
+	hqos add port 0 subport 0 rate 150 M size 1000000 tc period 10
+
+### hqos set port subport
+
+Sets traffic classes parameters of the subport.
+By default all subport's TC rates are equal to the subport's rate.
+
+	hqos set port <port-number> subport <subport-number> tc <tc-number> rate <rate>
+	
+Example:
+
+	hqos set port 0 subport 0 tc 1 rate 150 M
+	hqos set port 0 subport 0 tc 2 rate 100 M
+	hqos set port 0 subport 0 tc 3 rate 50 M
+	hqos set port 0 subport 0 tc 4 rate 50 M
+
+### hqos add port subport pipes
+
+Creates a number of pipes of a particular profile for a port's subport.
+
+	hqos add port <port-number> subport <subport-number> pipes <number-of-pipes> profile <profile-id>
+
+Example:
+
+	hqos add port 1 subport 0 pipes 40000 profile 1
 
 ## Range commands
 
