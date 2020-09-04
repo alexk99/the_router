@@ -2897,17 +2897,37 @@ http://doc.dpdk.org/guides-18.11/prog_guide/qos_framework.html#hierarchical-sche
 ### hqos add profile
 
 Creates a hqos profile.
-The profile defines the Token Bucket Algoright paramers of a pipe.
+The profile defines the Token Bucket Algorithm paramers of a pipe.
 
 	hqos add profile <profile-id> rate <rate> size <size> tc period <tc-period>
 
- - rate is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G.
- - size is the bucket size, i.e. upper limit for the tb_credits.
- - tc-period is time period that should elapse since the last credit update in order for the bucket to be awarded credits.
+ - rate is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G
+ - size is the bucket size, i.e. upper limit for the tb_credits
+ - tc-period is time period that should elapse since the last credit update in order for the bucket to be awarded credits
 
 Example:
 
 	hqos add profile 1 rate 15 M size 1000000 tc period 40
+
+### hqos set profile
+
+Sets traffic class's parameters of the profile.
+
+	hqos set profile <profile-id> tc <tc-class-number> rate <rate> wrr weights <weights>
+
+ - rate is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G
+ - tc-class-number is a number of the traffic class. Valid values are 1 - 4
+ - weights - traffic class's weights used by the WRR algorithm
+
+By default all TC rates are equal to the profile's rate.
+Default values for WRR weights are 1 1 1 1.
+
+Example:
+
+	hqos set profile 1 tc 1 rate 15 M wrr weights 1 1 1 1
+	hqos set profile 1 tc 2 rate 15 M wrr weights 1 1 1 1
+	hqos set profile 1 tc 3 rate 15 M wrr weights 1 1 1 1
+	hqos set profile 1 tc 4 rate 15 M wrr weights 1 1 1 1
 
 ## Range commands
 
