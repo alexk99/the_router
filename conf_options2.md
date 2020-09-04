@@ -2894,6 +2894,28 @@ for the circuit_id suboption.
 TheRouter's HQoS implementation is based on the DPDK QoS Scheduler framework.
 http://doc.dpdk.org/guides-18.11/prog_guide/qos_framework.html#hierarchical-scheduler 
 
+HQoS hierarchy includes 5 levels: port, subport, pipe, traffic class and queue.
+
+In TR each subport represents a predefined group of subscriber.
+A pipe represents a particular subsriber.
+
+Traffic classes (TC) represent 4 classes of traffic.
+A packet is classified to a particular TC based
+on the IPv4 ToS value.
+
+Each TC consists of 4 queues with id of 1 to 4.
+A packet goes to a particular queue based on
+the content of it's L3 header:
+
+	(ip src + ip dst) % 3
+
+Traffic shaping is performed on suport and pipe levels
+using the Token Bucket Algorithm.
+
+TCs of the same pipe handled in strict priority order.
+Queues of the same TC are serviced using Weighted Round Robin (WRR) 
+algorithm according to predefined weights.
+
 ### hqos add profile
 
 Creates a hqos profile.
