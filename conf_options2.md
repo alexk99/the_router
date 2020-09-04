@@ -2901,9 +2901,9 @@ The profile defines the Token Bucket Algoright paramers of a pipe.
 
 	hqos add profile <profile-id> rate <rate> size <size> tc period <tc-period>
 
-<rate> is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G.
-<size> is the bucket size, i.e. upper limit for the tb_credits.
-<tc-period> is time period that should elapse since the last credit update in order for the bucket to be awarded credits.
+ - rate is a traffic limit rate in bit/s. The rate value can include suffixes K, M or G.
+ - size is the bucket size, i.e. upper limit for the tb_credits.
+ - tc-period is time period that should elapse since the last credit update in order for the bucket to be awarded credits.
 
 Example:
 
