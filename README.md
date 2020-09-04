@@ -27,6 +27,7 @@ TheRouter is a software packet router based on one of the fastest packet process
 	- SLAAC
 	- VRRP v3
  * Flow accounting via IPFIX
+ * QoS and HQoS
 
 ## BRAS/BNG - Broadband Remote Access Server  
 
@@ -34,7 +35,8 @@ TheRouter is a software packet router based on one of the fastest packet process
  * PPPoE subscribers
  * VRRP - enables redundancy and active-active BNG mode
  * IPoE - VLAN per subscriber with IP unnumbered support
- * Traffic shaping (Token bucket filter with extended burst value)
+ * QOS: Policing (Token bucket filter with extended burst value)
+ * HQoS: shaping, WRR, RED
  * DHCP relay
  * DHCP option82 rewrite function
  * Redirect subscribers traffic based on multiple routing tables and PBR
@@ -50,7 +52,8 @@ PPPoE server supports:
  * RADIUS authorization (PAP and CHAP)
  * RADIUS accounting
  * CoA
- * Shaping (Token bucket filter with extended burst value)
+ * QOS: Policing (Token bucket filter with extended burst value)
+ * HQoS: shaping, WRR, RED
  * TCP MSS Fix/Clumping
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
