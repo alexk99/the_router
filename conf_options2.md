@@ -3038,6 +3038,12 @@ Example:
 
 	hqos add port 1 subport 0 pipes 40000 profile 1
 
+### applying hqos to subscriber
+
+Radius attributes therouter_shaper_ingress_params and 
+therouter_shaper_egress_params should be used to apply hqos to a subscriber.
+See the description of those attributes for details.
+
 ## Range commands
 
 Some commands could be applied to a set of interfaces
