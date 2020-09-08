@@ -2684,7 +2684,6 @@ TheRouter VAS:
 	    ATTRIBUTE therouter_subsc_static_arp 19 integer
 	    ATTRIBUTE therouter_subsc_proxy_arp 20 integer
 	    ATTRIBUTE therouter_subsc_rp_filter 21 integer
-	    ATTRIBUTE therouter_shaper_type 22 integer
 	    ATTRIBUTE therouter_shaper_ingress_params 23 string
 	    ATTRIBUTE therouter_shaper_egress_params 24 string
 	    ATTRIBUTE therouter_subsc_addr_prefix_map_id 25 integer
@@ -2737,32 +2736,33 @@ the 'rpf' flag should be used in the VIF configuration command
 when the L2 subscriber's parent interface is created. 
 
 ### therouter_shaper_ingress_params
-
-This attribute carries a string containing parameters for subscriber's ingress shaper.
-A string format depends on a shaper type. see therouter_shaper_type for the details.
-
 ### therouter_shaper_egress_params
+
+This attributes carry a string containing parameters for subscriber's ingress/egress qos discipline.
+The string format depends on a qos discipline but should always starts with an integer number indicating
+qos type.
+
+QoS types:
+ - 1 - policer
+ - 2 - multi policer
+ - 4 - qos scheduler
+
 This attribute carries a string containing parameters for subscriber's egress shaper.
 A string format depends on a shaper type. see therouter_shaper_type for the details.
 
-### therouter_shaper_type
-
-This attributes defines the type of subscriber's shaper.
-
- - 1 - a general policer. This is the default shaper type, i.e.
-when a radius request contains no therouter_shaper_type attribute,
-TheRouter uses this type. Shapers of this type are configured using
+ - 1 - a general policer. This is the default qos type, no need to use therouter_shaper_ingress_params
+ or therouter_shaper_egress_params for this type. General policers should be configured using
 therouter_ingress_cir and therouter_egress_cir attributes.
 
  - 2 - a multi policer. The multi policer applies different bandwidth 
  limits depending on the packet src/dst ip address.
 
-Shapers of this type are configured using therouter_shaper_ingress_params
+QoS of this type are configured using therouter_shaper_ingress_params
 and therouter_shaper_egress_params attributes. 
 Format of therouter_shaper_ingress_params/therouter_shaper_egress_params 
 attribute values for the multi policer is
 
-	<nb_policers/limit1/limit2/../prefix_map_id/prefix_map_mode>	
+	<2/nb_policers/limit1/limit2/../prefix_map_id/prefix_map_mode>	
 	Where
 		- nb_policers - number of policers;
 		- limit1 - bandwidth limit of policer 1;
@@ -2773,6 +2773,25 @@ attribute values for the multi policer is
 		- prefix_map_mode - prefix map's mode of operation: 
 		    0 - use packet's src ip address to find a match;
 		    1 - use packet's dst ip address to find a match;
+
+ - 4 - DPDK QoS Scheduler
+ 
+DPDK based QoS discipline.
+Format of therouter_shaper_ingress_params/therouter_shaper_egress_params 
+attribute values for this qos is
+
+	<4/nb_ports/port1,profile1/port2,profile2/../prefix_map_id/prefix_map_mode>	
+	Where
+		- nb_ports - number of qos scheduler ports/pipes that will be allocated for the subscriber;
+		- port1 - qos scheduler port number for traffic direction #1
+		- profile1 - profile id for port1
+		- ...
+		- prefix_map_id - id of a prefix map to classify a packet
+		  and to decide which traffic direction (qos port/pipe) should be used for the packet;
+		- prefix_map_mode - prefix map's mode of operation: 
+		    0 - use packet's src ip address to find a match;
+		    1 - use packet's dst ip address to find a match;
+
 
 ### therouter_subsc_addr_prefix_map_id
 
