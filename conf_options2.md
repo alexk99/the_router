@@ -86,9 +86,9 @@ Table of Contents
          * [npf_conn_limit_filter_mode](#npf_conn_limit_filter_mode)
          * [npf_conn_limit_default_max_conn](#npf_conn_limit_default_max_conn)
          * [NPF sysctl variables controlling connection tracking state timeouts](#npf-sysctl-variables-controlling-connection-tracking-state-timeouts)
-      * [NAT events logging via IPFIX](#nat-events-logging-via-ipfix)
-         * [Enabling NAT events](#enabling-nat-events)
-         * [Configuring ipfix collector](#configuring-ipfix-collector)
+      * [NAT events logging - NEL](#nat-event-logging---nel)
+         * [Enabling NEL](#enabling-nat-events)
+         * [Configuring collector](#configuring-collector)
       * [Other commands](#other-commands)
          * [shutdown](#shutdown)
          * [sh ver](#sh-ver)
@@ -1040,7 +1040,7 @@ Example:
 
 	sysctl set nat_events 1
 
-### Configuring ipfix collector
+### Configuring collector
 
 	nel collector addr <collector ipv4 address> [port <port>] [proto 9 | 10]
 
