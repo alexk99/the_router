@@ -15,7 +15,7 @@ TheRouter is a software packet router based on one of the fastest packet process
  * Stateful and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * Link Aggregation/Link Bonding/LACP
- * NAT events logging via IPFIX (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
+ * NAT events logging (IPFIX, Netflow v9) (https://tools.ietf.org/html/draft-ietf-behave-ipfix-nat-logging-13#page-11)
  * VRRP (v2 for IPv4 and v3 for IPv6)
  * IPv6
  	- Unicast routing
