@@ -2932,7 +2932,7 @@ http://doc.dpdk.org/guides-18.11/prog_guide/qos_framework.html#hierarchical-sche
 
 HQoS hierarchy includes 5 levels: port, subport, pipe, traffic class and queue.
 
-In TR each subport represents a predefined group of subscriber.
+In TR each subport represents a predefined group of subscribers.
 A pipe represents a particular subsriber.
 
 Traffic classes (TC) represent 4 classes of traffic.
@@ -2945,7 +2945,7 @@ the content of it's L3 header:
 
 	(ip src + ip dst) % 3
 
-Traffic shaping is performed on suport and pipe levels
+Traffic shaping is performed on subport and pipe levels
 using the Token Bucket Algorithm.
 
 TCs of the same pipe handled in strict priority order.
