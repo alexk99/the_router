@@ -87,7 +87,7 @@ Table of Contents
          * [npf_conn_limit_default_max_conn](#npf_conn_limit_default_max_conn)
          * [NPF sysctl variables controlling connection tracking state timeouts](#npf-sysctl-variables-controlling-connection-tracking-state-timeouts)
       * [NAT events logging - NEL](#nat-event-logging---nel)
-         * [Enabling NEL](#enabling-nat-events)
+         * [Enabling NEL](#enabling-nel)
          * [Configuring collector](#configuring-collector)
       * [Other commands](#other-commands)
          * [shutdown](#shutdown)
