@@ -1034,15 +1034,23 @@ Example:
 		...
 	}
 
-## NAT events logging via IPFIX
+## NAT event logging - NEL
 
-### Enabling NAT events 
+### Enabling NEL
 
-	sysctl set ipfix_nat_events 1
+	sysctl set nat_events 1
 
 ### Configuring ipfix collector
 
-	ipfix_collector addr 192.168.20.2 port 1234
+	nel collector addr <collector ipv4 address> [port <port>] [proto 9 | 10]
+
+Example
+
+	nel collector addr 10.0.0.1 port 9995 proto 9
+
+Proto:
+ - 9  - netflow v9
+ - 10 - ipfix
 
 ## Other commands
 
