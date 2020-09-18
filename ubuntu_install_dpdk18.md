@@ -82,6 +82,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 ## Install NPF
 
+		ln -s /usr/lib/x86_64-linux-gnu/libpcap.so.1.8.1 /usr/lib/x86_64-linux-gnu/libpcap.so.1
 		git clone -b conn_limits https://github.com/alexk99/npf
 		wget http://therouter.net/downloads/city/city.h
 		cp city.h /usr/local/include/
