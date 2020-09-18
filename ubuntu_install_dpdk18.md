@@ -193,11 +193,17 @@ Download and apply the patches:
 		wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_rx_capabilities.patch
 		wget http://therouter.net/downloads/dpdk/patches/18.11.3/librte_ip_frag_add_mbuf_counter.patch
 		wget http://therouter.net/downloads/dpdk/patches/18.11.3/rte_timer.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/bonding_tx_capabilities.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/bond_lacp.diff
+		wget http://therouter.net/downloads/dpdk/patches/18.11.3/scheduler_fix_port_time_rounding.diff
 		
 		cat ./bonding_mempool.patch | patch -p1
 		cat ./bonding_rx_capabilities.patch | patch -p1
 		cat ./librte_ip_frag_add_mbuf_counter.patch | patch -p1
 		cat ./rte_timer.patch | patch -p1
+		cat ./bonding_tx_capabilities.patch | patch -p1
+		cat ./bond_lacp.diff | patch -p1
+		cat ./scheduler_fix_port_time_rounding.diff | patch -p1
 
 Run the following commands:		
 
