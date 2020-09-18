@@ -19,6 +19,7 @@ Here are installation steps for Ubuntu 18.04.
 		./configure
 		make
 		make install
+		cd ..
 
 ## Install libcdb
 
@@ -32,6 +33,7 @@ Here are installation steps for Ubuntu 18.04.
 		export DESTDIR=/usr/local
 		make all
 		make install
+		cd ..
 
 Notes: install process ends successfully even if it indicates that there has been the following error:
 
@@ -54,6 +56,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 		export DESTDIR=/usr/local
 		make all
 		make install
+		cd ../..
 
 ## Install bpfjit
 
@@ -66,7 +69,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 		cp -rpn ../../sljit-0.92/* ./
 		cd ..
 
- * Edit ./SPECS/libbpfjit.spec and delete or comment the following lines:
+ * Edit ./SPECS/libbpfjit.spec and delete or delete the following lines:
 
 		BuildRequires:>make
 		BuildRequires:>libtool
@@ -75,31 +78,34 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 		make rpm
 		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
+		cd ..
 
 ## Install NPF
 
- * Clone NPF
-
 		git clone -b conn_limits https://github.com/alexk99/npf
-
- * Download <a href="http://therouter.net/downloads/city/city.h">city.h</a>, then
-
+		wget http://therouter.net/downloads/city/city.h
 		cp city.h /usr/local/include/
-
- * Run the following commands:
-
-		cd npf/src	
+		cd npf/src
 		cd libnpf/net
 		rm ./npf.h
-		ln -s ../../kern/npf.h npf.h		
+		ln -s ../../kern/npf.h npf.h
 		cd ../..
-		
 		export DESTDIR=/
 		export LIBDIR=/usr/lib64
 		export INCDIR=/usr/local/include
 		export MANDIR=/usr/local
 		make
 		make install
+		cd ..
+
+ ## Install city hash
+
+		git clone https://github.com/google/cityhash
+		cd ./cityhash/
+		./configure
+		make all check CXXFLAGS="-g -O3"
+		make install
+		cd ..
 
 ## Update system library paths
 
@@ -198,16 +204,6 @@ Run the following commands:
 		make install T=x86_64-native-linuxapp-gcc
 
 ## TheRouter
-
-### Install dependencies
-
- * city hash
-
-		git clone https://github.com/google/cityhash
-		cd ./cityhash/
-		./configure
-		make all check CXXFLAGS="-g -O3"
-		make install
 
 ### Download TheRouter 
 
