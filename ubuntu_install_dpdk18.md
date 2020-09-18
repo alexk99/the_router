@@ -11,15 +11,6 @@ Here are installation steps for Ubuntu 18.04.
 		apt -y install g++ libjemalloc-dev libpcap-dev python libpcre2-8-0 autoconf zlib1g-dev flex byacc
 		apt -y install cmake libtool libtool-bin subversion rpm libreadline-dev libnuma-dev libnl-genl-3-dev
 
-## Install libcap
-
-		wget http://www.tcpdump.org/release/libpcap-1.5.3.tar.gz
-		tar xzvf ./libpcap-1.5.3.tar.gz
-		cd ./libpcap-1.5.3/
-		./configure
-		make
-		make install
-
 ## Install Proplib
 
 		wget http://therouter.net/downloads/proplib-0.6.3.tar.xz
