@@ -8,23 +8,8 @@ Here are installation steps for Ubuntu 18.04.
 ## Install the following utilities and libs:
 
 		apt update
-		apt -y install g++
-		apt -y install libjemalloc-dev
-		apt -y install libpcap-dev
-		apt -y install python
-		apt -y install libpcre2-8-0
-		apt -y install autoconf
-		apt -y install zlib1g-dev
-		apt -y install flex
-		apt -y install byacc
-		apt -y install cmake
-		apt -y install libtool
-		apt -y install libtool-bin
-		apt -y install subversion
-		apt -y install rpm
-		apt -y install libreadline6 libreadline6-dev
-		apt -y install libnuma-dev
-		apt -y install libnl-genl-3-dev
+		apt -y install g++ libjemalloc-dev libpcap-dev python libpcre2-8-0 autoconf zlib1g-dev flex byacc
+		apt -y install cmake libtool libtool-bin subversion rpm libreadline-dev libnuma-dev libnl-genl-3-dev
 
 ## Install libcap
 
