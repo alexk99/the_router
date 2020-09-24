@@ -865,6 +865,226 @@ An integer startup scope sysctl variable. Number of ICMP buckets.
 	[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
 	[-h,--help] destination
 
+## Deterministic SNAT44
+
+TheRouter implements the Deterministic SNAT44 algorithm according with rfc7422 https://tools.ietf.org/html/rfc7422
+
+### det snat create map
+
+Creates a map to translate one ipv4 address space (in) to another (out) ipv4 address space.
+
+	det snat create map <map-id> in <addrs/mask> out <addr/mask> sess <nb_sess_per_host>
+
+- nb_sess_per_host - maximum number of translation sessions per "in" network's host
+
+Example:
+
+	det snat create map 1 in 10.11.1.0/24 out 10.114.0.0/29 sess 1024
+
+### det snat delete map
+
+Deletes a translation map.
+
+	det snat del map <map-id>
+
+### det snat flush map
+
+Deletes all translation sessions from the map.
+
+	det snat flush map <map-id>
+
+### show det snat maps
+
+Output translation maps.
+
+	sh det snat maps
+
+Example:
+
+	h5 ~ # rcli sh det snat maps
+	SNAT deterministic map
+	  map id: 1
+	  internal net: 10.11.1.0/24
+	  external net: 10.114.0.0/29
+	  size: 524288
+	  active sessions: 292
+	  ports per host: 2016
+	  state counters:
+	    unknown: 7
+	    udp_active: 111
+	    tcp_syn_sent: 1
+	    tcp_established: 173
+	    tcp_fin_wait: 0
+	    tcp_close_wait: 0
+	    tcp_closing: 0
+	    tcp_last_ack: 0
+	    tcp_closed: 0
+	    icmp_active: 0
+
+### det snat vif enable
+
+Enables deterministic snat function on a particular interface.
+
+	det snat vif <vif-name> enable
+
+Example:
+
+	det snat vif v3 enable
+
+### det snat vif disable
+
+Disables deterministic snat function on a particular interface.
+
+	det snat vif <vif-name> disable
+
+### det snat add map
+
+	det snat vif <vif-name> add map <map-id>
+
+Adds a map to an interface.
+
+Once a map is added to an interface and snat function is enabled 
+the interface will start performing SNAT translations accoriding with the map's parameters.
+
+Example:
+
+	det snat vif v3 add map 1
+
+### det snat del map
+
+Deletes a map from an interface.
+
+	det snat vif <vif-name> del map <map-id>
+
+Example:
+
+	det snat vif v3 del map 1
+
+### det snat sh mapping alg in
+
+Show mapping ports of a particulat host.
+According to the Deterministic NAT algorithm all host translations will exclusively use ports
+from a specific port range.
+
+	sh det snat mapping alg map <map-id> in <host>
+
+ - host - ipv4 address of host from "in" network
+
+Example:
+
+	h5 ~ # rcli sh det snat mapping alg map 1 in 10.11.1.10
+	in 10.11.1.10 -> out 10.114.0.0 ports 21184 - 23199
+
+### det snat sh mapping alg out
+
+Determines a host address from "in" network by address and port from "out" network.
+
+	sh det snat mapping alg map <map-id> out <addr:port>
+
+- addr - a translated (out) address
+- port - a translated (out) port
+
+Example:
+
+	h5 ~ # rcli sh det snat mapping alg map 1 out 10.114.0.0:23199
+	out 10.114.0.0:23199 -> in 10.11.1.10
+
+### det snat timeout
+
+Sets timeout for translations with a particular state.
+
+	det snat timeout <state-name> <timeout>
+
+- timeout - timeout value in seconds
+- state-name - name of the translation session state
+
+List of states:
+
+	unknown
+	udp_active
+	tcp_syn_sent
+	tcp_established
+	tcp_fin_wait
+	tcp_close_wait
+	tcp_closing
+	tcp_last_ack
+	tcp_closed
+	icmp_active
+
+Example:
+
+	det snat timeout tcp_established 1200
+
+### det snat close host sessions
+
+Closes and deletes all translation sessions of a particular host.
+
+	det snat close sess MAP <map-id> in <addr>
+
+- addr - ipv4 address of host from "in" network
+
+Example:
+
+	det snat close sess MAP 1 in 10.11.1.10
+
+### det snat close host session in
+
+Closes and deletes a translation session of a particular host.
+
+	det snat close sess MAP <map-id> in <addr:port> ext <addr:port>
+
+- in addr:port - ipv4 address and port of the internal endpoint of the translation
+- ext addr:port - ipv4 addres and port of the external endpoint of the translation
+
+Example:
+
+	det snat close sess MAP 1 in 10.11.1.10:63140 ext 13.94.102.123:443
+
+### det snat close host session out
+
+Closes and deletes a translation session of a particular host.
+
+	det snat close sess map <map-id> out <addr:port> ext <addr:port>
+
+- in addr:port - translated (out) ipv4 address and port of the internal endpoint of the translation
+- ext addr:port - ipv4 addres and port of the external endpoint of the translation
+
+Example:
+
+	det snat close sess map 1 out 10.114.0.0:21828 ext 13.94.102.123:443
+
+### det snat show session in
+
+Outputs a translation session with "in" address.
+
+	sh det snat sess map <map-id> in <addr:port> ext <addr:port>
+
+### det snat show session out
+
+Outputs a translation session with "out" address.
+
+	sh det snat sess map <map-id> out <addr:port> ext <addr:port>
+
+### det snat show sessions
+
+Output translations sessions of a host.
+
+	sh det snat sessions map <map-id> in <in-addr>
+
+Example:
+
+	h5 ~ # rcli sh det snat sessions map 1 in 10.11.1.10 | head
+	in addr:port	out addr:port	ext addr:port	state	expire in secs
+	10.11.1.10:62829	10.114.0.0:21517	xx.xx.xx.95:443	tcp_established	1637
+	10.11.1.10:62862	10.114.0.0:21550	xx.xx.xx.95:443	tcp_established	1652
+	10.11.1.10:63160	10.114.0.0:21848	xx.xx.xx.95:443	tcp_established	2631
+	10.11.1.10:63161	10.114.0.0:21849	xx.xx.xx.95:443	tcp_established	2631
+	10.11.1.10:63222	10.114.0.0:21910	xx.xx.xx.95:443	tcp_established	2657
+	10.11.1.10:63223	10.114.0.0:21911	xx.xx.xx.95:443	tcp_established	2657
+	10.11.1.10:63233	10.114.0.0:21921	xx.xx.xx.95:443	tcp_established	2669
+	10.11.1.10:63234	10.114.0.0:21922	xx.xx.xx.95:443	tcp_established	2669
+	10.11.1.10:63275	10.114.0.0:21963	xx.xx.xx.95:443	tcp_established	2773
+
 ## NPF
 
 ### npf load
