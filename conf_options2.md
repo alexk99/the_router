@@ -2329,6 +2329,12 @@ Sets profiles's PADO delay value in milliseconds.
 
 	pppoe profile set <id> pado delay <pado_delay_in_ms>
 
+Sets profiles's PADI accept rate in sessions per second.
+
+	pppoe profile set <id> accept rate <sess_per_sec>
+
+Once the incoming PADI rate overflows the limit TR will start silently drop PADI packets.
+
 Sets profiles's radius client id.
 
 	pppoe profile set <id> radius_client [radius_client_id]
