@@ -820,7 +820,11 @@ Creates a PBR rule to match the traffic originated from one of VIFs contained in
 
 Creates a PBR rule to match the traffic originated from a given network.
 
-	ip pbr rule add prio <prio_num> from <net/mask> <route_table_name>
+	ip pbr rule add prio <prio_num> from <net/mask> table <route_table_name>
+
+Creates a PBR rule to match the traffic originated from a particular network and destined to another network
+
+	ip pbr rule add prio <prio_num> from <net/mask> to <net/mask> table <route_table_name>
 
 ### ip pbr rule del
 
