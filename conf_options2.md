@@ -2901,6 +2901,16 @@ Example:
 
 	radius_client add accounting server 192.168.5.2 port 1813
 
+## Radius sysctl variables
+
+### radius_initial_retransmit_timeout
+
+  A integer sysctl variable that defines the initial radius restransmit timeout in milliseconds.
+
+### radius_num_retransmit
+
+  A integer sysctl variable that defines the number of radius restransmit.
+
 ## Radius Accounting sysctl variables
 
 ### radius_accounting
