@@ -501,7 +501,7 @@ or
 Creates a new bonding (link aggregation group) port.
 Note that to complete port configuration the "port" command should be used after the "bond port" command.
 
-	bond port mode <mode> bond_slaves <slave_port,...> primary port <port_number> policy <trasmit_policy>
+	bond port mode <mode> bond_slaves <slave_port,...> primary port <port_number> policy <transmit_policy>
 
 mode:
 
@@ -518,7 +518,7 @@ mode:
  LACP specification see the IEEE 802.3ad/802.1AX standards. It is also
  described here https://www.kernel.org/doc/Documentation/networking/bonding.txt.
 
-trasmit_policy:
+transmit_policy:
 
 0 - BALANCE_XMIT_POLICY_LAYER2
 1 - BALANCE_XMIT_POLICY_LAYER23
