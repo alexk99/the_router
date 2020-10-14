@@ -533,6 +533,10 @@ Examples:
 	bond port mode 4 bond_slaves 0,1 primary port 1 policy 2
 	port 2 mtu 1500 tpid 0x8100 state enabled bond_slaves 0,1
 
+Note that bonding port start its numeration after the standart ports.
+For example, if there are total two standart port in the system with numbers 0 and 1,
+then a bonding port will have number 2.
+
 ### rx_queue
 
 	rx_queue port <dpdk_port_number> queue <queue_number> lcore <lcore>
