@@ -159,21 +159,17 @@ Use the 'lspci' utility to find out NIC's addresses.
 
 #### Prepare configuration files
 
-For configuration examples and options see the page <a href="/conf_options.md">Configure TheRouter</a>
+For configuration examples and options see the page <a href="/conf_options2.md">Command reference</a>
 
  - create router.conf
 
 		nano /etc/router.conf
 
- - create NPF conf
-
-		nano /etc/npf.conf
-
 #### Run TheRouter
 
-  Define a bash variable 'rvrf'
+  Define a bash alise
 
-  		export rvrf="ip netns exec tr"
+  		alias rcli="ip netns exec tr rcli"
 
   Edit therouter_start.sh script located in TheRouter's archive sbin directory
   and use your NIC's addresses as values for -w parameters. If you have only
@@ -187,8 +183,8 @@ For configuration examples and options see the page <a href="/conf_options.md">C
 
  		ROUTER: router configuration file '/etc/router.conf' successfully loaded  
 
-  Use the 'rcli' utility from the archive to configure and control TheRouter
+  Use the 'rcli' alias which will execute an rcli utility from the archive to configure and control TheRouter
 
-		# $rvrf rcli sh uptime
+		# rcli sh uptime
 		Uptime: 0 day(s), 1 hour(s), 38 minute(s), 14 sec(s)
 
