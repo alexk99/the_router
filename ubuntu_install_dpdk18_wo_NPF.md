@@ -167,7 +167,7 @@ For configuration examples and options see the page <a href="/conf_options2.md">
 
 #### Run TheRouter
 
-  Define a bash alise
+  Define a bash alias
 
   		alias rcli="ip netns exec tr rcli"
 
