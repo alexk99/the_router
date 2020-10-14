@@ -496,6 +496,38 @@ or
 
 	port 0 mtu 1500 tpid 0x8100 state enabled flags qinq_enabled,extend_vlan_offload
 
+### bond port
+
+Creates a new bonding (link aggregation group) port.
+Note that to complete port configuration the "port" command should be used after the "bond port" command.
+
+	bond port mode <mode> bond_slaves <slave_port,...> primary port <port_number> policy <trasmit_policy>
+
+mode:
+
+ 2 - Balance
+ 
+ In this mode all packets transmitted will be balanced across the available
+ slaves using one of three available transmit policies - l2, l2+3 or l3+4.
+ 
+ 4 - LACP (802.3AD)
+ 
+ This mode provides auto negotiation/configuration
+ of peers and well as link status changes monitoring using out of band
+ LACP (link aggregation control protocol) messages. For further details of
+ LACP specification see the IEEE 802.3ad/802.1AX standards. It is also
+ described here https://www.kernel.org/doc/Documentation/networking/bonding.txt.
+
+trasmit_policy:
+
+0 - BALANCE_XMIT_POLICY_LAYER2
+1 - BALANCE_XMIT_POLICY_LAYER23
+2 - BALANCE_XMIT_POLICY_LAYER34
+
+Examples:
+
+	bond port mode 4 bond_slaves 0,1 primary port 1 policy 2
+	port 2 mtu 1500 tpid 0x8100 state enabled bond_slaves 0,1
 
 ### rx_queue
 
