@@ -505,12 +505,12 @@ Note that to complete port configuration the "port" command should be used after
 
 mode:
 
- 2 - Balance
+  - 2 - Balance
  
  In this mode all packets transmitted will be balanced across the available
  slaves using one of three available transmit policies - l2, l2+3 or l3+4.
  
- 4 - LACP (802.3AD)
+  - 4 - LACP (802.3AD)
  
  This mode provides auto negotiation/configuration
  of peers and well as link status changes monitoring using out of band
@@ -520,9 +520,9 @@ mode:
 
 transmit_policy:
 
-0 - BALANCE_XMIT_POLICY_LAYER2
-1 - BALANCE_XMIT_POLICY_LAYER23
-2 - BALANCE_XMIT_POLICY_LAYER34
+ - 0 - BALANCE_XMIT_POLICY_LAYER2
+ - 1 - BALANCE_XMIT_POLICY_LAYER23
+ - 2 - BALANCE_XMIT_POLICY_LAYER34
 
 Examples:
 
