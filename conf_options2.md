@@ -1051,6 +1051,25 @@ Example:
 	h5 ~ # rcli sh det snat mapping alg map 1 out 10.114.0.0:23199
 	out 10.114.0.0:23199 -> in 10.11.1.10
 
+### sh det snat timeout
+
+Outputs session state's timeout values.
+
+Example:
+
+	~ rcli sh det snat timeout
+	unknown: 30
+	udp_active: 30
+	tcp_syn_sent: 30
+	tcp_established: 7200
+	tcp_fin_wait: 30
+	tcp_close_wait: 30
+	tcp_closing: 30
+	tcp_last_ack: 30
+	tcp_closed: 30
+	icmp_active: 60
+	udp_dns: 8
+
 ### det snat timeout
 
 Sets timeout for translations with a particular state.
@@ -1072,6 +1091,7 @@ List of states:
 	tcp_last_ack
 	tcp_closed
 	icmp_active
+	udp_dns
 
 Example:
 
