@@ -83,7 +83,7 @@ Table of Contents
          * [det snat del map](#det-snat-del-map)
          * [det snat sh mapping alg in](#det-snat-sh-mapping-alg-in)
          * [det snat sh mapping alg out](#det-snat-sh-mapping-alg-out)
-	 * [sh det snat timeout](#sh-det-snat-timeout)
+         * [sh det snat timeout](#sh-det-snat-timeout)
          * [det snat timeout](#det-snat-timeout)
          * [det snat close host sessions](#det-snat-close-host-sessions)
          * [det snat close host session in](#det-snat-close-host-session-in)
