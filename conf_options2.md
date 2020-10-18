@@ -1168,6 +1168,23 @@ Example:
 	10.11.1.10:63234	10.114.0.0:21922	xx.xx.xx.95:443	tcp_established	2669
 	10.11.1.10:63275	10.114.0.0:21963	xx.xx.xx.95:443	tcp_established	2773
 
+### det_nat_sess_bucket_size
+
+An integer sysctl variable that defines size of the session hashtable's bucket.
+
+To increase the performance of NAT session lookups a subscriber's session array is organized
+like a hashtable. It means that sessions are stored in the array in a special order
+which is based on a session's hash value. The hash value is calculated based on the session's
+external address and external port. All sessions with the same hash value are always
+stored in the same bucket. Using buckets increase performance, since the lookup operation
+have to scan only the bucket area (200 slots, for example) instead of on scanning the whole array (2048 slots, for example)
+in order to find a nat session.
+
+Example
+
+	rcli sysctl get det_nat_sess_bucket_size
+	200
+
 ## NPF
 
 ### npf load
