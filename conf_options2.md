@@ -91,6 +91,7 @@ Table of Contents
          * [det snat show session in](#det-snat-show-session-in)
          * [det snat show session out](#det-snat-show-session-out)
          * [det snat show sessions](#det-snat-show-sessions)
+         * [det snat bucket size](#det_nat_sess_bucket_size)
       * [NPF](#npf)
          * [npf load](#npf-load)
          * [sh npf conndb size](#sh-npf-conndb-size)
