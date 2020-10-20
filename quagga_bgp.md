@@ -95,15 +95,10 @@ Create a network namespace and set up the loopback interface:
 	$rvrf ip link set up lo
 
 Start TheRouter and setup kni interfaces.
-Each kni interface should be set up and the proper MAC address 
-should be configured after the router has started:
+Each kni interface should be set up after the router has started:
 
 	router_run.sh /etc/router.conf
-	$rvrf ip link set address 6C:B3:11:51:15:50 up rkni_p0
-	
-KNIs MAC address should be equal to the MAC address of the corresponding
-VIF interface which can be found out using the "rcli sh vif"
-command.
+	$rvrf ip link set up r_p0
 
 Check out the routing table. There are only directly connected routes and a default route there:
 
