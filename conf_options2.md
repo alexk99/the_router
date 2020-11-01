@@ -951,11 +951,11 @@ Deletes a translation map.
 
 	det snat del map <map-id>
 
-### det snat flush map
+### det snat flush sess
 
 Deletes all translation sessions from the map.
 
-	det snat flush map <map-id>
+	det snat flush sess map <map-id>
 
 ### show det snat maps
 
