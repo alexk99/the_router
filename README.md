@@ -15,7 +15,7 @@ TheRouter is a software packet router based on one of the fastest packet process
  * Stateful and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * Link Aggregation/Link Bonding/LACP
- * CGNAT (NPF, Endpoint-Dependent Mode, <a href="https://github.com/alexk99/the_router/blob/master/conf_options2.md#deterministic-snat44">Deterministic NAT</a>, Endpoint-Independent Mode (EIM))
+ * CGNAT (Endpoint-Dependent Mode by NPF, Endpoint-Independent Mode (EIM) by <a href="https://github.com/alexk99/the_router/blob/master/conf_options2.md#deterministic-snat44">Deterministic NAT</a>)
  * NAT events logging (IPFIX, Netflow v9)
  * VRRP (v2 for IPv4 and v3 for IPv6)
  * IPv6
