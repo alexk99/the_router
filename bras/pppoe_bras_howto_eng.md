@@ -95,6 +95,10 @@ The detailed description of the configuration commands will be provided in the f
 	
 	  # mbuf mempool size
 	  sysctl set mbuf 16384
+	  
+	  # NIC rx/tx descriptor ring sizes
+	  sysctl set num_rx_desc 512
+	  sysctl set num_tx_desc 1024
 	
 	  port 0 mtu 1500 tpid 0x8100 state enabled
 	  port 1 mtu 1500 tpid 0x8100 state enabled
