@@ -94,6 +94,7 @@ The detailed description of the configuration commands will be provided in the f
 	  sysctl set numa 0
 	
 	  # mbuf mempool size
+	  # this value depends on the total number of rx queues
 	  # mbuf = number of rx queues * 4096
 	  sysctl set mbuf 16384
 	  
