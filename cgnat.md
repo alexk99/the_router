@@ -119,8 +119,8 @@ Deterministic NAT</a>
 
 ### PPPoE BNG + CGNAT
 
-A BNG server running 17k+ PPPoE subscribers and performing CGNAT
+A BNG server running 20k+ PPPoE subscribers and performing CGNAT
 
-<img src="http://therouter.net/images/production/det_nat1/25g_31_10_2020.jpeg">
-<img src="http://therouter.net/images/production/det_nat1/pps_31_10_2020.jpeg">
+<img src="http://therouter.net/images/production/det_nat1/det_nat_br3_2.png">
+<img src="http://therouter.net/images/production/det_nat1/det_nat_br3_2_pps.png">
 
