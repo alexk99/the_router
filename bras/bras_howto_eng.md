@@ -107,8 +107,13 @@ will be provided in the following paragraphs.
 	  sysctl set numa 0
 	
 	  # mbuf mempool size
+	  # this value depends on the total number of rx queues
+	  # mbuf = number of rx queues * 4096
 	  sysctl set mbuf 16384
-	  sysctl set log_level 7
+	  
+	  # NIC rx/tx descriptor ring sizes
+	  sysctl set num_rx_desc 512
+	  sysctl set num_tx_desc 1024
 	
 	  #
 	  # port and queues setup
@@ -150,6 +155,8 @@ will be provided in the following paragraphs.
 	}
 	
 	runtime {
+	  sysctl set log_level 7
+	
 	  #
 	  # NPF NAT timeouts
 	  #
