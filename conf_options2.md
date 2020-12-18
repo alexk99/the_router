@@ -1192,8 +1192,7 @@ Example
 
 Creates a map to translate one set of ipv4 addresses into another using 1:1 relations.
 
-	nat11 create map <map-id> in <addrs/mask> size <map_size> sess <nb_sess_per_host>	
-	det snat create map <map-id> in <addrs/mask> out <addr/mask> sess <nb_sess_per_host>
+	nat11 create map <map-id> in <addrs/mask> size <map_size> sess <nb_sess_per_host>
 
 - in <addrs/mask> - internal ipv4 address space
 - nb_sess_per_host - maximum number of translation sessions per internal network host
@@ -1297,7 +1296,7 @@ Outputs translation rules.
 
 Outputs nat11 translation sessions of a particular internal ipv4 host.
 
-	sh nat11 sessions map <map-id> in <inernal-ipv4-address>
+	sh nat11 sessions map <map-id> in <internal-ipv4-address>
 
 ## NPF
 
