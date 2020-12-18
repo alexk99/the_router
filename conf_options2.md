@@ -1103,26 +1103,26 @@ Example:
 
 Closes and deletes all translation sessions of a particular host.
 
-	det snat close sess MAP <map-id> in <addr>
+	det snat close sess map <map-id> in <addr>
 
 - addr - ipv4 address of host from "in" network
 
 Example:
 
-	det snat close sess MAP 1 in 10.11.1.10
+	det snat close sess map 1 in 10.11.1.10
 
 ### det snat close host session in
 
 Closes and deletes a translation session of a particular host.
 
-	det snat close sess MAP <map-id> in <addr:port> ext <addr:port>
+	det snat close sess map <map-id> in <addr:port> ext <addr:port>
 
 - in addr:port - ipv4 address and port of the internal endpoint of the translation
 - ext addr:port - ipv4 addres and port of the external endpoint of the translation
 
 Example:
 
-	det snat close sess MAP 1 in 10.11.1.10:63140 ext 13.94.102.123:443
+	det snat close sess map 1 in 10.11.1.10:63140 ext 13.94.102.123:443
 
 ### det snat close host session out
 
@@ -1185,6 +1185,119 @@ Example
 
 	rcli sysctl get det_nat_sess_bucket_size
 	200
+
+## NAT44 1:1
+
+### nat11 create map
+
+Creates a map to translate one set of ipv4 addresses into another using 1:1 relations.
+
+	nat11 create map <map-id> in <addrs/mask> size <map_size> sess <nb_sess_per_host>	
+	det snat create map <map-id> in <addrs/mask> out <addr/mask> sess <nb_sess_per_host>
+
+- in <addrs/mask> - internal ipv4 address space
+- nb_sess_per_host - maximum number of translation sessions per internal network host
+- map_size - maximum number of 1:1 translation rules
+
+Example:
+
+	nat11 create map 1 in 10.11.1.0/24 size 1024 sess 2048
+
+### nat11 delete map
+
+Deletes a translation map.
+
+	nat11 del map <map-id>
+
+### nat11 vif enable
+
+Enables nat 1:1 function on a particular interface.
+
+	nat11 vif <vif-name> enable
+
+Example:
+
+	nat11 vif v3 enable
+
+### nat11 vif disable
+
+Disables nat 1:1 function on a particular interface.
+
+	nat11 vif <vif-name> disable
+
+### nat11 add map
+
+	nat11 vif <vif-name> add map <map-id>
+
+Adds a map to an interface.
+
+Once a map is added to an interface and nat 1:1 function is enabled 
+the interface will start performing NAT 1:1 translations accoriding with the map's parameters.
+
+Example:
+
+	nat11 vif v3 add map 1
+
+### nat11 del map
+
+Deletes a map from an interface.
+
+	nat11 vif <vif-name> del map <map-id>
+
+Example:
+
+	nat11 vif v3 del map 1
+
+### nat11 add translation rule
+
+Adds a NAT 1:1 translation rule to the map
+
+	nat11 rule add map <map-id> <internal ipv4 address> <translation ipv4 addres>
+
+Example:
+
+	nat11 rule add map 1 10.0.0.1 10.114.0.5
+
+### nat11 del translation rule
+
+Deletes a NAT 1:1 translation rule from the map.
+
+	nat11 rule del map <map-id> <internal ipv4 address>
+
+Example:
+
+	nat11 rule del map 1 10.0.0.1
+
+### nat11 close host session in
+
+Closes and deletes a translation session of a particular host.
+
+	nat11 close sess map <map-id> in <addr:port> ext <addr:port>
+
+- in addr:port - ipv4 address and port of the internal endpoint of the translation
+- ext addr:port - ipv4 addres and port of the external endpoint of the translation
+
+Example:
+
+	nat11 close sess map 1 in 10.11.1.10:63140 ext 13.94.102.123:443
+
+### show nat11 maps
+
+Outputs translation maps.
+
+	sh nat11 maps
+
+### show nat11 translation rules
+
+Outputs translation rules.
+
+	sh nat11 rules map <map-id>
+
+### show nat11 sessions
+
+Outputs nat11 translation sessions of a particular internal ipv4 host.
+
+	sh nat11 sessions map <map-id> in <inernal-ipv4-address>
 
 ## NPF
 
