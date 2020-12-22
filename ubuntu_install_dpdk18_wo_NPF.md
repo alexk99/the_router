@@ -162,7 +162,7 @@ to find out NIC's PCI addresses.
 After correct PCI addresses of your NIC are added to the load_dpdk_drivers.sh file,
 run it and then check that NICs are switched to DPDK mode by running again
 
-	$RTE_SDK/usertools/dpdk-devbind.py --status
+		$RTE_SDK/usertools/dpdk-devbind.py --status
 
 This time you should find your NICs in the "Network devices using DPDK-compatible driver" section.
 
