@@ -153,7 +153,18 @@ Run the following commands:
 
 Edit load_dpdk_drivers.sh script from TheRouter archive's sbin directory
 and replace 0000:xx:xx.x values with PCI addresses of your NICs, for examaple 0000:02:00.0.
-Use the 'lspci' utility to find out NIC's addresses.
+Run 
+
+		$RTE_SDK/usertools/dpdk-devbind.py --status
+
+to find out NIC's PCI addresses.
+
+After correct PCI addresses of your NIC are added to the load_dpdk_drivers.sh file,
+run it and then check that NICs are switched to DPDK mode by running again
+
+	$RTE_SDK/usertools/dpdk-devbind.py --status
+
+This time you should find your NICs in the "Network devices using DPDK-compatible driver" section.
 
 ### Run TheRouter
 
