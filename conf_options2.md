@@ -1128,39 +1128,45 @@ Example:
 
 Closes and deletes a translation session of a particular host.
 
-	det snat close sess map <map-id> in <addr:port> ext <addr:port>
+	det snat close sess map <map-id> in <addr:port> ext <addr:port> <ip_proto>
 
 - in addr:port - ipv4 address and port of the internal endpoint of the translation
 - ext addr:port - ipv4 addres and port of the external endpoint of the translation
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
 
 Example:
 
-	det snat close sess map 1 in 10.11.1.10:63140 ext 13.94.102.123:443
+	det snat close sess map 1 in 10.11.1.10:63140 ext 13.94.102.123:443 tcp
 
 ### det snat close host session out
 
 Closes and deletes a translation session of a particular host.
 
-	det snat close sess map <map-id> out <addr:port> ext <addr:port>
+	det snat close sess map <map-id> out <addr:port> ext <addr:port> <ip_proto>
 
 - in addr:port - translated (out) ipv4 address and port of the internal endpoint of the translation
 - ext addr:port - ipv4 addres and port of the external endpoint of the translation
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
 
 Example:
 
-	det snat close sess map 1 out 10.114.0.0:21828 ext 13.94.102.123:443
+	det snat close sess map 1 out 10.114.0.0:21828 ext 13.94.102.123:443 tcp
 
 ### det snat show session in
 
 Outputs a translation session with "in" address.
 
-	sh det snat sess map <map-id> in <addr:port> ext <addr:port>
+	sh det snat sess map <map-id> in <addr:port> ext <addr:port> <ip_proto>
+
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
 
 ### det snat show session out
 
 Outputs a translation session with "out" address.
 
-	sh det snat sess map <map-id> out <addr:port> ext <addr:port>
+	sh det snat sess map <map-id> out <addr:port> ext <addr:port> <ip_proto>
+
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
 
 ### det snat show sessions
 
