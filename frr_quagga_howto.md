@@ -1,7 +1,7 @@
 # 1. Install and configure FRR or Quagga
 
-see attached file quagga_frr.notes_eng.txt
-for detailed instructions
+follow this installation steps
+https://github.com/alexk99/the_router/blob/master/frr_quagga_install.txt
 
 also take a look here for more details
 https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite
