@@ -8,47 +8,45 @@ https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-
 
 # 2. Configure TR
 
-## 2.1. add following commands to the startup section 
-of TR's configuration file
+## 2.1.
+add following commands to the startup section of TR's configuration file
 
-  sysctl set linux_route_proto 3 
-  sysctl set ppp_install_subsc_linux_routes 1
-  
-## 2.2. use the "kni" flag for all TR interfaces (VIFs)
-that will be used to communicate with external routers via BGP
+    sysctl set linux_route_proto 3
+    sysctl set ppp_install_subsc_linux_routes 1
+
+## 2.2. 
+use the "kni" flag for all TR VIF interfaces that will be used to communicate with external routers via a dynamic routing protocol
 
 for example
 
-  # uplink interface
-  vif add name v3 port 0 type dot1q cvid 3 flags kni
+    # uplink interface
+    vif add name v3 port 0 type dot1q cvid 3 flags kni
 
 ## 2.3.
 you should manually set up the linux KNI interfaces after TR has started.
 to do that use ip link command:
 
-  ip link set up dev r_xxx
+    ip link set up dev r_xxx
 
 where xxx is the name of your KNI VIF interface.
-you can place this command at the end of your therouter_start.sh
-in the section
+you can place this command at the end of your therouter_start.sh in the section
 
-##
-## Setup KNI interfaces
-##
+    ##
+    ## Setup KNI interfaces
+    ##
 
 # 3.
 Once a subscriber has connected to TR
 TR will create a linux /32 route for that subscriber.
-The route will be added to 'tr' linux namespaces at dev 'lo'
-To output such routes use 
+The route will be added to the 'tr' linux namespace at the dev 'lo'.
+To output such routes use
 
-  $rvrf ip route ls dev lo
+    $rvrf ip route ls dev lo
 
 Don't forget to define $rvrf bash variable as
 
-  ip netns exec tr
+    ip netns exec tr
 
 # 4.
-Use FRR command 'redistribute kernel'
-to redistribute routes created by TR to your uplink router.
+Use FRR command 'redistribute kernel' to redistribute routes created by TR to your uplink router.
 
