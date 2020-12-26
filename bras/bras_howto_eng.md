@@ -373,18 +373,15 @@ supported by FRR/Quagga. An example of such interface is the v3 interface.
 The router receives a default route from the BGP peer established 
 via the v3 KNI interface.
 
-You should manually up KNI interfaces and configure their 
-MAC addresses once TheRouter has started. MAC address of a KNI interface 
-should be equal to the MAC address of the router's interface coupled with the KNI.
-To figure out the MAC address of a VIF use the 'rcli sh vif' command.
+You should manually up KNI interfaces once TheRouter has started.
 
 Example of a bash script that up kni interfaces and configure their MAC address:
 
 	#!/bin/bash
 	
-	ip link set up dev rkni_v3 address 00:1B:21:3C:69:44
-	ip link set up dev rkni_v5 address 00:1B:21:3C:69:44
-	ip link set up dev rkni_v21 address 00:1B:21:3C:69:44
+	ip link set up dev r_v3
+	ip link set up dev r_v5
+	ip link set up dev r_v21
 
 ### 4.4.2. FRR/Quagga
 
