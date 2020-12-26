@@ -375,7 +375,7 @@ via the v3 KNI interface.
 
 You should manually up KNI interfaces once TheRouter has started.
 
-Example of a bash script that up kni interfaces and configure their MAC address:
+Example of a bash script that sets up KNI interfaces:
 
 	#!/bin/bash
 	
