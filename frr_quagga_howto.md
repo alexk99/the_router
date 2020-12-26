@@ -35,7 +35,7 @@ you can place this command at the end of your therouter_start.sh in the section
     ## Setup KNI interfaces
     ##
 
-# 3.
+# 3. Output subscriber's routes
 Once a subscriber has connected to TR
 TR will create a linux /32 route for that subscriber.
 The route will be added to the 'tr' linux namespace at the dev 'lo'.
@@ -47,6 +47,6 @@ Don't forget to define $rvrf bash variable as
 
     ip netns exec tr
 
-# 4.
+# 4. Configure FRR
 Use FRR command 'redistribute kernel' to redistribute routes created by TR to your uplink router.
 
