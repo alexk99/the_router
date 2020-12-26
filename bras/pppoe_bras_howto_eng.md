@@ -78,7 +78,7 @@ To download pppoe enabled build use the link on main page in the section PPPoE.
 	# !! use your own MAC address of a physical port
 	# !! use the 'rcli sh vif' command to figure out MAC addresses of ports
 	#
-	$rvrf ip link set up address 6C:B3:11:51:15:50 dev rkni_v3
+	$rvrf ip link set up address 6C:B3:11:51:15:50 dev r_v3
 	
 	#
 	# start FRR/Quagga daemons
@@ -414,8 +414,8 @@ both the Linux route table and the_router's route table.
 Linux routing table in the "tr" namespace
 
 	h5 src # $rvrf ip route ls
-	default via 192.168.1.3 dev rkni_v3 proto 186 metric 20
-	192.168.1.0/24 dev rkni_v3 proto kernel scope link src 192.168.1.111
+	default via 192.168.1.3 dev r_v3 proto 186 metric 20
+	192.168.1.0/24 dev r_v3 proto kernel scope link src 192.168.1.111
 
 The TheRouter's main routing table:
 
