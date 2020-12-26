@@ -338,18 +338,16 @@ Dynamic routing. Integration with Quagga routing suite
 
 ### 4.3.1. KNI interfaces
 
-a KNI interface must be created for each router's VIF that will be used to communicate
-with other routers via dynamic routing protocols supported by Quagga/FRR. Example of such interface
+A KNI interface must be created for each router's VIF that will be used to communicate
+with other routers via dynamic routing protocols supported by Quagga/FRR. An example of such interface
 is the v3 interface. The router receives a default route from the BGP peer established via the v3 kni interface.
 
-You should up KNI interfaces and configure their MAC addresses after the_router has started.
-MAC address of a kni interface should be equal to the mac address of the router's interface (VIF) 
-coupled with a kni interface. MAC address of a VIF can be found out from the 'rcli sh vif' command output.
+You should up KNI interfaces after the_router has started.
 
-Example of a bash script that up a kni interface and configure it's MAC address:
+Example of a bash script that sets up a kni interface:
 
 	#!/bin/bash
-	ip link set up address 00:1B:21:3C:69:44 dev rkni_v3
+	ip link set up dev r_v3
 	
 ### 4.3.2. Starting FRR
 
