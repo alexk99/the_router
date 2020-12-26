@@ -26,10 +26,10 @@ for example
 you should manually set up the linux KNI interfaces after TR has started.
 to do that use ip link command:
 
-    ip link set up dev r_xxx
+    $rvrf ip link set up dev r_xxx
 
 where xxx is the name of your KNI VIF interface.
-you can place this command at the end of your therouter_start.sh in the section
+you can place this command in file therouter_start.sh in the section
 
     ##
     ## Setup KNI interfaces
