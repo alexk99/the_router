@@ -269,6 +269,6 @@ For configuration examples and options see the page <a href="/conf_options2.md">
 
   Use the 'rcli' alias which will execute an rcli utility from the archive to configure and control TheRouter
 
-		# $rvrf rcli sh uptime
+		# rcli sh uptime
 		Uptime: 0 day(s), 1 hour(s), 38 minute(s), 14 sec(s)
 
