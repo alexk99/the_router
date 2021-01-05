@@ -258,6 +258,8 @@ For configuration examples and options see the page <a href="/conf_options2.md">
   Edit therouter_start.sh script located in TheRouter's archive sbin directory
   and use your NIC's addresses as values for -w parameters. If you have only
   one NIC then delete the second -w parameter.
+  
+  Save the alias in the /root/.profile so it's created everytime you log in.
 
   Start TheRouter
 
