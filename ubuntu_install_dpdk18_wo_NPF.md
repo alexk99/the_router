@@ -51,21 +51,6 @@ Here are installation steps for Ubuntu 18.04.
 
 ### Configure linux kernel
 
-* Make sure the following options are enabled:
-
-		UIO support
-		   Device Drivers -> Userspace I/O drivers -> Generic driver for PCI 2.3 and PCI Express cards
-		      symbol UIO_PCI_GENERIC
-		
-		PROC_PAGE_MONITOR
-		   File systems -> Pseudo filesystems -> /proc file system support      
-		
-		HUGETLBFS
-		  File systems -> Pseudo filesystems
-		
-		HPET and HPET_MMAP
-		   Device Drivers -> Character devices -> HPET - High Precision Event Timer
-
 * Turn on linux boot time options:
 	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
 
@@ -185,6 +170,8 @@ For configuration examples and options see the page <a href="/conf_options2.md">
   Edit therouter_start.sh script located in TheRouter's archive sbin directory
   and use your NIC's addresses as values for -w parameters. If you have only
   one NIC then delete the second -w parameter.
+  
+  Save the alias in the /root/.profile so it's created everytime you log in.
 
   Start TheRouter
 
