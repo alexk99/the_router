@@ -1205,6 +1205,49 @@ Example
 	rcli sysctl get det_nat_sess_bucket_size
 	200
 
+## Deterministic DNAT44
+
+### det snat add dnat
+
+Creates a DNAT rules table for an SNAT map.
+
+	rcli det snat add dnat map <map-id> size <dnat-map-size>
+
+- map-id - id of already existing SNAT map;
+- dnat-map-size - maximum number of DNAT rules that can be stored in a DNAT map;
+
+### det snat add del
+
+Deletes a DNAT rules table from an SNAT map.
+
+	rcli det snat del dnat map <map-id>
+
+- map-id - id of already existing SNAT map;
+
+### det snat add dnat rule
+
+Adds a new DNAT rule.
+
+	rcli det snat add dnat rule map <map-id> out <addr:port> in <addr:port> <ip_proto>
+
+- map-id - id of already existing SNAT map;
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
+
+### det snat del dnat rule
+
+Deletes a DNAT rule.
+
+	rcli det snat del dnat rule map <map-id> out <addr:port> <ip_proto>
+
+- map-id - id of already existing SNAT map;
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
+
+### sh det dnat rules
+
+	rcli sh det dnat rules map <map-id>
+
+Outputs DNAT rules.
+
 ## NAT44 1:1
 
 ### nat11 create map
