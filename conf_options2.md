@@ -1239,6 +1239,14 @@ Adds a new DNAT rule.
 - map-id - id of already existing SNAT map;
 - ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
 
+Note that when creating a DNAT rule you have to use an output port number from a port range reserved
+for the input ip address used in the rule.
+
+To determine the port range reserved for the input ip address use the command "sh det snat mapping". For example:
+
+ 	# rcli sh det snat mapping alg map 1 in 10.11.1.11
+  	in 10.11.1.11 -> out 10.114.0.0 ports 23200 - 25215
+
 ### det snat del dnat rule
 
 Deletes a DNAT rule.
