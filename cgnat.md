@@ -8,7 +8,7 @@ and are two completely different implementations.
 
 ## Deterministic NAT
 
-- SNAT44 mode
+- SNAT44, DNAT44
 - EIM, Endpoint Independent Mapping
 - NAT session/translation limit per host
 - Deterministic address and port selection
