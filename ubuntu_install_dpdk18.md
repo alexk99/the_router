@@ -101,6 +101,9 @@ Notes: install process ends successfully even if it indicates that there has bee
 
  ## Install city hash
 
+		unset LIBDIR
+		unset INCDIR
+		unset DESTDIR
 		git clone https://github.com/google/cityhash
 		cd ./cityhash/
 		./configure
