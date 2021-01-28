@@ -28,6 +28,9 @@ Here are installation steps for Ubuntu 18.04.
 
 ## Install city hash
 
+		unset LIBDIR
+		unset INCDIR
+		unset DESTDIR
 		git clone https://github.com/google/cityhash
 		cd ./cityhash/
 		./configure
