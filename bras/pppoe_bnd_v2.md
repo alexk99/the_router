@@ -1,5 +1,5 @@
 # Network scheme
-<img src="http://therouter.net/images/bras/pppoe_bng_2.png">
+<img src="http://therouter.net/images/bras/pppoe_bng_2_1.png">
 
 # Configuration
 
