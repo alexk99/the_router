@@ -187,6 +187,7 @@ Notes: install process ends successfully even if it indicates that there has bee
 
 Download DPDK 18.11.3
 
+		cd /usr/src/
 		wget https://fast.dpdk.org/rel/dpdk-18.11.3.tar.xz
 		tar xvf dpdk-18.11.3.tar.xz
 		cd ./dpdk-stable-18.11.3
@@ -223,7 +224,11 @@ Run the following commands:
 
 #### Define RTE_SDK variable
 
-		export RTE_SDK=/path_to_dpdk
+		export RTE_SDK=/usr/src/dpdk-stable-18.11.3
+
+Add the above export command to /root/.profile
+
+		nano /root/.profile
 
 #### Load drivers and bind your NICs to DPDK
 
@@ -254,16 +259,23 @@ For configuration examples and options see the page <a href="/conf_options2.md">
 
 #### Run TheRouter
 
+  Copy files from sbin directory from a TheRouter distributive archive to the /usr/local/sbin directory
+
+		cd <THE_ROUTER_ARCHIVE_DIR>
+		cp ./sbin/* /usr/local/sbin/
+
   Define a bash alias
 
-  		alias rcli="ip netns exec tr rcli"
+		alias rcli="ip netns exec tr rcli"
 
-  Edit therouter_start.sh script located in TheRouter's archive sbin directory
+  Add the alias to /root/.profile so it's created everytime you log in.
+
+		nano /root/.profile
+
+  Edit /usr/local/sbin/therouter_start.sh script
   and use your NIC's addresses as values for -w parameters. If you have only
   one NIC then delete the second -w parameter.
   
-  Save the alias in the /root/.profile so it's created everytime you log in.
-
   Start TheRouter
 
 		therouter_start.sh /etc/router.conf
