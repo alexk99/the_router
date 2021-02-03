@@ -4,9 +4,9 @@ startup {
   # mbuf mempool size
   sysctl set mbuf 16384
   
-	# NIC rx/tx descriptor ring sizes
-	sysctl set num_rx_desc 512
-	sysctl set num_tx_desc 1024
+  # NIC rx/tx descriptor ring sizes
+  sysctl set num_rx_desc 512
+  sysctl set num_tx_desc 1024
 
   port 0 mtu 1500 tpid 0x8100 state enabled
 
@@ -233,11 +233,11 @@ runtime {
   sysctl set flow_acct 1
   sysctl set flow_acct_dropped_pkts 0
 
-	#
-	# NAT events logging (NEL)
-	#
-	nel collector addr 192.168.5.4 port 9995 proto 9
-	sysctl set nat_events 1  
+  #
+  # NAT events logging (NEL)
+  #
+  nel collector addr 192.168.5.4 port 9995 proto 9
+  sysctl set nat_events 1  
 
   #
   # NPF (NAT)
