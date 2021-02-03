@@ -118,9 +118,9 @@ runtime {
   ipv6 addr add xxx:4/112 dev lo
 
   # ipv6 uplink
-  vif add name v100 port 0 type dot1q cvid 100 flags kni
-  ipv6 enable dev v100
-  ipv6 addr add xxx:3/112 dev v100
+  vif add name uplinkv6 port 0 type dot1q cvid 100 flags kni
+  ipv6 enable dev uplinkv6
+  ipv6 addr add xxx:3/112 dev uplinkv6
 
   ipv6 route add ::/0 via xx60::1:1
 
