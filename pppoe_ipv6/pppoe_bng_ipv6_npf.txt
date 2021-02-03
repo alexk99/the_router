@@ -1,6 +1,12 @@
 startup {
+  sysctl set numa 0
+
   # mbuf mempool size
   sysctl set mbuf 16384
+  
+	# NIC rx/tx descriptor ring sizes
+	sysctl set num_rx_desc 512
+	sysctl set num_tx_desc 1024
 
   port 0 mtu 1500 tpid 0x8100 state enabled
 
@@ -93,15 +99,14 @@ runtime {
   # pppoe ptp address
   ip route add 10.10.1.1/32 local
 
-  vif add name v3 port 0 type dot1q cvid 3 flags pppoe_on,npf_on,kni,flow_acct
-  # vif add name v3 port 0 type dot1q cvid 3 flags pppoe_on,npf_on
+  vif add name uplink port 0 type dot1q cvid 3 flags pppoe_on,npf_on,kni,flow_acct
   vif add name v20 port 0 type dot1q cvid 20
 
-  arp add 192.168.1.73 60:a4:4c:41:0a:24 dev v3 static
+  arp add 192.168.1.73 60:a4:4c:41:0a:24 dev uplink static
   arp add 192.168.20.2 60:a4:4c:41:0a:24 dev v20 static
 
-  ip addr add 192.168.1.111/24 dev v3
-  ip addr add 192.168.1.118/24 dev v3
+  ip addr add 192.168.1.111/24 dev uplink
+  ip addr add 192.168.1.118/24 dev uplink
 
   ip addr add 192.168.20.111/24 dev v20
   ip addr add 192.168.20.112/24 dev v20
@@ -201,7 +206,7 @@ runtime {
   ppp ipv6 pool slaac ppp6_slaac_pool
 
   #
-  # radius (auth)
+  # radius authorization
   #
   radius_client add src ip 192.168.20.111
   radius_client add src ip 192.168.20.112
@@ -221,11 +226,6 @@ runtime {
   sysctl set radius_accounting_interim_interval 60
   sysctl set radius_initial_retransmit_timeout 500
 
-  # radius h4
-  #radius_client add src ip 192.168.1.111
-  #radius_client add accounting server 192.168.1.165
-  #radius_client add server 192.168.1.165 port 1812
-
   #
   # Flow accounting
   #
@@ -233,9 +233,11 @@ runtime {
   sysctl set flow_acct 1
   sysctl set flow_acct_dropped_pkts 0
 
-  #
-  # NAT events (NSEL)
-  #
+	#
+	# NAT events logging (NEL)
+	#
+	nel collector addr 192.168.5.4 port 9995 proto 9
+	sysctl set nat_events 1  
 
   #
   # NPF (NAT)
