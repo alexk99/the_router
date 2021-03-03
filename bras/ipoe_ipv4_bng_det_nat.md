@@ -1,4 +1,4 @@
-# IPoE ipv4 BNG example configuration.
+# IPoE IPv4 BNG example configuration.
   
   	startup {
 	  sysctl set numa 0
