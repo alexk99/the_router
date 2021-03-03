@@ -129,12 +129,12 @@ runtime {
   # PPP pools
   #
 
-	# create IP pools
-	ip pool add ppp_pool_1
-	ip pool add range ppp_pool_1 10.0.1.0 - 10.0.1.255
-	
-	ip pool add ppp_pool_2
-	ip pool add range ppp_pool_2 10.0.2.0 - 10.0.2.255
+  # create IP pools
+  ip pool add ppp_pool_1
+  ip pool add range ppp_pool_1 10.0.1.0 - 10.0.1.255
+  
+  ip pool add ppp_pool_2
+  ip pool add range ppp_pool_2 10.0.2.0 - 10.0.2.255
 
   # use pool
   ppp ip pool add ppp_pool_1
@@ -216,9 +216,9 @@ runtime {
   sysctl set nat_events 1  
 
   #
-	# SNAT 44
-	#
-	det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 2048
-	det snat vif uplink enable
-	det snat vif uplink add map 1
+  # SNAT 44
+  #
+  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 2048
+  det snat vif uplink enable
+  det snat vif uplink add map 1
 }
