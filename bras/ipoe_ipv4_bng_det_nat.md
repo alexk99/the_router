@@ -1,6 +1,6 @@
 # IPoE ipv4 BNG example configuration.
   
-  startup {
+  	startup {
 	  sysctl set numa 0
 	
 	  # mbuf mempool size
