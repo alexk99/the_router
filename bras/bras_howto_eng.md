@@ -534,14 +534,13 @@ or to authenticate a L2/L3 subscriber.
 The information provided in this radius reply will be used by TheRouter 
 to configure subscribers ip addresses, routes and PBR rules.
 
-The following attributes are used to configure a dynamic VIF (subscriber connected via
-a dedicated vlan)
+#### The following attributes are used to configure a dynamic VIF (subscriber connected via a dedicated vlan)
 
 	therouter_ipv4_addr or Framed-IP-Address
 	therouter_ipv4_mask or Framed-IP-Netmask
 	therouter_ip_unnumbered
-	therouter_ingress_cir or WISPr-Bandwidth-Max-Up
-	therouter_engress_cir or WISPr-Bandwidth-Max-Down	
+	therouter_ingress_cir or WISPr-Bandwidth-Max-Up or Mikrotik-Rate-Limit
+	therouter_engress_cir or WISPr-Bandwidth-Max-Down or Mikrotik-Rate-Limit	
 	therouter_subsc_ttl
 	therouter_pbr
 	therouter_subsc_proxy_arp
@@ -553,10 +552,10 @@ based on subscriber's VLAN id and the port number via it is connected to TheRout
 The detailed description of the ip configuration of subscriber's connected via a dedicated VLAN is provided in the chapter
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#vlan-per-subscriber">Vlan per subscriber</a>
 
-The following attributes could be used to configure a L2/L3 connected subscriber:
+#### The following attributes could be used to configure a L2/L3 connected subscriber:
 
-	therouter_ingress_cir or WISPr-Bandwidth-Max-Up
-	therouter_engress_cir or WISPr-Bandwidth-Max-Down
+	therouter_ingress_cir or WISPr-Bandwidth-Max-Up or Mikrotik-Rate-Limit
+	therouter_engress_cir or WISPr-Bandwidth-Max-Down or Mikrotik-Rate-Limit
 	therouter_subsc_ttl
 	therouter_subsc_static_arp
 	therouter_install_subsc_route
