@@ -6,8 +6,8 @@ and ip unnumbered scheme is used to configure IPv4 subscriber's routing.
 Subscribers are connected to vlan v5, QinQ vlan range cvid 2010 cvid 2500 - 2800,
 dot1q range 2500 - 2800.
 
-To provide subscriber with IPv4 addresses DHCP relay is used wich
-forward DHCP requests to an external DHCP server located at host 192.168.20.3.
+To provide subscribers with IPv4 addresses DHCP relay is used which
+forwards DHCP requests to an external DHCP server located at host 192.168.20.3.
 host 192.168.20.3 could be running at the same machine TR is running at.
 
   	startup {
