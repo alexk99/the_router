@@ -2985,11 +2985,18 @@ Example:
 
 Create a new IPv6 address pool.
 
-	ipv6 pool add <pool_name> <prefix> length <len> preferred_lt <integer> valid_lt <integer> flags <flag,...>
+	ipv6 pool add <pool_name> <prefix> length <len> [preferred_lt <integer>] [valid_lt <integer>] [flags <flag,...>]
 
 Parameters:
  - prefix - the pool's address space;
  - len - length of prefixes allocated from the pool;
+ - preferred_lt - the length of time in seconds that a valid address is
+ 	preferred (i.e., the time until deprecation). When the preferred
+	lifetime expires, the address becomes deprecated. Default value is 604800 seconds (7 days);
+ - valid_lt - the length of time in seconds an address remains in the valid
+ 	state (i.e., the time until invalidation). The valid lifetime
+ 	must be greater then or equal to the preferred lifetime.  When
+ 	the valid lifetime expires, the address becomes invalid. Default value is 2592000 seconds (30 days);
 
 Flags:
  
