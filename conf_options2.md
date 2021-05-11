@@ -2610,6 +2610,10 @@ Sets profiles's radius client id.
 
 	pppoe profile set <id> radius_client [radius_client_id]
 
+Sets profiles's MTU.
+
+	pppoe profile set <id> mtu <mtu_value>
+
 ### pppoe profile add vif
 
 Adds an interface into a pppoe profile. As a result the interface will start using PPPoE parameters
