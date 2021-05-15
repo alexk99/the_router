@@ -2677,6 +2677,32 @@ Outputs the pppoe profile used by a particular iinterface
 	  pado delay: 100 ms
 	  service name: *
 
+## PPPoE verbose logging
+
+PPPoE verbose log feature can be used to output log_level 8 syslog messages only for particular set of
+PPPoE subscribers. PPPoE subscribers are choosed by their MAC addresses. Once at least one MAC address 
+has been added to a verbose list the router will output syslog log_level 8 messages only for those subscribers.
+When the verbose list is empty the router outputs log_level 8 messages for all pppoe subscribers.
+Not that log_level 8 should be enabled by setting sysctl "log_level" variable value to 8.
+
+### pppoe verbose add
+
+Adds a pppoe subscriber's MAC address to the verbose list.
+
+	pppoe verbose add <MAC>
+
+### pppoe verbose del
+
+Deletes a pppoe subscriber's MAC address from the verbose list of subscribers.
+
+	pppoe verbose del <MAC>
+
+### pppoe verbose flush
+
+Deletes all MAC addresses from the verbose list.
+
+	pppoe verbose flush
+
 ## PPPoE sysctl variables
 
 ### pppoe_max_subsc
