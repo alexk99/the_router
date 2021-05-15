@@ -3683,3 +3683,36 @@ Example:
 
 	vif acl modify range svid <vlan_range> cvid <vlan_range> name <name> dir <direction> aclid <acl_id> prio <prio>
 
+## UDP API
+
+### udp_api secret
+
+Configures UDP API secret.
+
+	udp_api secret "<secret>"
+
+example
+
+	udp_api secret "123"
+
+## Captive portal
+
+### ipoe captive portal redirect url
+
+Configures captive portal redirect URL format.
+
+	ipoe captive portal redirect url format "format_string"
+
+The format string can include the following place holders {}:
+
+	mac
+	ipv4
+	svid
+	cvid
+	nas_ip_addr
+	sess_id
+
+example:
+
+	ipoe captive portal redirect url format "http://captive.portal.com/?mac={mac}&subsc_ip={ipv4}&svid={svid}&cvid={cvid}&nas_ip_addr={nas_ip_addr}&sess_id={sess_id}"
+
