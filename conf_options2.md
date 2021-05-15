@@ -355,7 +355,7 @@ Table of Contents
          * [therouter_subsc_addr_prefix_map_value](#therouter_subsc_addr_prefix_map_value)
          * [therouter_pbr](#therouter_pbr)
       * [IPoE subsribers](#ipoe-subsribers)
-      * [ipoe subsc username](#ipoe-subsc-username)
+      	 * [ipoe subsc username](#ipoe-subsc-username)
          * [subsc_vif_max](#subsc_vif_max)
          * [install_subsc_linux_routes](#install_subsc_linux_routes)
          * [subsc_initiate_by_egress_pkts](#subsc_initiate_by_egress_pkts)
