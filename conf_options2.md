@@ -2793,6 +2793,16 @@ at the same time. Once TR receives and delays that number of PADI/PADO all new P
 An integer read-only sysctl variable which contains the number of currently delayed PADO packets that are
 waiting to be sent to the wire.
 
+### ppp_username_trim_trailing_spaces
+
+An boolean sysctl variable that instructs the router to trim trailing spaces from pppoe usernames
+that come from CoA protocol and CHAP/PAP auth protocols.
+
+### ppp_username_to_lower_case
+
+An boolean sysctl variable that instructs the router to lower pppoe usernames
+that come from CoA protocol and CHAP/PAP auth protocols.
+
 ## PPPoE IPv6
 
 ### sh pppoe ipv6 subsc
