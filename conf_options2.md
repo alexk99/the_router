@@ -3408,6 +3408,10 @@ of one of online L2 subscribers and if no match is found, the request will be ig
 Also it will check that the ARP request has been received from the VIF the matching 
 subscriber is connected to.
 
+### install_subsc_routes
+A boolean sysctl variable. When enabled TheRouter will install a /32 route for each IPoE L2/L3 subscriber's
+ip address. Default value is false (0).
+
 ## DHCP Relay
 
 ### enabling DHCP relay
