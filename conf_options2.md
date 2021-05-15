@@ -3406,7 +3406,7 @@ Description is available
 
 ### ipoe subsc username
 
-A command to configure IPoE subscriber's username. The username will be used in RADIUS packets.
+Configures IPoE subscriber's username. The username will be used in RADIUS packets.
 
 	ipoe subsc username format "<field>[:<field>]..." [delimiter ":"]
 
