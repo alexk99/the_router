@@ -3356,6 +3356,30 @@ Description is available
 
 ## IPoE subsribers
 
+## ipoe subsc username
+
+A command to configure IPoE subscriber's username. The username will be used in RADIUS packets.
+
+	ipoe subsc username format "<field>[:<field>]..." [delimiter ":"]
+
+A list of fields that can be used to compose the username includes:
+
+	port
+	ipv4
+	mac
+	opt82_remote_id
+	opt82_circuit_id
+
+example:
+
+	ipoe subsc username format "mac"
+or
+
+	ipoe subsc username format "ipv4:mac" delimiter ":"
+
+Note that opt82_remote_id and opt82_circuit_id field values are avaialbe only when DHCP subscriber's session
+initiation is used.
+
 ### subsc_vif_max
 
 A startup integer sysctl variable that defines the maximum number of concurrent IPoE subscribers.
