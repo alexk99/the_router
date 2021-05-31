@@ -191,11 +191,11 @@ runtime {
   #
   
   # SLAAC pool
-  ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+  ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 flags rand,cache
   # NA address pool
-  ipv6 pool add ppp6_na_pool xxx::/64 length 128 preferred_lt 3600 valid_lt 7200 flags rand,cache
+  ipv6 pool add ppp6_na_pool xxx::/64 length 128 flags rand,cache
   # ND address pool
-  ipv6 pool add ppp6_pd_pool xx::/48 length 64 preferred_lt 3600 valid_lt 7200 flags rand,cache
+  ipv6 pool add ppp6_pd_pool xx::/48 length 64 flags rand,cache
 
   #
   # use the following ipv6 pools by default for ppp
