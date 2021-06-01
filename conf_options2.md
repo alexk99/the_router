@@ -2163,7 +2163,7 @@ Shows flow accounting statistic counters.
 
 To enable flow accounting on a particular VIF use the VIF flag "flow_acct". For example:
 
-	vif add name v3 port 2 type dot1q cvid 3 flags npf_on, kni, flow_acct
+	vif add name v3 port 2 type dot1q cvid 3 flags flow_acct
 
 or use "vif flags" command
 
