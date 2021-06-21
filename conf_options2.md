@@ -2147,11 +2147,18 @@ Deletes a prefix from Router Advertisement messages sent for a VRRP IPV6 group.
 
 ## Flow accounting IPFIX. 
 
-### flow ipfix_collector
+### flow ipfix_collector [deprecated]
 
 Configures flow accounting ipfix collector address and port. Default port value is 4739.
 
 	flow ipfix_collector addr <ipv4 address> [port <port-number>]
+
+### flow collector
+
+Configures flow accounting collector address and port. Default port value is 4739. Default proto value is 10.
+Current supported protocols: 9 - netflow v9, 10 - IPFIX.
+
+	flow collector addr <ipv4 address> [port <port-number>] [proto 9|10]
 
 ### sh flow stat
 
