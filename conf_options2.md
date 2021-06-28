@@ -998,23 +998,28 @@ Example:
 
 	h5 ~ # rcli sh det snat maps
 	SNAT deterministic map
-	  map id: 1
-	  internal net: 10.11.1.0/24
-	  external net: 10.114.0.0/29
+	  map id: 2
+	  internal net: 10.xx.1.0/24
+	  external net: 10.xx.0.0/29
 	  size: 524288
-	  active sessions: 292
+	  active sessions: 63
 	  ports per host: 2016
+	  sessions per host: 2048
+	  dnat map: none
 	  state counters:
-	    unknown: 7
-	    udp_active: 111
-	    tcp_syn_sent: 1
-	    tcp_established: 173
-	    tcp_fin_wait: 0
-	    tcp_close_wait: 0
-	    tcp_closing: 0
-	    tcp_last_ack: 0
-	    tcp_closed: 0
-	    icmp_active: 0
+	    unknown: 0
+	    active: 0
+	    syn_sent: 0
+	    established: 62
+	    fin_wait: 0
+	    close_wait: 0
+	    closing: 0
+	    last_ack: 0
+	    closed: 0
+	    icmp active: 0
+	    dns: 1
+	    gre: 0
+
 
 ### det snat vif enable
 
@@ -1092,16 +1097,17 @@ Example:
 
 	~ rcli sh det snat timeout
 	unknown: 30
-	udp_active: 30
-	tcp_syn_sent: 30
-	tcp_established: 7200
-	tcp_fin_wait: 30
-	tcp_close_wait: 30
-	tcp_closing: 30
-	tcp_last_ack: 30
-	tcp_closed: 30
-	icmp_active: 60
-	udp_dns: 8
+	active: 40
+	syn_sent: 30
+	established: 7200
+	fin_wait: 30
+	close_wait: 30
+	closing: 30
+	last_ack: 30
+	closed: 30
+	icmp active: 30
+	dns: 4
+	gre: 7200
 
 ### det snat timeout
 
@@ -1115,20 +1121,21 @@ Sets timeout for translations with a particular state.
 List of states:
 
 	unknown
-	udp_active
-	tcp_syn_sent
-	tcp_established
-	tcp_fin_wait
-	tcp_close_wait
-	tcp_closing
-	tcp_last_ack
-	tcp_closed
+	active
+	syn_sent
+	established
+	fin_wait
+	close_wait
+	closing
+	last_ack
+	closed
 	icmp_active
-	udp_dns
+	dns
+	gre
 
 Example:
 
-	det snat timeout tcp_established 1200
+	det snat timeout established 1200
 
 ### det snat close host sessions
 
