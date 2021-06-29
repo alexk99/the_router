@@ -78,7 +78,6 @@ Deterministic NAT</a>
 	
 	  #
 	  sysctl set nat_portmap_initial_size 16777216
-	  sysctl set det_nat_sess_bucket_size 64
 	}
 	
 	runtime {
