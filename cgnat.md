@@ -107,10 +107,7 @@ Deterministic NAT</a>
 	  #
 	  det snat create map 1 in 10.11.1.0/24 out 10.114.0.0/29 sess 2048
 	  det snat vif uplink enable
-	  det snat vif uplink add map 1
-	
-	  sysctl set det_snat_conn_limit_group_by 1
-	  det snat connection limit set 10.11.1.10 1000  
+	  det snat vif uplink add map 1	
 	}
 
 
