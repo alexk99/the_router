@@ -7,6 +7,8 @@
 	startup {
 	  sysctl set mbuf 8192
 
+	  # mode 4 - LACP
+	  # policy 2 - BALANCE_XMIT_POLICY_LAYER34
 	  bond port mode 4 bond_slaves 0,1 primary port 1 policy 2
 	  port 2 mtu 1500 tpid 0x8100 state enabled bond_slaves 0,1
 
