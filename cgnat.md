@@ -34,8 +34,8 @@ Deterministic NAT</a>
 ### Deterministic SNAT44
 
 	startup {
-	  sysctl set num_rx_desc 512
-	  sysctl set num_tx_desc 512
+	  sysctl set num_rx_desc 1024
+	  sysctl set num_tx_desc 1024
 	
 	  # mbuf mempool size
 	  sysctl set mbuf 16384
