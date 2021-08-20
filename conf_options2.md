@@ -3026,6 +3026,12 @@ Example:
 	vif_id	vlan	port	mac	remote_id	subsc_id	IA_NA	IA_PD	ingress_qdisc	egress_qdisc	rx_pkts	tx_pkts	rx_bytes	tx_bytes	ttl	expire_inuptime
 	16	0.300	2	xx:xx:xx:58:63:xx			xxxx:xxxx:xxxx:xxxx:xxxx:e90a:xxxx:1264	xxxx:xxxx:1f0b:1460::/64	100M	100M	0	0	0	0	600	583	0 day(s), 0 hour(s), 0 min(s), 16 sec(s)
 
+	
+### subsc ipv6 disconnect
+	
+Disconnects an IPv6oE subscriber
+	
+	rcli subsc ipv6 disconnect <vif-id>
 
 ### ipoe ipv6 pool
 
