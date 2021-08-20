@@ -3072,7 +3072,7 @@ Valid values are:
 ### dhcpv6 add dns
 
 Adds a recursive DNS server to the global list of servers.
-Values on the list will be used in the RA messages sent to PPPoE subsribers and 
+Values on the list will be used in the RA messages sent to PPPoE and IPv6oE subsribers 
 by DHCPv6 server. 
 
 	dhcpv6 add dns <ipv6_address>
