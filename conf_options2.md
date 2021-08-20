@@ -3012,6 +3012,77 @@ carrying the PPP subscriber's IA_PD prefix
 0 - disable
 1 - enable
 
+## IPv6oE
+
+### sh subsc ipv6 subsc
+
+Outputs connected/online IPv6oE subscribers
+
+	sh subsc ipv6
+
+Example:
+
+	rcli sh subsc ipv6
+	vif_id	vlan	port	mac	remote_id	subsc_id	IA_NA	IA_PD	ingress_qdisc	egress_qdisc	rx_pkts	tx_pkts	rx_bytes	tx_bytes	ttl	expire_inuptime
+	16	0.300	2	xx:xx:xx:58:63:xx			xxxx:xxxx:xxxx:xxxx:xxxx:e90a:xxxx:1264	xxxx:xxxx:1f0b:1460::/64	100M	100M	0	0	0	0	600	583	0 day(s), 0 hour(s), 0 min(s), 16 sec(s)
+
+
+### ipoe ipv6 pool
+
+Sets the default address pool for IPv6oE addresses of a particular type
+
+	ipoe ipv6 pool <ipv6oe_address_type> <pool_name>
+
+<ipv6oe_address_type> can take one of the following values:
+
+	ia_na
+	ia_pd
+	slaac
+
+Example
+
+	# default pools
+	ipoe ipv6 pool ia_na ipv6_na_pool_1
+	ipoe ipv6 pool ia_pd ipv6_pd_pool_1
+	ipoe ipv6 pool slaac ipv6_slaac_pool_1
+
+### ipoe ipv6 pool <ipv6oe_address_type> disable
+
+Unsets the default address pool for IPv6oE adresses of a particular type
+
+	ipoe ipv6 pool <ipv6oe_address_type> disable
+
+Example:
+
+	ipoe ipv6 pool ia_na disable
+	ipoe ipv6 pool ia_pd disable
+	ipoe ipv6 pool slaac disable
+
+## IPv6oE sysctl variables
+
+### ipoe_dhcpv6_ia_na
+
+An integer sysctl variable that controls IA_NA option's behavior of the DHCPv6 server for IPv6oE subscribers.
+
+Valid values are:
+
+ - 0 - disable, the IA_NA option is not included in DHCPv6 messages;
+ - 1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
+	from pool only if the DHCPv6 client asks for that option;
+ - 2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
+	from pool immidiately after the IPv6oE subscriber has connected;
+
+### ipoe_dhcpv6_ia_pd
+
+Setup the IA_PD for DHCPv6 server.
+
+Valid values are:
+
+ - 0 - disable, the IA_PD option is not included in the DHCPv6 messages;
+ - 1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
+	from pool only if the DHCPv6 client asks for that option;
+ - 2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
+	the IA_PD value will be allocated from pool immidiately after the IPv6oE subscriber has connected;
 
 ## IPv6 Pools
 
