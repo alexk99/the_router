@@ -2884,28 +2884,6 @@ Example:
 	vif_id  username        mac     svid    cvid    session_id      ia_na   ia_pd   slaac   mtu     ingress cir     egress cir      rx_pkts tx_pkts rx_bytes        tx_bytes        uptime
 	5       alexk   84:16:F9:BD:54:F7       0       3       1       xxx:237f:ee39:5584:17eb  xxx60::/64 xxxaf::/64 1492    100000  100000  182736  26991718793821
 
-### dhcpv6 add dns
-
-Adds a recursive DNS server to the global list of servers.
-Values on the list will be used in the RA messages sent to PPPoE subsribers and 
-by DHCPv6 server. 
-
-	dhcpv6 add dns <ipv6_address>
-
-### dhcpv6 del dns
-
-Deletes a recursive DNS server address from the RDNSS list.
-
-	dhcpv6 del dns <ipv6_address>
-
-### dhcpv6 domain search list
-
-	dhcpv6 domain search list <string>
-
-Example
-
-	dhcpv6 domain search list i6.therouter.net
-
 ### ppp ipv6 pool
 
 Sets the default address pool for PPP IPv6 addresses of a particular type
@@ -2982,16 +2960,6 @@ A boolean sysctl varialbe that enables/disables the use of SLAAC for the PPP int
 
 0 - disable
 1 - enable
-
-### dhcpv6_preferred_lt
-
-An integer sysctl variable that defines the default preferred value for IPv6 addresses. 
-For example, This value will be used for IPv6 addresses received via RADIUS protocol.
-
-### dhcpv6_valid_lt
-
-An integer sysctl variable that defines the default valid value for IPv6 addresses. 
-For example, this value will be used for IPv6 addresses received via RADIUS protocol.
 
 ### ppp_rad_acct_slaac
 
@@ -3098,6 +3066,40 @@ Valid values are:
 	from pool only if the DHCPv6 client asks for that option;
  - 2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
 	the IA_PD value will be allocated from pool immidiately after the IPv6oE subscriber has connected;
+
+## DHCPv6
+
+### dhcpv6 add dns
+
+Adds a recursive DNS server to the global list of servers.
+Values on the list will be used in the RA messages sent to PPPoE subsribers and 
+by DHCPv6 server. 
+
+	dhcpv6 add dns <ipv6_address>
+
+### dhcpv6 del dns
+
+Deletes a recursive DNS server address from the RDNSS list.
+
+	dhcpv6 del dns <ipv6_address>
+
+### dhcpv6 domain search list
+
+	dhcpv6 domain search list <string>
+
+Example
+
+	dhcpv6 domain search list i6.therouter.net
+
+### dhcpv6_preferred_lt
+
+An integer sysctl variable that defines the default preferred value for IPv6 addresses. 
+For example, This value will be used for IPv6 addresses received via RADIUS protocol.
+
+### dhcpv6_valid_lt
+
+An integer sysctl variable that defines the default valid value for IPv6 addresses. 
+For example, this value will be used for IPv6 addresses received via RADIUS protocol.
 
 ## IPv6 Pools
 
