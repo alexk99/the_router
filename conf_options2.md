@@ -212,7 +212,8 @@ Table of Contents
          * [vrrp group nd ra prefix add|update](#vrrp-group-nd-ra-prefix-addupdate)
          * [vrrp group nd ra prefix del](#vrrp-group-nd-ra-prefix-del)
       * [Flow accounting IPFIX.](#flow-accounting-ipfix)
-         * [flow ipfix_collector](#flow-ipfix_collector)
+         * [flow ipfix_collector [deprecated]](#flow-ipfix_collector-deprecated)
+         * [flow collector](#flow-collector)
          * [sh flow stat](#sh-flow-stat)
       * [enabling flow accounting on an interface](#enabling-flow-accounting-on-an-interface)
          * [flow_acct](#flow_acct)
@@ -309,6 +310,14 @@ Table of Contents
          * [ppp_rad_acct_slaac](#ppp_rad_acct_slaac)
          * [ppp_rad_acct_ia_na](#ppp_rad_acct_ia_na)
          * [ppp_rad_acct_ia_pd](#ppp_rad_acct_ia_pd)
+      * [IPv6oE](#ipv6oe)
+         * [sh subsc ipv6 subsc](#sh-subsc-ipv6-subsc)
+         * [subsc ipv6 disconnect](#subsc-ipv6-disconnect)
+         * [ipoe ipv6 pool](#ipoe-ipv6-pool)
+         * [ipoe ipv6 pool &lt;ipv6oe_address_type&gt; disable](#ipoe-ipv6-pool-ipv6oe_address_type-disable)
+      * [IPv6oE sysctl variables](#ipv6oe-sysctl-variables)
+         * [ipoe_dhcpv6_ia_na](#ipoe_dhcpv6_ia_na)
+         * [ipoe_dhcpv6_ia_pd](#ipoe_dhcpv6_ia_pd)
       * [IPv6 Pools](#ipv6-pools)
          * [sh ipv6 pool](#sh-ipv6-pool)
       * [ipv6 pool add](#ipv6-pool-add)
@@ -355,7 +364,7 @@ Table of Contents
          * [therouter_subsc_addr_prefix_map_value](#therouter_subsc_addr_prefix_map_value)
          * [therouter_pbr](#therouter_pbr)
       * [IPoE subsribers](#ipoe-subsribers)
-      	 * [ipoe subsc username](#ipoe-subsc-username)
+         * [ipoe subsc username](#ipoe-subsc-username)
          * [subsc_vif_max](#subsc_vif_max)
          * [install_subsc_linux_routes](#install_subsc_linux_routes)
          * [subsc_initiate_by_egress_pkts](#subsc_initiate_by_egress_pkts)
@@ -3080,7 +3089,7 @@ Valid values are:
 
 ### ipoe_dhcpv6_ia_pd
 
-Setup the IA_PD for DHCPv6 server.
+An integer sysctl variable that controls IA_PD option's behavior of the DHCPv6 server for IPv6oE subscribers.
 
 Valid values are:
 
