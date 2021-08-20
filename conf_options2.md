@@ -663,6 +663,7 @@ Flags:
  - flow_acct
  - rpf
  - dhcp_rel
+ - ipv6oe
 
 rpf - reverse path filter
 
