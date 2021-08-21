@@ -3043,6 +3043,30 @@ Example:
 	ipoe ipv6 pool ia_pd disable
 	ipoe ipv6 pool slaac disable
 
+### ipoe subsc ipv6 username
+
+Configures IPv6oE subscriber's username. The username will be used in RADIUS packets.
+The command can only be used in the startup section of a configuration file.
+
+	ipoe subsc ipv6 username format "<field>[:<field>]..." [delimiter ":"]
+
+A list of fields that can be used to compose the username includes:
+
+	port
+	mac
+	remote_id
+	subscriber_id
+
+example:
+
+	ipoe subsc username format "mac"
+or
+
+	ipoe subsc username format "port:mac" delimiter ":"
+
+Note that remote_id and subscriber_id field values will be defined only if the 
+corresponded options were included in the DHCPv6 request initiated subscriber creation.
+	
 ## IPv6oE sysctl variables
 
 ### ipoe_dhcpv6_ia_na
