@@ -170,7 +170,7 @@ runtime {
   ipv6 pool add ppp6_slaac_pool xxx::/48 length 64 flags rand,cache
   # NA address pool
   ipv6 pool add ppp6_na_pool xxx::/64 length 128 flags rand,cache
-  # ND address pool
+  # PD address pool
   ipv6 pool add ppp6_pd_pool xx::/48 length 64 flags rand,cache
 
   #
