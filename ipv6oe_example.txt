@@ -1,0 +1,85 @@
+  startup {
+    ..
+
+    sysctl set ipv6oe_subsc_passwd "123456"
+    ipoe subsc ipv6 username format "mac"
+
+    # LPM6
+    # note: a subscriber's /128 ipv6 address might consume up to 8 tbl8 entries
+    # when the address is allocated from /64 pool
+    #
+    sysctl set fib6_max_lpm_tbl8 65536
+
+    #
+    # enable DHCPv6 server
+    #
+    sysctl set dhcpv6_server 1
+
+    #
+    # System name
+    #
+    sysctl set system_name "tr1"
+
+    ..
+  }
+
+  runtime {
+    ..
+
+    #
+    # IPv6 localhost
+    #
+    ipv6 enable dev lo
+    ipv6 addr add xxx:4/112 dev lo
+
+    #
+    # ipv6 uplink
+    #
+    vif add name uplinkv6 port 0 type dot1q cvid 100 flags kni
+    ipv6 enable dev uplinkv6
+    ipv6 addr add xxx:3/112 dev uplinkv6  
+
+    # default route
+    ipv6 route add ::/0 via xx60::1:1
+
+    # google dns
+    dhcpv6 add dns 2001:4860:4860::8888
+    dhcpv6 add dns 2001:4860:4860::8844
+    dhcpv6 domain search list i6.therouter.net
+
+    # default lifetime values for ipv6 addresses
+    sysctl set dhcpv6_preferred_lt 86400
+    sysctl set dhcpv6_valid_lt 172800
+
+    #
+    # subscribers interfaces
+    #
+    vif add name v300 port 2 type dot1q cvid 300 flags ipv6oe
+    ipv6 enable dev v300
+    ipv6 nd ra enable dev v300
+
+    #
+    sysctl set ipoe_dhcpv6_ia_na 2
+    sysctl set ipoe_dhcpv6_ia_pd 2
+    sysctl set ipoe_slaac 0
+
+    # ipv6 radius accounting
+    sysctl set ppp_rad_acct_slaac 1
+    sysctl set ppp_rad_acct_ia_na 1
+    sysctl set ppp_rad_acct_ia_pd 1
+
+    #
+    # IPv6 Pools
+    #
+
+    # NA address pool
+    ipv6 pool add ppp6_na_pool xxx::/64 length 128 flags rand,cache
+    # PD address pool
+    ipv6 pool add ppp6_pd_pool xx::/48 length 64 flags rand,cache
+
+    # default ipoe ipv6 pools
+    ipoe ipv6 pool ia_na ppp6_na_pool
+    ipoe ipv6 pool ia_pd ppp6_pd_pool
+
+    ..
+  }
