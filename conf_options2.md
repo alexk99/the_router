@@ -309,6 +309,7 @@ Table of Contents
          * [sh subsc ipv6 subsc](#sh-subsc-ipv6-subsc)
          * [subsc ipv6 disconnect](#subsc-ipv6-disconnect)
          * [ipoe ipv6 pool](#ipoe-ipv6-pool)
+         * [ipoe subsc ipv6 username](#ipoe-subsc-ipv6-username)
          * [ipoe ipv6 pool &lt;ipv6oe_address_type&gt; disable](#ipoe-ipv6-pool-ipv6oe_address_type-disable)
       * [IPv6oE sysctl variables](#ipv6oe-sysctl-variables)
          * [ipoe_dhcpv6_ia_na](#ipoe_dhcpv6_ia_na)
@@ -3059,10 +3060,10 @@ A list of fields that can be used to compose the username includes:
 
 example:
 
-	ipoe subsc username format "mac"
+	ipoe subsc ipv6 username format "mac"
 or
 
-	ipoe subsc username format "port:mac" delimiter ":"
+	ipoe subsc ipv6 username format "port:mac" delimiter ":"
 
 Note that remote_id and subscriber_id field values will be defined only if the 
 corresponded options were included in the DHCPv6 request initiated subscriber creation.
