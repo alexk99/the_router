@@ -97,7 +97,7 @@ Here are installation steps for Ubuntu 18.04.
 
 ### Patch and install DPDK
 
-Download DPDK 18.11.3
+Download DPDK 18.11.11
 
 		cd /usr/src/
 		wget http://fast.dpdk.org/rel/dpdk-18.11.11.tar.xz
