@@ -106,23 +106,23 @@ Download DPDK 18.11.11
 
 Download and apply the patches:
 
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/bond_lacp.patch
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_mempool.patch                      
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_rx_capabilities.patch              
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_tx_capabilities.patch              
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/dpdk_kernel_workaround.patch               
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/librte_ip_frag_add_mbuf_counter.patch      
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/rte_timer.patch                            
-	wget http://therouter.net/downloads/dpdk/patches/18.11.11/tap_tcmsgs_ifindex_type_fix.patch          
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/bond_lacp.patch
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_mempool.patch                      
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_rx_capabilities.patch              
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/bonding_tx_capabilities.patch              
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/dpdk_kernel_workaround.patch               
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/librte_ip_frag_add_mbuf_counter.patch      
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/rte_timer.patch                            
+		wget http://therouter.net/downloads/dpdk/patches/18.11.11/tap_tcmsgs_ifindex_type_fix.patch          
 
-	patch -p1 < ./bond_lacp.patch
-	patch -p1 < ./bonding_mempool.patch
-	patch -p1 < ./bonding_rx_capabilities.patch
-	patch -p1 < ./bonding_tx_capabilities.patch
-	patch -p1 < ./dpdk_kernel_workaround.patch
-	patch -p1 < ./librte_ip_frag_add_mbuf_counter.patch
-	patch -p1 < ./rte_timer.patch
-	patch -p1 < ./tap_tcmsgs_ifindex_type_fix.patch
+		patch -p1 < ./bond_lacp.patch
+		patch -p1 < ./bonding_mempool.patch
+		patch -p1 < ./bonding_rx_capabilities.patch
+		patch -p1 < ./bonding_tx_capabilities.patch
+		patch -p1 < ./dpdk_kernel_workaround.patch
+		patch -p1 < ./librte_ip_frag_add_mbuf_counter.patch
+		patch -p1 < ./rte_timer.patch
+		patch -p1 < ./tap_tcmsgs_ifindex_type_fix.patch
 
 Run the following commands:		
 
@@ -138,7 +138,7 @@ Run the following commands:
 
 #### Define RTE_SDK variable
 
-		export RTE_SDK=/usr/src/dpdk-stable-18.11.3
+		export RTE_SDK=/usr/src/dpdk-stable-18.11.11
 
  Add the above export command to /root/.profile
   
