@@ -1,7 +1,7 @@
 # Install
 
 Latest 30 day trial build of TheRouter is available only by request.
-Please contact alex at therouter.net.
+Please contact us by email info at bisonrouter.com
 
 Here are installation steps for Ubuntu 18.04.
 
