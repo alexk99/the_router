@@ -1028,7 +1028,7 @@ Example:
 	    closing: 0
 	    last_ack: 0
 	    closed: 0
-	    icmp active: 0
+	    icmp_active: 0
 	    dns: 1
 	    gre: 0
 
@@ -1117,7 +1117,7 @@ Example:
 	closing: 30
 	last_ack: 30
 	closed: 30
-	icmp active: 30
+	icmp_active: 30
 	dns: 4
 	gre: 7200
 
