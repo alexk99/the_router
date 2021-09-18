@@ -1522,6 +1522,105 @@ Outputs nat11 translation sessions of a particular internal ipv4 host.
 
 	sh nat11 sessions map <map-id> in <internal-ipv4-address>
 
+## NAT Policy
+
+A NAT policy functions enable to apply different NAT maps to traffic based
+on various ip matching criteria such as prefix, prefix map, ipset.
+
+A NAT policy is a sorted list of policy rules. The policy rule uses one
+of matching criteria to apply a particular nat map to the packets matching that criterion.
+The module starts at the rule with the lowerest position and once the rule's match criterion fires 
+the module stops the searching process.
+
+### nat policy add
+
+Creates a new NAT policy.
+
+	nat policy add <policy_id>
+
+Example
+
+	nat policy add 1
+
+### nat map types
+
+	snat44
+	snat1to1
+
+### nat policy del
+
+Deletes a NAT policy.
+
+	nat policy del <policy_id>
+
+Example
+
+	nat policy del 1
+
+### nat policy prefix rule add
+
+Adds a prefix rule to the policy. This rule uses a prefix to match ingress packets source ip addresses.
+
+	nat policy rule add <policy_id> pos <number> from prefix <ipv4/mask> map <nat_map_type> <nat_map_id>
+
+Example
+
+	nat policy rule add 1 pos 10 from prefix 10.0.0.0/24 map snat44 2
+
+### nat policy prefix map rule add
+
+Adds a prefix rule to the policy. This rule uses a prefix map to match ingress packets source ip addresses.
+
+	nat policy rule add <policy_id> pos <number> from prefix map <prefix_map_id> map <nat_map_type> <nat_map_id>
+
+Example
+
+	nat policy rule add 1 pos 20 from prefix map 1 map snat1to1 10
+
+prefix_map_id is the id of an already created prefix map.
+
+### nat policy ipset rule add
+
+Adds a prefix rule to the policy. This rule uses a ipset to match ingress packets source ip addresses.
+
+	nat policy rule add <policy_id> pos <number> from ipset <ipset_name> map <nat_map_type> <nat_map_id>
+
+Example
+
+	nat policy rule add 1 pos 100 from ipset nat_ipset map snat1to1 10
+
+ipset_name is the name of an already created ipset.
+
+### nat policy rule del
+
+Deletes a prefix rule from the policy.
+
+	nat policy rule del <policy_id> pos <number>
+
+Example
+
+	nat policy rule add 1 pos 10
+
+### nat policy vif add
+
+Adds a nat policy to a VIF.
+
+	nat policy add vif <vif_name> <policy_id>
+
+Example
+
+	 nat policy add vif v3 1
+
+### nat policy vif del
+
+Deletes a nat policy from a VIF.
+
+	nat policy del vif <vif_name> <policy_id>
+
+Example
+
+	 nat policy del vif v3 1
+
 ## NPF
 
 ### npf load
