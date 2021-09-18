@@ -972,6 +972,114 @@ An integer startup scope sysctl variable. Number of ICMP buckets.
 	[-f,--dont_frag] [-a,--source_address ip_source_address] [-w,--nowait]
 	[-h,--help] destination
 
+## VRRP
+
+### vrrp create group
+
+Creates a new vrrp group.
+
+	vrrp create group <vrrp_id> dev <vif_name>
+
+Example
+
+	vrrp create group 10 dev v5
+
+### vrrp del group
+
+Deletes a vrrp group.
+
+	vrrp del group <vrrp_id> dev <vif_name>
+
+Example
+
+	vrrp del group 10 dev v5
+
+### vrrp group ip add
+
+Adds a primary or secondary IP address to a vrrp group.
+
+	vrrp group <vrrp_id> dev <vif_name> ip add <ip_address> [secondary]
+
+Examples
+
+	vrrp group 10 dev v5 ip add 10.0.5.10
+	vrrp group 11 dev v5 ip add 10.0.55.11 secondary
+
+### vrrp group ip del
+
+Deletes an IP address from a vrrp group.
+
+	vrrp group <vrrp_id> dev <vif_name> ip del <ip_address>
+
+Example
+
+	vrrp group 10 dev v5 ip del 10.0.5.10
+
+### vrrp group prio
+
+Changes the priority of a vrrp group.
+
+	vrrp group <vrrp_id> dev <vif_name> prio <value>
+
+Example
+
+	vrrp group 10 dev v5 prio 100
+
+### vrrp group advert_int
+
+Changes the advertisement transmission interval (cetiseconds, 100 centiseconds == 1 sec) of a vrrp group.
+
+	vrrp group <vrrp_id> dev <vif_name> advert_int <value>
+
+Example
+
+	vrrp group 10 dev v5 advert_int 200
+
+### vrrp group preempt_mode
+
+Changes the preempt_mode of a vrrp group.
+
+	vrrp group <vrrp_id> dev <vif_name> preempt_mode <on|off>
+
+Example
+
+	vrrp group 10 dev v5 preempt_mode on
+
+### sh vrrp
+
+Displays a vrrp group.
+
+	sh vrrp
+
+Example
+
+	h5 ~ # rcli sh vrrp
+	vif v5 - group 11
+	  vif v5 - port 0, vid 0.5, type 0
+	  state is backup
+	  virtual mac address is 00:00:5E:00:01:0B
+	  primary ip address is 10.0.55.10
+	    secondary ip address is 10.0.55.11
+	  advertisement interval is 1 sec
+	  preemption is on
+	  priority is 100
+	  master router is 10.0.5.2, priority is 150
+	  master router advertisement interval is 1 sec
+	  master down interval is 3.609 sec
+
+	vif v5 - group 10
+	  vif v5 - port 0, vid 0.5, type 0
+	  state is master
+	  virtual mac address is 00:00:5E:00:01:0A
+	  primary ip address is 10.0.5.10
+	    secondary ip address is 10.0.5.11
+	  advertisement interval is 1 sec
+	  preemption is on
+	  priority is 150
+	  master router is 10.0.55.1 (this system), priority is 150
+	  master router advertisement interval is 1 sec
+	  master down interval is 3.414 sec
+
 ## Deterministic SNAT44
 
 TheRouter implements the Deterministic SNAT44 algorithm according with rfc7422 https://tools.ietf.org/html/rfc7422
