@@ -68,6 +68,10 @@ Run the following commands:
 ### Download BisonRouter 
 
  Please, contact us at info@bisonrouter.net
+ 
+### Install BisonRouter
+
+		apt install /usr/src/bison-router_xxx.deb
 
 ### Configure DPDK ports
 
