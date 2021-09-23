@@ -498,7 +498,7 @@ Symbol # is used to comment a whole line.
 
 	startup {
 	  # total number of mbufs
-	  sysctl set mbuf 8192
+	  sysctl set mbuf 32768
 	
 	  port 0 mtu 1500 tpid 0x8100 state enabled
 	  port 1 mtu 1500 tpid 0x8100 state enabled
@@ -512,20 +512,16 @@ Symbol # is used to comment a whole line.
 	  rx_queue port 1 queue 2 lcore 1
 	
 	  sysctl set global_packet_counters 1
-	
-	  #  sysctl set arp_cache_timeout 300
 	}
 
 	runtime {
-	  vif add name p0 port 1 type untagged flags npf_on
+	  vif add name p0 port 0 type untagged
 	  ip addr add 10.0.0.1/24 dev p0
 	
-	  vif add name p1 port 0 type untagged flags npf_on
+	  vif add name p1 port 1 type untagged
 	  ip addr add 10.0.1.1/24 dev p1
 	
 	  ip route add 0.0.0.0/0 via 10.0.1.2 src 10.0.1.1
-	
-	  npf load "/etc/npf.conf"
 	}
 
 ### NPF configaration file example
