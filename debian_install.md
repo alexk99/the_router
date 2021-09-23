@@ -100,7 +100,7 @@ This time you should find your NICs in the "Network devices using DPDK-compatibl
 
 #### Prepare configuration files
 
-For configuration examples and options see the page <a href="/conf_options2.md">Command reference</a>
+For configuration examples and options see the page <a href="/conf_options2.md#therouter-configuration-file-example">Command reference</a>
 
  - create router.conf
 
