@@ -52,16 +52,14 @@ Here are installation steps for Ubuntu 20.10.
 
 ### DPDK
 
-Download DPDK 18.11.11
+Download and install
 
 		cd /usr/src/
 		wget http://fast.dpdk.org/rel/dpdk-18.11.11.tar.xz
 		tar xvf dpdk-18.11.11.tar.xz
 		cd ./dpdk-stable-18.11.11
-
-Run the following commands:		
-
 		make install T=x86_64-native-linuxapp-gcc
+		
 
 ## BisonRouter
 
