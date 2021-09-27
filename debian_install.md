@@ -50,7 +50,7 @@ Here are installation steps for Ubuntu 20.10.
 
 			mount huge
 
-### Patch and install DPDK
+### DPDK
 
 Download DPDK 18.11.11
 
