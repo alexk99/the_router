@@ -9,7 +9,7 @@ Add the content of /etc/bisonrouter/snmpd/sudoers to /etc/sudoers
 Edit community (passwords) in /etc/snmp/snmpd.conf
 
 	rocommunity
-        rocommunity6
+	rocommunity6
 
 Restart snmpd service
 
