@@ -21,7 +21,7 @@ Restart snmpd service
 
 Get pppoe subscriber table
 
-        # snmptable -v2c -c public localhost BISON-ROUTER-MIB::pppoeIpv4Table
+	# snmptable -v2c -c public localhost BISON-ROUTER-MIB::pppoeIpv4Table
 	SNMP table: BISON-ROUTER-MIB::pppoeIpv4Table
 	
 	 pppoeIndex pppoeUsername          pppoeMac pppoeSvid pppoeCvid pppoeSessionId  pppoeIpv4 pppoeMtu pppoeIngressCir pppoeEgressCir pppoeRxPkts pppoeTxPkts pppoeRxOctets pppoeTxOctets pppoePort
@@ -30,7 +30,7 @@ Get pppoe subscriber table
 
 ### VIF
 
-        # snmptable -v2c -c public localhost BISON-ROUTER-MIB::vifTable
+	# snmptable -v2c -c public localhost BISON-ROUTER-MIB::vifTable
 	SNMP table: BISON-ROUTER-MIB::vifTable
 	
 	 vifIndex   vifName vifPort vifSvid vifCvid vifRxPkts vifTxPkts vifRxOctets vifTxOctets
