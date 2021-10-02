@@ -19,7 +19,7 @@ Restart snmpd service
 
 ### PPPoE 
 
-Get pppoe subscriber table
+PPPoE subscriber table
 
 	# snmptable -v2c -c public localhost BISON-ROUTER-MIB::pppoeIpv4Table
 	SNMP table: BISON-ROUTER-MIB::pppoeIpv4Table
@@ -38,6 +38,17 @@ Get pppoe subscriber table
 	        3       v20       2       0      20        16        16        1734        1952
 	        4 pppoe_any       2     823       0         0         0           0           0
 	        5      v100       2       0     100         6         0         550           0
+
+### Deterministic NAT statistic
+
+	snmpwalk -v2c -c public localhost BISON-ROUTER-MIB::detSnatStat
+	BISON-ROUTER-MIB::detSSTotalMaps.0 = INTEGER: 2
+	BISON-ROUTER-MIB::detSSTotalSessions.0 = Counter64: 5
+	BISON-ROUTER-MIB::detSSPortmapFailures.0 = Counter64: 0
+	BISON-ROUTER-MIB::detSSPortmapFailures2.0 = Counter64: 0
+	BISON-ROUTER-MIB::detSSSessionOverflow.0 = Counter64: 0
+	BISON-ROUTER-MIB::detSSNoFreePortmapPorts.0 = Counter64: 0
+	BISON-ROUTER-MIB::detSSNoFreePortmapPorts.0 = No more variables left in this MIB View (It is past the end of the MIB tree)
 
 ## MIB
 
