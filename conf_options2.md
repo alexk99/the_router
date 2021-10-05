@@ -1577,7 +1577,9 @@ Example
 
 Adds a prefix rule to the policy. This rule uses a prefix map to match ingress packets source ip addresses.
 
-	nat policy rule add <policy_id> pos <number> from prefix map <prefix_map_id> map <nat_map_type> <nat_map_id>
+	nat policy rule add <policy_id> pos <number> from prefix map <prefix_map_id> map <nat_map_type> [<nat_map_id>]
+
+When the nat_map_id value is omited, prefix map's values are used as map's id values to lookup the right NAT map.
 
 Example
 
