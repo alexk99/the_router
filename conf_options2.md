@@ -1365,6 +1365,18 @@ Example
 	rcli sysctl get det_nat_sess_bucket_size
 	200
 
+### det snat map add to prefix map
+
+Adds map's internal and external prefixes to a prefix map.
+
+	det snat map <nat-map-id> add to prefix map <prefix-map-id>
+
+### det snat map del from prefix map
+
+Deletes map's internal and external prefixes from a prefix map.
+
+	det snat map <nat-map-id> del from prefix map <prefix-map-id>
+
 ## Deterministic DNAT44
 
 ### det snat add dnat
@@ -1537,6 +1549,18 @@ A NAT policy is a sorted list of policy rules. The policy rule uses one
 of matching criteria to apply a particular nat map to the packets matching that criterion.
 The module starts at the rule with the lowerest position and once the rule's match criterion fires 
 the module stops the searching process.
+
+### sh nat policy
+
+Outputs NAT policy rules.
+
+Example:
+
+	# rcli sh nat policy
+	nat policy id 1:
+	  nat policy rules:
+	    10: from prefix map 1 -> nat map snat44
+	    100: from ipset nat_ipset -> nat map snat1to1:10
 
 ### nat policy add
 
