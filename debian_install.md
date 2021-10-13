@@ -53,7 +53,7 @@ Here are installation steps for Ubuntu 20.10.
 ### DPDK
 
 Download and install
-
+		apt-get install libnuma-dev -y
 		cd /usr/src/
 		wget http://fast.dpdk.org/rel/dpdk-18.11.11.tar.xz
 		tar xvf dpdk-18.11.11.tar.xz
