@@ -5,6 +5,11 @@ Please contact us by email info at bisonrouter.com
 
 Here are installation steps for Ubuntu 20.10.
 
+## Install utilities and libs:
+
+		apt update
+		apt -y install python libnuma-dev
+		
 ## Install DPDK
 
 ### Configure linux kernel
