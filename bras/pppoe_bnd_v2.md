@@ -16,7 +16,7 @@
 		  sysctl set num_tx_desc 1024
 		
 		  port 0 mtu 1500 tpid 0x8100 state enabled
-		  port 1 mtu 1500 tpid 0x8100 state enabled
+		  port 1 mtu 1500 tpid 0x8100 state enabled flags qinq_enabled
 		
 		  rx_queue port 0 queue 0 lcore 1
 		  rx_queue port 0 queue 1 lcore 2
@@ -93,6 +93,14 @@
 		  vif add name pppoe1 port 1 type dot1q cvid 101 flags pppoe_on
 		  vif add name pppoe2 port 1 type dot1q cvid 102 flags pppoe_on
 		  vif add name pppoe3 port 1 type dot1q cvid 103 flags pppoe_on
+		  
+		  # PPPoE QinQ subscriber interfaces
+		  
+		  # QinQ vlan range 2010.2500 - 2010.2800
+		  vif add name pppoe_r1 port 1 type qinq range svid 2010 cvid 2500 2800 flags pppoe_on
+
+		  # QinQ 2800.* 
+		  vif add name pppoe_any port 1 type qinq svid 2800 cvid * flags pppoe_on
 		  
 		  # Management interface to a subnet with 
 		  # Radius server and netflow collector
