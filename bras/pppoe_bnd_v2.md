@@ -214,7 +214,7 @@
 		  #
 		  # SNAT 44
 		  #
-		  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 2048
+		  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 4096
 		  det snat vif uplink enable
 		  det snat vif uplink add map 1
 		
