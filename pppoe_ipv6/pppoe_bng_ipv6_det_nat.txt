@@ -5,7 +5,7 @@ startup {
   sysctl set mbuf 16384
   
   # NIC rx/tx descriptor ring sizes
-  sysctl set num_rx_desc 512
+  sysctl set num_rx_desc 1024
   sysctl set num_tx_desc 1024
 
   port 0 mtu 1500 tpid 0x8100 state enabled
@@ -218,7 +218,7 @@ runtime {
   #
   # SNAT 44
   #
-  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 2048
+  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 4096
   det snat vif uplink enable
   det snat vif uplink add map 1
 }
