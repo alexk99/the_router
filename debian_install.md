@@ -5,10 +5,9 @@ Please contact us by email info at bisonrouter.com
 
 Here are installation steps for Ubuntu 20.04.
 
-## Install utilities and libs:
+## Update the system
 
 		apt update
-		apt -y install python libnuma-dev
 		
 ## Install DPDK
 
