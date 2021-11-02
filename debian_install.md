@@ -55,17 +55,6 @@ Here are installation steps for Ubuntu 20.10.
 
 			mount huge
 
-### DPDK
-
-Download and install
-
-		cd /usr/src/
-		wget http://fast.dpdk.org/rel/dpdk-18.11.11.tar.xz
-		tar xvf dpdk-18.11.11.tar.xz
-		cd ./dpdk-stable-18.11.11
-		make install T=x86_64-native-linuxapp-gcc
-		
-
 ## BisonRouter
 
 ### Download BisonRouter 
@@ -74,69 +63,98 @@ Download and install
  
 ### Install BisonRouter
 
-		apt install ./bison-router_xxx.deb
+		apt install ./bison-router-xxx.deb
+
+### Install DPDK
+
+Use the bisonrouter utility to download and install DPDK.
+DPDK will be saved into the directory specified in /etc/bisonrouter/bisonrouter.env
+configuration file in the variable br_dpdk_dest. Default DPDK installation path is /usr/src/dpdk-18.11.11.
+
+		bisonrouter install_dpdk
 
 ### Configure DPDK ports
 
-#### Define RTE_SDK variable
+Determine what NIC devices are available in the system.
+The following command will ouput information about NIC devices and their PCI addresses.
 
-		export RTE_SDK=/usr/src/dpdk-stable-18.11.11
+		bisonrouter dev_status
 
- Add the above export command to /root/.profile
-  
-  		nano /root/.profile
 
-#### Load drivers and bind your NICs to DPDK
+Edit /etc/bisonrouter/bisonrouter.env and save the NIC PCI addresses you want to use 
+in the 'br_pci_devs' list.
 
-Edit /usr/sbin/load_dpdk_drivers.sh script
-and replace 0000:xx:xx.x values with PCI addresses of your NICs, for examaple 0000:02:00.0.
-Run 
+For example:
 
-		$RTE_SDK/usertools/dpdk-devbind.py --status
+		br_pci_devs=(
+		  "0000:04:00.0" 
+		  "0000:04:00.1"
+		)
 
-to find out NIC's PCI addresses.
+Run
 
-After correct PCI addresses of your NIC are added to the load_dpdk_drivers.sh file,
-run it and then check that NICs are switched to DPDK mode by running again
+		bisonrouter bind_devices
+		bisonrouter dev_status
 
-		$RTE_SDK/usertools/dpdk-devbind.py --status
+Now your PCI devices should be using DPDK drivers and thus should be ready for BisonRouter.
 
-This time you should find your NICs in the "Network devices using DPDK-compatible driver" section.
+For example:
+
+	Network devices using DPDK-compatible driver
+	============================================
+	0000:04:00.0 '82599ES 10-Gigabit SFI/SFP+ Network Connection 10fb' drv=vfio-pci unused=ixgbe
+	0000:04:00.1 '82599ES 10-Gigabit SFI/SFP+ Network Connection 10fb' drv=vfio-pci unused=ixgbe
+
 
 ### Run BisonRouter
 
-#### Prepare configuration files
+#### Prepare a configuration file
 
 For configuration examples and options see the page <a href="/conf_options2.md#therouter-configuration-file-example">Command reference</a>
 
- - create router.conf
+Create /etc/bisonrouter/brouter.conf
 
-		nano /etc/router.conf
+		nano /etc/bisonrouter/brouter.conf
+
+#### Configure CPU cores
+
+Edit /etc/bisonrouter/bisonrouter.env and update the variable 'br_lcores' according with your hardware setup.
+Use only the cores from the same NUMA socket if you system has multiple CPUs. To find out what cores available run:
+
+		bisonrouter cpu_layout
+
 
 #### Run BisonRouter
 
-  Define a bash alias
+Start BisonRouter
 
-  		alias rcli="ip netns exec tr rcli"
+		bisonrouter start
 
-  Add the alias to /root/.profile so it's created everytime you log in.
-  
-  		nano /root/.profile
+Check the syslog to ensure that BisonRouter has started successfully.
 
-  Edit /usr/sbin/therouter_start.sh script
-  and use your NIC's addresses as values for -w parameters. If you have only
-  one NIC then delete the second -w parameter.
+ 		ROUTER: router configuration file '/etc/bisonrouter/brouter.conf' successfully loaded  
 
-  Start BisonRouter
-
-		therouter_start.sh /etc/router.conf
-
-  Check the syslog to ensure that BisonRouter has started successfully.
-
- 		ROUTER: router configuration file '/etc/router.conf' successfully loaded  
-
-  Use the 'rcli' alias which will execute an rcli utility to configure and control BisonRouter
+Use the 'rcli' utility to configure and control BisonRouter
 
 		# rcli sh uptime
 		Uptime: 0 day(s), 1 hour(s), 38 minute(s), 14 sec(s)
   
+To stop/restart BisonRouter also use the bisonrouter utility which supports the following options:
+  
+		# bisonrouter
+		Usage: bisonrouter [OPTIONS]
+
+		Options:
+
+		  start                 - start the Bison Router (BR) daemon
+		  stop                  - stop the BR daemon
+		  restart               - restart the BR daemon
+		  status                - show Bison Router daemon status
+
+		  bind_devices          - load kernel modules and bind PCI devices
+		  unbind_devices        - unload kernel modules and unbind devices
+		  dev_status            - show device status
+
+		  cpu_layout            - show core and socket information
+		  install_dpdk          - fetch the DPDK source code and install
+		  reinstall_dpdk        - remove the current DPDK and reinstall
