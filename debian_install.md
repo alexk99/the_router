@@ -1,4 +1,3 @@
-# Install
 
 A 30-day trial build of BisonRouter is available only by request.
 Please contact us by email info at bisonrouter.com
@@ -9,9 +8,7 @@ The following installation steps can be used for Ubuntu 20.04 and 20.10 versions
 
 		apt update
 		
-## Install DPDK
-
-### Configure linux kernel
+## Configure linux kernel
 
 * Turn on linux boot time options:
 	- Edit GRUB_CMDLINE_LINUX variable in the /etc/default/grub
@@ -104,9 +101,7 @@ For example:
 	0000:04:00.1 '82599ES 10-Gigabit SFI/SFP+ Network Connection 10fb' drv=vfio-pci unused=ixgbe
 
 
-### Run BisonRouter
-
-#### Prepare a configuration file
+### Prepare a configuration file
 
 For configuration examples and options see the page <a href="/conf_options2.md#therouter-configuration-file-example">Command reference</a>
 
@@ -114,7 +109,7 @@ Create /etc/bisonrouter/brouter.conf
 
 		nano /etc/bisonrouter/brouter.conf
 
-#### Configure CPU cores
+### Configure CPU cores
 
 Edit /etc/bisonrouter/bisonrouter.env and update the variable 'br_lcores' according to your hardware setup.
 Use only the cores from the same NUMA socket if your system has multiple CPUs. To find out what cores available run:
@@ -122,7 +117,7 @@ Use only the cores from the same NUMA socket if your system has multiple CPUs. T
 		bisonrouter cpu_layout
 
 
-#### Run BisonRouter
+### Run BisonRouter
 
 Start BisonRouter
 
