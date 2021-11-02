@@ -75,11 +75,10 @@ configuration file in the variable br_dpdk_dest. Default DPDK installation path 
 
 ### Configure DPDK ports
 
-Determine what NIC devices are available in the system.
-The following command will ouput information about NIC devices and their PCI addresses.
+Determine what NIC devices are available in your system.
+The following command will output information about NIC devices and their PCI addresses.
 
 		bisonrouter dev_status
-
 
 Edit /etc/bisonrouter/bisonrouter.env and save the NIC PCI addresses you want to use 
 in the 'br_pci_devs' list.
@@ -96,7 +95,7 @@ Run
 		bisonrouter bind_devices
 		bisonrouter dev_status
 
-Now your PCI devices should be using DPDK drivers and thus should be ready for BisonRouter.
+Now your PCI devices should be using DPDK drivers and thus should be ready for the BisonRouter.
 
 For example:
 
@@ -118,8 +117,8 @@ Create /etc/bisonrouter/brouter.conf
 
 #### Configure CPU cores
 
-Edit /etc/bisonrouter/bisonrouter.env and update the variable 'br_lcores' according with your hardware setup.
-Use only the cores from the same NUMA socket if you system has multiple CPUs. To find out what cores available run:
+Edit /etc/bisonrouter/bisonrouter.env and update the variable 'br_lcores' according to your hardware setup.
+Use only the cores from the same NUMA socket if your system has multiple CPUs. To find out what cores available run:
 
 		bisonrouter cpu_layout
 
