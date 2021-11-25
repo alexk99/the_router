@@ -7,6 +7,7 @@
 ## Install NPF
 
 		wget https://files.therouter.net/download/npf_build.sh
+		chmod +x ./npf_build.sh
 		./npf_build.sh
 
 ## Update system library paths
