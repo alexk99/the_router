@@ -11,115 +11,20 @@ Here are installation steps for Ubuntu 18.04.
 		apt -y install g++ libjemalloc-dev libpcap-dev python libpcre2-8-0 autoconf zlib1g-dev flex byacc
 		apt -y install cmake libtool libtool-bin subversion rpm libreadline-dev libnuma-dev libnl-genl-3-dev
 
-## Install Proplib
-
-		wget http://therouter.net/downloads/proplib-0.6.3.tar.xz
-		tar xvf ./proplib-0.6.3.tar.xz
-		cd ./proplib-0.6.3
-		./configure
-		make
-		make install
-		cd ..
-
-## Install libcdb
-
-		wget http://therouter.net/downloads/libcdb.tar.gz
-		tar xvf ./libcdb.tar.gz
-		cd ./libcdb
-		wget http://therouter.net/downloads/libcdb_alexk.patch
-		cat libcdb_alexk.patch | patch -p1
-		export LIBDIR=lib
-		export INCDIR=include
-		export DESTDIR=/usr/local
-		make all
-		make install
-		cd ..
-
-Notes: install process ends successfully even if it indicates that there has been the following error:
-
-		make -C man install
-		make[1]: Entering directory '/home/alex/libcdb/man'
-		make[1]: *** No rule to make target 'install'.  Stop.
-		make[1]: Leaving directory '/home/alex/libcdb/man'
-		Makefile:5: recipe for target 'install' failed
-		make: *** [install] Error 2	
-
-## Install qsbr
-
-		wget http://therouter.net/downloads/libqsbr.tar.gz
-		tar xzvf libqsbr.tar.gz
-		cd ./libqsbr/src
-		wget http://therouter.net/downloads/libqsbr_alexk.patch
-		cat libqsbr_alexk.patch | patch -p1
-		export LIBDIR=lib
-		export INCDIR=include/qsbr
-		export DESTDIR=/usr/local
-		make all
-		make install
-		cd ../..
-
-## Install bpfjit
-
-		wget http://therouter.net/downloads/bpfjit.tar.gz
-		wget http://therouter.net/downloads/sljit-0.92.tgz
-		mkdir /usr/lib64
-		tar xzvf ./bpfjit.tar.gz
-		tar xzvf ./sljit-0.92.tgz
-		cd ./bpfjit/sljit/
-		cp -rpn ../../sljit-0.92/* ./
-		cd ..
-
- * Edit ./SPECS/libbpfjit.spec and delete or delete the following lines:
-
-		BuildRequires:>make
-		BuildRequires:>libtool
-
- * Run
-
-		make rpm
-		rpm --nodeps -ihv RPMS/x86_64/libbpfjit-0.1-1.x86_64.rpm
-		cd ..
-
 ## Install NPF
 
-		ln -s /usr/lib/x86_64-linux-gnu/libpcap.so.1.8.1 /usr/lib/x86_64-linux-gnu/libpcap.so.1
-		git clone -b conn_limits https://github.com/alexk99/npf
-		wget http://therouter.net/downloads/city/city.h
-		cp city.h /usr/local/include/
-		cd npf/src
-		cd libnpf/net
-		rm ./npf.h
-		ln -s ../../kern/npf.h npf.h
-		cd ../..
-		export DESTDIR=/
-		export LIBDIR=/usr/lib64
-		export INCDIR=/usr/local/include
-		export MANDIR=/usr/local
-		make
-		make install
-		cd ..
-
- ## Install city hash
-
-		unset LIBDIR
-		unset INCDIR
-		unset DESTDIR
-		git clone https://github.com/google/cityhash
-		cd ./cityhash/
-		./configure
-		make all check CXXFLAGS="-g -O3"
-		make install
-		cd ..
+		wget https://files.therouter.net/download/npf_build.sh
+		./npf_build.sh
 
 ## Update system library paths
 
- Add the following lines to the /etc/ld.so.conf.d/router.conf
+Add the following lines to the /etc/ld.so.conf.d/router.conf
 
 		/usr/lib64
 		/usr/local/lib
 		/usr/lib/x86_64-linux-gnu
 
- Run
+Run
 
 		ldconfig
 
