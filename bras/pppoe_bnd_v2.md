@@ -103,7 +103,7 @@
 	  #
 	  
 	  # uplink interface
-	  vif add name uplink port 0 type dot1q cvid 3 flags kni
+	  vif add name uplink port 0 type dot1q cvid 3
 	  ip addr add 192.168.1.2/24 dev uplink
 	  
 	  # PPPoE subscribers interfaces
