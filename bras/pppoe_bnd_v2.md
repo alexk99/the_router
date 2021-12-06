@@ -143,7 +143,7 @@
 	
 	  pppoe profile create 2
 	  pppoe profile set 2 service name sn1
-	  pppoe profile set 2 pado delay 200
+	  pppoe profile set 2 pado delay 20
 	  
 	  # use profile 1 on interfaces pppoe1 and pppoe2
 	  pppoe profile add 1 vif pppoe1
