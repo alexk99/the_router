@@ -113,8 +113,8 @@
 	  
 	  # PPPoE QinQ subscriber interfaces
 	  
-	  # QinQ vlan range 2010.2500 - 2010.2800
-	  vif add name pppoe_r1 port 1 type qinq range svid 2010 cvid 2500 2800 flags pppoe_on
+	  # QinQ vlan range 2010.2500 - 2010.2510
+	  vif add name pppoe_r1 port 1 type qinq range svid 2010 cvid 2500 2510 flags pppoe_on
 
 	  # QinQ 2800.* 
 	  vif add name pppoe_any port 1 type qinq svid 2800 cvid * flags pppoe_on
