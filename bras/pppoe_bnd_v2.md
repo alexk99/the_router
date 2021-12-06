@@ -78,7 +78,7 @@
 	  # when the address is allocated from /64 pool
 	  #
 	  sysctl set fib6_max_lpm_tbl8 65536
-	  sysctl set fib6_max_next_hops 16384
+	  sysctl set fib6_max_next_hops 32768
 	  
 	  # enable ipv6 for pppoe
 	  sysctl set ppp_ipv6 1
