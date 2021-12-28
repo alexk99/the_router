@@ -2903,6 +2903,18 @@ Sets profiles's MTU.
 
 	pppoe profile set <id> mtu <mtu_value>
 
+### pppoe profile add service name
+
+Adds a pppoe service-name to a pppoe profile.
+
+	pppoe profile <id> add service name "<name>"
+
+### pppoe profile del service name
+
+Deletes a pppoe service-name from a pppoe profile.
+
+	pppoe profile <id> del service name "<name>"
+
 ### pppoe profile add vif
 
 Adds an interface into a pppoe profile. As a result the interface will start using PPPoE parameters
