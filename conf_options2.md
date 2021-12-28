@@ -278,6 +278,8 @@ Table of Contents
          * [pppoe profile create](#pppoe-profile-create)
          * [pppoe profile destroy](#pppoe-profile-destroy)
          * [pppoe profile set](#pppoe-profile-set)
+         * [pppoe profile add service name](#pppoe-profile-add-service-name)
+         * [pppoe profile del service name](#pppoe-profile-del-service-name)
          * [pppoe profile add vif](#pppoe-profile-add-vif)
          * [pppoe profile del vif](#pppoe-profile-del-vif)
          * [pppoe profile add vif range](#pppoe-profile-add-vif-range)
