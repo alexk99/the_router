@@ -68,6 +68,9 @@ ipv6 prefix and addresses.
 
 		# maximum number of subscriber interfaces/sessions
 		sysctl set subsc_vif_max 60000
+		
+		# enable IPv6 protocol for IPoE subscribers
+		sysctl set ipoe_ipv6 1		
 	}
 
 	runtime {
