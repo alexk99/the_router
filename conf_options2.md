@@ -3256,108 +3256,6 @@ carrying the PPP subscriber's IA_PD prefix
 0 - disable
 1 - enable
 
-## IPv6oE
-
-### sh subsc ipv6 subsc
-
-Outputs connected/online IPv6oE subscribers
-
-	sh subsc ipv6
-
-Example:
-
-	rcli sh subsc ipv6
-	vif_id	vlan	port	mac	remote_id	subsc_id	IA_NA	IA_PD	ingress_qdisc	egress_qdisc	rx_pkts	tx_pkts	rx_bytes	tx_bytes	ttl	expire_inuptime
-	16	0.300	2	xx:xx:xx:58:63:xx			xxxx:xxxx:xxxx:xxxx:xxxx:e90a:xxxx:1264	xxxx:xxxx:1f0b:1460::/64	100M	100M	0	0	0	0	600	583	0 day(s), 0 hour(s), 0 min(s), 16 sec(s)
-
-	
-### subsc ipv6 disconnect
-	
-Disconnects an IPv6oE subscriber
-	
-	rcli subsc ipv6 disconnect <vif-id>
-
-### ipoe ipv6 pool
-
-Sets the default address pool for IPv6oE addresses of a particular type
-
-	ipoe ipv6 pool <ipv6oe_address_type> <pool_name>
-
-<ipv6oe_address_type> can take one of the following values:
-
-	ia_na
-	ia_pd
-	slaac
-
-Example
-
-	# default pools
-	ipoe ipv6 pool ia_na ipv6_na_pool_1
-	ipoe ipv6 pool ia_pd ipv6_pd_pool_1
-	ipoe ipv6 pool slaac ipv6_slaac_pool_1
-
-### ipoe ipv6 pool <ipv6oe_address_type> disable
-
-Unsets the default address pool for IPv6oE adresses of a particular type
-
-	ipoe ipv6 pool <ipv6oe_address_type> disable
-
-Example:
-
-	ipoe ipv6 pool ia_na disable
-	ipoe ipv6 pool ia_pd disable
-	ipoe ipv6 pool slaac disable
-
-### ipoe subsc ipv6 username
-
-Configures IPv6oE subscriber's username. The username will be used in RADIUS packets.
-The command can only be used in the startup section of a configuration file.
-
-	ipoe subsc ipv6 username format "<field>[:<field>]..." [delimiter ":"]
-
-A list of fields that can be used to compose the username includes:
-
-	port
-	mac
-	remote_id
-	subscriber_id
-
-example:
-
-	ipoe subsc ipv6 username format "mac"
-or
-
-	ipoe subsc ipv6 username format "port:mac" delimiter ":"
-
-Note that remote_id and subscriber_id field values will be defined only if the 
-corresponded options were included in the DHCPv6 request initiated subscriber creation.
-	
-## IPv6oE sysctl variables
-
-### ipoe_dhcpv6_ia_na
-
-An integer sysctl variable that controls IA_NA option's behavior of the DHCPv6 server for IPv6oE subscribers.
-
-Valid values are:
-
- - 0 - disable, the IA_NA option is not included in DHCPv6 messages;
- - 1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
-	from pool only if the DHCPv6 client asks for that option;
- - 2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
-	from pool immidiately after the IPv6oE subscriber has connected;
-
-### ipoe_dhcpv6_ia_pd
-
-An integer sysctl variable that controls IA_PD option's behavior of the DHCPv6 server for IPv6oE subscribers.
-
-Valid values are:
-
- - 0 - disable, the IA_PD option is not included in the DHCPv6 messages;
- - 1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
-	from pool only if the DHCPv6 client asks for that option;
- - 2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
-	the IA_PD value will be allocated from pool immidiately after the IPv6oE subscriber has connected;
-
 ## DHCPv6
 
 ### dhcpv6 add dns
@@ -3825,6 +3723,28 @@ Note that remote_id and subscriber_id field values are defined only when DHCP su
 is initiated by DHCP or DHCPv6 packets. Those values correspond to DHCP option82 values or DHCPv6 option 18/
 option 37 values.
 
+### show subscribers
+
+Outputs IPoE subscriber online sessions.
+	
+	rcli sh subsc
+
+Example:
+
+	# rcli sh subsc
+	vif_id  port    vlan    ip      mac     sess-id circuit-id      remote-id       ingress_car     egress_car      rx_pkts tx_pkts rx_bytes        tx_bytes        pbr     ttl     expire_in    uptime
+	8       2       0.931  10.x.x.x      xx:16:xx:xx:xx:xx       1641657854-8                    250M    250M    7841    7606    1356631 3446740 0       600     291     0 day(s), 2 hour(s), 17 min(s), 19 sec(s)
+
+### subsc disconnect
+	
+Disconnects an IPoE subscriber
+
+	subsc disconnect <vif-id>
+
+Example:
+
+	rcli subsc disconnect 8
+
 ### subsc_vif_max
 
 A startup integer sysctl variable that defines the maximum number of concurrent IPoE subscribers.
@@ -3885,6 +3805,77 @@ subscriber is connected to.
 A boolean sysctl variable. When enabled TheRouter will install a /32 route for each IPoE L2/L3 subscriber's
 ip address. Default value is false (0).
 
+## IPoE IPv6 subscribers
+
+### sh subsc ipv6 subsc
+
+Outputs connected/online IPv6oE subscribers
+
+	sh subsc ipv6
+
+Example:
+
+	# rcli sh subsc ipv6
+	vif_id  vlan    port    mac     remote_id       subsc_id        IA_NA   IA_PD   ingress_qdisc   egress_qdisc    rx_pkts tx_pkts rx_bytes        tx_bytes        ttl     expire_in       uptime
+	8       0.820  2       xx:xx:xx:xx:xx:xx                       xx01:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:c9c3  2000:xxxx:xxxx:xxxx::/64 250M    250M    7852    7609    1359513 3446878 600     416  0 day(s), 2 hour(s), 21 min(s), 14 sec(s)
+
+### ipoe ipv6 pool
+
+Sets the default address pool for IPv6oE addresses of a particular type
+
+	ipoe ipv6 pool <ipv6oe_address_type> <pool_name>
+
+<ipv6oe_address_type> can take one of the following values:
+
+	ia_na
+	ia_pd
+	slaac
+
+Example
+
+	# default pools
+	ipoe ipv6 pool ia_na ipv6_na_pool_1
+	ipoe ipv6 pool ia_pd ipv6_pd_pool_1
+	ipoe ipv6 pool slaac ipv6_slaac_pool_1
+
+### ipoe ipv6 pool <ipv6oe_address_type> disable
+
+Unsets the default address pool for IPv6oE adresses of a particular type
+
+	ipoe ipv6 pool <ipv6oe_address_type> disable
+
+Example:
+
+	ipoe ipv6 pool ia_na disable
+	ipoe ipv6 pool ia_pd disable
+	ipoe ipv6 pool slaac disable
+	
+## IPv6oE sysctl variables
+
+### ipoe_dhcpv6_ia_na
+
+An integer sysctl variable that controls IA_NA option's behavior of the DHCPv6 server for IPv6oE subscribers.
+
+Valid values are:
+
+ - 0 - disable, the IA_NA option is not included in DHCPv6 messages;
+ - 1 - enable, the IA_NA option is included to the DHCPv6 replies, IA_NA value will be allocated
+	from pool only if the DHCPv6 client asks for that option;
+ - 2 - allways allocate, the IA_NA option is included in the DHCPv6 replies, IA_NA value will be allocated
+	from pool immidiately after the IPv6oE subscriber has connected;
+
+### ipoe_dhcpv6_ia_pd
+
+An integer sysctl variable that controls IA_PD option's behavior of the DHCPv6 server for IPv6oE subscribers.
+
+Valid values are:
+
+ - 0 - disable, the IA_PD option is not included in the DHCPv6 messages;
+ - 1 - enable, the IA_PD option is included in the DHCPv6 reply messages, the IA_PD value will be allocated
+	from pool only if the DHCPv6 client asks for that option;
+ - 2 - allways allocate, the IA_PD option is included in the DHCPv6 replies messages,
+	the IA_PD value will be allocated from pool immidiately after the IPv6oE subscriber has connected;
+		
 ## DHCP server
 		
 ### enabling DHCP server
