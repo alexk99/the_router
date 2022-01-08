@@ -146,11 +146,24 @@ ipv6 prefix and addresses.
 	
 	  # IP pools
 	  ip pool add pool_1
-	  ip pool add range pool_1 10.0.0.2 - 10.0.255.255
+	  ip pool add range pool_1 10.0.0.2 - 10.0.3.255
 	  ip pool set pool_1 router 10.0.0.1 mask 16 lease time 600
 	  ip pool add pool_1 dns 8.8.8.8
 	  ip pool add pool_1 dns 8.8.4.4
 	  ip pool add pool_1 ntp 192.36.143.130
+
+	  ip pool add pool_2
+	  ip pool add range pool_1 10.0.10.0 - 10.0.20.255
+	  ip pool set pool_2 router 10.0.0.1 mask 16 lease time 600
+	  ip pool add pool_2 dns 8.8.8.8
+	  ip pool add pool_2 dns 8.8.4.4
+	  ip pool add pool_2 ntp 192.36.143.130
+
+	  # default ipoe pools.
+	  # This ip pools will be used by IPoE subscribers by default 
+	  # if radius access-reply message doesn't specify other pool name to use
+	  ipoe ip pool add pool_1
+  	  ipoe ip pool add pool_2
 	
 	  #
 	  # Radius
