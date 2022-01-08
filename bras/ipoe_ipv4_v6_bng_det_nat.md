@@ -105,16 +105,23 @@ ipv6 prefix and addresses.
 	  #
 	  # Subscriber VLANs
 	  #
+	  
 	  vif add name v5 port 0 type dot1q cvid 5 flags l2_subs,proxy_arp
 	  ip addr add 10.10.0.1/32 dev v5
+	  ipv6 enable dev v5
+	  ipv6 nd ra enable dev v5
 	  
 	  # qinq interfaces to L2 connected subscribers vlans
 	  vif add name l2subs_a port 0 type qinq range svid 2010 cvid 2500 2800 flags l2_subs,proxy_arp
 	  ip addr add range svid 2010 cvid 2500 2800 10.10.0.1/32 name l2subs_a
+	  ipv6 enable vif range svid 2010 cvid 2500 2800 name l2subs_a
+	  ipv6 nd ra enable vif range svid 2010 cvid 2500 2800 name l2subs_a
 	  
 	  # dot1q interfaces to L2 connected subscribers vlans
 	  vif add name l2subs_b port 0 type dot1q range svid 0 cvid 2500 2800 flags l2_subs,proxy_arp
-	  ip addr add range svid 2010 cvid 2500 2800 10.10.0.1/32 name l2subs_b
+	  ip addr add range svid 0 cvid 2500 2800 10.10.0.1/32 name l2subs_b
+	  ipv6 enable vif range svid 0 cvid 2500 2800 name l2subs_b
+	  ipv6 nd ra enable range svid 0 cvid 2500 2800 name l2subs_b
 	
 	  # local route to the ip address shared by all subscribers interfaces
 	  # according with ip unnumbered scheme
@@ -219,7 +226,7 @@ ipv6 prefix and addresses.
 	  # PD address pool
 	  ipv6 pool add pd_pool xx::/48 length 64 flags rand,cache
 
-	  # enable IA_NA, IA_PD and SLAAC for PPP
+	  # enable IA_NA, IA_PD and SLAAC for IPoE
 	  sysctl set ipoe_dhcpv6_ia_na 1
   	  sysctl set ipoe_dhcpv6_ia_pd 1
 	  # SLAAC is not yet supported
