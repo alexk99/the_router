@@ -3807,6 +3807,18 @@ ip address. Default value is false (0).
 
 ## IPoE IPv6 subscribers
 
+### Enabling IPv6 protocol
+		
+"ipoe_ipv6" is a startup only boolean sysctl variable that enables IPv6 protocol for IPoE subscribers.
+		
+Example
+
+	startup {
+	  ..
+	  sysctl set ipoe_ipv6 1
+	  ..
+	}
+
 ### sh subsc ipv6 subsc
 
 Outputs connected/online IPv6oE subscribers
