@@ -16,10 +16,10 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  # mbuf mempool size
 	  # this value depends on the total number of rx queues
 	  # mbuf = number of rx queues * 4096
-	  sysctl set mbuf 16384
+	  sysctl set mbuf 32000
 	  
 	  # NIC rx/tx descriptor ring sizes
-	  sysctl set num_rx_desc 512
+	  sysctl set num_rx_desc 1024
 	  sysctl set num_tx_desc 1024
 	
 	  #
@@ -35,7 +35,7 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  #
 	  sysctl set global_packet_counters 1
 	  sysctl set vif_stat 1
-	  sysctl set arp_cache_timeout 300
+	  sysctl set arp_cache_timeout 600
 	  sysctl set arp_cache_size 65536
 	  sysctl set dynamic_vif_ttl 600
 	  sysctl set fpm_debug 0
@@ -58,7 +58,13 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  # Note: FRR 4.0 bgpd redistribute kernel doesn't see linux routes with proto static,
 	  # but it sees BOOT routes
 	  #
-	  sysctl set linux_route_proto 3	  
+	  sysctl set linux_route_proto 3
+	  
+	  # maximum number of VIF (vlan) interfaces
+	  sysctl set vif_max 10000
+	  
+	  # maximum number of subscriber interfaces/sessions
+	  sysctl set subsc_vif_max 60000
 	}
 	
 	runtime {
@@ -85,7 +91,21 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  #
 	  # L2 connected subsribers
 	  #
+	  
+	  # setup IPoE subscriber username
+	  ipoe subsc username format "svid.cvid.mac"
+	  
+	  #
+	  # Subsriber Initiation methods: 
+	  #   intiate subscriber sessions only by DHCP requests
+	  #
+  	  sysctl set subsc_initiate_by_ingress_pkts 0
+  	  sysctl set subsc_initiate_by_egress_pkts 0
+  	  sysctl set l2_subsc_initiate_by_dhcp 1
 	    
+	  #
+	  # Subscriber VLANs
+	  #
 	  vif add name v5 port 0 type dot1q cvid 5 flags l2_subs,proxy_arp
 	  ip addr add 10.10.0.1/32 dev v5
 	  
@@ -108,12 +128,18 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  ip route add 0.0.0.0/0 via 192.168.1.3 src 192.168.1.112
 	
 	  #
-	  # DHCP relay
+	  # DHCP server
 	  #
-	  dhcp_relay opt82 mode rewrite_if_doesnt_exist
-	  dhcp_relay opt82 remote_id "tr_h4"
-	  dhcp_relay 192.168.20.3
-	  sysctl set dhcp_relay_enabled 1
+	  # enable DHCP server
+	  sysctl set dhcp_server 1
+	
+	  # IP pools
+	  ip pool add pool_1
+	  ip pool add range pool_1 10.0.0.2 - 10.0.255.255
+	  ip pool set pool_1 router 10.0.0.1 mask 16 lease time 600
+	  ip pool add pool_1 dns 8.8.8.8
+	  ip pool add pool_1 dns 8.8.4.4
+	  ip pool add pool_1 ntp 192.36.143.130
 	
 	  #
 	  # Radius
@@ -158,10 +184,10 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  #
 	  # SNAT 44
 	  #
-	  det snat create map 1 in 10.0.0.0/16 out 10.114.0.0/29 sess 2048
+	  det snat create map 1 in 10.0.0.0/16 out 10.114.0.0/29 sess 4096
 	  det snat vif uplink enable
 	  det snat vif uplink add map 1  
 	  
-	  # blackhole NAT addresses
+	  # blackhole NAT public (out) addresses
 	  ip route add 10.114.0.1/29 unreachable
 	}
