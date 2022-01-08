@@ -1,6 +1,5 @@
 Table of Contents
 =================
-
    * [Table of Contents](#table-of-contents)
    * [Configuration overview](#configuration-overview)
       * [Command line options](#command-line-options)
@@ -3808,10 +3807,12 @@ The command can only be used in the startup section of a configuration file.
 A list of fields that can be used to compose the username includes:
 
 	port
+	svid
+	cvid
 	ipv4
 	mac
-	opt82_remote_id
-	opt82_circuit_id
+	remote_id
+	subscriber_id
 
 example:
 
@@ -3820,14 +3821,19 @@ or
 
 	ipoe subsc username format "ipv4:mac" delimiter ":"
 
-Note that opt82_remote_id and opt82_circuit_id field values are avaialbe only when DHCP subscriber's session
-initiation is used.
+Note that remote_id and subscriber_id field values are defined only when DHCP subscriber's session
+is initiated by DHCP or DHCPv6 packets. Those values correspond to DHCP option82 values or DHCPv6 option 18/
+option 37 values.
 
 ### subsc_vif_max
 
 A startup integer sysctl variable that defines the maximum number of concurrent IPoE subscribers.
 The variable can be used only in the startup configuration file section.
 
+### ipoe_ttl
+		
+An integer sysctl variable that defines IPoE subscriber's Time-To-Live parameter value in seconds.
+		
 ### install_subsc_linux_routes
 
 A boolean sysctl variable. When enabled TheRouter will add/remove linux kernel /32 routes for ipoe subscriber's ip addresses.
