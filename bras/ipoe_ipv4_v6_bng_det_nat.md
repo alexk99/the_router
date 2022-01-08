@@ -106,6 +106,8 @@ ipv6 prefix and addresses.
 	  # Subscriber VLANs
 	  #
 	  
+	  sysctl set ipoe_ttl 600
+	  
 	  vif add name v5 port 0 type dot1q cvid 5 flags l2_subs,proxy_arp
 	  ip addr add 10.10.0.1/32 dev v5
 	  ipv6 enable dev v5
