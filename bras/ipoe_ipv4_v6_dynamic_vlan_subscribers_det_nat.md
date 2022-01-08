@@ -94,6 +94,7 @@ ipv6 prefix and addresses.
 		#
 		# L2 connected subsribers
 		#
+		sysctl set ipoe_ttl 600
 
 		# setup IPoE subscriber username
 		ipoe subsc username format "svid.cvid.mac"
