@@ -3693,7 +3693,7 @@ See the description of the therouter_subsc_addr_prefix_map_id attribute.
 Description is available 
 <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md#pbr-rules">here</a>
 
-## IPoE subsribers
+## IPoE subscribers
 
 ### ipoe subsc username
 
@@ -3744,6 +3744,25 @@ Disconnects an IPoE subscriber
 Example:
 
 	rcli subsc disconnect 8
+
+### Default IPoE DHCP pools
+
+Default IPoE DHCP pools are used by IPoE subscribers when no other pools
+specified in the radius access-reply message.
+		
+Adds an ip pool to the list of default IPoE subscriber ip pools
+
+	ipoe ip pool add <pool-name>
+
+Deletes an ip pools from the list of default IPoE subscriber ip pools
+
+	ipoe ip pool del <pool-name>
+
+Example:
+
+	# global ipoe pools
+	ipoe ip pool add ppp_pool_1
+	ipoe ip pool add ppp_pool_2
 
 ### subsc_vif_max
 
