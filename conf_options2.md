@@ -3887,12 +3887,14 @@ Globally enables the DHCP server function.
 
 	sysctl set dhcp_server 1
 
-## configuring DHCP server's ip pools 
+### configuring DHCP server's ip pools 
 
 Note that before configuring DHCP parameters of an ip pool it should be created by using command 
 
 	ip pool add <pool-name>
 
+See [IP pools](#ip-pools)
+		
 Setups the DHCP parameters of an ip pool
 
 	ip pool set <pool-name> router <ipv4-address> mask <network-mask> lease time <time>
