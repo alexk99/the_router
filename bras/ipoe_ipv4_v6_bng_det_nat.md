@@ -6,9 +6,8 @@ and ip unnumbered scheme is used to configure IPv4 subscriber's routing.
 Subscribers are connected to vlan v5, QinQ vlan range cvid 2010 cvid 2500 - 2800,
 dot1q range 2500 - 2800.
 
-To provide subscribers with IPv4 addresses DHCP relay is used which
-forwards DHCP requests to an external DHCP server located at host 192.168.20.3.
-host 192.168.20.3 could be running at the same machine TR is running at.
+Note that some ipv6 values marked as XX in the IPv6 section should be changed to your actual 
+ipv6 prefix and addresses.
 
   	startup {
 	  sysctl set numa 0
@@ -190,4 +189,51 @@ host 192.168.20.3 could be running at the same machine TR is running at.
 	  
 	  # blackhole NAT public (out) addresses
 	  ip route add 10.114.0.1/29 unreachable
+	  
+	  #
+	  # IPv6
+	  #
+	  ipv6 enable dev lo
+	  ipv6 addr add xxx:4/112 dev lo
+
+	  # ipv6 uplink
+	  ipv6 enable dev uplink
+	  ipv6 addr add xxx:3/112 dev uplink
+
+	  # ipv6 default route
+	  ipv6 route add ::/0 via xx60::1:1
+
+	  sysctl set ipv6_tcp_mss_fix 1
+
+	  # DHCPv6	  
+	  # google dns
+	  dhcpv6 add dns 2001:4860:4860::8888
+	  dhcpv6 add dns 2001:4860:4860::8844
+	  dhcpv6 domain search list i6.bisonrouter.com
+
+	  #
+	  # IPv6 Pools
+	  #
+	  # NA address pool
+	  ipv6 pool add na_pool xxx::/64 length 128 flags rand,cache
+	  # PD address pool
+	  ipv6 pool add pd_pool xx::/48 length 64 flags rand,cache
+
+	  # enable IA_NA, IA_PD and SLAAC for PPP
+	  sysctl set ipoe_dhcpv6_ia_na 1
+  	  sysctl set ipoe_dhcpv6_ia_pd 1
+	  # SLAAC is not yet supported
+  	  sysctl set ipoe_slaac 0
+
+	  # ipv6 radius accounting. include all adresses/prefixes into start packets.
+	  sysctl set ppp_rad_acct_slaac 1
+	  sysctl set ppp_rad_acct_ia_na 1
+	  sysctl set ppp_rad_acct_ia_pd 1	  
+
+	  #
+	  # use the following ipv6 pools by default for IPoE subscriber
+	  # when no radius pools attributes are received
+	  # 
+	  ipoe ipv6 pool ia_na na_pool
+  	  ipoe ipv6 pool ia_pd pd_pool
 	}
