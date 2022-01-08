@@ -3925,6 +3925,11 @@ Deletes a NBNS server from the list of ip pool NBNS servers:
 
 Example:
 
+	# create pool with name "pool_1"
+  	ip pool add pool_1
+  	ip pool add range pool_1 10.11.1.10 - 10.11.200.255
+
+	# setup pool's DHCP parameters
 	ip pool set pool_1 router 10.0.0.1 mask 24 lease time 600
 	ip pool add pool_1 dns 8.8.8.8
 	ip pool add pool_1 dns 8.8.4.4
