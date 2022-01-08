@@ -3879,6 +3879,57 @@ subscriber is connected to.
 A boolean sysctl variable. When enabled TheRouter will install a /32 route for each IPoE L2/L3 subscriber's
 ip address. Default value is false (0).
 
+## DHCP server
+		
+### enabling DHCP server
+
+Globally enables the DHCP server function.
+
+	sysctl set dhcp_server 1
+
+## configuring DHCP server's ip pools 
+
+Note that before configuring DHCP parameters of an ip pool it should be created by using command 
+
+	ip pool add <pool-name>
+
+Setups the DHCP parameters of an ip pool
+
+	ip pool set <pool-name> router <ipv4-address> mask <network-mask> lease time <time>
+
+Adds a DNS server to the list of ip pool DNS servers:
+
+	ip pool add <pool-name> dns <ip-address>
+
+Deletes a DNS server from the list of ip pool DNS servers:
+
+	ip pool del <pool-name> dns <ip-address>
+
+Adds a NTP server to the list of ip pool NTP servers:
+
+	ip pool add <pool-name> ntp <ip-address>
+
+Deletes a NTP server from the list of ip pool NTP servers:
+
+	ip pool del <pool-name> ntp <ip-address>
+
+Adds a NBNS (NetBios Name Server) server to the list of ip pool NBNS servers:
+
+	ip pool add <pool-name> nbns <ip-address>
+
+Deletes a NBNS server from the list of ip pool NBNS servers:
+
+	ip pool del <pool-name> nbns <ip-address>
+
+Example:
+
+	ip pool set pool_1 router 10.0.0.1 mask 24 lease time 600
+	ip pool add pool_1 dns 8.8.8.8
+	ip pool add pool_1 dns 8.8.4.4
+	ip pool add pool_1 ntp 192.36.143.130
+	ip pool add pool_1 nbns 1.1.1.1
+	ip pool add pool_1 nbns 1.1.1.3
+		
 ## DHCP Relay
 
 ### enabling DHCP relay
