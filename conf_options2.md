@@ -1397,7 +1397,7 @@ Example:
 	# rcli sh det snat debug stat
 	ip      no_free_ports   sess_overflows
 
-### sh det snat debug stat <ip>
+### sh det snat debug stat ipv4
 
 Outputs debug statistic counters for a particular ip address
 
