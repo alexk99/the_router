@@ -103,6 +103,7 @@ Table of Contents
          * [det_nat_sess_bucket_size](#det_nat_sess_bucket_size)
          * [det snat map add to prefix map](#det-snat-map-add-to-prefix-map)
          * [det snat map del from prefix map](#det-snat-map-del-from-prefix-map)
+         * [enabling debug statisctic counters](#enabling-debug-statisctic-counters)
          * [sh det snat debug stat](#sh-det-snat-debug-stat)
          * [sh det snat debug stat ipv4](#sh-det-snat-debug-stat-ipv4)
          * [det snat debug stat clear](#det-snat-debug-stat-clear)
