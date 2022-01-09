@@ -1391,6 +1391,12 @@ Deletes map's internal and external prefixes from a prefix map.
 
 	det snat map <nat-map-id> del from prefix map <prefix-map-id>
 
+### enabling debug statisctic counters
+
+Enables collecting debug statistic for "no-free-ports" and "session-overflow" events.
+
+	sysctl set det_snat_debug_stat 1
+
 ### sh det snat debug stat
 
 Outputs debug statistic counters of the deterministic nat module
