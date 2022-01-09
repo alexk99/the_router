@@ -1388,6 +1388,28 @@ Deletes map's internal and external prefixes from a prefix map.
 
 	det snat map <nat-map-id> del from prefix map <prefix-map-id>
 
+### sh det snat debug stat
+
+Outputs debug statistic counters of the deterministic nat module
+
+Example:
+
+	# rcli sh det snat debug stat
+	ip      no_free_ports   sess_overflows
+
+### sh det snat debug stat <ip>
+
+Outputs debug statistic counters for a particular ip address
+
+Example:
+
+	# rcli sh det snat debug stat 1.1.1.1
+	ip      no_free_ports   sess_overflows
+
+### det snat debug stat clear
+
+Clears debug statistic counters.
+
 ## Deterministic DNAT44
 
 ### det snat add dnat
