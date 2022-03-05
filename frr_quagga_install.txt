@@ -9,29 +9,35 @@ Use -M fpm command line parameter to run FRR Zebra daemon
 
 1.3) After FRR Zebra has started it should start listening tcp port 2620.
 
-  ip netns exec tr netstat -an | grep 2620
+  ip netns exec br netstat -an | grep 2620
 
 --------------------
 2) Network namespace 
 
-TheRouter and quagga/frr daemons (bgpd, zebra) should run
-in the same linux network namespace 'tr'.
+BisonRouter and Quagga/FRR daemons (bgpd, zebra) should run
+in the same linux network namespace 'br'. 
 
-For example, to run bgpd in the 'tr' linux namespace run
-ip netns exec tr /usr/local/sbin/bgpd
+For example, to run bgpd in the 'br' linux namespace run
+ip netns exec br /usr/local/sbin/bgpd
+
+BisonRouter startup script/service can start FRR daemons.
+To enable that set 'br_use_frr' variable in /etc/bisonrouter/bisonrouter.env
+to "yes" and specify FRR start and stop commands in the variables
+br_frr_stop_command and br_frr_start_command.
 
 --------------------
-3) KNI 
-After TheRouter process has started, up KNI interfaces
+3) KNI
 
-for example,
-  $rvrf ip link up dev r_v3
+KNI interface names must be added to variable 'br_kni_vifs'
+in /etc/bisonrouter/bisonrouter.env in order to the bisonrouter
+startup script or service to up them after BR process has started.
 
-where
-  $rvrf == ip netns exec tr
+Linux KNI interfaces are created automatically by the BisonRuoter process
+for all VIFs with the 'kni' flag. The name of a KNI interface consist
+of a 'r_' prefix and the name of the corresponding VIF.
 
 -----
-4) If you build FRR from the sources use the following parameters
+4) If you build FRR using sources use the following parameters
 for the ./configure script
 
 apt install libjson-c-dev libpcre3-dev libcap-dev bison flex
