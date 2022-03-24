@@ -85,9 +85,9 @@ Linux KNI interfaces must be set up after BisonRouter has started. To configure 
 
 For example:
 
-br_kni_vifs=(
-  "r_p0"
-)
+	br_kni_vifs=(
+	  "r_p0"
+	)
 
 Start BisonRouter.
 
