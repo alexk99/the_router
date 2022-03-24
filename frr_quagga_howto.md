@@ -9,13 +9,13 @@ https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-
 # 2. Configure TR
 
 ## 2.1.
-add following commands to the startup section of TR's configuration file
+add following commands to the startup section of BR's configuration file
 
     sysctl set linux_route_proto 3
     sysctl set ppp_install_subsc_linux_routes 1
 
 ## 2.2. 
-use the "kni" flag for all TR VIF interfaces that will be used to communicate with external routers via a dynamic routing protocol
+Use the "kni" flag for all VIF interfaces that will be used to communicate with external routers via a dynamic routing protocol
 
 for example
 
@@ -23,29 +23,30 @@ for example
     vif add name v3 port 0 type dot1q cvid 3 flags kni
 
 ## 2.3.
-you should manually set up the linux KNI interfaces after TR has started.
-to do that use ip link command:
 
-    $rvrf ip link set up dev r_xxx
+Linux KNI interfaces must be set up after BisonRouter has started.
+To configure the bisonrouter script to do that edit the 'br_kni_vifs'
+variable in /etc/bisonrouter/bisonrouter.env and include KNI interfaces 
+names into it.
 
-where xxx is the name of your KNI VIF interface.
-you can place this command in file therouter_start.sh in the section
+For example:
 
-    ##
-    ## Setup KNI interfaces
-    ##
+br_kni_vifs=(
+	"r_v3"
+	"r_v100"
+)
 
 # 3. Output subscriber's routes
 Once a subscriber has connected to TR
 TR will create a linux /32 route for that subscriber.
-The route will be added to the 'tr' linux namespace at the dev 'lo'.
+The route will be added to the 'br' linux namespace at the dev 'lo'.
 To output such routes use
 
     $rvrf ip route ls dev lo
 
 Don't forget to define $rvrf bash variable as
 
-    ip netns exec tr
+    ip netns exec br
 
 # 4. Configure FRR
 Use FRR command 'redistribute kernel' to redistribute routes created by TR to your uplink router.
