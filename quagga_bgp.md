@@ -81,7 +81,7 @@ Note that "kni" flag is used.
 		..
 	}
 	
-Linux KNI interfaces must be set up after BisonRouter has started. To configure the bisonrouter script to do that edit the 'br_kni_vifs' variable in /etc/bisonrouter/bisonrouter.env and include KNI interfaces names into it. Note that a KNI name consist from a prefix 'r_' and the name of the correspondent VIF interface.
+Linux KNI interfaces must be set up after BisonRouter has started. To configure the bisonrouter script to do that edit the 'br_kni_vifs' variable in /etc/bisonrouter/bisonrouter.env and include KNI interfaces names into it. Note that a KNI name consists from a prefix 'r_' and the name of the correspondent VIF interface.
 
 For example:
 
