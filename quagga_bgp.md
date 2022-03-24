@@ -1,8 +1,8 @@
 # Dynamic routing. Integration with Quagga or FRR.
 
-Integration with Quagga/FRR is built on using Kernel network interfaces (KNI) on the BisonRouter side 
+Integration with Quagga/FRR is built on top of using Kernel Network Interfaces (KNI) on the BisonRouter side 
 and <a href="http://www.nongnu.org/quagga/docs/docs-multi/zebra-FIB-push-interface.html">zebra FIB push interface</a> 
-on the quagga's side.
+on the Quagga/FRR side.
 
 <img src="http://therouter.net/images/quagga.png">
 
