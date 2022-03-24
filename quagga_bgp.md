@@ -6,7 +6,7 @@ on the Quagga/FRR side.
 
 <img src="http://therouter.net/images/quagga.png">
 
-KNI interfaces should be created for every BisonRouter virtual interfaces (VIF) that is going to be used in
+KNI interfaces should be created for every BisonRouter virtual interface (VIF) that is going to be used in
 dynamic routing with external routers. To do so a KNI flag must be used in the creation
 of a VIF. The KNI flag instructs the BisonRouter to create a KNI interface in the linux kernel and forward to it
 all packets that are destined to any ip address of the parent VIF. In other words all the conroll plane traffic
