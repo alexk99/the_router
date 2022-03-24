@@ -1,50 +1,44 @@
 # Dynamic routing. Integration with Quagga or FRR.
 
-Integration with Quagga/FRR is built on using Kernel network interfaces (KNI) on the DPDK side 
+Integration with Quagga/FRR is built on using Kernel network interfaces (KNI) on the BisonRouter side 
 and <a href="http://www.nongnu.org/quagga/docs/docs-multi/zebra-FIB-push-interface.html">zebra FIB push interface</a> 
 on the quagga's side.
 
 <img src="http://therouter.net/images/quagga.png">
 
-KNI interfaces are created for every router's virtual interfaces (VIF) that are going to participate in
-the dynamic routing interaction with external routers. To do so 'kni' flag must be used in the creation
-of a VIF. Kni flag instructs the router's core to create KNI interface in the linux kernel and forward to it
+KNI interfaces should be created for every BisonRouter virtual interfaces (VIF) that are going to participate in
+dynamic routing with external routers. To do so a KNI flag must be used in the creation
+of a VIF. The KNI flag instructs the BisonRouter to create a KNI interface in the linux kernel and forward to it
 all packets that are destined to any ip address of the parent VIF. In other words all the conroll plane traffic
-goes through the KNI interfaces, so Quagga BGP daemon can receive it and sends responses back to the world.
+will go through the KNI interfaces, so Quagga/FRR BGP daemon can receive it and send responses back to the wire.
 
-Once the quagga has received a route it will try to push it throuht its 'FIB push inteface'. TheRouter listens
-on that interface for a route updates add install them into its main routing table. That updates
+Once the Quagga/FRR has received a route it will try to send it to 'FIB push inteface'. BisonRouter listens
+on that interface for a route updates add install them into its main routing table. Those updates
 instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
-goes along slow path through KNI to the quagga and then back to the router through FPM interface. But data traffic
-will always go along the fast path right through the router's core to a destination.
+goes along the slow path through KNI to the Quagga/FRR and then back to the router through FPM interface.
+But data traffic will always go along the fast path right through the BisonRouter's core.
 
 ## Using a separate network namespace
 
-Since linux host running TheRouter can be used for running other network related programs (for example dhcpd, radius, etc..)
-that use different NICs and network different routes it would be very convinient to completly separate linux network stack and the TheRouter network
-enviroment. Linux network namespace is ideal solution for that task. TheRouter and Quagga/FRR will be running in one
-network space and linux and all standart programs it hosts will be running in the default network namespace. 
-Therefore the dynamic routes that Quagga/FRR creates for TheRouter will be installed in the dedicated routing table 
-and will not mess with linux routes.
+Since linux host running BisonRouter can be used for running other network related programs (for example dhcpd, radius, etc..)
+that use different NICs and different network routes it would be very convinient to use two separate linux network namespaces.
+BisonRouter and Quagga/FRR will be running in one network namespace and linux and the programs it hosts will be running in 
+the default network namespace. Therefore the dynamic routes that Quagga/FRR creates for BisonRouter will be installed in the dedicated 
+routing table and will not mess with linux routes.
 
-First, a network namespace should be created:
+The 'bisonrouter start' command starts BisonRouter daemon in the 'br' namesace.
 
 	ip netns add tr
 
-Second, TheRouter and Quagga/FRR components (bgpd, ospfd, zebra) should be started in the created namespace "tr" 
-by using the following prexix for a startup command:
+To start the Quagga/FRR components (bgpd, ospfd, zebra) in the same network namespace "tr" 
+a following prexix can be used in a startup command:
 
 	ip netns exec tr <command>
 
-For example, in order to run TheRouter in the network namespace named "tr" TheRouter should be started using the command:
-
-	ip netns exec tr \<route_path>\the_router --proc-type=primary -c 0xF --lcores=...
-
-Also, note that rcli and telnet command for confiring TheRouter and Quagga should be also executed in the "tr" namespace.
+Note that the telnet command for connecting to Quagga/FRR should be executed in the "tr" namespace.
 So, it's very convinient to define a bash variable and use it instead of typing 'ip netns exec tr' each time.
 
 	export rvrf="ip netns exec tr"
-	$rvrf rcli sh ip route
 	$rvrf telnet localhost bgpd
 
 ## Quagga/FRR installation
@@ -58,26 +52,27 @@ For example, if you are installing Quagga using sources then just run:
 
 ## Running Quagga/FRR
 
-FRRs zebra component should be executed with -M fpm
+FRR's zebra component should be executed with -M fpm
 command line option. (Note: Quaggas zebra doesn't need that option).
 
-It's better to run Quagga/FRR and TheRouter in the same dedicated linux network
-namespace. To run Quagga/FRR components in a namaspace just use a prefix
-"ip netns exec tr" before executable file, where "tr" is the name of the namespace.
+Quagga/FRR must be running in the 'br' linux network namespace. 
+To run Quagga/FRR components in a namaspace just use a prefix
+"ip netns exec tr" before executable file, where 'br' is the name of 
+the BisonRouter namespace.
 
 For example,
 
-	ip netns exec tr /usr/local/sbin/bgpd
+	ip netns exec br /usr/local/sbin/bgpd
 
-Once Quagga/FRR is started it should listen FPM port tcp/2620.
+Once Quagga/FRR has started it should start listing FPM port tcp/2620.
 
-	ip netns exec tr netstat -an | grep 2620
+	ip netns exec br netstat -an | grep 2620
 
 # Configuration examples
 
 ## BGP
 
-### Configure TheRouter
+### Configuring BisonRouter
 
 Note that "kni" flag is used.
 
@@ -87,27 +82,27 @@ Note that "kni" flag is used.
 		ip addr add 10.0.0.1/24 dev p0
 		..
 	}
+	
+Linux KNI interfaces must be set up after BisonRouter has started. To configure the bisonrouter script to do that edit the 'br_kni_vifs' variable in /etc/bisonrouter/bisonrouter.env and include KNI interfaces names into it. Note that a KNI name consist from a prefix 'r_' and the name of the correspondent VIF interface.
 
-Create a network namespace and set up the loopback interface:
+For example:
 
-	ip netns add tr
-	export rvrf="ip netns exec tr"
-	$rvrf ip link set up lo
+br_kni_vifs=(
+  "r_p0"
+)
 
-Start TheRouter and setup kni interfaces.
-Each kni interface should be set up after the router has started:
+Start BisonRouter.
 
-	router_run.sh /etc/router.conf
-	$rvrf ip link set up r_p0
+	bisonrouter start
 
 Check out the routing table. There are only directly connected routes and a default route there:
 
-	h5 # $rvrf rcli sh ip route
+	h5 # rcli sh ip route
 	10.0.0.0/24 C dev p0 src 10.0.0.1
 	10.0.1.0/24 C dev p1 src 10.0.1.1
 	0.0.0.0/0 via 10.0.1.2 dev p1 src 10.0.1.1		
 
-### Start Zebra on the router's host using the following config file
+### Start zebra
 
 zebra.conf
 
@@ -117,7 +112,7 @@ zebra.conf
 	no banner motd
 	log file /var/log/quagga/zebra.log
 
-### Start bgpd on the router's host using the following config file
+### Start bgpd
 
 bgpd.conf
 
@@ -133,7 +128,7 @@ bgpd.conf
 	line vty
 	!
 
-### Start external bgp router
+### Start an external bgp router
 	
 Let's take a cisco router and configure bgp on it:
 
@@ -175,7 +170,7 @@ Let's check out that we received a bgp route:
 
 Then check out the main routing table:
 
-	h5 # $rvrf rcli sh ip route
+	h5 # rcli sh ip route
 	10.0.0.0/24 C dev p0 src 10.0.0.1
 	10.12.0.0/24 via 10.0.0.3 dev p0 src 10.0.0.1
 	10.0.1.0/24 C dev p1 src 10.0.1.1
