@@ -67,6 +67,9 @@ ipv6 prefix and addresses.
 	  
 	  # enable IPv6 protocol for IPoE subscribers
 	  sysctl set ipoe_ipv6 1
+	  
+	  # enable DHCPv6 server
+	  sysctl set dhcpv6_server 1
 	}
 	
 	runtime {
@@ -234,8 +237,6 @@ ipv6 prefix and addresses.
 	  sysctl set ipv6_tcp_mss_fix 1
 
 	  # DHCPv6
-	  # enable DHCPv6 server
-	  sysctl set dhcpv6_server 1
 	  # google dns
 	  dhcpv6 add dns 2001:4860:4860::8888
 	  dhcpv6 add dns 2001:4860:4860::8844
