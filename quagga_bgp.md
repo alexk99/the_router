@@ -6,39 +6,37 @@ on the Quagga/FRR side.
 
 <img src="http://therouter.net/images/quagga.png">
 
-KNI interfaces should be created for every BisonRouter virtual interfaces (VIF) that are going to participate in
+KNI interfaces should be created for every BisonRouter virtual interfaces (VIF) that is going to be used in
 dynamic routing with external routers. To do so a KNI flag must be used in the creation
 of a VIF. The KNI flag instructs the BisonRouter to create a KNI interface in the linux kernel and forward to it
 all packets that are destined to any ip address of the parent VIF. In other words all the conroll plane traffic
 will go through the KNI interfaces, so Quagga/FRR BGP daemon can receive it and send responses back to the wire.
 
-Once the Quagga/FRR has received a route it will try to send it to 'FIB push inteface'. BisonRouter listens
-on that interface for a route updates add install them into its main routing table. Those updates
+Once the Quagga/FRR has received a route it will send it to the 'FIB push inteface'. BisonRouter listens
+on that interface for route updates add install them into its main routing table. Those updates
 instruct router's data plane core to forward traffic to the right destinaion. So, control plane trafic
 goes along the slow path through KNI to the Quagga/FRR and then back to the router through FPM interface.
 But data traffic will always go along the fast path right through the BisonRouter's core.
 
 ## Using a separate network namespace
 
-Since linux host running BisonRouter can be used for running other network related programs (for example dhcpd, radius, etc..)
+Since a linux host running BisonRouter can be used for running other network related programs (for example dhcpd, radius, etc..)
 that use different NICs and different network routes it would be very convinient to use two separate linux network namespaces.
 BisonRouter and Quagga/FRR will be running in one network namespace and linux and the programs it hosts will be running in 
 the default network namespace. Therefore the dynamic routes that Quagga/FRR creates for BisonRouter will be installed in the dedicated 
 routing table and will not mess with linux routes.
 
-The 'bisonrouter start' command starts BisonRouter daemon in the 'br' namesace.
+The 'bisonrouter start' command starts BisonRouter daemon in the 'br' network namesace.
 
-	ip netns add tr
-
-To start the Quagga/FRR components (bgpd, ospfd, zebra) in the same network namespace "tr" 
+To start the Quagga/FRR components (bgpd, ospfd, zebra) in the same network namespace "br" 
 a following prexix can be used in a startup command:
 
-	ip netns exec tr <command>
+	ip netns exec br <command>
 
-Note that the telnet command for connecting to Quagga/FRR should be executed in the "tr" namespace.
-So, it's very convinient to define a bash variable and use it instead of typing 'ip netns exec tr' each time.
+Note that the telnet command for connecting to Quagga/FRR should be also executed in the 'br' namespace.
+So, it's very convinient to define a bash variable and use it instead of typing 'ip netns exec br' each time.
 
-	export rvrf="ip netns exec tr"
+	export rvrf="ip netns exec br"
 	$rvrf telnet localhost bgpd
 
 ## Quagga/FRR installation
@@ -57,7 +55,7 @@ command line option. (Note: Quaggas zebra doesn't need that option).
 
 Quagga/FRR must be running in the 'br' linux network namespace. 
 To run Quagga/FRR components in a namaspace just use a prefix
-"ip netns exec tr" before executable file, where 'br' is the name of 
+"ip netns exec br" before executable file, where 'br' is the name of 
 the BisonRouter namespace.
 
 For example,
@@ -180,7 +178,7 @@ Then check out the main routing table:
 	
 ## OSFP
 Let's set up a test network consisting of three routers: h4, h5 and c2.
-h4 and h5 are routers running TheRouter software, c2 is a cisco router.
+h4 and h5 are routers running BisonRouter software, c2 is a cisco router.
 On each router an ip address is assigned to a loopback interface: h4 has 4.4.4.4
 address, h5 has 5.5.5.5 address and c2 has 2.2.2.2 address.
 Then we can use this addresses to establish iBGP connectivity. For example
@@ -249,7 +247,7 @@ h4 BGP
 	line vty
 	!	
 
-h4 TheRouter
+h4 BisonRouter
 
 	startup {
 	  sysctl set mbuf 8192
@@ -342,7 +340,7 @@ h5 BGP
 	line vty
 	!
 
-h5 TheRouter
+h5 BisonRouter
 
 	h5 src # cat /etc/router_ospf_loopback.conf
 	startup {
