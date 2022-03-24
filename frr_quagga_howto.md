@@ -49,5 +49,5 @@ Don't forget to define $rvrf bash variable as
     ip netns exec br
 
 # 4. Configure FRR
-Use FRR command 'redistribute kernel' to redistribute routes created by TR to your uplink router.
+Use FRR command 'redistribute kernel' to redistribute routes created by BisonRouter to your uplink router.
 
