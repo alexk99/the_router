@@ -1123,7 +1123,7 @@ consists from a number of ip address ranges.
 - nb_in_entries - maximum number of internal ip records;
 - nb_sessions - maximum number of NAT sessions;
 - port_block_size - port block size;
-- ration between internal and out address. For example, ratio value 32 would mean that each out (public) address could be used no more than 32 internal ip addresses at the same time;
+- ratio between internal and out address. For example, a ratio value 32 would mean that each out (public) address could be used no more than by 32 internal ip addresses at the same time;
 - nb_pb_per_in_ip - maximum number of port blocks that an internal ip can use at the same time.
 
 Example:
