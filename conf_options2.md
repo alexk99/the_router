@@ -1134,6 +1134,54 @@ or
 
 	snat create map 1 in entries 40000 sess 16000000 port block 128 ratio 64 ip port block 4
 
+### show snat maps
+
+Output translation maps.
+
+	sh snat maps
+
+Example:
+
+	# rcli sh snat maps
+	SNAT map
+	  map id: 1
+	  internal prefixes:
+	    192.168.2.0/24
+	    10.8.0.0/24
+	  out ranges:
+	    10.114.0.0 - 10.114.0.7
+	  active sessions: 0
+	  max internal hosts: 32768
+	  max sessions: 8388608
+	  in/out ratio: 32
+	  port block size: 128
+	  port blocks per out address: 504
+	  port blocks per in address: 4
+	  state counters:
+	    unknown: 0
+	    active: 0
+	    syn_sent: 0
+	    established: 0
+	    fin_wait: 0
+	    close_wait: 0
+	    closing: 0
+	    last_ack: 0
+	    closed: 0
+	    icmp_active: 0
+	    dns: 0
+	    gre: 0
+
+### show snat sessions
+
+Output NAT sessions
+
+	sh snat sessions map 1
+
+Example:
+
+	# rcli sh snat sessions map 1
+	in addr:port	out addr:port	ext addr:port	proto	state	expire in secs
+
 ### snat delete map
 
 Deletes a translation map.
@@ -1220,6 +1268,88 @@ Restores one of the previously disabled out ip addresses
 Example:
 
 	snat map 1 out ip 1.1.1.128 enable
+
+### snat vif enable
+
+Enables snat function on a particular interface.
+
+	snat vif <vif-name> enable
+
+Example:
+
+	snat vif v20 enable
+
+### snat vif disable
+
+Disables snat function on a particular interface.
+
+	snat vif <vif-name> disable
+
+### snat add map
+
+	snat vif <vif-name> add map <map-id>
+
+Adds a map to an interface.
+
+Once a map is added to an interface and snat function is enabled 
+the interface will start performing SNAT translations accoriding with the map's parameters.
+
+Example:
+
+	snat vif v20 add map 1
+
+### snat del map
+
+Deletes a map from an interface.
+
+	snat vif <vif-name> del map <map-id>
+
+Example:
+
+	snat vif v20 del map 1
+
+## DNAT
+
+### snat add dnat
+
+Creates a DNAT rules table for a SNAT map.
+
+	rcli snat add dnat map <map-id> size <dnat-map-size>
+
+- map-id - id of already existing SNAT map;
+- dnat-map-size - maximum number of DNAT rules that can be stored in a DNAT map;
+
+### snat del dnat
+
+Deletes the DNAT rules table from a SNAT map.
+
+	rcli snat del dnat map <map-id>
+
+- map-id - id of already existing SNAT map;
+
+### snat add dnat rule
+
+Adds a new DNAT rule.
+
+	rcli snat add dnat rule map <map-id> out <addr:port> in <addr:port> <ip_proto>
+
+- map-id - id of already existing SNAT map;
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
+
+### snat del dnat rule
+
+Deletes a DNAT rule.
+
+	rcli snat del dnat rule map <map-id> out <addr:port> <ip_proto>
+
+- map-id - id of already existing SNAT map;
+- ip_proto - name of ipv4 protocol: icmp, tcp, udp or gre
+
+### sh dnat rules
+
+	rcli sh dnat rules map <map-id>
+
+Outputs DNAT rules.
 
 ## Deterministic SNAT44
 
@@ -1542,7 +1672,7 @@ Creates a DNAT rules table for an SNAT map.
 - map-id - id of already existing SNAT map;
 - dnat-map-size - maximum number of DNAT rules that can be stored in a DNAT map;
 
-### det snat add del
+### det snat del dnat
 
 Deletes a DNAT rules table from an SNAT map.
 
