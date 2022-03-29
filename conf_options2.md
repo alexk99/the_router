@@ -1110,6 +1110,117 @@ Example
 	  master router advertisement interval is 1 sec
 	  master down interval is 3.414 sec
 
+## SNAT44
+
+### snat create map
+
+Creates a map to translate an internal ipv4 address space (in) to a public ipv4 address space (out).
+Internal ip address space can include a number of internal ip address prefixes. The out address spaces
+consists from a number of ip address ranges.
+
+	snat create map <map-id> [in entries <nb_in_entries>] [sess <nb_sessions>] [port block <port_block_size>] [ratio <ratio>] [ip port block <nb_pb_per_in_ip>]
+
+- nb_in_entries - maximum number of internal ip records;
+- nb_sessions - maximum number of NAT sessions;
+- port_block_size - port block size;
+- ration between internal and out address. For example, ratio value 32 would mean that each out (public) address could be used no more than 32 internal ip addresses at the same time;
+- nb_pb_per_in_ip - maximum number of port blocks that an internal ip can use at the same time.
+
+Example:
+
+	snat create map 1 ratio 32
+
+or	
+
+	snat create map 1 in entries 40000 sess 16000000 port block 128 ratio 64 ip port block 4
+
+### snat delete map
+
+Deletes a translation map.
+
+	snat del map <map-id>
+
+### snat map add in prefix
+
+Adds an ip address prefix to the map's internal ip adddress space
+
+	snat map <map-id> add in prefix <net/mask>
+
+Example:
+
+	snat map 1 add in prefix 10.0.0.0/16
+
+
+### snat map del in prefix
+
+Deletes an ip address prefix from the map's internal ip adddress space
+
+	snat map <map-id> del in prefix <net/mask>
+
+Example:
+
+	snat map 1 del in prefix 10.0.0.0/16
+
+### snat map add out range
+
+Adds an ip range to the map's out ip adddress space
+
+	snat map <map-id> add out range <ipv4-from> <ipv4-to>
+
+Example:
+
+	snat map 1 add out range 1.1.1.10 1.1.1.20
+
+### snat map del out range
+
+Deletes an ip range from the map's out ip adddress space
+
+	snat map <map-id> del out range <ipv4-from> <ipv4-to>
+
+Example:
+
+	snat map 1 del out range 1.1.1.10 1.1.1.20
+
+### snat map add out prefix
+
+Adds an ipv4 prefix to the map's out ip adddress space
+
+	snat map <map-id> add out prefix <net/mask>
+
+Example:
+
+	snat map 1 add out prefix 1.1.1.0/24
+
+### snat map del out prefix
+
+Deletes an ipv4 prefix from the map's out ip adddress space
+
+	snat map <map-id> del out prefix <net/mask>
+
+Example:
+
+	snat map 1 del out prefix 1.1.1.0/24
+
+### snat map out ip disable
+
+Excludes one of out ip addresses from the map's out ip adddress space
+
+	snat map <map-id> out ip <ipv4_address> disable
+
+Example:
+
+	snat map 1 out ip 1.1.1.128 disable
+
+### snat map out ip enable
+
+Restores one of the previously disabled out ip addresses
+
+	snat map <map-id> out ip <ipv4_address> enable
+
+Example:
+
+	snat map 1 out ip 1.1.1.128 enable
+
 ## Deterministic SNAT44
 
 TheRouter implements the Deterministic SNAT44 algorithm according with rfc7422 https://tools.ietf.org/html/rfc7422
