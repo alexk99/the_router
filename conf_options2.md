@@ -3196,6 +3196,27 @@ Deletes a pppoe service-name from a pppoe profile.
 
 	pppoe profile <id> del service name "<name>"
 
+### pppoe profile add ip pool
+
+Adds an ip pool to a pppoe profile.
+
+	pppoe profile <id> add ip pool <name>
+
+Example:
+
+	pppoe profile 1 add ip pool p_subs_1
+
+### pppoe profile del ip pool
+
+Deletes an ip pool from a pppoe profile.
+
+	pppoe profile <id> del ip pool <name>
+
+Example:
+
+	pppoe profile 1 del ip pool p_subs_1
+
+
 ### pppoe profile add vif
 
 Adds an interface into a pppoe profile. As a result the interface will start using PPPoE parameters
