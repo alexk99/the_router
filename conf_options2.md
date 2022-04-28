@@ -3071,7 +3071,7 @@ Enables PPPoE protocol on the interface. See "vif add" for details.
 
 Example:
 
-	vif add name v3 port 0 type dot1q cvid 3 flags flow_acct,pppoe_on,npf_on
+	vif add name v3 port 0 type dot1q cvid 3 flags pppoe_on
 
 
 ### pppoe ac_cookie key
