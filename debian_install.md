@@ -55,7 +55,7 @@ The following installation steps can be used for Ubuntu 20.04 and 20.10 versions
 
 ### Download BisonRouter 
 
- Please, contact us at info@bisonrouter.net
+ Please, contact us at info@bisonrouter.com
  
 ### Install BisonRouter
 
