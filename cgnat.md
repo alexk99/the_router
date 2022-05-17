@@ -38,7 +38,7 @@ Deterministic NAT</a>
 	  sysctl set num_tx_desc 1024
 	
 	  # mbuf mempool size
-	  sysctl set mbuf 16384
+	  sysctl set mbuf 32768
 	
 	  # mode 4 - lacp
 	  bond port mode 4 bond_slaves 0,1 primary port 1 policy 2
