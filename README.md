@@ -2,7 +2,8 @@
   <img src="http://therouter.net/images/github_header5.png" />
 </p>
 
-## We are rebranding. The project is now BisonRouter! Please visit our <a href="https://bisonrouter.com">web site</a> for more information.
+## We are rebranding
+The project is now BisonRouter! Please visit our <a href="https://bisonrouter.com">web site</a> for more information.
 
 TheRouter is a software packet router based on one of the fastest packet processing libraries. </a> Using modern software technique such as QSBR, lockless data structures and <a href="https://github.com/efficient/libcuckoo">cuckoo hashing</a> enables the router to perform routing (<a href="https://github.com/alexk99/the_router/blob/master/routing_perf_tests.md">up to 32Mpps</a>) and <a href="https://github.com/alexk99/the_router/blob/master/conf_options2.md#deterministic-snat44">CGNAT</a> (up to 10 Mpps) on high packet rates using commodity hardware.
 
