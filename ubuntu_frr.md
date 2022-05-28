@@ -14,6 +14,7 @@
 	  -D CMAKE_BUILD_TYPE:String="Release" ..
 	make
 	make install
+	ldconfig
 
 # FRR 
 
@@ -35,6 +36,7 @@ For example,
 	./configure --localstatedir=/var/run/frr  --runstatedir=/var/run/frr --sysconfdir=/etc/frr --enable-fpm
 	make
 	make install
+	ldconfig
 
 ## configure
 
@@ -58,7 +60,6 @@ For example
 	
 ## run
 
-	ldconfig
 	service frr start
 	
 ## check
