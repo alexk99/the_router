@@ -1,6 +1,6 @@
 # Install FRR
 
-Follow installation steps for Ubuntu https://github.com/alexk99/the_router/blob/master/ubuntu_frr.md)
+Follow installation steps for Ubuntu https://github.com/alexk99/the_router/blob/master/ubuntu_frr.md
 
 To find out more details about a way FRR is communicating with BisonRouter you can take a look here
 https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-integration-with-quagga-routing-suite
