@@ -1,7 +1,7 @@
 
 # Install dependencies
 
-	apt -y install libjson-c-dev libpcre3-dev libcap-dev bison flex
+	apt -y install frr libjson-c-dev libpcre3-dev libcap-dev bison flex
 	apt -y install libelf-dev cmake libpcre2-dev pkg-config texinfo
 
 ## libyang
@@ -25,11 +25,12 @@ Download one of the stable FRR releases from GitHub
 
 For example,
 
-	https://github.com/FRRouting/frr/releases/tag/frr-8.2.2
+	wget https://github.com/FRRouting/frr/archive/refs/tags/frr-8.2.2.tar.gz
 
 ## build
 
-	tar xvf XXX
+	tar xvf ./frr-8.2.2.tar.gz
+	cd ./frr-frr-8.2.2/
 	./bootstrap.sh
 	./configure --localstatedir=/var/run/frr  --runstatedir=/var/run/frr --sysconfdir=/etc/frr --enable-fpm
 	make
@@ -54,3 +55,15 @@ For example
 
 	watchfrr_options="--netns=br"
 	zebra_options="  -A 127.0.0.1 -s 90000000 -M fpm"
+	
+## run
+
+	ldconfig
+	service frr start
+	
+## check
+
+Make sure FRR daemons up, running in the 'br' linux namespace, and zebra is listening to FPM port
+
+	ip netns exec br netstat -an | grep 2620
+
