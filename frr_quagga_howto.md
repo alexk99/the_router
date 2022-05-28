@@ -9,7 +9,7 @@ https://github.com/alexk99/the_router/blob/master/quagga_bgp.md#dynamic-routing-
 
 ## Subscriber routes
 
-To announce PPPoE/IPoE subscriber's /32 routes add following commands to the startup section of a BR's configuration file
+To announce PPPoE/IPoE subscriber's /32 routes add the following commands to the startup section of a BR configuration file
 
     sysctl set linux_route_proto 3
     sysctl set ppp_install_subsc_linux_routes 1
@@ -24,7 +24,7 @@ for example
     # uplink interface
     vif add name v3 port 0 type dot1q cvid 3 flags kni
 
-Linux KNI interfaces must be set up after BisonRouter has started.
+Linux KNI interfaces must be set up after BisonRouter has been started.
 To instruct the bisonrouter script to do that edit the 'br_kni_vifs'
 variable in /etc/bisonrouter/bisonrouter.env and include names 
 of the KNI interfaces into it.
