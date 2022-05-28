@@ -1,5 +1,5 @@
 
-# Install dependencies
+# Dependencies
 
 	apt -y install frr libjson-c-dev libpcre3-dev libcap-dev bison flex
 	apt -y install libelf-dev cmake libpcre2-dev pkg-config texinfo
