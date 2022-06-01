@@ -46,21 +46,20 @@ Note: make shure that BisonRouter can reach Linux by using command:
 
 ## Configuring OpenResty
 
-  cp /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.old
-  cp /etc/bisonrouter/captive_portal/nginx.conf.example /usr/local/openresty/nginx/conf/nginx.conf
+    cp /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.old
+    cp /etc/bisonrouter/captive_portal/nginx.conf.example /usr/local/openresty/nginx/conf/nginx.conf
 
-Edit /usr/local/openresty/nginx/conf/nginx.conf and edit
-the 'listen' option
+Edit /usr/local/openresty/nginx/conf/nginx.conf file and set up the 'listen' option
 
-  listen 192.168.100.2;
+    listen 192.168.100.2;
 
 Restart OpenResty
 
-  service openresty status
+    service openresty status
 
-- Configuring BisonRouter
+## Configuring BisonRouter
 
--- Routing table 'rt_bl'
+### Routing table 'rt_bl'
 
 BisonRouter should be configured to use an additional routing table
 named 'rt_bl' with the default route pointing to the
@@ -72,51 +71,51 @@ the Captive Portal.
 
 Example
 
-  # create an additional routing table with name "rt_bl"
-  ip route table add rt_bl
+    # create an additional routing table with name "rt_bl"
+    ip route table add rt_bl
 
-  # create a connected route to a network with a default router
-  ip route add 192.168.100.0/24 dev v20 table rt_bl
+    # create a connected route to a network with a default router
+    ip route add 192.168.100.0/24 dev v20 table rt_bl
 
-  # create a default route
-  ip route add 0.0.0.0/0 via 192.168.100.2 table rt_bl
+    # create a default route
+    ip route add 0.0.0.0/0 via 192.168.100.2 table rt_bl
 
-  #
-  # 'rt_bl' routing table should also contain
-  #   - a route to the Captive Portal Web server
-  #   - a route to DNS server used by subscribers
-  #
+    #
+    # 'rt_bl' routing table should also contain
+    #   - a route to the Captive Portal Web server
+    #   - a route to DNS server used by subscribers
+    #
 
-  # ipsets containing subscriber's ip addresses
-  #
-  # Note: size should be large enouph to store all online
-  # subscriber's IP addresses
-  #
-  u32set create ips1 size 131072 bucket_size 16
-  u32set create l2s1 size 131072 bucket_size 16
-  subsc u32set init ips1 l2s1
+    # ipsets containing subscriber's ip addresses
+    #
+    # Note: size should be large enouph to store all online
+    # subscriber's IP addresses
+    #
+    u32set create ips1 size 131072 bucket_size 16
+    u32set create l2s1 size 131072 bucket_size 16
+    subsc u32set init ips1 l2s1
 
-  #
-  # PBR rules
-  #  forbit by default, ips1 - permit
-  #  10.111.0.0/16 - subscriber's subnet
-  #
-  ip pbr rule add prio 10 u32set l2s1 type "l2" table main
-  ip pbr rule add prio 20 u32set ips1 type "ip" table main
-  ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
+    #
+    # PBR rules
+    #  forbit by default, ips1 - permit
+    #  10.111.0.0/16 - subscriber's subnet
+    #
+    ip pbr rule add prio 10 u32set l2s1 type "l2" table main
+    ip pbr rule add prio 20 u32set ips1 type "ip" table main
+    ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
 
-- Configuring the Linux host
+## Configuring the Linux host
 
--- DNAT
+### DNAT
 
 Incoming HTTP request's destination address should be rewritten
 with the ip address of the OpenResty Nginx server 192.168.100.2.
 
-  iptables -A PREROUTING -t nat -p tcp -i vlan20 --dport 80  -j DNAT --to 192.168.100.2:80
+    iptables -A PREROUTING -t nat -p tcp -i vlan20 --dport 80  -j DNAT --to 192.168.100.2:80
 
 Note: vlan20 is a linux host interface to a p-t-p network to BR.
 
--- Routing
+### Routing
 The linux host must have an ip route to BisonRouter subscriber networks,
 in order for OpenResty Nginx 302 redirect replies to reach subscribers.
 
@@ -126,16 +125,16 @@ Note:
   the iptable DNAT rule and the route to subscribers must
   be saved to rc.local in order to autostart them after the reboot.
 
-- Radius attributes to control PBR rules
+## Radius attributes to control PBR rules
 
-  #
-  # PBR rules
-  #  forbit by default, ips1 - permit
-  #  10.111.0.0/16 - subscriber's subnet
-  #
-  ip pbr rule add prio 10 u32set l2s1 type "l2" table main
-  ip pbr rule add prio 20 u32set ips1 type "ip" table main
-  ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
+    #
+    # PBR rules
+    #  forbit by default, ips1 - permit
+    #  10.111.0.0/16 - subscriber's subnet
+    #
+    ip pbr rule add prio 10 u32set l2s1 type "l2" table main
+    ip pbr rule add prio 20 u32set ips1 type "ip" table main
+    ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
 
 The above PBR rule with prio 30 instructs BR to redirect all subscriber
 to captive portal. This happens as long as the ipset 'ips1' is empty.
@@ -144,17 +143,17 @@ subscriber has been authorized by the Captive Portal subscriber's IP
 address must be added to the ipset 'ips1'. This could be accomplished
 either by using rcli command
 
-  rcli ipset add ips1 10.11.1.12
+    rcli ipset add ips1 10.11.1.12
 
 or by using radius attribute "therouter_pbr" and CoA
 
-  therouter_pbr=1 -- add subscriber's ip address to the ipset "rt_bl"
-  therouter_pbr=2 -- delete subscriber's ip address from the ipset "rt_bl"
+    therouter_pbr=1 - add subscriber's ip address to the ipset "rt_bl"
+    therouter_pbr=2 - delete subscriber's ip address from the ipset "rt_bl"
 
-Other commands:
+### Other commands:
 
-  # delete IP address 10.11.1.12 from 'ips1'
-  rcli ipset del ips1 10.11.1.12
+    # delete IP address 10.11.1.12 from 'ips1'
+    rcli ipset del ips1 10.11.1.12
 
-  # output the content of 'ips1'
-  rcli sh ipset ips1
+    # output the content of 'ips1'
+    rcli sh ipset ips1
