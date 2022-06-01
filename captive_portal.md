@@ -10,17 +10,15 @@ The scheme works as follows:
 
 - BisonRouter uses the Policy Based Routing (PBR) to redirect traffic
 to a Linux host;
-
 - The Linux host uses iptables DNAT rules to redirect HTTP traffic to
 an OpenResty Nginx Web server running at the same Linux host;
-
 - OpenResty Nginx Web server requests BisonRouter where it should
 redirect HTTP queries. BisonRouter uses 'ipoe captive portal' option
 to compose a response and sent it back to OpenResty. Upon receiving
 the response OpenResty performs HTTP redirection to a destination
 captive portal page located at the address carried in the response.
 
-- Configuring a link to the local linux host
+## Configuring a link to the local Linux host
 
 BisonRouter should have a network connection to the local Linux host
 running BisonRouter. Since Linux and BisonRouter are two different
@@ -35,7 +33,7 @@ Linux: 192.168.100.2/24
 Note: make shure that BisonRouter can reach Linux by using command:
   rcli ping 192.168.100.2
 
-- Installing openresty
+## Installing OpenResty Nginx
 
     systemctl disable nginx
     systemctl stop nginx
@@ -46,10 +44,10 @@ Note: make shure that BisonRouter can reach Linux by using command:
     # check
     service openresty status
 
-- Configuring OpenResty
+## Configuring OpenResty
 
-    cp /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.old
-    cp /etc/bisonrouter/captive_portal/nginx.conf.example /usr/local/openresty/nginx/conf/nginx.conf
+  cp /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.old
+  cp /etc/bisonrouter/captive_portal/nginx.conf.example /usr/local/openresty/nginx/conf/nginx.conf
 
 Edit /usr/local/openresty/nginx/conf/nginx.conf and edit
 the 'listen' option
