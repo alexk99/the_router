@@ -141,7 +141,7 @@ to the captive portal. This happens only if ipset 'ips1' doesn't contain that
 particular subscriber's IP address.
 
 Therefore to conroll subscriber internet access the following logic must be implemented
-in a Radius/OSS server:
+in a Radius server:
 
 - upon connection, a subscriber's IP address must be deleted from the ipset 'ips1'
 in order to make sure the subscriber doesn't have internet access until the captive
