@@ -143,22 +143,22 @@ particular subscriber's IP address.
 Therefore to conroll subscriber internet access the following logic must be implemented
 in a Radius/OSS server:
 
-- upon connection, a subscriber's IP address must be deleted from the ipset 'ips1' 
-in order to make sure the subscriber doesn't have internet access until the captive 
-portal grant it such permission. Therefore radius authentication reply must contain an
-attribute/value pair therouter_pbr=2.
+- upon connection, a subscriber's IP address must be deleted from the ipset 'ips1'
+in order to make sure the subscriber doesn't have internet access until the captive
+portal grants it such permission. Therefore radius authentication reply must contain 
+an attribute/value pair therouter_pbr=2.
 
-- to grant a subscriber an internet access after the
+- to grant a subscriber internet access after the
 subscriber has been authorized by the Captive Portal subscriber's IP
-address must be added to the ipset 'ips1'. This could be accomplished
-either by using rcli command
+address must be added to the ipset 'ips1'. 
+This could be accomplished either by using rcli command
 
-    rcli ipset add ips1 10.11.1.12
+    rcli ipset add ips1 x.x.x.x
 
-or by using radius attribute "therouter_pbr" and CoA
+or by sending to BR a CoA message carring the following radius attribute/value pair
+to add subscriber's ip address to the ipset "rt_bl"
 
-    therouter_pbr=1 - add subscriber's ip address to the ipset "rt_bl"
-
+    therouter_pbr=1
 
 ### Other commands:
 
