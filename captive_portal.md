@@ -62,11 +62,11 @@ Restart OpenResty
 ### Routing table 'rt_bl'
 
 BisonRouter should be configured to use an additional routing table
-named 'rt_bl' with the default route pointing to the
-OpenResty Nginx Web server with address 192.168.100.2.
+named 'rt_bl' with the default route pointing to the IP address of
+OpenResty Nginx Web server (192.168.100.2).
 
 BR's PBR rules must be configured to use the 'rt_bl' table to
-route only the traffic of the subscribers that should be redirected to
+route only the traffic of the unuthorized subscribers that should be redirected to
 the Captive Portal.
 
 Example
