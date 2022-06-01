@@ -151,10 +151,7 @@ an attribute/value pair therouter_pbr=2.
 - to grant a subscriber internet access after the
 subscriber has been authorized by the Captive Portal subscriber's IP
 address must be added to the ipset 'ips1'. 
-This could be accomplished either by using rcli command
-
-    rcli ipset add ips1 x.x.x.x
-
+This could be accomplished either by using rcli command 'rcli ipset add ips1 x.x.x.x'
 or by sending to BR a CoA message carring the following radius attribute/value pair
 to add subscriber's ip address to the ipset "rt_bl"
 
