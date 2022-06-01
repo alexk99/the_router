@@ -125,7 +125,7 @@ Note:
   the iptable DNAT rule and the route to subscribers must
   be saved to rc.local in order to autostart them after the reboot.
 
-## Radius attributes to control PBR rules
+## Controlling subscriber Internet access. Radius attributes.
 
     #
     # PBR rules
@@ -136,9 +136,19 @@ Note:
     ip pbr rule add prio 20 u32set ips1 type "ip" table main
     ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
 
-The above PBR rule with prio 30 instructs BR to redirect all subscriber
-to captive portal. This happens as long as the ipset 'ips1' is empty.
-Therefore, to grant a subscriber an access to internet after the
+The PBR rule with prio 30 instructs BR to redirect subscriber's traffic
+to the captive portal. This happens only if ipset 'ips1' doesn't contain that 
+particular subscriber's IP address.
+
+Therefore to conroll subscriber internet access the following logic must be implemented
+in a Radius/OSS server:
+
+- upon connection, a subscriber's IP address must be deleted from the ipset 'ips1' 
+in order to make sure the subscriber doesn't have internet access until the captive 
+portal grant it such permission. Therefore radius authentication reply must contain an
+attribute/value pair therouter_pbr=2.
+
+- to grant a subscriber an internet access after the
 subscriber has been authorized by the Captive Portal subscriber's IP
 address must be added to the ipset 'ips1'. This could be accomplished
 either by using rcli command
@@ -148,7 +158,7 @@ either by using rcli command
 or by using radius attribute "therouter_pbr" and CoA
 
     therouter_pbr=1 - add subscriber's ip address to the ipset "rt_bl"
-    therouter_pbr=2 - delete subscriber's ip address from the ipset "rt_bl"
+
 
 ### Other commands:
 
