@@ -27,8 +27,8 @@ network operating systems the Linux host must use a dedicated NIC.
 Let's assume that there is a point-to-point connection
 between BisonRouter and Linux with the following IP addresses:
 
-BisonRouter: 192.168.100.1/24
-Linux: 192.168.100.2/24
+    BisonRouter: 192.168.100.1/24
+    Linux: 192.168.100.2/24
 
 Note: make shure that BisonRouter can reach Linux by using command:
   rcli ping 192.168.100.2
