@@ -71,6 +71,12 @@ the Captive Portal.
 
 Example
 
+    runtime {
+    
+    udp_api secret "1234567890123456"
+    # address of a captive portal page
+    ipoe captive portal redirect url format "http://google.com/?mac={mac}&subsc_ip={ipv4}&svid={svid}&cvid={cvid}&nas_ip_addr={nas_ip_addr}&sess_id={sess_id}"
+    
     # create an additional routing table with name "rt_bl"
     ip route table add rt_bl
 
@@ -103,6 +109,8 @@ Example
     ip pbr rule add prio 10 u32set l2s1 type "l2" table main
     ip pbr rule add prio 20 u32set ips1 type "ip" table main
     ip pbr rule add prio 30 from 10.111.0.0/16 table rt_bl
+    
+    }
 
 ## Configuring the Linux host
 
