@@ -21,5 +21,5 @@ BEGIN-VENDOR TheRouter
     ATTRIBUTE therouter_subsc_addr_prefix_map_id 25 integer
     ATTRIBUTE therouter_subsc_addr_prefix_map_value 26 integer
     ATTRIBUTE therouter_subsc_nat_connection_limit 27 integer
-    ATTRIBUTE therouter_pppoe_service_name 42 string
+    ATTRIBUTE therouter_l2_pbr 42 integer
 END-VENDOR   TheRouter
