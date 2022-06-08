@@ -9,7 +9,7 @@
 	  # mbuf mempool size
 	  # this value depends on the total number of rx queues
 	  # mbuf = number of rx queues * 4096
-	  sysctl set mbuf 16384
+	  sysctl set mbuf 80000
 	  
 	  # NIC rx/tx descriptor ring sizes
 	  sysctl set num_rx_desc 1024
