@@ -55,7 +55,7 @@ Edit /usr/local/openresty/nginx/conf/nginx.conf file and set up the 'listen' opt
 
 Restart OpenResty
 
-    service openresty status
+    service openresty restart
 
 ## Configuring BisonRouter
 
