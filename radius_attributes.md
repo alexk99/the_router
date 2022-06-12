@@ -1,8 +1,8 @@
 ## CIR
 
-Vendor: TheRouter
-Attribute: therouter_ingress_cir
-Attribute: therouter_egress_cir
+    Vendor: TheRouter
+    Attribute: therouter_ingress_cir
+    Attribute: therouter_egress_cir
 
 These attributes specify subscriber ingress and egress bandwidth limits
 in Kbit/s.
@@ -10,9 +10,9 @@ in Kbit/s.
 As alternative, the following attributes can be used instead
 of therouter_ingress_cir, therouter_egress_cir to specify bandwidth limits:
 
-Vendor: 14122
-Attribute: WISPr-Bandwidth-Max-Up (8)
-Attribute: WISPr-Bandwidth-Max-Down (7)
+    Vendor: 14122
+    Attribute: WISPr-Bandwidth-Max-Up (8)
+    Attribute: WISPr-Bandwidth-Max-Down (7)
 
 These attributes specify subscriber ingress and egress bandwidth limits
 in bit/s.
