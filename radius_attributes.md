@@ -17,9 +17,9 @@ of therouter_ingress_cir, therouter_egress_cir to specify bandwidth limits:
 These attributes specify subscriber ingress and egress bandwidth limits
 in bit/s.
 
-Another alternative to specify subscriber bandwidth limits is:
-Vendor: 14988
-Attribute: Mikrotik-Rate-Limit (8)
+    Another alternative to specify subscriber bandwidth limits is:
+    Vendor: 14988
+    Attribute: Mikrotik-Rate-Limit (8)
 
 ## PBR
 
@@ -37,26 +37,26 @@ from the ipset.
 BisonRouter supports the following standard attributes
 for PPPoE subscribers:
 
-Vendor: 311
-Attribute: RAD_VSA_MS_PRIMARY_DNS_SERVER (28)
-Attribute: RAD_VSA_MS_SECONDARY_DNS_SERVER (29)
+    Vendor: 311
+    Attribute: RAD_VSA_MS_PRIMARY_DNS_SERVER (28)
+    Attribute: RAD_VSA_MS_SECONDARY_DNS_SERVER (29)
 
 Those attributes are used to specify RDNS servers
 for a PPPoE subscriber.
 
 ## Standard attributes
 
-Vendor: standard
-PW_FRAMED_IP_ADDRESS (8)
-PW_FRAMED_POOL (88)
-PW_FRAMED_ROUTE (22)
-PW_CLASS (25)
-PW_FRAMED_IPV6_PREFIX (97)
-PW_FRAMED_IPV6_ADDRESS (99)
-PW_DELEGATED_IPV6_PREFIX (123)
-PW_FRAMED_IPV6_POOL (100)
-PW_STATEFUL_IPV6_ADDRESS_POOL (172)
-PW_DELEGATED_IPV6_PREFIX_POOL (171)
+    Vendor: standard
+    PW_FRAMED_IP_ADDRESS (8)
+    PW_FRAMED_POOL (88)
+    PW_FRAMED_ROUTE (22)
+    PW_CLASS (25)
+    PW_FRAMED_IPV6_PREFIX (97)
+    PW_FRAMED_IPV6_ADDRESS (99)
+    PW_DELEGATED_IPV6_PREFIX (123)
+    PW_FRAMED_IPV6_POOL (100)
+    PW_STATEFUL_IPV6_ADDRESS_POOL (172)
+    PW_DELEGATED_IPV6_PREFIX_POOL (171)
 
 Documentation for the standard attributes can be found in the RFC documents.
 BisonRouter uses those attributes in the way that documentation suggests.
