@@ -23,8 +23,8 @@ in bit/s.
 
 ## PBR
 
-Vendor: TheRouter
-Attribute: therouter_pbr
+    Vendor: TheRouter
+    Attribute: therouter_pbr
 
 This attribute controls the ipset specified
 in 'subsc u32set init' command. Attribute value 1 instructs
