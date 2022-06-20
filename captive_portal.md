@@ -129,6 +129,8 @@ Note: vlan20 is a linux host interface to a p-t-p network to BR.
 ### Routing
 The linux host must have an ip route to BisonRouter subscriber networks,
 in order for OpenResty Nginx 302 redirect replies to reach subscribers.
+For example, if your sibscriber network is 10.111.0.0/16 and BR IP address
+is 192.168.100.2 then a route should be as follows:
 
     ip route add 10.111.0.0/16 via 192.168.100.2/24
 
