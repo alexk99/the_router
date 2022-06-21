@@ -44,6 +44,12 @@ Note: make shure that BisonRouter can reach Linux by using command:
     # check
     service openresty status
 
+## Installing Luarocks
+
+    apt install luarocks
+    git config --global url."https://".insteadOf git://
+    luarocks install lua-struct
+
 ## Configuring OpenResty
 
     cp /usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf.old
