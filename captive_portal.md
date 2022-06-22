@@ -78,7 +78,7 @@ BR's PBR rules must be configured to use the 'rt_bl' table to
 route only the traffic of the unuthorized subscribers that should be redirected to
 the Captive Portal.
 
-### Important
+#### Important note
 
 'rt_bl' routing table should contain:
 
