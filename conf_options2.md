@@ -2713,7 +2713,7 @@ unspecified (by this router).
 Adds or updates a prefix to/in Router Advertisement messages sent for a VRRP IPV6 group.
 
 	vrrp group <vrrp_id> dev <vif_name> nd ra prefix add|update <prefix/length> [valid_lt <number>] 
-	  [preferred_lt <number>] [flags O,A] dev <vif_name>
+	  [preferred_lt <number>] [flags O,A]
   
 ### vrrp group nd ra prefix del
 
