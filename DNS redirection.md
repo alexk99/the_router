@@ -13,7 +13,7 @@ to a Linux host;
 - The Linux host uses iptables DNAT rules to redirect DNS traffic to
 a BIND recursive DNS server running at the same Linux host;
 
-<img src="https://files.therouter.net/images/br_rdns_redirection.png">
+<img src="https://files.therouter.net/images/br_rdns_redirection2.png">
 
 ## Configuring a link to the local Linux host
 
