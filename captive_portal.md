@@ -18,6 +18,8 @@ to compose a response and sent it back to OpenResty. Upon receiving
 the response OpenResty performs HTTP redirection to a destination
 captive portal page located at the address carried in the response.
 
+<img src="https://files.therouter.net/images/br_captive_portal.png">
+
 ## Configuring a link to the local Linux host
 
 BisonRouter should have a network connection to the local Linux host
