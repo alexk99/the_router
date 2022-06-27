@@ -13,6 +13,8 @@ to a Linux host;
 - The Linux host uses iptables DNAT rules to redirect DNS traffic to
 a BIND recursive DNS server running at the same Linux host;
 
+<img src="https://files.therouter.net/images/br_captive_portal.png">
+
 ## Configuring a link to the local Linux host
 
 BisonRouter should have a network connection to the local Linux host
