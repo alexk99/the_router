@@ -99,14 +99,19 @@ Example
     # create a connected route to a network with a default router
     ip route add 192.168.100.0/24 dev v20 table rt_bl
 
+    # create a connected route to a network with a captive portal
+    ip route add 192.168.200.0/24 dev v30 table rt_bl
+
     # create a default route
     ip route add 0.0.0.0/0 via 192.168.100.2 table rt_bl
 
-    #
-    # 'rt_bl' routing table should also contain
-    #   - a route to the Captive Portal Web server
-    #   - a route to DNS server used by subscribers
-    #
+    # create a route to the Captive Portal Web server
+    #  10.10.10.100 - captive portal IP address
+    #  192.168.200.10 - a gateway to reach the captive portal IP
+    ip route add 10.10.10.100/32 via 192.168.200.10 table rt_bl
+    
+    # create a route to DNS server used by subscribers
+    ip route add 8.8.8.8/32 via 192.168.200.10 table rt_bl
 
     # ipsets containing subscriber's ip addresses
     #
