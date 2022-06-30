@@ -12,6 +12,7 @@ and are two completely different implementations.
 - EIM, Endpoint Independent Mapping
 - NAT session/translation limit per host
 - Deterministic address and port selection
+- Dynamic PBA (port block allocation)
 - NAT events logging: IPFIX, netflow v9
 - Performance: up to 10Mpps, up to 80Gbit/s
 
