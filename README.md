@@ -15,6 +15,9 @@ TheRouter is a software packet router based on one of the fastest packet process
  * ARP, proxy ARP
  * ICMP
  * PBR and multiple routing tables
+ * ECMP and UCMP routing and load balancing
+ * Deterministic NAT
+ * Dynamic PBA NAT (port block allocation)
  * Stateful and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
  * Link Aggregation/Link Bonding/LACP
@@ -30,18 +33,20 @@ TheRouter is a software packet router based on one of the fastest packet process
 	- MLD v1, v2
 	- SLAAC
 	- VRRP v3
- * Flow accounting via IPFIX
+ * Flow accounting via IPFIX/Netflow v9
  * QoS and HQoS
 
 ## BRAS/BNG - Broadband Remote Access Server  
 
  * IPoE L2/L3 connected subscribers
+ * full support for IPv6
  * PPPoE subscribers
  * VRRP - enables redundancy and active-active BNG mode
  * IPoE - VLAN per subscriber with IP unnumbered support
  * QOS: Policing (Token bucket filter with extended burst value)
  * HQoS: shaping, WRR, RED
  * DHCP relay
+ * DHCP server
  * DHCP option82 rewrite function
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Radius/CoA
