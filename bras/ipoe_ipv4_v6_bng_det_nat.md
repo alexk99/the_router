@@ -101,7 +101,7 @@ ipv6 prefix and addresses.
 	  sysctl set install_subsc_routes 1
 	  
 	  # setup IPoE subscriber username
-	  ipoe subsc username format "svid.cvid.mac"
+	  ipoe subsc username format "svid.cvid.mac" delimiter "."
 	  
 	  #
 	  # Subsriber Initiation methods: 
