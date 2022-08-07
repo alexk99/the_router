@@ -70,6 +70,12 @@ ipv6 prefix and addresses.
 	  
 	  # enable DHCPv6 server
 	  sysctl set dhcpv6_server 1
+	  
+	  #
+	  sysctl set fib6_max_next_hops 131072
+	  sysctl set fib6_max_lpm_tbl8 262144
+	  sysctl set nd_neighbor_cache_size 131072
+	  sysctl set max_num_solicited_node_addrs 50000	  
 	}
 	
 	runtime {
