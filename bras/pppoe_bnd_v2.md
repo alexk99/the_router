@@ -77,8 +77,8 @@
 	  # note: a subscriber's /128 ipv6 address might consume up to 8 tbl8 entries
 	  # when the address is allocated from /64 pool
 	  #
-	  sysctl set fib6_max_lpm_tbl8 65536
-	  sysctl set fib6_max_next_hops 32768
+	  sysctl set fib6_max_lpm_tbl8 262144
+	  sysctl set fib6_max_next_hops 131072
 	  
 	  # enable ipv6 for pppoe
 	  sysctl set ppp_ipv6 1
