@@ -66,7 +66,7 @@ For example
 	
 ## run
 
-	service frr start
+	service frr restart
 	
 ## check
 
