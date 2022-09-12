@@ -68,9 +68,16 @@ For example
 
 	service frr restart
 	
-## check
+## check 1
 
-Make sure FRR daemons up, running in the 'br' linux namespace, and zebra is listening to FPM port
+Make sure Zebra daemon is up and running using '-M fpm' option
+
+	ps ax | grep zebra | grep fpm
+	3230717 ?        S<sl  28:00 /usr/local/sbin/zebra -d -F traditional -A 127.0.0.1 -s 90000000 -M fpm	
+
+## check 2
+
+After BisonRouter has been started FRR should connect to its TCP:2620 port in order to receive routing commands via FPM protocol.
 
 	ip netns exec br netstat -an | grep 2620
 
