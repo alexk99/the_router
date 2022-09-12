@@ -2,8 +2,13 @@
 
 ## Dependencies
 
-	apt -y install frr libjson-c-dev libpcre3-dev libcap-dev bison flex
-	apt -y install libelf-dev cmake libpcre2-dev pkg-config texinfo autoconf
+	apt -y install \
+	   git autoconf automake libtool make libreadline-dev texinfo \
+	   pkg-config libpam0g-dev libjson-c-dev bison flex \
+	   libc-ares-dev python3-dev python3-sphinx \
+	   install-info build-essential libsnmp-dev perl \
+	   libcap-dev python2 libelf-dev libunwind-dev \
+	   frr libpcre3-dev cmake libpcre2-dev
 
 ## libyang
 
@@ -27,12 +32,12 @@ Download one of the stable FRR releases from GitHub
 
 For example,
 
-	wget https://github.com/FRRouting/frr/archive/refs/tags/frr-8.2.2.tar.gz
+	wget https://github.com/FRRouting/frr/archive/refs/tags/frr-8.3.1.tar.gz
 
 ## build
 
-	tar xvf ./frr-8.2.2.tar.gz
-	cd ./frr-frr-8.2.2/
+	tar xvf ./frr-8.3.1.tar.gz
+	cd ./frr-frr-8.3.1/
 	./bootstrap.sh
 	./configure --localstatedir=/var/run/frr  --runstatedir=/var/run/frr --sysconfdir=/etc/frr --enable-fpm
 	make
