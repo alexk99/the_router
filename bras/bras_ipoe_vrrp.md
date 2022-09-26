@@ -143,18 +143,6 @@
 	  subsc vrrp group 20 add ip 192.168.5.1
 	  subsc vrrp group 20 enable
 
-	  #
-	  # profiles
-	  #
-	  ipoe profile create 1
-	  ipoe profile 1 add dhcp pool pool_3
-	  ipoe profile 1 add vif v5
-	  ipoe profile 1 add vif range svid 2010 cvid 2500 2800 name l2subs_a
-
-	  ipoe profile create 2
-	  ipoe profile 1 add dhcp pool pool_4
-	  ipoe profile 1 add vif range svid 0 cvid 2500 2800 name l2subs_b
-
 	  # blackhole ipoe subscriber's network
 	  ip route add 192.168.0.0/16 unreachable
 
@@ -200,6 +188,18 @@
 	  # This ip pools will be used by IPoE subscribers by default 
 	  # if radius access-reply message doesn't specify other pool name to use
 	  ipoe ip pool add pool_2
+
+	  #
+	  # profiles
+	  #
+	  ipoe profile create 1
+	  ipoe profile 1 add dhcp pool pool_3
+	  ipoe profile 1 add vif v5
+	  ipoe profile 1 add vif range svid 2010 cvid 2500 2800 name l2subs_a
+
+	  ipoe profile create 2
+	  ipoe profile 1 add dhcp pool pool_4
+	  ipoe profile 1 add vif range svid 0 cvid 2500 2800 name l2subs_b
 
 	  #
 	  # Radius
