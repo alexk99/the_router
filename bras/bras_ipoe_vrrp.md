@@ -85,6 +85,7 @@
 	  # uplink
 	  vif add name uplink port 0 type dot1q cvid 3
 	  ip addr add 192.168.1.112/24 dev uplink
+	  ip addr add 10.8.0.1/24 dev uplink
 
 	  #
 	  # L2 connected subsribers
