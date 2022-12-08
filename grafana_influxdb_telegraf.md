@@ -5,6 +5,14 @@
         br_enable_snmp_subagents="yes"
 
 - Copy a NetSNMP configuration file example /etc/bisonrouter/snmpd/snmpd.conf.example to /etc/snmp/snmpd.conf
+
+- Set up SNMP communities strings/passwords in /etc/snmp/snmpd.conf
+
+For example
+
+        rocommunity xxx  default    -V systemonly
+        rocommunity6 xxx  default   -V systemonly
+
 - restart the NetSNMP service
 
         service snmpd restart
