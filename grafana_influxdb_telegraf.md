@@ -29,3 +29,29 @@ Replace passwd and your_token with your own password and token strings.
 
 # Configuring Telegraf
 
+- Save the following Telegraf example configuration file to /etc/telegraf/telegraf.conf
+https://github.com/alexk99/the_router/blob/master/telegraf.conf
+
+- Replace all 'xxx' strings with your actual data.
+
+## SNMP community
+
+Replace xxx with the BisonRouter snmp community from the rocommunity command in /etc/snmp/snmpd.conf
+
+    ## SNMP community string.
+    community = "xxx"
+
+## InfluxDB token
+
+Replace xxx with the token created earlier at the step 'Create an InfluxDB token'
+
+    ## Token for authentication.
+    token = "xxx"
+    
+## Configure BisonRouter SNMP data sources
+
+Edit the vifName variable in the section [[inputs.snmp.table]] and include names of BisonRouter VIF interfaces you want to monitor.
+For example
+
+    vifName = [ "v20", "v30.1" ]
+
