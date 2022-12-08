@@ -25,7 +25,7 @@ For example
     apt-get update &&  apt-get -y install influxdb2
     service influxdb start
 
-## Initial InfluxDB setup
+### Initial InfluxDB setup
 
 Replace passwd and your_token with your own password and token strings.
 
@@ -53,21 +53,21 @@ https://github.com/alexk99/the_router/blob/master/telegraf.conf
 
 - Replace all 'xxx' strings with your actual data.
 
-## SNMP community
+### SNMP community
 
 Replace xxx with the BisonRouter snmp community from the rocommunity command in /etc/snmp/snmpd.conf
 
     ## SNMP community string.
     community = "xxx"
 
-## InfluxDB token
+### InfluxDB token
 
 Replace xxx with the token created earlier at the step 'Create an InfluxDB token'
 
     ## Token for authentication.
     token = "xxx"
     
-## Configuring BisonRouter SNMP data sources
+### Configuring BisonRouter SNMP data sources
 
 Edit the vifName variable in the section [[inputs.snmp.table]] and include names of BisonRouter VIF interfaces you want to monitor.
 For example
@@ -76,7 +76,7 @@ For example
 
 # Configuring Grafana
 
-## Configuring InfluxDB datasource
+### Configuring InfluxDB datasource
 
 - Go to the Configuration -> Data Sources -> Add data source. Select 'infoflux db'.
 - Fill in the following fields:
@@ -89,7 +89,7 @@ For example
 
 - Replace xxx with the token created earlier at the step 'Create an InfluxDB token'.
 
-## Creating a new dashboard
+### Creating a new dashboard
 
 - Go to the section Dashboards -> Manage. Press the button 'New Dashboard' and then 'Add new panel'.
 
