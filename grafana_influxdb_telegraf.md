@@ -2,12 +2,12 @@
 
 - Edit /etc/bisonrouter/bisonrouter.env and change the value of br_enable_snmp_subagents variable to "yes"
 
-    br_enable_snmp_subagents="yes"
+        br_enable_snmp_subagents="yes"
 
 - Copy a NetSNMP configuration file example /etc/bisonrouter/snmpd/snmpd.conf.example to /etc/snmp/snmpd.conf
 - restart the NetSNMP service
 
-    service snmpd restart
+        service snmpd restart
 
 # Install InfluxDB
 
