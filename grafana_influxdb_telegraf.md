@@ -1,3 +1,14 @@
+# Configuring BisonRouter and NetSNMP
+
+- Edit /etc/bisonrouter/bisonrouter.env and change the value of br_enable_snmp_subagents variable to "yes"
+
+    br_enable_snmp_subagents="yes"
+
+- Copy a NetSNMP configuration file example /etc/bisonrouter/snmpd/snmpd.conf.example to /etc/snmp/snmpd.conf
+- restart the NetSNMP service
+
+    service snmpd restart
+
 # Install InfluxDB
 
     wget -q https://repos.influxdata.com/influxdb.key
@@ -59,14 +70,16 @@ For example
 
 ## Configuring InfluxDB datasource
 
-Go to the Configuration -> Data Sources -> Add data source. Select 'infoflux db'.
-Fill in the following fields:
+- Go to the Configuration -> Data Sources -> Add data source. Select 'infoflux db'.
+- Fill in the following fields:
 
     Query language: Flux
     url: http://localhost:8086
     Organization: bisonrouter
-    Token: the token created earlier at the step 'Create an InfluxDB token'
+    Token: xxx
     Default bucket: bisonrouter
+
+- Replace xxx with the token created earlier at the step 'Create an InfluxDB token'.
 
 ## Creating a new dashboard
 
