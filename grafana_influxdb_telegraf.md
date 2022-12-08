@@ -75,16 +75,16 @@ Fill in the following fields:
 - Edit the query source code in the 'Query' tab.
 For example, if you want to graph 'RX/TX Octets' of the BisonRouter interface 'v20' then use the following query:
 
-     from(bucket: "bisonrouter")
-      |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-      |> filter(fn: (r) => r["_measurement"] == "VIF")
-      |> filter(fn: (r) => r["vifName"] == "v20")
-      |> filter(fn: (r) => r["_field"] == "vifRxOctets" or r["_field"] == "vifTxOctets")
-      |> derivative(nonNegative: true)
-      |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)    
-      |> map(fn: (r) => ({r with _value: r._value  * 8.0}))
-      |> yield()
-  
-  - Change the units to 'bits(IEC)' in 'Field' tab.
-  
-  - Save your results.
+        from(bucket: "bisonrouter")
+        |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+        |> filter(fn: (r) => r["_measurement"] == "VIF")
+        |> filter(fn: (r) => r["vifName"] == "v20")
+        |> filter(fn: (r) => r["_field"] == "vifRxOctets" or r["_field"] == "vifTxOctets")
+        |> derivative(nonNegative: true)
+        |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)    
+        |> map(fn: (r) => ({r with _value: r._value  * 8.0}))
+        |> yield()
+
+- Change the units to 'bits(IEC)' in 'Field' tab.
+
+- Save your results.
