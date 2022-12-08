@@ -48,10 +48,43 @@ Replace xxx with the token created earlier at the step 'Create an InfluxDB token
     ## Token for authentication.
     token = "xxx"
     
-## Configure BisonRouter SNMP data sources
+## Configuring BisonRouter SNMP data sources
 
 Edit the vifName variable in the section [[inputs.snmp.table]] and include names of BisonRouter VIF interfaces you want to monitor.
 For example
 
     vifName = [ "v20", "v30.1" ]
 
+# Configuring Grafana
+
+## Configuring InfluxDB datasource
+
+Go to the Configuration -> Data Sources -> Add data source. Select 'infoflux db'.
+Fill in the following fields:
+
+    Query language: Flux
+    url: http://localhost:8086
+    Organization: bisonrouter
+    Token: the token created earlier at the step 'Create an InfluxDB token'
+    Default bucket: bisonrouter
+
+## Creating a new dashboard
+
+- Go to the section Dashboards -> Manage. Press the button 'New Dashboard' and then 'Add new panel'.
+
+- Edit the query source code in the 'Query' tab.
+For example, if you want to graph 'RX/TX Octets' of the BisonRouter interface 'v20' then use the following query:
+
+     from(bucket: "bisonrouter")
+      |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+      |> filter(fn: (r) => r["_measurement"] == "VIF")
+      |> filter(fn: (r) => r["vifName"] == "v20")
+      |> filter(fn: (r) => r["_field"] == "vifRxOctets" or r["_field"] == "vifTxOctets")
+      |> derivative(nonNegative: true)
+      |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)    
+      |> map(fn: (r) => ({r with _value: r._value  * 8.0}))
+      |> yield()
+  
+  - Change the units to 'bits(IEC)' in 'Field' tab.
+  
+  - Save your results.
