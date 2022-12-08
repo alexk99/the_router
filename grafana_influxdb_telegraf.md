@@ -5,8 +5,27 @@
     echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
     apt-get update &&  apt-get -y install influxdb2
     service influxdb start
- 
-# Install Telegraph
 
-  apt-get -y install telegraf
+## Initial InfluxDB setup
+
+Replace passwd and your_token with your own password and token strings.
+
+    influx setup -u root -p 'passwd' -t your_token -o bisonrouter -b bisonrouter -f
+
+# Install Telegraf
+
+    apt-get -y install telegraf
+
+# Install Grafana
+
+    echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+    apt-get update
+    apt-get -y install grafana
+    service grafana-server start
+
+# Create an InfluxDB token 
+
+    influx auth create --org bisonrouter --read-buckets --write-buckets
+
+# Configuring Telegraf
 
