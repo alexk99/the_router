@@ -85,11 +85,11 @@ For example
 - Go to the Configuration -> Data Sources -> Add data source. Select 'infoflux db'.
 - Fill in the following fields:
 
-    Query language: Flux
-    url: http://localhost:8086
-    Organization: bisonrouter
-    Token: xxx
-    Default bucket: bisonrouter
+        Query language: Flux
+        url: http://localhost:8086
+        Organization: bisonrouter
+        Token: xxx
+        Default bucket: bisonrouter
 
 - Replace xxx with the token created earlier at the step 'Create an InfluxDB token'.
 
