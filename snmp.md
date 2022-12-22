@@ -39,6 +39,21 @@ PPPoE subscriber table
 	        4 pppoe_any       2     823       0         0         0           0           0
 	        5      v100       2       0     100         6         0         550           0
 
+### NAT translation state counters
+
+	snmptable -v2c -c xxx localhost BISON-ROUTER-MIB::natTranslationStateCountersTable
+	SNMP table: BISON-ROUTER-MIB::natTranslationStateCountersTable
+
+	 natTscMapId natTscMapType natStateUnknown natStateActive natStateSynSent natStateEstablished natStateFinWait natStateCloseWait natStateClosing 	natStateLastAck natStateClosed natStateIcmpActive natStateDns natStateGre
+		   1             2               0              0               0                   0               0                 0               0               0              0                  0           0           0
+		   1             4               0              0               0                   0               0                 0               0               0              0                  0           0           0
+
+NAT MAP types:
+
+	1 - Deterministic SNAT44
+	2 - NAT 1:1
+	4 - SNAT44 (PortBlock SNAT44)
+
 ### Deterministic NAT statistic
 
 	snmpwalk -v2c -c public localhost BISON-ROUTER-MIB::detSnatStat
