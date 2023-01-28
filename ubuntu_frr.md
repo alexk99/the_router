@@ -67,15 +67,26 @@ For example
 ## run
 
 	service frr restart
-	
+
 ## check 1
+
+Make sure your KNI interfaces are UP
+
+For example, r_v2002 - is the name of a KNI interface corresponding to the BisonRouter VIF v2002 with KNI flag.
+
+	# ip netns exec br ip link ls dev r_v2002
+	8: r_v2002: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+	    link/ether c6:9d:58:8d:6f:9c brd ff:ff:ff:ff:ff:ff
+
+
+## check 2
 
 Make sure Zebra daemon is up and running using '-M fpm' option
 
 	ps ax | grep zebra | grep fpm
 	3230717 ?        S<sl  28:00 /usr/local/sbin/zebra -d -F traditional -A 127.0.0.1 -s 90000000 -M fpm	
 
-## check 2
+## check 3
 
 After BisonRouter has been started FRR should connect to its TCP:2620 port in order to receive routing commands via FPM protocol.
 
