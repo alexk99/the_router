@@ -120,7 +120,11 @@ There are three different modules implementing CGNAT functions in BisonRouter (f
 
 ### PPPoE BNG + CGNAT
 
-A BNG server running 20k+ PPPoE subscribers and performing CGNAT
+a BNG server running 60k+ PPPoE subscribers and performing Deterministic CGNAT
+
+<img src="https://files.therouter.net/download/images/pppoe_det_nat_bng_100g.png">
+
+Another BNG server running 20k+ PPPoE subscribers and performing Deterministic CGNAT
 
 <img src="http://therouter.net/images/production/det_nat1/det_nat_br3_2.png">
 <img src="http://therouter.net/images/production/det_nat1/det_nat_br3_2_pps.png">
