@@ -1,10 +1,17 @@
 # CGNAT, Carrier-grade NAT
 
-TheRouter implements CGNAT functions with the help
-of two different subsystems: NPF and Deterministic NAT.
+There are three different modules implementing CGNAT functions in BisonRouter (former TheRouter) Those modules implement different sets of NAT functions.
 
-Those two subsystem implements different sets of NAT functions
-and are two completely different implementations.
+## Port-Block based NAT
+
+- SNAT44, DNAT44
+- EIM, Endpoint Independent Mapping
+- NAT session/translation limit per host
+- Dynamic PBA (port-block allocation)
+- NEL: NAT events logging: IPFIX, Netflow v9
+- Performance: up to 15Mpps, up to 120Gbit/s
+- ALG support: PPtP
+- <a href="https://docs.bisonrouter.com/runtime_commands.html#snat44">NAT Docs</a>
 
 ## Deterministic NAT
 
@@ -12,9 +19,10 @@ and are two completely different implementations.
 - EIM, Endpoint Independent Mapping
 - NAT session/translation limit per host
 - Deterministic address and port selection
-- Dynamic PBA (port block allocation)
-- NAT events logging: IPFIX, netflow v9
-- Performance: up to 10Mpps, up to 80Gbit/s
+- NEL: NAT events logging: IPFIX, Netflow v9
+- Performance: up to 15Mpps, up to 120Gbit/s
+- ALG support: PPtP
+- <a href="https://docs.bisonrouter.com/runtime_commands.html#deterministic-snat44">Deterministic NAT Docs</a>
 
 ## NPF
 
@@ -25,10 +33,6 @@ and are two completely different implementations.
 - Performance: up to 8Mpps, up to 60Gbit/s
 - ALG support: PPtP
 
-## Documentation
-
-<a href="https://github.com/alexk99/the_router/blob/master/conf_options2.md#deterministic-snat44">
-Deterministic NAT</a>
 
 ## Configuration example
 
