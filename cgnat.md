@@ -10,6 +10,7 @@ There are three different modules implementing CGNAT functions in BisonRouter (f
 - Dynamic PBA (port-block allocation)
 - NEL: NAT events logging: IPFIX, Netflow v9
 - Performance: up to 15Mpps, up to 120Gbit/s
+- Supports all major protocols and applications including SIP, FTP, RTSP, IPSec and GRE based VPNs, and gaming console.
 - ALG support: PPtP
 - <a href="https://docs.bisonrouter.com/runtime_commands.html#snat44">NAT Docs</a>
 
@@ -21,6 +22,7 @@ There are three different modules implementing CGNAT functions in BisonRouter (f
 - Deterministic address and port selection
 - NEL: NAT events logging: IPFIX, Netflow v9
 - Performance: up to 15Mpps, up to 120Gbit/s
+- Supports all major protocols and applications including SIP, FTP, RTSP, IPSec and GRE based VPNs, and gaming console.
 - ALG support: PPtP
 - <a href="https://docs.bisonrouter.com/runtime_commands.html#deterministic-snat44">Deterministic NAT Docs</a>
 
