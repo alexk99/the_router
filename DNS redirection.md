@@ -110,7 +110,7 @@ in order for the BIND replies to reach subscribers.
 For example, if your sibscriber network is 10.0.0.0/16 and BR IP address
 is 192.168.100.1 then a route should be as follows:
 
-    ip route add 10.0.0.0/16 via 192.168.100.1/24
+    ip route add 10.0.0.0/16 via 192.168.100.1
 
 Note:
   the iptable DNAT rule and the route to subscribers must
