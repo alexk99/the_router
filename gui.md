@@ -31,5 +31,5 @@ Enter an IP address of a BisonRouter interface to access the GUI.
 
         service bisonrouter_gui_backend start
 
-- Open an URL http://<IP address of a BisonRouter>
+- Open an URL http://IP-address-of-a-BisonRouter
 use the 'admin' username and the password that was specified in the 'gui_postinstall' command 
