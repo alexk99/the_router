@@ -1,7 +1,9 @@
 # GUI installation
 
+## 1
 - Install BisonRouter
 
+## 1
 - Edit /etc/bisonrouter/brouter.conf and add the following line
 to the startup section
 
