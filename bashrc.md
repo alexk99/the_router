@@ -15,7 +15,7 @@ add_vlan() {
 add_vlan_qinq() {
     local vlan="$1"
     local cvlan="*"
-    command=$(printf "'vif add name vlan%s port 1 type qinq svid %s cvid %s flags pppoe_on'" "$vlan" "$vlan" "$cvlan")
+    command=$(printf "rcli 'vif add name vlan%s port 1 type qinq svid %s cvid %s flags pppoe_on'" "$vlan" "$vlan" "$cvlan")
 
     eval "$command"
 }
