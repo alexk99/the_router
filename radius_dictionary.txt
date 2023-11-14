@@ -21,6 +21,8 @@ BEGIN-VENDOR TheRouter
     ATTRIBUTE therouter_subsc_addr_prefix_map_id 25 integer
     ATTRIBUTE therouter_subsc_addr_prefix_map_value 26 integer
     ATTRIBUTE therouter_subsc_nat_connection_limit 27 integer
+    ATTRIBUTE the_router_vsa_car_ingress_group_id 30 integer
+    ATTRIBUTE the_router_vsa_car_egress_group_id 31 integer
     ATTRIBUTE therouter_l2_pbr 42 integer
     ATTRIBUTE therouter_rst_connected_at_time 43 integer
 END-VENDOR   TheRouter
