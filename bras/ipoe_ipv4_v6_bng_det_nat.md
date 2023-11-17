@@ -78,7 +78,7 @@ ipv6 prefix and addresses.
 	  sysctl set max_num_solicited_node_addrs 50000
 
 	  # setup IPoE subscriber username
-	  ipoe subsc username format "svid.cvid.mac" delimiter "."   
+	  ipoe subsc username format "svid.cvid.mac" delimiter "." type "l2"
 	}
 	
 	runtime {
