@@ -25,4 +25,6 @@ BEGIN-VENDOR TheRouter
     ATTRIBUTE the_router_vsa_car_egress_group_id 31 integer
     ATTRIBUTE therouter_l2_pbr 42 integer
     ATTRIBUTE therouter_rst_connected_at_time 43 integer
+    ATTRIBUTE therouter_ingress_acl_ids 44 string
+    ATTRIBUTE therouter_egress_acl_ids 45 string
 END-VENDOR   TheRouter
