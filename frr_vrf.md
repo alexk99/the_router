@@ -52,6 +52,7 @@
 	  ip route table add red
 	
 	  # create mappings between linux VRF names and router's additional route table names
+          # fpm route table map add <linux-route-table-name> rtable <bison-route-table-name> 
 	  fpm route table map add green rtable green
 	  fpm route table map add red rtable red
 	
