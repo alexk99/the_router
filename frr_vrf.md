@@ -4,15 +4,15 @@
 
 ## Setup linux VRF
 
-	export rns="ip netns exec tr"
+	export brns="ip netns exec br"
 
 	# create VRF inside the_router namespace
-	$rns ip link add green type vrf table 11
-	$rns ip link add red type vrf table 10
+	$brns ip link add green type vrf table 11
+	$brns ip link add red type vrf table 10
 
 	# up vrf devices
-	$rns ip link set up green
-	$rns ip link set up red
+	$brns ip link set up green
+	$brns ip link set up red
 
 ## Start TheRouter
 
@@ -30,6 +30,8 @@
 	}
 	
 	runtime {
+          sysctl set fpm_rt_map 1
+	  
 	  # loopback address
 	  ip addr add 5.5.5.5/32 dev lo
 	
