@@ -77,10 +77,10 @@
 ### Note: change MAC addresses
 
 	# Enslave L3 interfaces to a VRF device
-	$rns ip link set up address 68:05:CA:30:61:80 master green dev rkni_v11
-	$rns ip link set up address 68:05:CA:30:61:80 master green dev rkni_v13
-	$rns ip link set up address 68:05:CA:30:61:80 master red dev rkni_v12
-	$rns ip link set up address 68:05:CA:30:61:80 master red dev rkni_v14
+	$brns ip link set up address 68:05:CA:30:61:80 master green dev rkni_v11
+	$brns ip link set up address 68:05:CA:30:61:80 master green dev rkni_v13
+	$brns ip link set up address 68:05:CA:30:61:80 master red dev rkni_v12
+	$brns ip link set up address 68:05:CA:30:61:80 master red dev rkni_v14
 
 ## FRR bgpd conf
 
