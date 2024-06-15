@@ -5,7 +5,7 @@
 	apt -y install \
 	   git autoconf automake libtool make libreadline-dev texinfo \
 	   pkg-config libpam0g-dev libjson-c-dev bison flex \
-	   libc-ares-dev python3-dev python3-sphinx \
+	   libc-ares-dev python3-dev python3-jinja2 \
 	   install-info build-essential libsnmp-dev perl \
 	   libcap-dev python2 libelf-dev libunwind-dev \
 	   frr libpcre3-dev cmake libpcre2-dev
