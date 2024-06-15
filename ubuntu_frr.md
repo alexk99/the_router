@@ -33,12 +33,12 @@ Download one of the stable FRR releases from GitHub
 
 For example,
 
-	wget https://github.com/FRRouting/frr/archive/refs/tags/frr-8.3.1.tar.gz
+	wget https://github.com/FRRouting/frr/archive/refs/tags/frr-9.0.2.tar.gz
 
 ## build
 
-	tar xvf ./frr-8.3.1.tar.gz
-	cd ./frr-frr-8.3.1/
+	tar xvf ./frr-9.0.2.tar.gz
+	cd ./frr-frr-9.0.2/
 	./bootstrap.sh
 	./configure --localstatedir=/var/run/frr  --runstatedir=/var/run/frr --sysconfdir=/etc/frr --enable-fpm
 	make
