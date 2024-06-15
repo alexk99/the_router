@@ -15,6 +15,7 @@
 	cd /usr/src
 	git clone https://github.com/CESNET/libyang.git
 	cd ./libyang
+ 	git checkout tags/v2.1.148
 	mkdir build; cd build
 	cmake -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr \
 	  -D CMAKE_BUILD_TYPE:String="Release" ..
