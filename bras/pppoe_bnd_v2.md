@@ -4,7 +4,7 @@
 # Configuration
 
 	startup {
-	  sysctl set numa 0
+	  sysctl set numa 1
 	
 	  # mbuf mempool size
 	  # this value depends on the total number of rx queues
