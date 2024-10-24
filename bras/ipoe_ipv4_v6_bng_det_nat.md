@@ -10,7 +10,7 @@ Note that some ipv6 values marked as XX in the IPv6 section should be changed to
 ipv6 prefix and addresses.
 
   	startup {
-	  sysctl set numa 0
+	  sysctl set numa 1
 	
 	  # mbuf mempool size
 	  # this value depends on the total number of rx queues
