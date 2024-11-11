@@ -62,7 +62,9 @@ Edit /usr/local/openresty/nginx/conf/nginx.conf file and set up the 'listen' opt
     listen 192.168.100.2;
 
 Edit the TR_UDP_API_ADDR variable in /etc/bisonrouter/captive_portal/tr_captive_portal_redirect.lua and
-use the BisonRouter IP address of the p-t-p link to linux.
+use the IP address of the BisonRouter p-t-p link to linux.
+
+    TR_UDP_API_ADDR = "192.168.100.1"
 
 Restart OpenResty
 
