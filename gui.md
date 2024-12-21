@@ -11,7 +11,7 @@ to the startup section
 
 ### 3
 - Edit /etc/bisonrouter/brouter.conf and use the 'kni' flag in VIF command
-  that creates an interface to access the GUI
+  that creates an interface to access the GUI. Usually, it is an uplink VIF.
 
 ### 4
 - Edit /etc/bisonrouter/bisonrouter.env and add 'br_default_gw' variable.
