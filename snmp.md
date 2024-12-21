@@ -25,8 +25,8 @@ PPPoE subscriber table
 	SNMP table: BISON-ROUTER-MIB::pppoeIpv4Table
 	
 	pppoeIndex pppoeUsername          pppoeMac pppoeSvid pppoeCvid pppoeSessionId  pppoeIpv4 pppoeMtu pppoeIngressCir pppoeEgressCir pppoeRxPkts pppoeTxPkts pppoeRxOctets pppoeTxOctets pppoePort
-	          7         alexk xx:xx:f9:xx:xx:xx       823       400   1633188587-1 10.x.x.x     1492          100000         100000         238         194         26606         53884         2
-	          8          alex  xx:xx:b6:xx:xx:xx         0         3   1633188588-2 10.x.x.x     1480          100000         100000          30          30          1743          2943         2
+	        7         alexk xx:xx:f9:xx:xx:xx       823       400   1633188587-1 10.x.x.x     1492          100000         100000         238         194         26606         53884         2
+	        8         alex  xx:xx:b6:xx:xx:xx         0         3   1633188588-2 10.x.x.x     1480          100000         100000          30          30          1743          2943         2
 
 ### IPoE 
 
