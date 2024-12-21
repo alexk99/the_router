@@ -37,7 +37,7 @@ IPoE subscriber table
 	SNMP table: BISON-ROUTER-MIB::ipoeIpv4Table
 
 	ipoeIndex             ipoeUsername           ipoeMac ipoeSvid ipoeCvid ipoeSessionId     ipoeIpv4 ipoeIngressCir ipoeEgressCir ipoeRxPkts ipoeTxPkts ipoeRxOctets ipoeTxOctets ipoePort ipoeTtl
-	 7 1.30.1.1a:xx:xx:xx:xx:xx 1a:b8:xx:xx:xx:xx       30        1  1734623255-7 10.2.168.192         1M;30M        1M;32M          1          1  	 84           84        1     610
+	        7 1.30.1.1a:xx:xx:xx:xx:xx 1a:b8:xx:xx:xx:xx       30        1  1734623255-7 10.2.168.192         1M;30M        1M;32M          1          1  	 84           84        1     610
 
 ### VIF
 
