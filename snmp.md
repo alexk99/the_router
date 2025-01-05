@@ -76,6 +76,20 @@ NAT MAP types:
 	BISON-ROUTER-MIB::detSSNoFreePortmapPorts.0 = Counter64: 0
 	BISON-ROUTER-MIB::detSSNoFreePortmapPorts.0 = No more variables left in this MIB View (It is past the end of the MIB tree)
 
+### Port utilization
+
+	snmptable -v2c -c xxx localhost BISON-ROUTER-MIB::portRxQueueUtilization
+	SNMP table: BISON-ROUTER-MIB::portRxQueueUtilization
+	
+	 prquIndex prquLcore prquPort prquRxQueue prquEmptyPolls prquPktsPerPoll
+	         1         1        0           0            100               0
+	         2         1        1           0            100               0
+	         3         1        2           0            100               0
+	         4         2        0           1            100               0
+	         5         2        1           1            100               0
+	         6         2        2           1            100               0
+
+
 ## MIB
 
 Bison Router MIB is located here
