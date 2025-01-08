@@ -101,6 +101,20 @@ NAT MAP types:
 	                    4             10.114.0.3           10.114.0.3                   0                 4032                   0                    1
 	                    5             10.114.0.4           10.114.0.4                   0                 4032                   0                    1
 
+### License
+
+	snmpwalk -v2c -c xxx localhost BISON-ROUTER-MIB::licenseInfo
+	BISON-ROUTER-MIB::licStatus.0 = INTEGER: 2
+	BISON-ROUTER-MIB::licStatusDesc.0 = STRING: OK
+	BISON-ROUTER-MIB::licForwBandwidth.0 = INTEGER: 8000000
+
+Status codes
+
+	starting	0
+	DMI_OK		1
+	OK		2
+	failed		3
+
 ## MIB
 
 Bison Router MIB is located here
