@@ -89,6 +89,17 @@ NAT MAP types:
 	         5         2        1           1            100               0
 	         6         2        2           1            100               0
 
+### SNAT44 prefix usage
+
+	snmptable -v2c -c xxx localhost BISON-ROUTER-MIB::snat44UsageStat
+	SNMP table: BISON-ROUTER-MIB::snat44UsageStat
+	
+	 snat44UsageStatIndex snat44UsageStatIpStart snat44UsageStatIpEnd snat44UsageStatUsed snat44UsageStatTotal snat44UsageStatPerc snat44UsageStatMapId
+	                    1            192.168.2.0        192.168.2.255                   0                  256                   0                    1
+	                    2               10.8.0.0           10.8.0.255                   0                  256                   0                    1
+	                    3             10.114.0.1           10.114.0.1                   0                 4032                   0                    1
+	                    4             10.114.0.3           10.114.0.3                   0                 4032                   0                    1
+	                    5             10.114.0.4           10.114.0.4                   0                 4032                   0                    1
 
 ## MIB
 
