@@ -40,14 +40,14 @@ TheRouter is a software packet router based on one of the fastest packet process
 ## BRAS/BNG - Broadband Remote Access Server  
 
  * IPoE L2/L3 connected subscribers
- * full support for IPv6
+ * Full support for IPv6
  * PPPoE subscribers
  * VRRP - enables redundancy and active-active BNG mode
  * IPoE - VLAN per subscriber with IP unnumbered support
  * QOS: Policing (Token bucket filter with extended burst value)
  * HQoS: shaping, WRR, RED
- * DHCP relay
- * DHCP server
+ * DHCP4/6 relay
+ * DHCP4/6 server
  * DHCP option82 rewrite function
  * Redirect subscribers traffic based on multiple routing tables and PBR
  * Radius/CoA
@@ -105,11 +105,3 @@ Configuration
  * <a href="https://github.com/alexk99/the_router/blob/master/border_bgp_service_provider_1.md">TheRouter as a BGP border router in a service provider network</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/ash_pppoe_nat_isp.md">The first productive BRAS: PPPoE, NAT</a>
  
-## Customers
-
-| <a href="https://www.cloudbit.ch/"><img src="http://therouter.net/images/customers/cloudbit_250_130.png" /></a> | <a href="https://innofield.com/"><img src="http://therouter.net/images/customers/innofield_250_130.png" /></a> | <a href="https://interra.ru/"><img src="http://therouter.net/images/customers/interra_250_130.png" /></a> |
-| -- | -- | -- |
-
-| <a href="https://inetvl.ru"><img src="http://therouter.net/images/customers/atk_logo_250_130.png" /></a> | <a href="https://www.smbits.com.br/"><img src="http://therouter.net/images/customers/smbits_250_130.png" /></a> | <a href="http://www.stampedecom.in/"><img src="http://therouter.net/images/customers/stampede.png" /></a> |
-| -- | -- | -- |
-
