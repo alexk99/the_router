@@ -13,6 +13,10 @@ to the startup section
 - Edit /etc/bisonrouter/brouter.conf and use the 'kni' flag in VIF command
   that creates an interface to access the GUI. Usually, it is an uplink VIF.
 
+- Edit the 'br_kni_vifs' variable in /etc/bisonrouter/bisonrouter.env and add the names of all VIF with KNI flag into that list.
+  For example, if the name of KNI VIF is 'v20' then add 'r_v20' to the 'br_kni_vifs' list.
+  Note that you need to use 'r_' prefix when adding VIF names.
+
 ### Step 4
 - Edit /etc/bisonrouter/bisonrouter.env and add 'br_default_gw' variable.
 It should contain an IP address of the BisonRouter default gateway.
