@@ -1,6 +1,6 @@
 # DNS redirection
 
-BisonRouter DNS redirection function is build on top of the following components:
+BisonRouter's DNS redirection function is built on top of the following components:
 
  * Linux host with kernel DNAT rules;
  * BIND recursive DNS server;
@@ -11,7 +11,7 @@ The scheme works as follows:
 - BisonRouter uses the Policy Based Routing (PBR) to redirect traffic
 to a Linux host;
 - The Linux host uses iptables DNAT rules to redirect DNS traffic to
-a BIND recursive DNS server running at the same Linux host;
+a BIND recursive DNS server running on the same Linux host;
 
 <img src="https://files.therouter.net/images/br_rdns_redirection2.png">
 
@@ -94,6 +94,9 @@ Example
 ## Configuring the Linux host
 
 ### DNAT
+
+DNAT is required because DNS requests originally target external servers. 
+The Linux host must rewrite the destination to the local BIND server’s IP so it can process them.
 
 The incoming DNS request's destination address should be rewritten
 with the IP address of the BIND recursive DNS server 192.168.100.2.
