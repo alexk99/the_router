@@ -66,7 +66,7 @@ Restart BIND
 ### Routing table 'rt_dns'
 
 BisonRouter should be configured to use an additional routing table
-named 'rt_bl' with the default route pointing to the IP address of
+named 'rt_dns' with the default route pointing to the IP address of
 BIND recursive DNS server (192.168.100.2).
 
 BR's PBR rules must be configured to use the 'rt_dns' table to route only the DNS traffic.
