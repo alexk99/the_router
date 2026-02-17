@@ -16,8 +16,9 @@ TheRouter is a software packet router based on one of the fastest packet process
  * ICMP
  * PBR and multiple routing tables
  * ECMP and UCMP routing and load balancing
- * Deterministic NAT
- * Dynamic PBA NAT (port block allocation)
+ * Deterministic SNAT44
+ * Dynamic PBA SNAT44 (port block allocation)
+ * NAT64
  * NAT Hairpinning (NAT loopback)
  * Stateful and stateless firewall and various forms of NAT. This functionality is based 
    on the improved version of <a href="https://github.com/rmind/npf">NetBSD packet filter</a>
