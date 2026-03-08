@@ -50,7 +50,7 @@ TheRouter is a software packet router based on one of the fastest packet process
  * DHCP4/6 relay
  * DHCP4/6 server
  * DHCP option82 rewrite function
- * Redirect subscribers traffic based on multiple routing tables and PBR
+ * Redirect subscribers' traffic based on multiple routing tables and PBR
  * Radius/CoA
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/subsriber_management_eng.md">BRAS documentation</a>
  * <a href="https://github.com/alexk99/the_router/blob/master/bras/bras_howto_eng.md">BRAS howto</a>
@@ -62,11 +62,13 @@ PPPoE server supports:
  * IPv4 and IPv6
  * RADIUS authorization (PAP and CHAP)
  * RADIUS accounting
+ * Multiple radius client
  * CoA
  * QOS: Policing (Token bucket filter with extended burst value)
  * HQoS: shaping, WRR, RED
  * TCP MSS Fix/Clumping
- * Redirect subscribers traffic based on multiple routing tables and PBR
+ * Redirect subscribers' traffic based on multiple routing tables and PBR
+ * PPPoE MTU 1500 support (RFC 4638)
  * Full RFC-compliant support PPPoE, LCP, IPCP, PAP, CHAP
  * Up to 60000 concurrent PPPoE subscribers
  * Local address/prefix pools
