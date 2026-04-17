@@ -43,6 +43,8 @@ TheRouter is a software packet router based on one of the fastest packet process
  * IPoE L2/L3 connected subscribers
  * Full support for IPv6
  * PPPoE subscribers
+ * L2TP LNS
+ * L2TP LAC (July 2026)
  * VRRP - enables redundancy and active-active BNG mode
  * IPoE - VLAN per subscriber with IP unnumbered support
  * QOS: Policing (Token bucket filter with extended burst value)
