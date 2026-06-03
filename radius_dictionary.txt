@@ -29,5 +29,6 @@ BEGIN-VENDOR TheRouter
     ATTRIBUTE therouter_egress_acl_ids 45 string
     ATTRIBUTE therouter_vrf_id 46 integer
     ATTRIBUTE therouter_del_subsc_ip_pool_cache_entry 47 integer
-    ATTRIBUTE therouter_subsc_nat_cps_limit 48
+    ATTRIBUTE therouter_subsc_nat_cps_limit 48 integer
+    ATTRIBUTE therouter_acl_template_vif_name 49 string
 END-VENDOR   TheRouter
