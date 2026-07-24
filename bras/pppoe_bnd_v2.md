@@ -214,29 +214,29 @@
 	
 	  # pbr rules
 	  ip pbr rule add prio 10 u32set ips1 type "ip" table rt_bl	
-	
+
 	  #
 	  # Flow accounting
 	  #
-	  flow ipfix_collector addr 192.168.5.3
-	  sysctl set flow_acct 0
+	  flow collector add addr 192.168.5.3 port 9995 proto 9
+	  sysctl set flow_acct 1
 	  sysctl set flow_acct_dropped_pkts 0	  
 	
 	  #
 	  # NAT events logging (NEL)
 	  #
-	  nel collector addr 192.168.5.4 port 9995 proto 9
+      nel collector add addr 192.168.5.4 port 9995 proto 9 events pb,nat_sess
 	  sysctl set nat_events 1
 	
 	  #
-	  # SNAT 44
+	  # Deterministic SNAT44
 	  #
 	  det snat create map 1 in 10.0.0.0/23 out 10.114.0.0/29 sess 4096
 	  det snat vif uplink enable
 	  det snat vif uplink add map 1
 	
 	  #
-	  # DNAT 44
+	  # Destination NAT44
 	  #
 	  det snat add dnat map 1 size 128
 	  det snat add dnat rule map 1 out 10.114.0.0:23200 in 10.0.0.0:22 tcp
