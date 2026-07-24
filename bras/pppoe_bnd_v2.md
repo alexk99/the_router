@@ -45,9 +45,9 @@
 	  #
 	  # IP Pool cache size, TTL
 	  #
-	  # IP Pool serve the same purpose as DHCP lease database does
+	  # IP Pool serves the same purpose as DHCP lease database does
 	  # and allows to have persistente ipv4 addresses as long as
-	  # TheRouter doens't reboot (no filesystem storage)
+	  # TheRouter doesn't reboot (no filesystem storage)
 	  #
 	  sysctl set ippool_cache_size 4096
 	  sysctl set ippool_cache_entry_ttl 172800
@@ -154,14 +154,7 @@
 	  #
 	  ppp dns primary 8.8.8.8
 	  ppp dns secondary 8.8.4.4
-	
-	  sysctl set ppp_max_configure 6
-	  sysctl set ppp_initial_restart_time 500
-	  
-	  sysctl set lcp_keepalive_interval 30
-	  sysctl set lcp_keepalive_num_retries 10
-	  sysctl set lcp_keepalive_probe_interval 500
-	  
+		  
 	  #
 	  # it's an IP address that will be assigned to each ptp pppoe interface
 	  #
@@ -170,7 +163,6 @@
 	
 	  #
 	  # IP pools
-	  #
 	  #
 	  
 	  # create IP pools
